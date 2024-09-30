@@ -1,0 +1,78 @@
+@font-face { font-family: txt; src: url(../font/OpenSans-Regular.ttf); }
+@font-face { font-family: bld; src: url(../font/OpenSans-Bold.ttf); }
+
+@keyframes spinn { 0% { transform: translate(-50%, -50%) rotate(0); } 100% { transform: translate(-50%, -50%) rotate(360deg); } }
+
+/* font-size: 22px; line-height: 30px; */
+/* font-size: 19px; line-height: 26px; */
+/* font-size: 13px; line-height: 18px; */
+/* font-size: 10px; line-height: 14px; */
+
+:root
+{
+    --light: rgb(255, 255, 255); /* ffffff */
+    --light1: rgba(255, 255, 255, 0.1);
+    --dark: rgb(0, 0, 0); /* 000000 */
+    --dark1: rgba(0, 0, 0, 0.1);
+    --dark2: rgba(0, 0, 0, 0.2);
+    --dark3: rgba(0, 0, 0, 0.3);
+    --dark5: rgba(0, 0, 0, 0.5);
+    --blue: rgb(7, 103, 126); /* 07677e */
+    --gold: rgb(255, 185, 0); /* ffb900 */
+    --red: rgb(227, 5, 24); /* e30518 */
+}
+
+body { display: flex; flex-direction: column; min-height: 300vh; margin: 0; font-family: txt; font-size: 13px; line-height: 18px; text-align: center; color: var(--dark); background-color: var(--light); overflow-y: scroll; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background-color: var(--dark2); }
+::-webkit-scrollbar-thumb { background-color: var(--dark2); }
+::-webkit-scrollbar-thumb:hover { background-color: var(--dark3); }
+::selection { color: var(--light); background-color: var(--blue); }
+a { text-decoration: underline; color: var(--dark); cursor: pointer; }
+a:hover { text-decoration: none; color: var(--blue); }
+b { font-family: bld; font-weight: normal; }
+
+#header { display: flex; flex-direction: column; color: var(--light); background-color: var(--blue); }
+#header > div { flex-grow: 1; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 20px; padding: 10px 20px; }
+#header > div > a { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 5px; text-decoration: none; color: var(--light); }
+#header > div > a > img { height: 40px; filter: brightness(0) invert(1); }
+#header > div > a > div { display: flex; flex-wrap: wrap; justify-content: center; align-items: baseline; gap: 0 5px; }
+#header > div > a > div > b { font-size: 22px; line-height: 30px; }
+#header > div > .op { flex-grow: 1; display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 5px; }
+#header > div > .op > .btn > a { color: var(--light); background-color: var(--light1); }
+#header > div > .op > .btn > a:hover { background-color: var(--dark); }
+
+#cont { flex-grow: 1; display: flex; flex-direction: column; }
+#cont > div { display: flex; flex-direction: column; gap: 20px; padding: 20px 20px 40px 20px; }
+
+#footer { display: flex; flex-direction: column; font-size: 10px; line-height: 14px; text-align: right; }
+#footer > div { flex-grow: 1; padding: 10px 26px; }
+
+#loader { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--dark5); backdrop-filter: grayscale(1) blur(10px); z-index: 999; display: none; }
+#loader > div { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; gap: 20px; }
+#loader > div > div:nth-of-type(1) { width: 100px; height: 100px; border-radius: 50%; background-color: var(--light); position: relative; }
+#loader > div > div:nth-of-type(1) > div { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border-radius: 50%; border: 5px solid var(--dark); animation: spinn 2s linear infinite; }
+#loader > div > div:nth-of-type(1) > div:nth-of-type(1) { width: 80px; height: 80px; border-top-color: transparent; }
+#loader > div > div:nth-of-type(1) > div:nth-of-type(2) { width: 60px; height: 60px; border-left-color: transparent; animation-direction: reverse; }
+#loader > div > div:nth-of-type(1) > div:nth-of-type(3) { width: 40px; height: 40px; border-bottom-color: transparent; }
+#loader > div > div:nth-of-type(1) > div:nth-of-type(4) { width: 20px; height: 20px; border-right-color: transparent; animation-direction: reverse; }
+#loader > div > div:nth-of-type(1) > div:nth-of-type(5) { border-color: var(--blue); animation: none; }
+#loader > div > div:nth-of-type(2) { padding: 5px 10px; color: var(--light); border-radius: 5px; background-color: var(--blue); }
+
+.popup { position: fixed; top: 0; left: 0; right: 0; bottom: 0; display: flex; justify-content: center; align-items: flex-start; background-color: var(--dark5); backdrop-filter: grayscale(1) blur(10px); z-index: 800; overflow-y: scroll; }
+.popup > div { display: flex; flex-direction: column; gap: 20px; width: calc(100% - 80px); max-width: 900px; padding: 20px; margin: 100px 20px; border-radius: 5px; background-color: var(--light); }
+.popup > div > .label { padding: 0 0 6px 0; font-family: bld; font-size: 19px; line-height: 26px; position: relative; }
+.popup > div > .label::after { position: absolute; left: 50%; bottom: 0; transform: translateX(-50%); width: 100px; height: 1px; background-color: var(--dark1); content: ""; }
+.popup > div > .op { display: flex; flex-wrap: wrap; justify-content: center; gap: 5px; }
+.popup#error > div > .txt { align-self: center; padding: 5px 10px; color: var(--light); border-radius: 5px; background-color: var(--red); }
+.popup#error > div > .det { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; font-size: 10px; line-height: 14px; }
+.popup#error > div > .det > .btn > a { padding: 1px; }
+.popup#error > div > .det > .btn > a > .ico { width: 14px; height: 14px; }
+.popup#error > div > .det > .txt { padding: 0 0 0 5px; text-align: left; border-left: 1px solid var(--dark1); }
+.popup#error > div > .det.off > .txt { display: none; }
+.popup#prompt > div > .op > .btn { width: 50px; }
+.popup#help > div > .logo { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 5px; }
+.popup#help > div > .logo > img { height: 40px; }
+.popup#help > div > .logo > div { font-family: bld; font-size: 22px; line-height: 30px; }
+.popup#help > div > .legal { font-size: 10px; line-height: 14px; }
+.popup#help > div > .copy { font-size: 10px; line-height: 14px; }

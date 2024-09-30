@@ -1,0 +1,14 @@
+.btn { display: flex; flex-direction: column; }
+.btn > a { flex-grow: 1; display: flex; justify-content: center; align-items: flex-start; gap: 5px; padding: 5px 10px; text-decoration: none; color: var(--dark); border-radius: 5px; border: 1px solid transparent; background-color: var(--dark1); }
+.btn > a > .ico { flex-shrink: 0; height: 18px; }
+.btn > a > .txt { text-align: left; }
+.btn > a:hover { color: var(--light); background-color: var(--dark); }
+.btn.min > a { padding: 5px; }
+.btn.min > a > .ico { width: 18px; }
+.btn.min > a > .txt { padding: 0 5px; text-align: center; }
+.btn.l > a { justify-content: flex-start; }
+.btn.l > a .txt { text-align: left; }
+.btn.r > a { flex-direction: row-reverse; justify-content: flex-start; }
+.btn.r > a .txt { text-align: right; }
+.btn.readonly > a { color: var(--dark1); border-color: var(--dark1); background-color: transparent; cursor: auto; }
+.btn.off { display: none; }
