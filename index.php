@@ -27,5 +27,3 @@
 
     $html = html(array_merge($opts, array("cont" => $cont, "script" => "index")));
     die($html);
-
-?>

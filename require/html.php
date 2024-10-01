@@ -155,9 +155,6 @@
             }
         }
 
-
-
-
         return $filter;
     }
     

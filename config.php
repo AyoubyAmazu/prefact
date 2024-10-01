@@ -2,7 +2,7 @@
 
     define("APPurl", $_SERVER["REQUEST_SCHEME"] . "://" . $_SERVER["HTTP_HOST"] . "/");
     define("APPself", $_SERVER["REQUEST_SCHEME"] . "://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
-    define("APPlocal", $_SERVER["DOCUMENT_ROOT"]);
+    define("APPlocal", $_SERVER["DOCUMENT_ROOT"].'/');
     define("APPdesc", "");
     define("APPwords", "");
     define("APPauthor", "FIDSUD");
@@ -21,7 +21,6 @@
     define("COOKIEhttp", true);
 
     define("CRYPTkey", "");
-        
     define("DATAresp", json_encode(array(
         "rd" => array("code" => "rd", "abr" => "RD", "txt" => "Responsable Déontologique", "all" => "Tous les responsables déontologiques", "num" => 1)
         , "re" => array("code" => "re", "abr" => "RE", "txt" => "Responsable Encadrement", "all" => "Tous les responsables encadrement", "num" => 2)
@@ -45,9 +44,9 @@
     )));
 
     define("DB", json_encode(array(
-        "prefact" => array("host" => "localhost", "port" => 3306, "name" => "prefact", "username" => "root", "password" => 1234)
-        , "dia" => array("host" => "localhost", "port" => 3306, "name" => "expert_fidsud", "username" => "root", "password" => 1234)
-        , "fact" => array("host" => "localhost", "port" => 3306, "name" => "z_fact", "username" => "root", "password" => 1234)
+        "prefact" => array("host" => "localhost", "port" => 3306, "name" => "prefact", "username" => "root", "password" => '')
+        , "dia" => array("host" => "localhost", "port" => 3306, "name" => "expert_fidsud", "username" => "root", "password" => '')
+        , "fact" => array("host" => "localhost", "port" => 3306, "name" => "z_fact", "username" => "root", "password" => '')
     )));
     
     define("DTmonth", json_encode(array(1 => "Janvier", 2 => "Février", 3 => "Mars", 4 => "Avril", 5 => "Mai", 6 => "Juin", 7 => "Juillet", 8 => "Août", 9 => "Septembre", 10 => "Octobre", 11 => "Novembre", 12 => "Décembre")));
