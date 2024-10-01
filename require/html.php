@@ -155,6 +155,10 @@
             }
         }
 
+        $keys = array_keys(json_decode(DATAresp, true));
+        $filtersSelect = 'SELECT '.implode(' , ', $keys).' FROM `adr`;';
+        $filters = dbSelect($filtersSelect, array_merge($opts, array("db" => "prefact")));
+
         return $filter;
     }
     

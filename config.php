@@ -44,9 +44,9 @@
     )));
 
     define("DB", json_encode(array(
-        "prefact" => array("host" => "localhost", "port" => 3306, "name" => "prefact", "username" => "root", "password" => '')
-        , "dia" => array("host" => "localhost", "port" => 3306, "name" => "expert_fidsud", "username" => "root", "password" => '')
-        , "fact" => array("host" => "localhost", "port" => 3306, "name" => "z_fact", "username" => "root", "password" => '')
+        "prefact" => array("host" => "localhost", "port" => 3306, "name" => "prefact", "username" => "root", "password" => '1234')
+        , "dia" => array("host" => "localhost", "port" => 3306, "name" => "expert_fidsud", "username" => "root", "password" => '1234')
+        , "fact" => array("host" => "localhost", "port" => 3306, "name" => "z_fact", "username" => "root", "password" => '1234')
     )));
     
     define("DTmonth", json_encode(array(1 => "Janvier", 2 => "Février", 3 => "Mars", 4 => "Avril", 5 => "Mai", 6 => "Juin", 7 => "Juillet", 8 => "Août", 9 => "Septembre", 10 => "Octobre", 11 => "Novembre", 12 => "Décembre")));
