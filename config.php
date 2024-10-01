@@ -10,7 +10,7 @@
     define("APPterms", "");
     define("APPprivacy", "");
     define("APPversion", date("YmdHis"));
-    
+
     define("AUTHout", "");
     
     define("COOKIEname", "FIDSUD_PREFACT");
@@ -25,23 +25,23 @@
     define("DATAresp", json_encode(array(
         "rd" => array("code" => "rd", "abr" => "RD", "txt" => "Responsable Déontologique", "all" => "Tous les responsables déontologiques", "num" => 1)
         , "re" => array("code" => "re", "abr" => "RE", "txt" => "Responsable Encadrement", "all" => "Tous les responsables encadrement", "num" => 2)
-        , "rc" => array("code" => "rc", "abr" => "RE", "txt" => "Responsable Collaborateur", "all" => "Tous les responsables encadrement", "num" => 3)
-        , "ra" => array("code" => "rc", "abr" => "RE", "txt" => "Responsable Auxiliaire", "all" => "Tous les responsables encadrement", "num" => 4)
-        , "res" => array("code" => "rc", "abr" => "RE", "txt" => "Responsable Encadrement Social", "all" => "Tous les responsables encadrement", "num" => 5)
-        , "rs" => array("code" => "rc", "abr" => "RE", "txt" => "Responsable Social", "all" => "Tous les responsables encadrement", "num" => 6)
-        , "rj" => array("code" => "rc", "abr" => "RE", "txt" => "Responsable Juridique", "all" => "Tous les responsables encadrement", "num" => 7)
-        , "rfp" => array("code" => "rc", "abr" => "RE", "txt" => "Responsable Fiscalité Personnel", "all" => "Tous les responsables encadrement", "num" => 8)
-        , "tgr" => array("code" => "rc", "abr" => "RE", "txt" => "Responsable à Tanger", "all" => "Tous les responsables encadrement", "num" => 9)
-        , "tgra" => array("code" => "rc", "abr" => "RE", "txt" => "Assistant à Tanger", "all" => "Tous les responsables encadrement", "num" => 11)
+        , "rc" => array("code" => "rc", "abr" => "RC", "txt" => "Responsable Collaborateur", "all" => "Tous les responsables encadrement", "num" => 3)
+        , "ra" => array("code" => "ra", "abr" => "RA", "txt" => "Responsable Auxiliaire", "all" => "Tous les responsables encadrement", "num" => 4)
+        , "res" => array("code" => "res", "abr" => "RES", "txt" => "Responsable Encadrement Social", "all" => "Tous les responsables encadrement", "num" => 5)
+        , "rs" => array("code" => "rs", "abr" => "RS", "txt" => "Responsable Social", "all" => "Tous les responsables encadrement", "num" => 6)
+        , "rj" => array("code" => "rj", "abr" => "RJ", "txt" => "Responsable Juridique", "all" => "Tous les responsables encadrement", "num" => 7)
+        , "rfp" => array("code" => "rfp", "abr" => "RFP", "txt" => "Responsable Fiscalité Personnel", "all" => "Tous les responsables encadrement", "num" => 8)
+        , "tgr" => array("code" => "tgr", "abr" => "TGR", "txt" => "Responsable à Tanger", "all" => "Tous les responsables encadrement", "num" => 9)
+        , "tgra" => array("code" => "tgra", "abr" => "TGRA", "txt" => "Assistant à Tanger", "all" => "Tous les responsables encadrement", "num" => 11)
     )));
     
     define("DATAsegment", json_encode(array(
-        "a" => array("code" => "a", "abr" => "A", "txt" => "", "color" => "green")
-        , "b" => array("code" => "re", "abr" => "RE", "txt" => "Responsable", "color" => "")
-        , "c" => array("code" => "rc", "abr" => "RE", "txt" => "Responsable", "color" => "gold")
-        , "d" => array("code" => "rc", "abr" => "RE", "txt" => "Responsable", "color" => "gold")
-        , "e" => array("code" => "rc", "abr" => "RE", "txt" => "Responsable", "color" => "red")
-        , "z" => array("code" => "rc", "abr" => "RE", "txt" => "Responsable", "color" => "dark")
+        "a" => array("code" => "a", "abr" => "A", "txt" => "Rentable,pas d'impayés,acheteur,prescript", "color" => "green")
+        , "b" => array("code" => "b", "abr" => "B", "txt" => "Rentable,pas d'impayés,à potontiel/prescript", "color" => "green")
+        , "c" => array("code" => "c", "abr" => "C", "txt" => "Rentable sans difficultés de paiement", "color" => "green")
+        , "d" => array("code" => "d", "abr" => "D", "txt" => "doit devenir rentable à 1 an,à régulqriser", "color" => "gold")
+        , "e" => array("code" => "e", "abr" => "E", "txt" => "consommateur de ressurces,créances impayées", "color" => "red")
+        , "z" => array("code" => "z", "abr" => "Z", "txt" => "non qualifiable", "color" => "dark")
     )));
 
     define("DB", json_encode(array(
