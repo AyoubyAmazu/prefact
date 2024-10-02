@@ -108,7 +108,7 @@ function htmlFilter($opts = array())
     }
     $html .= formSelect(array("key" => $opts["filter"]["codenaf"]['code'], "label" => "Code NAF", "selected" => array('code'=>'', 'txt'=>''), "list" => $opts["filter"]["codenaf"]['list'], "readonly" => (count($opts["filter"]["codenaf"]['list']) <= 1)));
     $html .= formSelect(array("key" => $opts["filter"]["segment"]['code'], "label" => "Segmentation", "selected" => $opts["filter"]["segment"]['selected'], "list" => $opts["filter"]["segment"]['list'], "readonly" => (count($opts["filter"]["segment"]['list']) <= 1)));
-
+    $html .= formInput(array('key'=>'codename','type'=>"text",'align'=>'c','label'=>'Code/Name'));
     $html .= "</div>";
     
     echo '<script>console.log(' . json_encode($opts["filter"]["codenaf"]) . ');</script>';
