@@ -111,7 +111,7 @@ function htmlFilter($opts = array())
     $html .= formInput(array('key'=>'codename','type'=>"text",'align'=>'c','label'=>'Code/Name'));
     $html .= "</div>";
     
-    echo '<script>console.log(' . json_encode($opts["filter"]["codenaf"]) . ');</script>';
+    // echo '<script>console.log(' . json_encode($opts["filter"]["codenaf"]) . ');</script>';
     return $html;
 }
 
@@ -191,7 +191,7 @@ function htmlFilterData($opts = array())
     $filter['codenaf']['list'] = array();
     $selectSegement = 'SELECT `naf`, `naf_txt` FROM `adr`; ';
     $result = dbSelect($selectSegement, array_merge($opts, array('db'=>'prefact')));
-    foreach($result as $v) array_push($filter['codenaf']['list'], array('code'=>$v['naf'], 'txt'=>['naf_txt']));
+    foreach($result as $v) array_push($filter['codenaf']['list'], array('code'=>$v['naf'], 'txt'=>$v['naf_txt']));
     //? segmentation
     $filter['segment'] = array('code'=>'sgment', 'selected'=>'');
     $filter['segment']['list'] = array();
@@ -200,7 +200,7 @@ function htmlFilterData($opts = array())
     foreach($result as $v) array_push($filter['segment']['list'], array('code'=>$v['segment'], 'txt'=>''));
     if(count($filter['segment']['list']) == 1) $filter['segment']['selected']=$filter['segment']['list'][0];
     else $filter['segment']['selected']=array('code'=>'', 'txt'=>'');
-    echo '<script>console.log(' . json_encode($filter['codenaf']) . ');</script>';
+    // echo '<script>console.log(' . json_encode($filter['codenaf']) . ');</script>';
 
     return $filter;
 }
