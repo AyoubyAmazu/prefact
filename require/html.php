@@ -108,7 +108,7 @@ function htmlFilter($opts = array())
     }
     $html .= formSelect(array("key" => $opts["filter"]["codenaf"]['code'], "label" => "Code NAF", "selected" => array('code'=>'', 'txt'=>''), "list" => $opts["filter"]["codenaf"]['list'], "readonly" => (count($opts["filter"]["codenaf"]['list']) <= 1)));
     $html .= formSelect(array("key" => $opts["filter"]["segment"]['code'], "label" => "Segmentation", "selected" => $opts["filter"]["segment"]['selected'], "list" => $opts["filter"]["segment"]['list'], "readonly" => (count($opts["filter"]["segment"]['list']) <= 1)));
-    $html .= formInput(array('key'=>'codename','type'=>"text",'align'=>'c','label'=>'Code/Name'));
+    $html .= formInput(array('key'=>'codename','type'=>"text",'align'=>'l','label'=>'Code/Name'));
     $html .= "</div>";
     
     // echo '<script>console.log(' . json_encode($opts["filter"]["codenaf"]) . ');</script>';
@@ -197,7 +197,7 @@ function htmlFilterData($opts = array())
     $filter['segment']['list'] = array();
     $selectSegement = 'SELECT `segment` FROM `adr`; ';
     $result = dbSelect($selectSegement, array_merge($opts, array('db'=>'prefact')));
-    foreach($result as $v) array_push($filter['segment']['list'], array('code'=>$v['segment'], 'txt'=>''));
+    foreach(json_decode(DATAsegment, true) as $v) array_push($filter['segment']['list'], array('code'=>$v['abr'], 'txt'=>$v['txt']));
     if(count($filter['segment']['list']) == 1) $filter['segment']['selected']=$filter['segment']['list'][0];
     else $filter['segment']['selected']=array('code'=>'', 'txt'=>'');
     // echo '<script>console.log(' . json_encode($filter['codenaf']) . ');</script>';

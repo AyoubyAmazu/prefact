@@ -22,7 +22,34 @@
     $list = dbSelect($sql, array_merge($opts, array("db" => "prefact")));
 
 
-    $cont = "";
-
+    $select = 'select * from synthese ';
+    $result = dbSelect($select, array_merge($opts, array('db'=>'prefact')));
+    $cont = "
+    <table>
+        <thead>
+                <tr>
+                    <td>Dossier</td>
+                    <td class''>Temp</td>
+                    <td>Factures</td>
+                    <td class=''>Statu</td>
+                    <td>Opiration</td>
+                    <td class=''>Provisions</td>
+                </tr>
+            </thead>
+        <tbody>
+    ";
+    // echo '<script>console.log(' . json_encode($result) . ');</script>';
+    foreach($result as $row){
+        $cont.='<tr>
+        <td>'.$row['adr'].'</td>
+        <td>'.$row['temps_dur'].'</td>
+        <td>'.$row['temps_dur'].'</td>
+        <td>'.$row['temps_dur'].'</td>
+        <td>'.$row['temps_dur'].'</td>
+        <td>'.$row['temps_dur'].'</td>
+        </tr>';
+    }
+    $cont .="</tbody></table>";
+    
     $html = html(array_merge($opts, array("cont" => $cont, "script" => "index")));
     die($html);
