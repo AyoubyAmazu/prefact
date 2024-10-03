@@ -61,10 +61,9 @@
 .select > .data > .list > .option.readonly > a { color: var(--dark5); background-color: transparent; cursor: auto; }
 .select > .data > .list > .option.off { display: none; }
 .select.required > .label::after { content: " *"; color: var(--red); }
-.select.on > .data { border-radius: 15px 15px 0 0; }
+.select.on > .data { border-radius: 5px 5px 0 0; -webkit-border-radius: 5px 5px 0 0; -moz-border-radius: 5px 5px 0 0; -ms-border-radius: 5px 5px 0 0; -o-border-radius: 5px 5px 0 0; }
 .select.on > .data > .list { display: block; }
 .select.off { display: none; }
-
 
 
 .label {display: flex;align-items: center; font-size: bold;}

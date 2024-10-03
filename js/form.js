@@ -76,12 +76,24 @@ function formTextareaInput(div, min)
     $(div).children(".data").children("textarea").css("height", ((min == undefined || min == null || min == "" || isNaN(Number(min)))? 18 : Number(min)) + "px");
     $(div).children(".data").children("textarea").css("height", ($(div).children(".data").children("textarea").prop("scrollHeight") - 10) + "px");
 }
-
+/**
+ * shows the list of a select
+ * @param {HTMLElement} div
+ */
 function formSelectShow(div) { if(div == undefined || div == null || div == "") div = ".select"; $(div).addClass("on").children(".data").children("a").children(".ico").children("i").addClass("fa-angle-up").removeClass("fa-angle-down"); }
-function formSelectHide(div) { if(div == undefined || div == null || div == "") div = ".select"; $(div).removeClass("on").children(".data").children("a").children(".ico").children("i").addClass("fa-angle-down").removeClass("fa-angle-up"); }
 
+/**
+ * hides the list of a select
+ * @param {HTMLElement} div
+ */
+function formSelectHide(div) { if(div == undefined || div == null || div == "") div = ".select"; $(div).removeClass("on").children(".data").children("a").children(".ico").children("i").addClass("fa-angle-down").removeClass("fa-angle-up"); }
+/**
+ * inialise the init status of a select
+ * @param {HTMLElement} div
+ */
 function formSelectInit(div)
 {
+    
     if($(div).children(".data").children(".list").css("display") != "none") { formSelectHide(div); return; }
     formSelectHide();
     formSelectShow(div);

@@ -58,11 +58,15 @@ function htmlHead($opts = array())
     $html .= "<script type='application/javascript' src='" . APPurl . "js/ops.js?v=" . APPversion . "'></script>";
     $html .= "<script type='application/javascript' src='" . APPurl . "js/form.js?v=" . APPversion . "'></script>";
     $html .= "<script type='application/javascript' src='" . APPurl . "js/str.js?v=" . APPversion . "'></script>";
-    if ($opts["script"] != "" && $opts["js"]) $html .= "<script type='application/javascript' src='" . APPurl . "js/" . $opts["script"] . ".js?v=" . APPversion . "'></script>";
+    if ($opts["script"] != "" && $opts["js"]) $html .= "<script type='application/javascript' src='" . APPurl . "js/" . $opts["script"] . ".js?v=" . APPversion . "' defer></script>";
 
     return $html;
 }
-
+/**
+ * Creates html of the header
+ * @param array $opts
+ * @return string html
+ */
 function htmlHeader($opts = array())
 {
     $opts = htmlOpts($opts);
@@ -88,7 +92,11 @@ function htmlHeader($opts = array())
 
     return $html;
 }
-
+/**
+ * Creates html of filters
+ * @param array $opts array of options that contains the filter array
+ * @return string html
+ */
 function htmlFilter($opts = array())
 {
     $opts = htmlOpts($opts);
@@ -114,7 +122,11 @@ function htmlFilter($opts = array())
     // echo '<script>console.log(' . json_encode($opts["filter"]["codenaf"]) . ');</script>';
     return $html;
 }
-
+/**
+ * initiate data of filters that will be used in @param htmlFilter
+ * @param array $opts array of options that contains the filter array
+ * @return string html
+ */
 function htmlFilterData($opts = array())
 {
     $opts = htmlOpts($opts);
@@ -215,12 +227,18 @@ function htmlTitle($opts = array())
 
     return $html;
 }
-
+/**
+ * Creates html of footer
+ * @return string html
+ */
 function htmlFooter()
 {
     return "<div><i class='fa-regular fa-copyright'></i> " . APPauthor . ", " . date("Y") . " - Tous droits reservés</div>";
 }
-
+/**
+ * Creates html of loader
+ * @return string html
+ */
 function htmlLoader()
 {
     return "<div><div><div></div><div></div><div></div><div></div><div></div></div><div>Chargement</div></div>";
