@@ -5,3 +5,9 @@ $('body > #filter > div .select .data > a').each(function () {
     });
 });
 
+$('body > #filter > div .select .data > .list .option a').each(function (item) {
+    $(this).on("click", function () {
+        console.log($(this).children().html());
+        formSelectOption($(this).parent()   );
+    });
+ });

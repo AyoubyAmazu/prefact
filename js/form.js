@@ -118,6 +118,8 @@ function formSelectOption(div)
     var code = $(div).attr("code"); if(code == undefined || code == null) code = ""; $(div).parents(".select").attr("code", code);
     var txt = $(div).children("a").html(); if(txt == undefined || txt == null) txt = ""; $(div).parents(".select").children(".data").children("a").children(".txt").html(txt);
     var title = $(div).children("a").attr("title"); if(title == undefined || title == null) title = ""; $(div).parents(".select").children(".data").children("a").attr("title", title);
+    console.log(code);
+    console.log('text=',txt); //!debuging
     formSelectHide($(div).parents(".select"));
 }
 
