@@ -1,9 +1,0 @@
-body > #filter{
-    padding: 30px;
-    background-color: lightgray;
-}
-body > #filter > div{
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-}

@@ -2,12 +2,19 @@
 
     function cookieInit()
     {
+        $respData = json_decode(DATAresp, true);
+
         $obj = ((isset($_COOKIE[COOKIEname]))? json_decode(cryptDel($_COOKIE[COOKIEname]), true) : false);
         if($obj == false) $obj = array();
 
         if(!isset($obj["filter"]["annee"])) $obj["filter"]["annee"] = -1;
         if(!isset($obj["filter"]["soc"])) $obj["filter"]["soc"] = -1;
         if(!isset($obj["filter"]["grp"])) $obj["filter"]["grp"] = "";
+        if(!isset($obj["filter"]["resp"])) $obj["filter"]["resp"] = -1;
+        foreach($respData as $v) if(!isset($obj["filter"][$v["code"]])) $obj["filter"][$v["code"]] = "";
+        if(!isset($obj["filter"]["naf"])) $obj["filter"]["naf"] = "";
+        if(!isset($obj["filter"]["segment"])) $obj["filter"]["segment"] = "";
+        if(!isset($obj["filter"]["txt"])) $obj["filter"]["txt"] = "";
 
         return $obj;
     }

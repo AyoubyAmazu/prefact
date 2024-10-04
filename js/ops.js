@@ -65,7 +65,18 @@ function popHelp()
     });
 }
 
+function filter()
+{
+
+}
+
 $(document).ready(function()
 {
     $("#header > div > .op > .btn.help > a").off("click").on("click", function() { popHelp(); });
+    $("#filter > div > .input > .data > .btn.prev > a").off("click").on("click", function(event) { formInputPrev($(event.target).parents(".input")); });
+    $("#filter > div > .input > .data > .btn.next > a").off("click").on("click", function(event) { formInputNext($(event.target).parents(".input")); });
+    $("#filter > div > .select > .data > a").off("click").on("click", function(event) { formSelectInit($(event.target).parents(".select")); });
+    $("#filter > div > .select > .data > .list > .input > .data > input").off("input").on("input", function(event) { formSelectFilter($(event.target).parents(".select")); });
+    $("#filter > div > .select > .data > .list > .option > a").off("click").on("click", function(event) { formSelectOption($(event.target).parents(".option")); });
+    
 });

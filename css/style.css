@@ -42,6 +42,38 @@ b { font-family: bld; font-weight: normal; }
 #header > div > .op > .btn > a { color: var(--light); background-color: var(--light1); }
 #header > div > .op > .btn > a:hover { background-color: var(--dark); }
 
+#filter { display: flex; flex-direction: column; background-color: var(--dark1); }
+#filter > div { flex-grow: 1; align-self: center; display: flex; flex-wrap: wrap; gap: 10px; padding: 20px; width: calc(100% - 40px); max-width: 1200px; }
+#filter > div > div { width: 100px; }
+#filter > div > div.soc { width: 320px; }
+#filter > div > div.grp { width: 210px; }
+#filter > div > div.txt { width: 320px; }
+#filter > div > div.naf > .data > a > .main > .txt { display: none; }
+#filter > div > div.naf > .data > a > .main > .code { font-size: 13px; line-height: 18px; }
+#filter > div > div.naf[code=""] > .data > a > .main > .txt { display: block; }
+#filter > div > div.naf[code=""] > .data > a > .main > .code { display: none; }
+#filter > div > div.naf[code="-"] > .data > a > .main > .txt { display: block; }
+#filter > div > div.naf[code="-"] > .data > a > .main > .code { display: none; }
+#filter > div > div.naf > .data > .list > .option > a > .txt { display: none; }
+#filter > div > div.naf > .data > .list > .option > a > .code { font-size: 13px; line-height: 18px; }
+#filter > div > div.naf > .data > .list > .option[code=""] > a > .txt { display: block; }
+#filter > div > div.naf > .data > .list > .option[code=""] > a > .code { display: none; }
+#filter > div > div.naf > .data > .list > .option[code="-"] > a > .txt { display: block; }
+#filter > div > div.naf > .data > .list > .option[code="-"] > a > .code { display: none; }
+#filter > div > div.resp > .data > a > .main > .txt { display: none; }
+#filter > div > div.resp > .data > a > .main > .code { font-size: 13px; line-height: 18px; }
+#filter > div > div.resp[code=""] > .data > a > .main > .txt { display: block; }
+#filter > div > div.resp[code=""] > .data > a > .main > .code { display: none; }
+#filter > div > div.resp[code="-"] > .data > a > .main > .txt { display: block; }
+#filter > div > div.resp[code="-"] > .data > a > .main > .code { display: none; }
+#filter > div > div.resp > .data > .list > .option > a > .txt { display: none; }
+#filter > div > div.resp > .data > .list > .option > a > .code { font-size: 13px; line-height: 18px; }
+#filter > div > div.resp > .data > .list > .option[code=""] > a > .txt { display: block; }
+#filter > div > div.resp > .data > .list > .option[code=""] > a > .code { display: none; }
+#filter > div > div.resp > .data > .list > .option[code="-"] > a > .txt { display: block; }
+#filter > div > div.resp > .data > .list > .option[code="-"] > a > .code { display: none; }
+#filter > div > div.op { display: flex; justify-content: flex-end; gap: 5px; width: 100%; }
+
 #cont { flex-grow: 1; display: flex; flex-direction: column; }
 #cont > div { display: flex; flex-direction: column; gap: 20px; padding: 20px 20px 40px 20px; }
 

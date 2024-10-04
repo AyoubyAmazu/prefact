@@ -21,6 +21,7 @@
     define("COOKIEhttp", true);
 
     define("CRYPTkey", "");
+    
     define("DATAresp", json_encode(array(
         "rd" => array("code" => "rd", "abr" => "RD", "txt" => "Responsable Déontologique", "all" => "Tous les responsables déontologiques", "num" => 1)
         , "re" => array("code" => "re", "abr" => "RE", "txt" => "Responsable Encadrement", "all" => "Tous les responsables encadrement", "num" => 2)

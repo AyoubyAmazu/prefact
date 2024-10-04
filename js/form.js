@@ -80,51 +80,49 @@ function formTextareaInput(div, min)
  * shows the list of a select
  * @param {HTMLElement} div
  */
-function formSelectShow(div) { if(div == undefined || div == null || div == "") div = ".select"; $(div).addClass("on").children(".data").children("a").children(".ico").children("i").addClass("fa-angle-up").removeClass("fa-angle-down"); }
+function formSelectShow(div) { $(((div == undefined || div == null || div == "")? ".select" : div)).addClass("on").children(".data").children("a").children(".ico").children("i").addClass("fa-angle-up").removeClass("fa-angle-down"); }
 
 /**
  * hides the list of a select
  * @param {HTMLElement} div
  */
-function formSelectHide(div) { if(div == undefined || div == null || div == "") div = ".select"; $(div).removeClass("on").children(".data").children("a").children(".ico").children("i").addClass("fa-angle-down").removeClass("fa-angle-up"); }
+function formSelectHide(div) { $(((div == undefined || div == null || div == "")? ".select" : div)).removeClass("on").children(".data").children("a").children(".ico").children("i").addClass("fa-angle-down").removeClass("fa-angle-up"); }
 /**
  * inialise the init status of a select
  * @param {HTMLElement} div
  */
 function formSelectInit(div)
 {
-    
-    if($(div).children(".data").children(".list").css("display") != "none") { formSelectHide(div); return; }
+    if($(div).hasClass("on")) { formSelectHide(div); return; }
     formSelectHide();
     formSelectShow(div);
     $(div).children(".data").children(".list").children(".option").not(".off").show();
-    $(div).children(".data").children(".list").children(".input.filter").children(".data").children("input").val("").focus();
+    $(div).children(".data").children(".list").children(".input").children(".data").children("input").val("").focus();
     $(div).children(".data").children(".list").scrollTop(0);
 }
 
 function formSelectFilter(div)
 {
-    var keyword = $.trim($(div).children(".data").children(".list").children(".input.filter").children(".data").children("input").val()).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    var keyword = $.trim($(div).children(".data").children(".list").children(".input").children(".data").children("input").val()).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
     if(keyword == "") { $(div).children(".data").children(".list").children(".option").not(".off").show(); return; }
     $(div).children(".data").children(".list").children(".option").not(".off").each(function()
     {
-        var option = $(this);
-        $(option).hide().children("a").children("div").each(function() { if($.trim($(this).text()).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().includes(keyword)) $(option).show(); });
+        $(this).hide();
+        if($.trim($(this).children("a").children(".txt").text()).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().includes(keyword)) $(this).show();
+        if($.trim($(this).children("a").children(".code").text()).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().startsWith(keyword)) $(this).show();
     });
 }
 
 function formSelectOption(div)
 {
     var code = $(div).attr("code"); if(code == undefined || code == null) code = ""; $(div).parents(".select").attr("code", code);
-    var txt = $(div).children("a").html(); if(txt == undefined || txt == null) txt = ""; $(div).parents(".select").children(".data").children("a").children(".txt").html(txt);
+    var txt = $(div).children("a").html(); if(txt == undefined || txt == null) txt = ""; $(div).parents(".select").children(".data").children("a").children(".main").html(txt);
     var title = $(div).children("a").attr("title"); if(title == undefined || title == null) title = ""; $(div).parents(".select").children(".data").children("a").attr("title", title);
-    console.log(code);
-    console.log('text=',txt); //!debuging
     formSelectHide($(div).parents(".select"));
 }
 
 $(window).click(function(event) { if($(event.target).parents(".select").length == 0) formSelectHide(); });
-
+/*
 function formCheckboxExec(div)
 {
     $(div).toggleClass("on");
@@ -141,6 +139,6 @@ function formCheckboxUnique(div)
         else $(this).children("a").children(".ico").children("i").addClass("fa-circle").removeClass("fa-circle-dot");
     });
 }
-
+*/
 
 

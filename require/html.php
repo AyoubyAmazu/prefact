@@ -58,7 +58,7 @@ function htmlHead($opts = array())
     $html .= "<script type='application/javascript' src='" . APPurl . "js/ops.js?v=" . APPversion . "'></script>";
     $html .= "<script type='application/javascript' src='" . APPurl . "js/form.js?v=" . APPversion . "'></script>";
     $html .= "<script type='application/javascript' src='" . APPurl . "js/str.js?v=" . APPversion . "'></script>";
-    if ($opts["script"] != "" && $opts["js"]) $html .= "<script type='application/javascript' src='" . APPurl . "js/" . $opts["script"] . ".js?v=" . APPversion . "' defer></script>";
+    if ($opts["script"] != "" && $opts["js"]) $html .= "<script type='application/javascript' src='" . APPurl . "js/" . $opts["script"] . ".js?v=" . APPversion . "'></script>";
 
     return $html;
 }
@@ -99,24 +99,26 @@ function htmlHeader($opts = array())
  */
 function htmlFilter($opts = array())
 {
+    $dataResp = json_decode(DATAresp, true);
     $opts = htmlOpts($opts);
-
+        
     $anneeOp = array();
     array_push($anneeOp, array("type" => "pre", "txt" => formBtn(array("key" => "prev", "ico" => "angle-left", "title" => "Année précedente"))));
-    array_push($anneeOp, array("type" => "poste", "txt" => formBtn(array("key" => "next", "ico" => "angle-right", "title" => "Année suivante"))));
+    array_push($anneeOp, array("type" => "post", "txt" => formBtn(array("key" => "next", "ico" => "angle-right", "title" => "Année suivante"))));
 
     $html = "<div>";
-    $html .= formInput(array("key" => "annee", "type" => "number", "align" => "c", "label" => "Année", "value" => $opts["filter"]['annee'], "op" => $anneeOp));
-    $html .= formSelect(array("key" => "soc", "label" => "Cabinet", "selected" => $opts["filter"]["soc"]["selected"], "list" => $opts["filter"]["soc"]["list"], "readonly" => (count($opts["filter"]["soc"]["list"]) <= 1)));
-    $html .= formSelect(array("key" => "grp", "label" => "Group", "selected" => $opts["filter"]["grp"]["selected"], "list" => $opts["filter"]["grp"]["list"], "readonly" => (count($opts["filter"]["grp"]["list"]) <= 1)));
-    if (isset($opts['filter']['selects']) && count($opts['filter']['selects']) > 0) {
-        foreach ($opts['filter']['selects'] as $select) {
-            $html .= formSelect(array('key' => 'res', 'label' => $select['abr'], 'list' => $select['list'], 'title' => $select['txt'], "readonly" => (count($select['list']) <= 1)));
-        }
-    }
-    $html .= formSelect(array("key" => $opts["filter"]["codenaf"]['code'], "label" => "Code NAF", "selected" => array('code'=>'', 'txt'=>''), "list" => $opts["filter"]["codenaf"]['list'], "readonly" => (count($opts["filter"]["codenaf"]['list']) <= 1)));
-    $html .= formSelect(array("key" => $opts["filter"]["segment"]['code'], "label" => "Segmentation", "selected" => $opts["filter"]["segment"]['selected'], "list" => $opts["filter"]["segment"]['list'], "readonly" => (count($opts["filter"]["segment"]['list']) <= 1)));
-    $html .= formInput(array('key'=>'codename','type'=>"text",'align'=>'l','label'=>'Code/Name'));
+        $html .= formInput(array("key" => "annee", "type" => "number", "align" => "c", "label" => "Année", "value" => $opts["filter"]['annee'], "op" => $anneeOp));
+        $html .= formSelect(array("key" => "soc", "label" => "Cabinet", "selected" => $opts["filter"]["soc"]["selected"], "list" => $opts["filter"]["soc"]["list"], "readonly" => (count($opts["filter"]["soc"]["list"]) <= 1)));
+        $html .= formSelect(array("key" => "grp", "label" => "Groupe", "selected" => $opts["filter"]["grp"]["selected"], "list" => $opts["filter"]["grp"]["list"], "readonly" => (count($opts["filter"]["grp"]["list"]) <= 1)));
+        $html .= formInput(opts: array('key' => 'txt', 'label' => 'Code/Name', "value" => $opts["filter"]["txt"]));
+        $html .= formSelect(array("key" => "naf", "label" => "Code NAF", "selected" => $opts["filter"]["naf"]["selected"], "list" => $opts["filter"]["naf"]['list'], "code" => true, "readonly" => (count($opts["filter"]["naf"]['list']) <= 1)));
+        $html .= formSelect(array("key" => "segment", "label" => "Segmentation", "selected" => $opts["filter"]["segment"]['selected'], "list" => $opts["filter"]["segment"]['list'], "filter" => false, "readonly" => (count($opts["filter"]["segment"]['list']) <= 1)));
+        $html .= formSelect(array("key" => "resp", "label" => "Resp", "title" => "Responsable", "selected" => $opts["filter"]["resp"]["selected"], "list" => $opts["filter"]["resp"]["list"], "code" => true, "readonly" => (count($opts["filter"]["resp"]["list"]) <= 1)));
+        foreach($dataResp as $v) $html .= formSelect(array("key" => $v["code"], "label" => $v["abr"], "title" => $v["txt"], "selected" => $opts["filter"][$v["code"]]["selected"], "list" => $opts["filter"][$v["code"]]["list"], "code" => true, "readonly" => (count($opts["filter"][$v["code"]]["list"]) <= 1), "extra" => array("resp")));
+        $html .= "<div class='op'>";
+            $html .= formBtn(array('key' => 'save', 'ico' => 'magnifying-glass', "title" => "Executer le filtre"));
+            $html .= formBtn(array('key' => 'reset', 'ico' => 'rotate', "title" => "Réinitialiser le filtre"));
+        $html .= "</div>";
     $html .= "</div>";
     
     // echo '<script>console.log(' . json_encode($opts["filter"]["codenaf"]) . ');</script>';
@@ -129,6 +131,8 @@ function htmlFilter($opts = array())
  */
 function htmlFilterData($opts = array())
 {
+    $dataResp = json_decode(DATAresp, true);
+    $dataSegment = json_decode(DATAsegment, true);
     $opts = htmlOpts($opts);
     $cookie = cookieInit();
 
@@ -180,38 +184,109 @@ function htmlFilterData($opts = array())
             $filter["grp"]["selected"] = (($k === false) ? $grpNull : $filter["grp"]["list"][$k]);
         }
     }
-    //? responsables
-    $filter['selects'] = array();
-    $keys = array_keys(json_decode(DATAresp, true));
-    $filtersSelect = 'SELECT ' . implode(' , ', $keys) . ' FROM `adr`;';
-    $result = dbSelect($filtersSelect, array_merge($opts, array("db" => "prefact")));
-    foreach ($keys as $key) 
+
+    $filter["resp"] = array();
+    $filter["resp"]["list"] = array();
+    $filter["resp"]["selected"] = array();
+    foreach($dataResp as $v)
     {
-        $list = array();
-        foreach(array_unique(array_column($result, $key)) as $v)
+        $filter[$v["code"]] = array();
+        $filter[$v["code"]]["list"] = array();
+        $filter[$v["code"]]["selected"] = array();
+        $respNull = array("code" => "", "txt" => "", "placeholder" => "Tous", "title" => $v["all"]);
+        $respNone = array("code" => "-", "txt" => "", "placeholder" => "Aucun", "title" => "Aucun " . strtolower($v["txt"]));
+        $sql = "SELECT DISTINCT `" . $v["code"] . "`, `" . $v["code"] . "_txt` FROM `adr`";
+        $result = dbSelect($sql, array_merge($opts, array("db" => "prefact")));
+        foreach ($result as $w)
         {
-            array_push($list, array('code'=>'', 'txt'=>$v));
+            array_push($filter[$v["code"]]["list"], array("code" => $w[$v["code"]], "txt" => $w[$v["code"] . "_txt"], "title" => $v["txt"] . " (" . $v["abr"] . ") : " . $w[$v["code"] . "_txt"] . " (" . $w[$v["code"]] . ")"));
+            if(!in_array($w[$v["code"]], array_column($filter["resp"]["list"], "code"))) array_push($filter["resp"]["list"], array("code" => $w[$v["code"]], "txt" => $w[$v["code"] . "_txt"], "title" => "Responsable : " . $w[$v["code"] . "_txt"] . " (" . $w[$v["code"]] . ")"));
         }
-        array_push($filter['selects']
-        , array($key
-        , 'abr' => json_decode(DATAresp, true)[$key]['abr']
-        , 'txt' => json_decode(DATAresp, true)[$key]['txt']
-        , 'list' => $list));
+        usort($filter[$v["code"]]["list"], function ($a, $b) {
+            return (($a["txt"] < $b["txt"]) ? -1 : (($a["txt"] > $b["txt"]) ? 1 : 0));
+        });
+        if (count($filter[$v["code"]]["list"]) == 0) $filter[$v["code"]]["selected"] = $respNull;
+        else {
+            $k = array_search("", array_column($filter[$v["code"]]["list"], "code"));
+            if ($k !== false) {
+                unset($filter[$v["code"]]["list"][$k]);
+                array_unshift($filter[$v["code"]]["list"], $respNone);
+            }
+            if (count($filter[$v["code"]]["list"]) == 1) $filter[$v["code"]]["selected"] = $filter[$v["code"]]["list"][0];
+            else {
+                array_unshift($filter[$v["code"]]["list"], $respNull);
+                $k = array_search($cookie["filter"][$v["code"]], array_column($filter[$v["code"]]["list"], "code"));
+                $filter[$v["code"]]["selected"] = (($k === false) ? $respNull : $filter[$v["code"]]["list"][$k]);
+            }
+        }
     }
-    //? code_naf
-    $filter['codenaf'] = array('code'=>'codenaf');
-    $filter['codenaf']['list'] = array();
-    $selectSegement = 'SELECT `naf`, `naf_txt` FROM `adr`; ';
-    $result = dbSelect($selectSegement, array_merge($opts, array('db'=>'prefact')));
-    foreach($result as $v) array_push($filter['codenaf']['list'], array('code'=>$v['naf'], 'txt'=>$v['naf_txt']));
-    //? segmentation
-    $filter['segment'] = array('code'=>'sgment', 'selected'=>'');
-    $filter['segment']['list'] = array();
-    $selectSegement = 'SELECT `segment` FROM `adr`; ';
-    $result = dbSelect($selectSegement, array_merge($opts, array('db'=>'prefact')));
-    foreach(json_decode(DATAsegment, true) as $v) array_push($filter['segment']['list'], array('code'=>$v['abr'], 'txt'=>$v['txt']));
-    if(count($filter['segment']['list']) == 1) $filter['segment']['selected']=$filter['segment']['list'][0];
-    else $filter['segment']['selected']=array('code'=>'', 'txt'=>'');
+    usort($filter["resp"]["list"], function ($a, $b) {
+        return (($a["txt"] < $b["txt"]) ? -1 : (($a["txt"] > $b["txt"]) ? 1 : 0));
+    });
+    if (count($filter["resp"]["list"]) == 0) $filter["resp"]["selected"] = $respNull;
+    else {
+        $k = array_search("", array_column($filter["resp"]["list"], "code"));
+        if ($k !== false) {
+            unset($filter["resp"]["list"][$k]);
+            array_unshift($filter["resp"]["list"], $respNone);
+        }
+        if (count($filter["resp"]["list"]) == 1) $filter["resp"]["selected"] = $filter["resp"]["list"][0];
+        else {
+            array_unshift($filter["resp"]["list"], $respNull);
+            $k = array_search($cookie["filter"]["resp"], array_column($filter["resp"]["list"], "code"));
+            $filter["resp"]["selected"] = (($k === false) ? $respNull : $filter["resp"]["list"][$k]);
+        }
+    }
+    
+    $filter["naf"] = array();
+    $filter["naf"]["list"] = array();
+    $filter["naf"]["selected"] = array();
+    $nafNull = array("code" => "", "txt" => "", "placeholder" => "Tous", "title" => "Tous les codes NAF");
+    $nafNone = array("code" => "-", "txt" => "", "placeholder" => "Aucun", "title" => "Aucun code NAF");
+    $sql = "SELECT DISTINCT `naf`, `naf_txt` FROM `adr`";
+    $result = dbSelect($sql, array_merge($opts, array("db" => "prefact")));
+    foreach ($result as $v) array_push($filter["naf"]["list"], array("code" => $v["naf"], "txt" => $v["naf_txt"], "title" => "Code NAF : " . $v["naf"] . " - " . $v["naf_txt"]));
+    usort($filter["naf"]["list"], function ($a, $b) {
+        return (($a["txt"] < $b["txt"]) ? -1 : (($a["txt"] > $b["txt"]) ? 1 : 0));
+    });
+    if (count($filter["naf"]["list"]) == 0) $filter["naf"]["selected"] = $nafNull;
+    else {
+        $k = array_search("", array_column($filter["naf"]["list"], "code"));
+        if ($k !== false) {
+            unset($filter["naf"]["list"][$k]);
+            array_unshift($filter["naf"]["list"], $nafNone);
+        }
+        if (count($filter["naf"]["list"]) == 1) $filter["naf"]["selected"] = $filter["naf"]["list"][0];
+        else {
+            array_unshift($filter["naf"]["list"], $nafNull);
+            $k = array_search($cookie["filter"]["naf"], array_column($filter["naf"]["list"], "code"));
+            $filter["naf"]["selected"] = (($k === false) ? $nafNull : $filter["naf"]["list"][$k]);
+        }
+    }
+
+    $filter["segment"] = array();
+    $filter["segment"]["list"] = array();
+    $filter["segment"]["selected"] = array();
+    $segmentNull = array("code" => "", "txt" => "", "placeholder" => "Toutes", "title" => "Toutes les segmentations");
+    $segmentNone = array("code" => "-", "txt" => "", "placeholder" => "Aucune", "title" => "Aucune segmentation");
+    foreach($dataSegment as $v) array_push($filter["segment"]["list"], array("code" => $v["code"], "txt" => $v["abr"], "title" => "Segmentation : " . $v["abr"] . " - " . $v["txt"], "attr" => array("color='" . $v["color"] . "'")));
+    if (count($filter["segment"]["list"]) == 0) $filter["segment"]["selected"] = $segmentNull;
+    else {
+        $k = array_search("", array_column($filter["segment"]["list"], "code"));
+        if ($k !== false) {
+            unset($filter["segment"]["list"][$k]);
+            array_unshift($filter["segment"]["list"], $segmentNone);
+        }
+        if (count($filter["segment"]["list"]) == 1) $filter["segment"]["selected"] = $filter["segment"]["list"][0];
+        else {
+            array_unshift($filter["segment"]["list"], $segmentNull);
+            $k = array_search($cookie["filter"]["segment"], array_column($filter["segment"]["list"], "code"));
+            $filter["segment"]["selected"] = (($k === false) ? $segmentNull : $filter["segment"]["list"][$k]);
+        }
+    }
+
+    $filter["txt"] = $cookie["filter"]["txt"];
+
     // echo '<script>console.log(' . json_encode($filter['codenaf']) . ');</script>';
 
     return $filter;

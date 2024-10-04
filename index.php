@@ -1,11 +1,11 @@
 <?php
+
     require_once("config.php");
 
     $opts = array();
     $opts["conn"] = dbStart(array_merge($opts, array("db" => array("dia","prefact"))));
     $opts["user"] = auth($opts);
     $opts['user']['socList'] = array();
-
 
     $opts["filter"] = htmlFilterData($opts);
 
