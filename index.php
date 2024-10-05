@@ -2,7 +2,7 @@
 
     require_once("config.php");
 
-    $opts = array();
+    $opts = array("ajax"=>true);
     $opts["conn"] = dbStart(array_merge($opts, array("db" => array("dia","prefact"))));
     $opts["user"] = auth($opts);
     $opts['user']['socList'] = array();
@@ -20,11 +20,18 @@
     $sql .= ", (SELECT `temps_dur` FROM `synthese` x WHERE x.`adr` = z.`id` AND `annee` = " . $opts["filter"]["annee"] . " LIMIT 1) AS 'temps_dur'";
     $sql .= " FROM `adr` z" . ((count($where) == 0)? "" : (" WHERE " . implode(" AND ", $where)));
     $list = dbSelect($sql, array_merge($opts, array("db" => "prefact")));
-
-
+    $cont ="";
+    $cont.='<script>console.log('.json_encode($_SERVER['REQUEST_METHOD']).');</script>';
+    if($_SERVER['REQUEST_METHOD'] === 'POST')
+    {
+        if(isset($_POST["search"]))
+        {
+            $cont.='<script>console.log("Yes");</script>';
+        }else{$cont.='<script>console.log("NO");</script>';}
+    }else{$cont.='<script>console.log("NO");</script>';}
     $select = 'select * from synthese ';
     $result = dbSelect($select, array_merge($opts, array('db'=>'prefact')));
-    $cont = "
+    $cont .= "
     <table>
         <thead>
                 <tr>
