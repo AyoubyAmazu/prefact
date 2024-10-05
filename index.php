@@ -38,7 +38,6 @@
             </thead>
         <tbody>
     ";
-    // echo '<script>console.log(' . json_encode($result) . ');</script>';
     foreach($result as $row){
         $cont.='<tr>
         <td>'.$row['adr'].'</td>
