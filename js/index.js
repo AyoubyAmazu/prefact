@@ -13,7 +13,7 @@ $(document).ready(function () {
       },
       success: function (data) {
         if (data && data.code === 200) {
-          console.log(JSON.parse(data.data)); // Handle the success response
+            $("#affichData").html((affichData(JSON.parse(data.data)))); // Handle the success response
         } else {
           console.error("Unexpected response:", data);
           popError(data.err); // Optional: Handle unexpected response
@@ -26,3 +26,19 @@ $(document).ready(function () {
     });
   });
 });
+
+
+function affichData(result){
+    let html;
+    result.forEach(row => {
+        html += '<tr>'
+        html += `<td><span>${row['adr']}</span></br><span>${row['temps_dur']}</span></br><span>${row['grp']}</span></br></td>
+               <td><span>${row['adr']}</span></br><span>${row['temps_dur']}</span></br><span>${row['grp']}</span></br></td>
+               <td><span>${row['adr']}</span></br><span>${row['temps_dur']}</span></br><span>${row['grp']}</span></br></td>
+               <td><span>${row['adr']}</span></br><span>${row['temps_dur']}</span></br><span>${row['grp']}</span></br></td>
+               <td><span>${row['adr']}</span></br><span>${row['temps_dur']}</span></br><span>${row['grp']}</span></br></td>
+               <td><span>${row['adr']}</span></br><span>${row['temps_dur']}</span></br><span>${row['grp']}</span></br></td>
+                </tr>` 
+    });
+return html
+}

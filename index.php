@@ -22,16 +22,14 @@
     $list = dbSelect($sql, array_merge($opts, array("db" => "prefact")));
     $cont ="";
     $cont.='<script>console.log('.json_encode($_SERVER['REQUEST_METHOD']).');</script>';
-    if($_SERVER['REQUEST_METHOD'] === 'POST')
-    {
-        if(isset($_POST["search"]))
-        {
-            $cont.='<script>console.log("Yes");</script>';
-        }else{$cont.='<script>console.log("NO");</script>';}
-    }else{$cont.='<script>console.log("NO");</script>';}
     $select = 'select * from synthese ';
     $result = dbSelect($select, array_merge($opts, array('db'=>'prefact')));
-    $cont .= "
+    $cont.='<div>';
+    $cont.=formSelect(array('key'=>'codeFilter',"label"=>'trier par :',""));
+    $cont.= formBtn(array("key"=>"parametres","align"=>'l',"ico"=>"wrench",'type'=>'solid','txt'=>"Paramétres"));
+
+    $cont .= "</div>
+
     <table>
         <thead>
                 <tr>
@@ -43,18 +41,18 @@
                     <td class=''>Provisions</td>
                 </tr>
             </thead>
-        <tbody>
+        <tbody id=affichData>
     ";
-    foreach($result as $row){
-        $cont.='<tr>
-        <td>'.$row['adr'].'</td>
-        <td>'.$row['temps_dur'].'</td>
-        <td>'.$row['temps_dur'].'</td>
-        <td>'.$row['temps_dur'].'</td>
-        <td>'.$row['temps_dur'].'</td>
-        <td>'.$row['temps_dur'].'</td>
-        </tr>';
-    }
+    // foreach($result as $row){
+    //     $cont.='<tr>
+    //     <td>'.$row['adr'].'</td>
+    //     <td>'.$row['temps_dur'].'</td>
+    //     <td>'.$row['temps_dur'].'</td>
+    //     <td>'.$row['temps_dur'].'</td>
+    //     <td>'.$row['temps_dur'].'</td>
+    //     <td>'.$row['temps_dur'].'</td>
+    //     </tr>';
+    // }
     $cont .="</tbody></table>";
     
     $html = html(array_merge($opts, array("cont" => $cont, "script" => "index")));
