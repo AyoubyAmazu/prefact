@@ -21,10 +21,6 @@
     $sql .= " FROM `adr` z" . ((count($where) == 0)? "" : (" WHERE " . implode(" AND ", $where)));
     $list = dbSelect($sql, array_merge($opts, array("db" => "prefact")));
     $cont ="";
-    $cont.='<script>console.log('.json_encode($_SERVER['REQUEST_METHOD']).');</script>';
-    $select = 'select * from synthese ';
-    $result = dbSelect($select, array_merge($opts, array('db'=>'prefact')));
-    $cont.='<div id="buttons">';
     $cont.='<div>';
     $cont.= formSelect(array('key'=>'codeFilter',"label"=>'trier par :',"type"=>"pre"));
     $cont.= formCheckbox(array("key"=>"ascedent","op"=>[array("code"=>"ascendent","txt"=>"ascendent","type"=>"post"),array("code"=>"descendent","txt"=>"descendent","type"=>"post")]));
