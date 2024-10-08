@@ -6,32 +6,30 @@ $(document).ready(function () {
       data: {
         search: "",
         annee: $(".annee .data input").val(),
-        soc: $(".soc .data a .main .txt").html(),
-        grp: $(".grp .data a .main .txt").html(),
+        soc: $(".soc").attr('code'),
+        grp: $(".grp").attr('code'),
         txt: $(".txt .data a .main .txt input").val(),
-        naf: $(".naf .data a .main .txt").html(),
-        segment: $(".segment .data a .main .txt").html(),
-        resp: $(".resp .data a .main .txt").html(),
-        rd: $(".rd .data a .main .txt").html(),
-        re: $(".re .data a .main .txt").html(),
-        rc: $(".rc .data a .main .txt").html(),
-        ra: $(".ra .data a .main .txt").html(),
-        res: $(".res .data a .main .txt").html(),
-        rs: $(".rs .data a .main .txt").html(),
-        rj: $(".rj .data a .main .txt").html(),
-        rfp: $(".rfp .data a .main .txt").html(),
-        tgr: $(".tgr .data a .main .txt").html(),
-        tgra: $(".tgra .data a .main .txt").html(),
+        naf: $(".naf").attr('code'),
+        segment: $(".segment").attr('code'),
+        resp: $(".resp").attr('code'),
+        rd: $(".rd").attr('code'),
+        re: $(".re").attr('code'),
+        rc: $(".rc").attr('code'),
+        ra: $(".ra").attr('code'),
+        res: $(".res").attr('code'),
+        rs: $(".rs").attr('code'),
+        rj: $(".rj").attr('code'),
+        rfp: $(".rfp").attr('code'),
+        tgr: $(".tgr").attr('code'),
+        tgra: $(".tgra").attr('code'),
       },
       beforeSend: function () {
-        console.log($(".soc .data a .main .txt").html());
         loaderShow();
       },
       complete: function () {
         loaderHide();
       },
       success: function (data) {
-        console.log(data.data);
         
         try {
           $("#affichData").html(affichData(data.data));

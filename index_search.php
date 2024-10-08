@@ -5,9 +5,10 @@ $user = auth(array('ajax'=>true));
 $opts = array('ajax'=>true);
 $isAnd = false;
 $dataResp = json_decode(DATAresp, true);
+//initiate the needed values
 $annee = '';if(isset($_POST['annee'])) $annee = $_POST['annee'];
-$soc = '';if(isset($_POST['soc'])) $annee = $_POST['soc'];
 $grp = '';if(isset($_POST['grp'])) $grp = $_POST['grp'];
+$soc = '';if(isset($_POST['soc'])) $soc = $_POST['soc'];
 $txt = '';if(isset($_POST['txt'])) $txt = $_POST['txt'];
 $naf = '';if(isset($_POST['naf'])) $naf = $_POST['naf'];
 $segment = '';if(isset($_POST['segment'])) $segment = $_POST['segment'];
@@ -18,24 +19,32 @@ foreach($dataResp as $v){if (isset($_POST[$v['code']]) and $_POST[$v['code']] !=
 
 $select = "SELECT * FROM `synthese` WHERE annee = ? ";
 if($annee != ''){$select=str_replace('?', $_POST['annee'], $select);}
+
 if($soc != '' or $grp != '' or $txt != '' or $naf != '' or $segment != '' or $resp != '' or count($resps) > 0) $select .= 'AND`adr` IN ( SELECT `id` FROM `adr` WHERE ';
+
 if($soc != ''){$select.=addSelect('soc', $soc);}
 if($grp != "" ){$select.=addSelect('grp', $grp);}
 if($txt != ""){$select.=addSelect('txt', $txt);}
 if($naf != ""){$select.=addSelect('naf', $naf);}
 if($segment != ""){$select.=addSelect('segment', $segment);}
 if($resp != ""){$select.=addSelect('resp', $resp);}
+
 if(count($resps) > 0)foreach($dataResp as $v){if($resps[$v['code']] != ""){$select.=addSelect($v['code'], $resps[$v['code']]);}}
 
-// $select .=$isAnd? " )": '';
-// $result = dbSelect($select, array_merge($opts, array('db'=>'prefact')));
+$select .=$isAnd? " )": '';
+$result = dbSelect($select, array_merge($opts, array('db'=>'prefact')));
 try {
-    echo json_encode(['success' => 200, 'data' => addSelect('soc', $soc)]);
+    echo json_encode(['success' => 200, 'data' => $select]);
 } catch (Exception $e) {
     error_log($e->getMessage());
     echo json_encode(['success' => false, 'error' => 'An error occurred.']);
 }
-
+/**
+ * add condition to the query
+ * @param string $column
+ * @param mixed $value
+ * @return string
+ */
 function addSelect(String $column, mixed $value): String
 {
     global $isAnd;
