@@ -21,6 +21,7 @@
     $sql .= " FROM `adr` z" . ((count($where) == 0)? "" : (" WHERE " . implode(" AND ", $where)));
     $list = dbSelect($sql, array_merge($opts, array("db" => "prefact")));
     $cont ="";
+    $cont.="<div id=buttons>";
     $cont.='<div>';
     $cont.= formSelect(array('key'=>'codeFilter',"label"=>'trier par :',"type"=>"pre"));
     $cont.= formCheckbox(array("key"=>"ascedent","op"=>[array("code"=>"ascendent","txt"=>"ascendent","type"=>"post"),array("code"=>"descendent","txt"=>"descendent","type"=>"post")]));
@@ -30,9 +31,10 @@
     $cont.=formBtn(array("key"=>"statistiques","aling"=>"c","ico"=>"chart-pie","type"=>"solid","txt"=>"statistiques"));
     $cont.=formBtn(array("key"=>"fileExcel","aling"=>"c","ico"=>"file-excel","type"=>"solid"));
     $cont.="</div>";
-    
-    
-    
+    $cont.="</div>";
+
+
+
     $cont.="</div>
     
     <table>
