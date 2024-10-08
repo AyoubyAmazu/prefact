@@ -15,7 +15,7 @@
             if(!isset($db[$v]["name"])) err(array_merge($opts, array("txt" => "Erreur de connexion à une base de données", "det" => "Nom de la base de données non identifié : " . $v)));
             if(!isset($db[$v]["username"])) err(array_merge($opts, array("txt" => "Erreur de connexion à une base de données", "det" => "Nom d'utilisateur de la base de données non identifié : " . $v)));
             if(!isset($db[$v]["password"])) err(array_merge($opts, array("txt" => "Erreur de connexion à une base de données", "det" => "Mot de passe de la base de données non identifié : " . $v)));
-
+            
             try { $result[$v] = new PDO("mysql:host=" . $db[$v]["host"] . ";port=" . $db[$v]["port"] . ";dbname=" . $db[$v]["name"] . ";charset=utf8", $db[$v]["username"], $db[$v]["password"]); }
             catch(Exception $e) { err(array_merge($opts, array("txt" => "Erreur de connexion à une base de données", "det" => $v . " | " . $e -> getMessage()))); }
         }

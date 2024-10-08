@@ -24,12 +24,21 @@
     $cont.='<script>console.log('.json_encode($_SERVER['REQUEST_METHOD']).');</script>';
     $select = 'select * from synthese ';
     $result = dbSelect($select, array_merge($opts, array('db'=>'prefact')));
+    $cont.='<div id="buttons">';
     $cont.='<div>';
-    $cont.=formSelect(array('key'=>'codeFilter',"label"=>'trier par :',""));
-    $cont.= formBtn(array("key"=>"parametres","align"=>'l',"ico"=>"wrench",'type'=>'solid','txt'=>"Paramétres"));
-
-    $cont .= "</div>
-
+    $cont.= formSelect(array('key'=>'codeFilter',"label"=>'trier par :',"type"=>"pre"));
+    $cont.= formCheckbox(array("key"=>"ascedent","op"=>[array("code"=>"ascendent","txt"=>"ascendent","type"=>"post"),array("code"=>"descendent","txt"=>"descendent","type"=>"post")]));
+    $cont.= formBtn(array("key"=>"parametres","align"=>'l',"ico"=>"wrench",'type'=>'solid','txt'=>"Paramétres",'list'=>array()));
+    $cont.= "</div>";
+    $cont.="<div>";
+    $cont.=formBtn(array("key"=>"statistiques","aling"=>"c","ico"=>"chart-pie","type"=>"solid","txt"=>"statistiques"));
+    $cont.=formBtn(array("key"=>"fileExcel","aling"=>"c","ico"=>"file-excel","type"=>"solid"));
+    $cont.="</div>";
+    
+    
+    
+    $cont.="</div>
+    
     <table>
         <thead>
                 <tr>
