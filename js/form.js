@@ -130,6 +130,7 @@ function formCheckboxExec(div)
     else $(div).children("a").children(".ico").children("i").addClass("fa-circle").removeClass("fa-circle-dot");
 }
 
+*/
 function formCheckboxUnique(div)
 {
     $(div).addClass("on").siblings(".option.on").removeClass("on");
@@ -139,6 +140,5 @@ function formCheckboxUnique(div)
         else $(this).children("a").children(".ico").children("i").addClass("fa-circle").removeClass("fa-circle-dot");
     });
 }
-*/
 
 

@@ -44,7 +44,13 @@ $(document).ready(function () {
       },
     });
   });
+  $(".checkbox .data .list").children().each(function (option) {
+    $(this).on("click", function (param) { 
+      formCheckboxUnique($(this))
+     });
+  })
 });
+
 
 function affichData(result) {
   console.log(result);
