@@ -24,8 +24,38 @@
     $cont.="<div id=buttons>";
     $cont.='<div>';
     $cont.= formSelect(array('key'=>'codeFilter',"label"=>'trier par :',"type"=>"pre"));
-    $cont.= formCheckbox(array("key"=>"ascedent","op"=>[array("code"=>"ascendent","txt"=>"ascendent","type"=>"post"),array("code"=>"descendent","txt"=>"descendent","type"=>"post")]));
-    $cont.= formBtn(array("key"=>"parametres","align"=>'l',"ico"=>"wrench",'type'=>'solid','txt'=>"Paramétres",'list'=>array()));
+    $cont.= formCheckbox(array(
+        "key" => "myCheckbox",
+        "align" => "c",
+        "title" => "Choose your options",
+        "selected" => array(
+            "code" => "option1",
+            "txt" => "Option 1",
+            "placeholder" => "Choose an option",
+            "title" => "Selected Option 1"
+        ),
+        "code" => "",
+        "filter" => true,
+        "other" => false,
+        "required" => true,
+        "readonly" => false,
+        "off" => false,
+        "list" => array(
+            array(
+                "code" => "asend",
+                "txt" => "Asendant",
+                "title" => "Asendant",
+                "value" => true,
+            ),
+            array(
+                "code" => "desend",
+                "txt" => "Desendant",
+                "title" => "Desendant",
+                "value" => false,
+            ),
+        )
+    ));
+    $cont.= formBtn(array("key"=>"parametres","align"=>'l',"ico"=>"wrench",'type'=>'solid','txt'=>"Paramétres"));
     $cont.= "</div>";
     $cont.="<div>";
     $cont.=formBtn(array("key"=>"statistiques","aling"=>"c","ico"=>"chart-pie","type"=>"solid","txt"=>"statistiques"));
