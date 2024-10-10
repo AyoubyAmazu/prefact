@@ -8,7 +8,7 @@ $(document).ready(function () {
         annee: $(".annee .data input").val(),
         soc: $(".soc").attr('code'),
         grp: $(".grp").attr('code'),
-        txt: $(".txt .data a .main .txt input").val(),
+        txt: $(".txt .data input").val(),
         naf: $(".naf").attr('code'),
         segment: $(".segment").attr('code'),
         resp: $(".resp").attr('code'),
@@ -44,6 +44,7 @@ $(document).ready(function () {
       },
     });
   });
+  // adding radio functionality
   $(".checkbox .data .list").children().each(function (option) {
     $(this).on("click", function (param) { 
       formCheckboxUnique($(this))
@@ -51,11 +52,13 @@ $(document).ready(function () {
   })
 });
 
-
+/**
+ * Creates Table rows of reach_fact data
+ * @param {JSON} result 
+ * @returns {String}
+ */
 function affichData(result) {
-  console.log(result);
-
-  let html = ""; // Initialize html as an empty string
+  let html = "";
   result.forEach((row) => {
     html += `
       <tr>

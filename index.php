@@ -23,7 +23,23 @@
     $cont ="";
     $cont.="<div id=buttons>";
     $cont.='<div>';
-    $cont.= formSelect(array('key'=>'codeFilter',"label"=>'trier par :',"type"=>"pre"));
+    $cont.= formSelect(array(
+        "key" => "codeFilter",
+        "label" => "",
+        "title" => "Choose an option",
+        "selected" => array(
+            "code" => "1",
+            "txt" => "Option 1",
+            "placeholder" => "Select...",
+        ),
+        "list" => array(
+            array("code" => "1", "txt" => "Option 1"),
+            array("code" => "2", "txt" => "Option 2"),
+            array("code" => "3", "txt" => "Option 3"),
+        ),
+        "op" => array(
+        array("type" => "pre", "txt" => "<div class='label'>trier par :</div>"),
+    )));
     $cont.= formCheckbox(array(
         "key" => "myCheckbox",
         "align" => "c",

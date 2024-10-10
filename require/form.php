@@ -157,7 +157,7 @@
         if(!isset($opts["key"])) $opts["key"] = ""; $opts["key"] = str_replace("'", "&apos;", $opts["key"]);
         if(!isset($opts["align"])) $opts["align"] = ""; if(!in_array($opts["align"], array("c", "r"))) $opts["align"] = "";
         if(!isset($opts["label"])) $opts["label"] = ""; $opts["label"] = str_replace("'", "&apos;", $opts["label"]);
-        if(!isset($opts["titlve"])) $opts["title"] = ""; if($opts["title"] == "") $opts["title"] = $opts["label"]; $opts["title"] = str_replace("'", "&apos;", $opts["title"]);
+        if(!isset($opts["title"])) $opts["title"] = ""; if($opts["title"] == "") $opts["title"] = $opts["label"]; $opts["title"] = str_replace("'", "&apos;", $opts["title"]);
         if(!isset($opts["selected"])) $opts["selected"] = array();
         if(!isset($opts["selected"]["code"])) $opts["selected"]["code"] = ""; $opts["selected"]["code"] = str_replace("'", "&apos;", $opts["selected"]["code"]);
         if(!isset($opts["selected"]["txt"])) $opts["selected"]["txt"] = ""; $opts["selected"]["txt"] = str_replace("'", "&apos;", $opts["selected"]["txt"]);
