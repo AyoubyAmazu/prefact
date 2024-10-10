@@ -23,7 +23,7 @@
     $cont ="";
     $cont.="<div id=buttons>";
     $cont.='<div>';
-    $cont.= formSelect(array('key'=>'codeFilter',"label"=>'trier par :',"type"=>"pre"));
+    $cont.= formSelect(array('key'=>'codeFilter',"label"=>'trier par :',"list"=>array(["txt"=>"Code", "code"=>"code"], ["txt"=>"ayoub","code"=>"ayoub"])));
     $cont.= formCheckbox(array("key"=>"ascedent","op"=>[array("code"=>"ascendent","txt"=>"ascendent","type"=>"post"),array("code"=>"descendent","txt"=>"descendent","type"=>"post")]));
     $cont.= formBtn(array("key"=>"parametres","align"=>'l',"ico"=>"wrench",'type'=>'solid','txt'=>"Paramétres",'list'=>array()));
     $cont.= "</div>";
@@ -32,8 +32,6 @@
     $cont.=formBtn(array("key"=>"fileExcel","aling"=>"c","ico"=>"file-excel","type"=>"solid"));
     $cont.="</div>";
     $cont.="</div>";
-
-
 
     $cont.="</div>
     
@@ -50,16 +48,6 @@
             </thead>
         <tbody id=affichData>
     ";
-    // foreach($result as $row){
-    //     $cont.='<tr>
-    //     <td>'.$row['adr'].'</td>
-    //     <td>'.$row['temps_dur'].'</td>
-    //     <td>'.$row['temps_dur'].'</td>
-    //     <td>'.$row['temps_dur'].'</td>
-    //     <td>'.$row['temps_dur'].'</td>
-    //     <td>'.$row['temps_dur'].'</td>
-    //     </tr>';
-    // }
     $cont .="</tbody></table>";
     
     $html = html(array_merge($opts, array("cont" => $cont, "script" => "index")));

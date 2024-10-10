@@ -34,7 +34,7 @@ if(count($resps) > 0)foreach($dataResp as $v){if($resps[$v['code']] != ""){$sele
 $select .=$isAnd? " )": '';
 $result = dbSelect($select, array_merge($opts, array('db'=>'prefact')));
 try {
-    echo json_encode(['success' => 200, 'data' => $select]);
+    echo json_encode(['success' => 200, 'data' => $result]);
 } catch (Exception $e) {
     error_log($e->getMessage());
     echo json_encode(['success' => false, 'error' => 'An error occurred.']);

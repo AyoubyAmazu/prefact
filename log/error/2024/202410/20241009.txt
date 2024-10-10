@@ -1,0 +1,1 @@
+09/10/2024 16:25:21 | Erreur de d'execution d'une requête SQL | /index_search.php | prefact | SELECT * FROM `synthese` WHERE annee = ?  | SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '?' at line 1
