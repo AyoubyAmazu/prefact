@@ -129,7 +129,11 @@ function formCheckboxExec(div)
     if($(div).hasClass("on")) $(div).children("a").children(".ico").children("i").addClass("fa-circle-dot").removeClass("fa-circle");
     else $(div).children("a").children(".ico").children("i").addClass("fa-circle").removeClass("fa-circle-dot");
 }
-
+*/
+/**
+ * works on radion buttons selects one at a time
+ * @param {HTMLElement} div 
+ */
 function formCheckboxUnique(div)
 {
     $(div).addClass("on").siblings(".option.on").removeClass("on");
@@ -139,6 +143,5 @@ function formCheckboxUnique(div)
         else $(this).children("a").children(".ico").children("i").addClass("fa-circle").removeClass("fa-circle-dot");
     });
 }
-*/
 
 
