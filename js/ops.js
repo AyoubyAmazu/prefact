@@ -2,7 +2,6 @@ const APPurl = window.location.origin + "/";
 
 function loaderShow() { $(":focus").blur(); $("body").css("overflow", "hidden").css("border-right", "10px solid var(--dark2)"); $(".popup").css("overflow", "hidden").css("border-right", "10px solid var(--dark2)"); $("#loader").show(); }
 function loaderHide() { $("#loader").hide(); $(".popup").last().css("border-right", "none").css("overflow-y", "scroll"); if($(".popup").length == 0) $("body").css("border-right", "none").css("overflow-y", "scroll");  }
-
 function popUp(html) { $(":focus").blur(); $("body").css("overflow", "hidden").css("border-right", "10px solid var(--dark2)"); $(".popup").css("overflow", "hidden").css("border-right", "10px solid var(--dark2)"); $("body").append(html); }
 function popDown(div) { $(div).remove(); $(".popup").last().css("border-right", "none").css("overflow-y", "scroll"); if($(".popup").length == 0) $("body").css("border-right", "none").css("overflow-y", "scroll");  }
 
@@ -78,5 +77,5 @@ $(document).ready(function()
     $("#filter > div > .select > .data > a").off("click").on("click", function(event) { formSelectInit($(event.target).parents(".select")); });
     $("#filter > div > .select > .data > .list > .input > .data > input").off("input").on("input", function(event) { formSelectFilter($(event.target).parents(".select")); });
     $("#filter > div > .select > .data > .list > .option > a").off("click").on("click", function(event) { formSelectOption($(event.target).parents(".option")); });
-    
+    $(".codeFilter > .data > a").off("click").on("click", function(event) { formSelectInit($(event.target).parents(".select")); });
 });
