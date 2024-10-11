@@ -79,8 +79,6 @@
     $cont.="</div>";
     $cont.="</div>";
 
-
-
     $cont.="</div>
     
     <table>
@@ -96,16 +94,6 @@
             </thead>
         <tbody id=affichData>
     ";
-    // foreach($result as $row){
-    //     $cont.='<tr>
-    //     <td>'.$row['adr'].'</td>
-    //     <td>'.$row['temps_dur'].'</td>
-    //     <td>'.$row['temps_dur'].'</td>
-    //     <td>'.$row['temps_dur'].'</td>
-    //     <td>'.$row['temps_dur'].'</td>
-    //     <td>'.$row['temps_dur'].'</td>
-    //     </tr>';
-    // }
     $cont .="</tbody></table>";
     
     $html = html(array_merge($opts, array("cont" => $cont, "script" => "index")));
