@@ -5,8 +5,71 @@
 
 #buttons>div{
     display: flex;
+    gap: 15px;
 }
 
-.codefilter{
-    display: flex;
+
+#buttons > div > .codeFilter{
+    flex-direction: row;
+    align-items: center;
 }
+
+/* Table Header */
+body > #cont > div > .list { display: table;  width: 100%; border-collapse: collapse; border-bottom: 1px solid var(--dark);}
+body > #cont > div > .list > .labels-section {white-space: nowrap;display: flex;   margin-left: 2%; margin-top: 3%; font-size: small; font-weight: bold;  margin-right: 12px;width:40px; }
+body > #cont > div > .list > .labels-section > div {margin-right: 13px;}
+body > #cont > div > .list > .line { display: table-row;   border-top: 1px solid black;  border-bottom:none; text-align: left; font-family: txt; font-size: 13px; line-height: 18px;}
+body > #cont > div > .list .col {display: table-cell;padding: 8px;justify-content: space-between;}
+body > #cont > div > .list > .sub { font-weight: bld; flex: 1;justify-content: space-between; margin-right: 10px; align-items: left;  font-size: 13px; line-height: 18px; }
+body > #cont > div > .list >.sub > .value { font-size: 13px; line-height: 18px; }
+body > #cont > div > .list > .line.st { background-color: var(--light); font-size: 18px; line-height: 24px; font-family: bld;  text-align: center;}
+body > #cont > div > .list >.line.st >.col {  border-bottom:  1px solid black; font-size: 13px; line-height: 18px;}
+body > #cont > div > .list > .line > div.col.dossier,
+body > #cont > div > .list > .line > .col > .sub > .value {width: 26%;font-size: 13px; line-height: 18px; font-family: txt;}
+body > #cont > div > .list > .line > .col > .sub > .label { font-size: 13px; line-height: 18px; font-family: txt;}
+
+/* Table Rows */
+body > #cont > div > .list > .line > .col.temps {width: 12%;white-space: nowrap;overflow: hidden;	}
+body > #cont > div > .list > .line > .col.factures {width: 12%;white-space: nowrap;   overflow: hidden;}
+body > #cont > div > .list > .line > .col.Statut {width: 15%;	white-space: nowrap;   overflow: hidden;}
+body > #cont > div > .list > .line > .col.Operations {width: 18; white-space: nowrap;   overflow: hidden;}
+body > #cont > div > .list > .line > .col.Provisions {width: 18%;white-space: nowrap;  overflow: hidden;}
+body > #cont > div > .list > .line > .col.op  { justify-content: center;  align-items: center; vertical-align: middle; width: 17px; position: relative; height: auto;}
+body > #cont > div > .list > .line > .col.op > .btn{ position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;cursor: pointer;}
+
+
+
+body > #cont > div > .list > .line > .col.op > .btn > a { border-radius: 0; border: none; display:inline-flex; align-content: left;}
+body > #cont > div > .list > .line > .col.op > .list  { position: absolute; top: 50%; right: 50%;align-content: start; border: 1px solid var(--dark); background-color: var(--light); overflow: visible; z-index: 1; width: 200px ;}
+body > #cont > div > .col.op > .list { margin-top: 10px;margin-left: 5px; width: 30%}
+body > #cont > div > .list > .line > .col.op > .list >.btn > a {border: none; display: inline-flex ;height: 20px; justify-content: left; font-size: 13px; line-height: 18px; font-family: bld;}
+body > #cont > div > .list > .line > .col.op > .list >.btn > a{ border-radius: 0px;} 
+body > #cont > div > .list > .line > .col.op > .list.off { display: none; }
+body > #cont > div > .list > .line > .col.op > .btnmenu > .btn >  a  {border: none; }
+
+
+body > #cont > div > .list > .labels-section > .lettre > .label > .label-key { font-size: 13px; line-height: 18px; font-family: txt; }
+body > #cont > div > .list > .labels-section > .lettre > .label > .label-value { font-size: 13px; line-height: 18px; font-family: bld; }
+body > #cont > div > .list > .labels-section > .montant > .label > .label-key { font-size: 13px; line-height: 18px; font-family: txt; }
+body > #cont > div > .list > .labels-section > .montant > .label > .label-value { font-size: 13px; line-height: 18px; font-family: bld; }
+body > #cont > div > .list > .labels-section > .solde > .label   { font-size: 13px; line-height: 18px; font-family: bld ; }
+body > #cont > div > .list > .labels-section > .solde > .label > .label-key   { margin-left: -5px; }
+body > #cont > div > .list > .labels-section > .ver > .label   { font-size: 13px; line-height: 18px; font-family: bld ; }
+
+body > #cont > div > .list > .labels-section > .ver > .label > .label-key   { margin-left: -5px; }
+
+
+body > #cont > div > .list .col:nth-child(odd) {background-color: var(--light);}
+body > #cont > div > .list .col:nth-child(even) {background-color: var(--dark1);}
+body > #cont > div > p {font-weight: bold; font-family: sans-serif;}
+body > #cont > div > .col.op > .list { margin-top: 10px;margin-left: 5px; width: 30%}
+body > #cont > div > .list > .btn {border: none; align-content: center ; align-items: center;  overflow-x: visible; }
+
+
+body > #cont > div > .list >.line .col .sub {display: flex;justify-content: space-between;align-items: center;font-weight: bold;margin-bottom: 5px;}
+body > #cont > div > .list >.line .col .sub .label {flex: 1;text-align: left; /* Align labels to the left */}
+body > #cont > div > .list >.line .col .sub .value {flex: 1;text-align: right; /* Align values to the right */}
+.green  {color : var(--green);}
+.red  {color : var(--red);}
+.gold  {color : var(--gold);}
+.black  {color : var(--black);}

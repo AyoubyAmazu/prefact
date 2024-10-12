@@ -350,4 +350,42 @@
         return $html;
     }
 
-?>
+    function formLabel($opts = array()) {
+        if(!isset($opts["href"])) $opts["href"] = ""; if($opts["href"] !== true) $opts["href"] = str_replace("'", "&apos;", $opts["href"]);
+            
+        if (!isset($opts["key"])) $opts["key"] = "";
+        $opts["key"] = str_replace("'", "&apos;", $opts["key"]);
+        
+        if (!isset($opts["value"])) $opts["value"] = "";
+        $opts["value"] = str_replace("'", "&apos;", $opts["value"]);
+        
+        if (!isset($opts["icon"])) $opts["icon"] = "";
+        $opts["icon"] = str_replace("'", "&apos;", $opts["icon"]);
+        
+        if (!isset($opts["title"])) $opts["title"] = "";
+        $opts["title"] = str_replace("'", "&apos;", $opts["title"]);
+        
+        if (!isset($opts["extra"])) $opts["extra"] = array();
+        if (!isset($opts["attr"])) $opts["attr"] = array();
+    
+        $div = array();
+        array_push($div, "label");
+    
+        if ($opts["key"] != "") array_push($div, $opts["key"]);
+        if (count($opts["extra"]) != 0) $div = array_merge($div, $opts["extra"]);
+    
+        $attr = array();
+        array_push($attr, "class='" . implode(" ", $div) . "'");
+        if (count($opts["attr"]) != 0) $attr = array_merge($attr, $opts["attr"]);
+    
+        $data = array();
+        if ($opts["title"] != "") array_push($data, "title='" . $opts["title"] . "'");
+    
+        $html = "<div " . implode(" ", $attr) . ">";
+        if ($opts["icon"] != "") $html .= "<div class='label-icon'><i class='" . $opts["icon"] . "'></i></div>"; // Added icon
+        if ($opts["key"] != "") $html .= "<div class='label-key'>" . $opts["key"] . "</div>";
+        $html .= "<div class='label-value'>" . $opts["value"] . "</div>";
+        $html .= "</div>";
+    
+        return $html;
+    }

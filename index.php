@@ -25,7 +25,7 @@
     $cont.='<div>';
     $cont.= formSelect(array(
         "key" => "codeFilter",
-        "label" => "",
+        "label" => "trier par :",
         "title" => "Choose an option",
         "selected" => array(
             "code" => "1",
@@ -36,10 +36,7 @@
             array("code" => "1", "txt" => "Option 1"),
             array("code" => "2", "txt" => "Option 2"),
             array("code" => "3", "txt" => "Option 3"),
-        ),
-        "op" => array(
-        array("type" => "pre", "txt" => "<div class='label'>trier par :</div>"),
-    )));
+        )));
     $cont.= formCheckbox(array(
         "key" => "myCheckbox",
         "align" => "c",
@@ -78,23 +75,20 @@
     $cont.=formBtn(array("key"=>"fileExcel","aling"=>"c","ico"=>"file-excel","type"=>"solid"));
     $cont.="</div>";
     $cont.="</div>";
+// table
+    $cont .= "<div  class='list'>";
+        $cont .= "<div  class='line st'>";
+            $cont .= "<div  class='col'>Dossier</div>";
+            $cont .= "<div class='col'>Temps</div>";
+            $cont .= "<div class='col'>Factures</div>";
+            $cont .= "<div class='col'>Statut</div>";
+            $cont .= "<div class='col'>Opérations</div>";
+            $cont .= "<div class='col'>Provisions</div>";
+            $cont .= "<div class='col'>  </div>";
+        $cont .= "</div>";
 
-    $cont.="</div>
-    
-    <table>
-        <thead>
-                <tr>
-                    <td>Dossier</td>
-                    <td class''>Temp</td>
-                    <td>Factures</td>
-                    <td class=''>Statu</td>
-                    <td>Opiration</td>
-                    <td class=''>Provisions</td>
-                </tr>
-            </thead>
-        <tbody id=affichData>
-    ";
-    $cont .="</tbody></table>";
+// Data
+$cont .= "</div>";
     
     $html = html(array_merge($opts, array("cont" => $cont, "script" => "index")));
     die($html);
