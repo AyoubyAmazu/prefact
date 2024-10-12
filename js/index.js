@@ -1,21 +1,13 @@
 $(document).ready(function () {
-  $('#buttons > div >.parametres').on("click", function () 
-  {
-    popPrompt( "Colonnes a afficher","html", 'string', 'Parametres du tablue');
-  });
-  $(".reset").on("click", resetFilter );
-  //data fetching
+  // $(".reset").on("click", resetFilter );
   $(".save").on("click", fetchData);
-  // adding radio functionality
-  $(".checkbox .data .list").children().each(function (option) {
-    $(this).on("click", function (param) { 
-      formCheckboxUnique($(this))
-     });
-  })
+  $(".checkbox .data .list").children().each(function (option) {$(this).on("click", function () { formCheckboxUnique($(this))});});
 });
-function resetFilter() {
-  
-}
+/**
+ * Shows popup the button of each row in the index table
+ * @param {HTMLElement} div 
+ */
+function openPopupMenu(div) {$(".list").addClass("off"); $(div).children(".list").removeClass("off");}
 /**
  * fetchs data from php using ajax
  */
@@ -50,6 +42,7 @@ function fetchData() {
       loaderHide();
     },
     success: function (data) {
+      console.log(data);
       
       try {
         $("#cont > div > .list").append(data.data);
@@ -57,6 +50,8 @@ function fetchData() {
         console.error("Invalid JSON response:", data);
         popError("Received an invalid response from the server.");
       }
+      // declare on click functonality for each of rows buttons
+      $("body > #cont > div > .list > .line > .col.op > .btn > a").off("click").on("click", function(event) {openPopupMenu($(event.target).parents(".col")); });
     },
     error: function (jqXHR, textStatus, errorThrown) {
       console.error("AJAX Error: " + textStatus, errorThrown);

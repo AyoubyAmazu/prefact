@@ -64,9 +64,19 @@ function popHelp()
     });
 }
 
-function filter()
+function filterDel()
 {
+    $("#filter > div > .annee > .data > input").val(new Date().getFullYear());
+    var obj = { filter: { year: -1, start: -1, end: -1, resp: -1, soc: "", grp: "", naf: "", segment: "", keyword: "" } };
+    $("#filter > div > .select").each(function()
+    {
+        // console.log($(this));
+        
+        var k = $(this).attr("resp"); if(k == undefined || k == null || k == "") return;
+        obj["filter"][k] = "";
+    });
 
+    // cookieSave(obj, true);
 }
 
 $(document).ready(function()
@@ -77,5 +87,6 @@ $(document).ready(function()
     $("#filter > div > .select > .data > a").off("click").on("click", function(event) { formSelectInit($(event.target).parents(".select")); });
     $("#filter > div > .select > .data > .list > .input > .data > input").off("input").on("input", function(event) { formSelectFilter($(event.target).parents(".select")); });
     $("#filter > div > .select > .data > .list > .option > a").off("click").on("click", function(event) { formSelectOption($(event.target).parents(".option")); });
-    $(".codeFilter > .data > a").off("click").on("click", function(event) { formSelectInit($(event.target).parents(".select")); });
+    $("#filter > div > .op > .btn.reset > a").off("click").on("click", function() { filterDel(); });
+    $("#cont > div >.op > .side > .sortCol > .data > a").off("click").on("click", function(event) { formSelectInit($(event.target).parents(".select")); });
 });

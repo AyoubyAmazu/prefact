@@ -1,18 +1,17 @@
-#buttons {
-    display: flex;
-    justify-content: space-between;
-}
+body > #cont > div > .op { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px;  }
+body > #cont > div > .op > .side { display: flex; flex-wrap: wrap; gap: 10px; font-weight: bld; }
+body > #cont > div > .op > .side > .select.sortCol { flex-direction: row; align-items: center; gap: 0 5px; width: 300px; }
+body > #cont > div > .op > .side > .select.sortCol > .label { padding: 0; font-size: 13px; line-height: 18px; font-family: bld;}
+body > #cont > div > .op > .side > .select.sortCol > .data  {font-size: 13px; line-height: 18px; font-family: bld; padding: 0%;}
+body > #cont > div > .op > .side > .select.sortCol > .data > .list > .option.readonly > a > div  {font-size: 13px; line-height: 18px; font-family: bld;  }
+body > #cont > div > .op > .side > .select.sortCol > .data > .list > .option > a > div  {font-size: 13px; line-height: 18px; font-family: txt;   }
+body > #cont > div > .op > .side > .checkbox.sortDir > .data > .list {font-size: 13px; line-height: 18px; font-family: bld;}
+body > #cont > div > .op > .side > .btn > a  {font-size: 13px; line-height: 18px; font-family: bd;}
 
-#buttons>div{
-    display: flex;
-    gap: 15px;
-}
+body > #cont > div > .op > .side > .select.sortCol > .label::after { content: " :"; }
+body > #cont > div > .op > .side > .select.sortCol > .data > .list > .option > a { padding: 5px 5px 5px 30px; font-size: 13px; line-height: 18px; font-family: bld; }
+body > #cont > div > .op > .side > .select.sortCol > .data > .list > .option.readonly > a { padding: 5px; color: var(--dark); background-color: var(--dark1); }
 
-
-#buttons > div > .codeFilter{
-    flex-direction: row;
-    align-items: center;
-}
 
 /* Table Header */
 body > #cont > div > .list { display: table;  width: 100%; border-collapse: collapse; border-bottom: 1px solid var(--dark);}
@@ -39,7 +38,7 @@ body > #cont > div > .list > .line > .col.op > .btn{ position: absolute; cursor:
 
 
 
-body > #cont > div > .list > .line > .col.op > .btn > a { border-radius: 0; border: none; display:inline-flex; align-content: left;}
+body > #cont > div > .list > .line > .col.op > .btn > a { border-radius: 0; border: none; display: block; align-content: center;}
 body > #cont > div > .list > .line > .col.op > .list  { position: absolute; top: 50%; right: 50%;align-content: start; border: 1px solid var(--dark); background-color: var(--light); overflow: visible; z-index: 1; width: 200px ;}
 body > #cont > div > .col.op > .list { margin-top: 10px;margin-left: 5px; width: 30%}
 body > #cont > div > .list > .line > .col.op > .list >.btn > a {border: none; display: inline-flex ;height: 20px; justify-content: left; font-size: 13px; line-height: 18px; font-family: bld;}

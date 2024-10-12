@@ -15,6 +15,12 @@
         if(!isset($obj["filter"]["naf"])) $obj["filter"]["naf"] = "";
         if(!isset($obj["filter"]["segment"])) $obj["filter"]["segment"] = "";
         if(!isset($obj["filter"]["txt"])) $obj["filter"]["txt"] = "";
+        
+        if(!isset($obj["index"])) $obj["index"] = array();
+        if(!isset($obj["index"]["sortCol"])) $obj["index"]["sortCol"] = "dossierCode";
+        if(!isset($obj["index"]["sortDir"])) $obj["index"]["sortDir"] = "ASC";
+        if(!isset($obj["index"]["displayCol"])) $obj["index"]["displayCol"] = array("dossierCode", "dossierNom");
+
 
         return $obj;
     }

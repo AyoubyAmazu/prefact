@@ -17,10 +17,15 @@ $resps = array();
 
 foreach($dataResp as $v){if (isset($_POST[$v['code']]) and $_POST[$v['code']] != '' and $_POST[$v['code']] != '-') $resps[$v['code']] = $_POST[$v['code']];}
 
-$select = "SELECT * FROM `synthese` WHERE annee = ? ";
+$select = "SELECT s.*, 
+       (SELECT a.code FROM `adr` a WHERE a.id = s.adr) AS code,
+       (SELECT a.txt FROM `adr` a WHERE a.id = s.adr) AS txt,
+       (SELECT a.segment FROM `adr` a WHERE a.id = s.adr) AS segment,
+       (SELECT a.obs FROM `adr` a WHERE a.id = s.adr) AS obs,
+       (SELECT a.grp_txt FROM `adr` a WHERE a.id = s.adr) AS grp_txt FROM `synthese` s WHERE s.annee = ? ";
 if($annee != ''){$select=str_replace('?', $_POST['annee'], $select);}
 
-if($soc != '' or $grp != '' or $txt != '' or $naf != '' or $segment != '' or $resp != '' or count($resps) > 0) $select .= 'AND`adr` IN ( SELECT `id` FROM `adr` WHERE ';
+if($soc != '' or $grp != '' or $txt != '' or $naf != '' or $segment != '' or $resp != '' or count($resps) > 0) $select .= 'AND s.adr IN ( SELECT `id` FROM `adr` WHERE ';
 
 if($soc != ''){$select.=addSelect('soc', $soc);}
 if($grp != "" ){$select.=addSelect('grp', $grp);}
@@ -37,9 +42,9 @@ $html = "";
 foreach ($result as $v) {
     $html .= "<div  class='line'>";
      $html .= "<div class='col dossier'>";
-    //     $html .= "<div class='sub code'>"  . $v["CodeDossier"] . "</a></div>";
-    //     $html .= "<div class='sub nom'>"   . $v["NomDossier"] . "</div>";
-    //     $html .= "<div class='sub groupe'>". $v["Groupe"] . "</div>";
+        $html .= "<div class='sub code'><a>"  . $v["code"] . "</a></div>";
+        $html .= "<div class='sub nom'>"   . $v["txt"] . "</div>";
+        $html .= "<div class='sub groupe'>". $v["grp_txt"] . "</div>";
      $html .= "</div>";
      $html .= "<div class='col temps'>";
         $html .= "<div class='sub'>";
@@ -64,41 +69,40 @@ foreach ($result as $v) {
         $html .= "<span class='label'>Débours</span> <span class='value'>" . $v["fact_debours"] . "</span>";
         $html .= "</div>";
      $html .= "</div>";
-
      $html .= "<div class='col Statut'>";
-        // $html .= "<div class='sub segmentation'>";
-        // $segmentation = $v["Segmentation"];
-        // $letter = substr($segmentation, 0, 1);
-        // $defaultColor = 'black';
-        // $colors = array('A' => 'green', 'B' => 'green', 'C' => 'green', 'D' => 'gold', 'E' => 'red', 'Z' => 'black',);
-        // $color = isset($colors[$letter]) ? $colors[$letter] : $defaultColor;
-        // $html .= "<span class='label'>Segmentation</span> <span style='color: $color;'>  $letter </span>";
-        // $html .= "</div>";
+        $html .= "<div class='sub segmentation'>";
+        $segment = $v["segment"];
+        $defaultColor = 'black';
+        $colors = array('A' => 'green', 'B' => 'green', 'C' => 'green', 'D' => 'gold', 'E' => 'red', 'Z' => 'black');
+        $color = isset($colors[$segment]) ? $colors[$segment] : $defaultColor;
+        $html .= "<span class='label'>segment</span> <span style='color: $color;'>  $segment </span>";
+        $html .= "</div>";
         $html .= "<div class='sub'>";
-              if (strpos($v["plusmoins"], '-') === 0) 
+        $html .= "<span class='label '>+/-value</span>";      
+        if (strpos($v["plusmoins"], '-') === 0) 
                   {
-             $html .= "<span class='label '>+/-value</span> <span class='value red'>" . $v["plusmoins"] . "</span>";
+            $html.="<span class='value red'>" . $v["plusmoins"] . "</span>";
                   }  
            elseif (strpos($v["plusmoins"], '+') === 0) 
                   {
-             $html .= "<span class='label'>+/-value</span> <span class='value green'>" . $v["plusmoins"] . "</span>";
+             $html .= "<span class='value green'>" . $v["plusmoins"] . "</span>";
                   }
         $html .= "</div>";
-        // $html .= "<div class='sub'>";
-        // $html .= "<span class='label'>Solde des créances</span> <span class='value'>". $v["ReportPostTemps"] . "</span>";
-        // $html .= "</div>";
+        $html .= "<div class='sub'>";
+        $html .= "<span class='label'>Solde des créances</span> <span class='value'>". $v["solde"] . "</span>";//$v["ReportPostTemps"]
+        $html .= "</div>";
      $html .= "</div>";
 
      $html .= "<div class='col Operations'>";
-    //     $html .= "<div class='sub'>";
-    //     $html .= "<span class='label'>En cours</span> <span class='value'>" . $v["MoisCloture"] . "</span>";
-    //     $html .= "</div>";
-    //     $html .= "<div class='sub'>";
-    //     $html .= "<span class='label'>Validation du RD</span> <span class='value'>" . $v["MoisCloture"] . "</span>";
-    //     $html .= "</div>";
-    //     $html .= "<div class='sub'>";
-    //     $html .= "<span class='label'>Traitement administratif</span> <span class='value'>" . $v["MoisCloture"] . "</span>";
-    //     $html .= "</div>";
+        $html .= "<div class='sub'>";
+        $html .= "<span class='label'>En cours</span> <span class='value'>" . $v["op_encours"] . "</span>";
+        $html .= "</div>";
+        $html .= "<div class='sub'>";
+        $html .= "<span class='label'>Validation du RD</span> <span class='value'>" . $v["op_rd"] . "</span>";
+        $html .= "</div>";
+        $html .= "<div class='sub'>";
+        $html .= "<span class='label'>Traitement administratif</span> <span class='value'>" . $v["op_admin"] . "</span>";
+        $html .= "</div>";
      $html .= "</div>";
 
      $html .= "<div class='col Provisions'>";
@@ -157,7 +161,12 @@ foreach ($result as $v) {
         "icon" => "fa-solid fa-lock",
         "title" => "Additional Information"));
      $html .= "</div>";
-    $html .= "</div>";
+     $html .= "<span class='value'>" . $v["obs"] . "</span>";
+     $html .= "</p>";
+
+     $html .= "</div>";
+
+    $html .= "</>";
    }
 
 try {
