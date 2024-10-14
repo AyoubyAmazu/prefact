@@ -1,3 +1,4 @@
+$(window).click(function(event) { if($(event.target).parents(".select").length == 0) formSelectHide(); });
 function formBtn(opts)
 {
     if(opts["key"] == undefined || opts["key"] == null) opts["key"] = ""; opts["key"] = opts["key"].toString().replace(/\'/g, "&apos;");
@@ -121,15 +122,16 @@ function formSelectOption(div)
     formSelectHide($(div).parents(".select"));
 }
 
-$(window).click(function(event) { if($(event.target).parents(".select").length == 0) formSelectHide(); });
-/*
+/**
+ * adds CheckBox Funcionality for checkbox button
+ * @param {HTMLElement} div 
+ */
 function formCheckboxExec(div)
 {
     $(div).toggleClass("on");
     if($(div).hasClass("on")) $(div).children("a").children(".ico").children("i").addClass("fa-circle-dot").removeClass("fa-circle");
     else $(div).children("a").children(".ico").children("i").addClass("fa-circle").removeClass("fa-circle-dot");
 }
-*/
 /**
  * works on radion buttons selects one at a time
  * @param {HTMLElement} div 

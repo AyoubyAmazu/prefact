@@ -2,7 +2,6 @@ const APPurl = window.location.origin + "/";
 
 function loaderShow() { $(":focus").blur(); $("body").css("overflow", "hidden").css("border-right", "10px solid var(--dark2)"); $(".popup").css("overflow", "hidden").css("border-right", "10px solid var(--dark2)"); $("#loader").show(); }
 function loaderHide() { $("#loader").hide(); $(".popup").last().css("border-right", "none").css("overflow-y", "scroll"); if($(".popup").length == 0) $("body").css("border-right", "none").css("overflow-y", "scroll");  }
-
 function popUp(html) { $(":focus").blur(); $("body").css("overflow", "hidden").css("border-right", "10px solid var(--dark2)"); $(".popup").css("overflow", "hidden").css("border-right", "10px solid var(--dark2)"); $("body").append(html); }
 function popDown(div) { $(div).remove(); $(".popup").last().css("border-right", "none").css("overflow-y", "scroll"); if($(".popup").length == 0) $("body").css("border-right", "none").css("overflow-y", "scroll");  }
 
@@ -65,9 +64,19 @@ function popHelp()
     });
 }
 
-function filter()
+function filterDel()
 {
+    $("#filter > div > .annee > .data > input").val(new Date().getFullYear());
+    var obj = { filter: { year: -1, start: -1, end: -1, resp: -1, soc: "", grp: "", naf: "", segment: "", keyword: "" } };
+    $("#filter > div > .select").each(function()
+    {
+        // console.log($(this));
+        
+        var k = $(this).attr("resp"); if(k == undefined || k == null || k == "") return;
+        obj["filter"][k] = "";
+    });
 
+    // cookieSave(obj, true);
 }
 
 $(document).ready(function()
@@ -78,5 +87,6 @@ $(document).ready(function()
     $("#filter > div > .select > .data > a").off("click").on("click", function(event) { formSelectInit($(event.target).parents(".select")); });
     $("#filter > div > .select > .data > .list > .input > .data > input").off("input").on("input", function(event) { formSelectFilter($(event.target).parents(".select")); });
     $("#filter > div > .select > .data > .list > .option > a").off("click").on("click", function(event) { formSelectOption($(event.target).parents(".option")); });
-    
+    $("#filter > div > .op > .btn.reset > a").off("click").on("click", function() { filterDel(); });
+    $("#cont > div >.op > .side > .sortCol > .data > a").off("click").on("click", function(event) { formSelectInit($(event.target).parents(".select")); });
 });
