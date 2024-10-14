@@ -4,7 +4,91 @@ $(document).ready(function () {
   $(".checkbox .data .list").children().each(function (option) {$(this).on("click", function () { formCheckboxUnique($(this))});});
   $("#cont > div > .op > .side > .select.sortCol > .data > .list > .input > .data > input").off("input").on("input", function(event) { sortColSelectFilter($(event.target).parents(".select")); });
   $("#cont > div > .op > .side > .select.sortCol > .data > .list > .option").not(".readonly").children("a").off("click").on("click", function(event) { sortColSelectOption($(event.target).parents(".option")); });
+  $("#cont > div > .op > .side > .btn.displayParam > a").off("click").on("click", function() { displayParam(); });
 });
+/**
+ * validats segment popup data
+ */
+function displaySegmeSave()
+{
+    var displaySegme = new Array();
+    $("body > .popup.displaySegme > div > .checkbox > .data > .list > .option.on").each(function()
+    {
+        var code = $(this).attr("code"); if(code == undefined || code == null || code == "") return;
+        displaySegme.push(code);
+    });
+    if(displaySegme.length == 0) { popError("Aucune colonnes séléctionnée"); return; }
+
+    // var obj = { index: { displaySegme: displaySegme } };
+}
+/**
+ * Adds functionaltiy to segment popup
+ */
+function displaySegmeAdapt()
+{
+    $("body > .popup.displaySegme > div > .checkbox > .data > .list > .option").not(".readonly").children("a").off("click").on("click", function(event) { formCheckboxExec($(event.target).parents(".option")); });
+    $("body > .popup.displaySegme > div > .op > .btn.cancel > a").off("click").on("click", function(event) { popDown($(event.target).parents(".popup")); });
+    $("body > .popup.displaySegme > div > .op > .btn.save > a").off("click").on("click", function() { displaySegmeSave(); });
+}
+/**
+ * Fetch Segment Data
+ */
+function displaySegme()
+{ 
+    $.ajax({
+        url: "index_segment.php"
+        , beforeSend: function() { loaderShow(); }
+        , complete: function() { loaderHide(); }
+        , success: function(data)
+        {
+            try { var result = JSON.parse(data); } catch(error) { popError(); return; }
+            if(result["code"] == 200) { popUp(result["html"]); displaySegmeAdapt(); return; }
+            popError(result["txt"], result["btn"]);
+        }
+    });
+}
+/**
+ * Save selected check boxes
+ */
+function displayParamSave()
+{
+    var displayParam = new Array();
+    $("body > .popup.displayParam > div > .checkbox > .data > .list > .option.on").each(function()
+    {
+        var code = $(this).attr("code"); if(code == undefined || code == null || code == "") return;
+        displayParam.push(code);
+    });
+    if(displayParam.length == 0) { popError("Aucune colonnes séléctionnée"); return; }
+    else{popDown($("body > .popup.displayParam"));}
+
+    // var obj = { index: { displayCol: displayParam } };
+}
+/**
+ * Adds functionality(cancel, save...) to params popup
+ */
+function displayParamAdapt()
+{
+    $("body > .popup.displayParam > div > .checkbox > .data > .list > .option").not(".readonly").children("a").off("click").on("click", function(event) { formCheckboxExec($(event.target).parents(".option")); });
+    $("body > .popup.displayParam > div > .op > .btn.cancel > a").off("click").on("click", function(event) { popDown($(event.target).parents(".popup")); });
+    $("body > .popup.displayParam > div > .op > .btn.save > a").off("click").on("click", function() { displayParamSave(); });
+}
+/**
+ * Fetchs The Params Popup data
+ */
+function displayParam()
+{
+    $.ajax({
+        url: "index_param.php"
+        , beforeSend: function() { loaderShow(); }
+        , complete: function() { loaderHide(); }
+        , success: function(data)
+        {
+            try { var result = JSON.parse(data); } catch(error) { popError(); console.error(error);return; }
+            if(result["code"] == 200) { popUp(result["html"]); displayParamAdapt(); return; }
+            popError(result["txt"], result["btn"]);
+        }
+    });
+}
 /**
  * Selects an option from sortCol select
  * @param {HTMLElement} div 
@@ -17,7 +101,7 @@ function sortColSelectOption(div)
     var obj = { index: { sortCol: sortCol } };
 }
 /**
- * displays the name and root of selected option 
+ * Displays the name and root of selected option 
  */
 function sortColAdapt()
 {
@@ -83,7 +167,6 @@ function fetchData() {
       loaderHide();
     },
     success: function (data) {
-      console.log(data);
       
       try {
         $("#cont > div > .list").append(data.data);
@@ -93,6 +176,11 @@ function fetchData() {
       }
       // declare on click functonality for each of rows buttons
       $("body > #cont > div > .list > .line > .col.op > .btn > a").off("click").on("click", function(event) {openPopupMenu($(event.target).parents(".col")); });
+
+  $("#cont > div > .list > .line > .col.op > .list >.btn.displaySegme > a").off("click").on("click", function() { displaySegme();});
+  $("#cont > div > .list > .line > .col.op > .list >.btn.displayCommentaire > a").off("click").on("click", function() { displayCommentaire(); });
+  $("#cont > div > .list > .line > .col.op > .list >.btn.displayDéverrouiller > a").off("click").on("click", function() { displayDéverrouiller(); });
+  $("#cont > div > .list > .line > .col.op > .list >.btn.displayInvalide > a").off("click").on("click", function() { displayInvalide(); });
     },
     error: function (jqXHR, textStatus, errorThrown) {
       console.error("AJAX Error: " + textStatus, errorThrown);
