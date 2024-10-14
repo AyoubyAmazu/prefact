@@ -10,3 +10,6 @@
 .codefilter{
     display: flex;
 }
+
+#cont > div > .op > .side > .select.sort { flex-direction: row; gap: 5px; }
+#cont > div > .op > .side > .select.sort > .label { padding: 8px 0; }

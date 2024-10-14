@@ -21,59 +21,13 @@
     $sql .= " FROM `adr` z" . ((count($where) == 0)? "" : (" WHERE " . implode(" AND ", $where)));
     $list = dbSelect($sql, array_merge($opts, array("db" => "prefact")));
     $cont ="";
-    $cont.="<div id=buttons>";
-    $cont.='<div>';
-    $cont.= formSelect(array(
-        "key" => "codeFilter",
-        "label" => "",
-        "title" => "Choose an option",
-        "selected" => array(
-            "code" => "1",
-            "txt" => "Option 1",
-            "placeholder" => "Select...",
-        ),
-        "list" => array(
-            array("code" => "1", "txt" => "Option 1"),
-            array("code" => "2", "txt" => "Option 2"),
-            array("code" => "3", "txt" => "Option 3"),
-        ),
-        "op" => array(
-        array("type" => "pre", "txt" => "<div class='label'>trier par :</div>"),
-    )));
-    $cont.= formCheckbox(array(
-        "key" => "myCheckbox",
-        "align" => "c",
-        "title" => "Choose your options",
-        "selected" => array(
-            "code" => "option1",
-            "txt" => "Option 1",
-            "placeholder" => "Choose an option",
-            "title" => "Selected Option 1"
-        ),
-        "code" => "",
-        "filter" => true,
-        "other" => false,
-        "required" => true,
-        "readonly" => false,
-        "off" => false,
-        "list" => array(
-            array(
-                "code" => "asend",
-                "txt" => "Asendant",
-                "title" => "Asendant",
-                "value" => true,
-            ),
-            array(
-                "code" => "desend",
-                "txt" => "Desendant",
-                "title" => "Desendant",
-                "value" => false,
-            ),
-        )
-    ));
-    $cont.= formBtn(array("key"=>"parametres","align"=>'l',"ico"=>"wrench",'type'=>'solid','txt'=>"Paramétres"));
+    $cont.="<div class='op' id=buttons>";
+    $cont.='<div class="side s1">';
+    $cont.= formSelect(array('key'=>'sort',"label"=>'trier par :',"type"=>"pre"));
+    $cont.= formCheckbox(array("key"=>"ascedent","op"=>[array("code"=>"ascendent","txt"=>"ascendent","type"=>"post"),array("code"=>"descendent","txt"=>"descendent","type"=>"post")]));
+    $cont.= formBtn(array("key"=>"parametres","align"=>'l',"ico"=>"wrench",'type'=>'solid','txt'=>"Paramétres",'list'=>array()));
     $cont.= "</div>";
-    $cont.="<div>";
+    $cont.="<div class='side s2'>";
     $cont.=formBtn(array("key"=>"statistiques","aling"=>"c","ico"=>"chart-pie","type"=>"solid","txt"=>"statistiques"));
     $cont.=formBtn(array("key"=>"fileExcel","aling"=>"c","ico"=>"file-excel","type"=>"solid"));
     $cont.="</div>";

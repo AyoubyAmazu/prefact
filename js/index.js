@@ -32,7 +32,7 @@ $(document).ready(function () {
       success: function (data) {
         
         try {
-          $("#affichData").html(affichData(data.data));
+          $("#affichData").html(afcont |fichData(data.data));
         } catch (e) {
           console.error("Invalid JSON response:", data);
           popError("Received an invalid response from the server.");
