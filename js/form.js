@@ -101,7 +101,10 @@ function formSelectInit(div)
     $(div).children(".data").children(".list").children(".input").children(".data").children("input").val("").focus();
     $(div).children(".data").children(".list").scrollTop(0);
 }
-
+/**
+ * Filters select option on the select input
+ * @param {HTMLElement} div
+ */
 function formSelectFilter(div)
 {
     var keyword = $.trim($(div).children(".data").children(".list").children(".input").children(".data").children("input").val()).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();

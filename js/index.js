@@ -99,6 +99,7 @@ function sortColSelectOption(div)
     sortColAdapt();
     var sortCol = $(div).attr("code"); if(sortCol == undefined || sortCol == null || sortCol == "") sortCol = "dossierCode";
     var obj = { index: { sortCol: sortCol } };
+    sortTableRows(sortCol);
 }
 /**
  * Displays the name and root of selected option 
@@ -119,15 +120,51 @@ function sortColAdapt()
 function sortColSelectFilter(div)
 {
     formSelectFilter(div);
+    var code = "";
     $(div).children(".data").children(".list").children(".option").not(".off").each(function()
     {
         if($(this).css("display") == "none") return;
-        var code = $(this).attr("code"); if(code == undefined || code == null || code == "") return;
+        code = $(this).attr("code"); if(code == undefined || code == null || code == "") return;
         var parent = $(this).attr("parent"); if(parent == undefined || parent == null) parent = "";
         if(parent == "") $(div).children(".data").children(".list").children(".option[parent='" + code + "']").show();
         else $(div).children(".data").children(".list").children(".option[code='" + parent + "']").show();
     });
 }
+/**
+ * Sorts table lines
+ * @param {String} code 
+ */
+function sortTableRows(code) { 
+  let asc = $(".checkbox.sortDir > .data > .list > .option.on").attr("code")
+
+  let lines = $("#cont > div > .list .line").map(function () {
+    if ($(this).hasClass("st")) return null;
+    let line = $(this);
+    let label = $(this).next('.labels-section');
+    
+    return {line: line, label: label}
+  }).get().filter((item) => {return item !== null});
+
+  lines.sort((a, b) => {
+    let cls = "";
+    if (code.includes("dossierCode")) cls = ".col.dossier > .sub.code > a";
+    if (code.includes("dossierNom")) cls = ".col.dossier > .sub.nom > a";
+    if (code.includes("dossierGroupe")) cls = ".col.dossier > .sub.groupe > a";
+    if (code.includes("tempsDuree")) cls = ".col.temps > .sub.duree > .value";
+    if (code.includes("tempsCout")) cls = ".col.temps > .sub.cout > .value";
+    if (code.includes("tempsDebours")) cls = ".col.temps > .sub.debours > .value";
+
+    if(asc === "ASC") { return $(cls, a.line).text().localeCompare($(cls, b.line).text()); }
+    else { return $(cls, b.line).text().localeCompare($(cls, a.line).text()); }
+  });
+  // console.log(lines);
+  lines.forEach(item => {
+    console.log(item.line, "======", item.label);
+    
+    item.line.appendTo($("#cont > div > .list"))
+    item.label.appendTo($("#cont > div > .list"))
+  })
+ }
 /**
  * Shows popup the button of each row in the index table
  * @param {HTMLElement} div 
@@ -181,7 +218,8 @@ function fetchData() {
   $("#cont > div > .list > .line > .col.op > .list >.btn.displayCommentaire > a").off("click").on("click", function() { displayCommentaire(); });
   $("#cont > div > .list > .line > .col.op > .list >.btn.displayDéverrouiller > a").off("click").on("click", function() { displayDéverrouiller(); });
   $("#cont > div > .list > .line > .col.op > .list >.btn.displayInvalide > a").off("click").on("click", function() { displayInvalide(); });
-    },
+  
+},
     error: function (jqXHR, textStatus, errorThrown) {
       console.error("AJAX Error: " + textStatus, errorThrown);
       popError("An error occurred while processing your request."); // Display a user-friendly error message
