@@ -70,14 +70,14 @@ foreach ($result as $v) {
         $html .= "</div>";
      $html .= "</div>";
      $html .= "<div class='col Statut'>";
-        $html .= "<div class='sub segmentation'>";
+        $html .= "<div class='sub segment'>";
         $segment = $v["segment"];
         $defaultColor = 'black';
         $colors = array('A' => 'green', 'B' => 'green', 'C' => 'green', 'D' => 'gold', 'E' => 'red', 'Z' => 'black');
         $color = isset($colors[$segment]) ? $colors[$segment] : $defaultColor;
         $html .= "<span class='label'>segment</span> <span style='color: $color;'>  $segment </span>";
         $html .= "</div>";
-        $html .= "<div class='sub'>";
+        $html .= "<div class='sub plusmoins'>";
         $html .= "<span class='label '>+/-value</span>";      
         if (strpos($v["plusmoins"], '-') === 0) 
                   {
@@ -88,19 +88,19 @@ foreach ($result as $v) {
              $html .= "<span class='value green'>" . $v["plusmoins"] . "</span>";
                   }
         $html .= "</div>";
-        $html .= "<div class='sub'>";
+        $html .= "<div class='sub solde'>";
         $html .= "<span class='label'>Solde des créances</span> <span class='value'>". $v["solde"] . "</span>";//$v["ReportPostTemps"]
         $html .= "</div>";
      $html .= "</div>";
 
      $html .= "<div class='col Operations'>";
-        $html .= "<div class='sub'>";
+        $html .= "<div class='sub op_encours'>";
         $html .= "<span class='label'>En cours</span> <span class='value'>" . $v["op_encours"] . "</span>";
         $html .= "</div>";
-        $html .= "<div class='sub'>";
+        $html .= "<div class='sub op_rd'>";
         $html .= "<span class='label'>Validation du RD</span> <span class='value'>" . $v["op_rd"] . "</span>";
         $html .= "</div>";
-        $html .= "<div class='sub'>";
+        $html .= "<div class='sub op_admin'>";
         $html .= "<span class='label'>Traitement administratif</span> <span class='value'>" . $v["op_admin"] . "</span>";
         $html .= "</div>";
      $html .= "</div>";

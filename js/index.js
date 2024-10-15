@@ -48,6 +48,53 @@ function displaySegme()
     });
 }
 /**
+ * function filter columns 
+ * @param {array} listparams 
+ */
+function cheakboxFilter(listparams)
+{ 
+  $("body > #cont > div >.list > .line > div > div  ").hide();
+  $("body > #cont > div >.list >  .labels-section ").children().hide();
+
+  listparams.forEach(element => {
+    //.................................................dosier filter.................................................
+    if(element == "dossierCode"){$("body > #cont > div >.list > .line > .col.dossier > .sub.code ").show();}
+    if(element=="dossierNom"){$("body > #cont > div >.list > .line > .col.dossier > .sub.nom ").show();}
+    if(element=="dossierGroupe"){$("body > #cont > div >.list > .line > .col.dossier > .sub.groupe").show();}
+    //.................................................temps filter.................................................
+    if(element=="tempsdurée"){$("body > #cont > div >.list > .line > .col.temps > .sub.duree").show();}
+    if(element=="tempscout"){$("body > #cont > div >.list > .line > .col.temps > .sub.cout").show();}
+    if(element=="tempsdebours"){$("body > #cont > div >.list > .line > .col.temps > .sub.debours").show();}
+    //.................................................factures filter .................................................
+    if(element == "facturesQuantité"){$("body > #cont > div >.list > .line > .col.factures > .sub.quantite ").show();}
+    if(element=="facturesEmises"){$("body > #cont > div >.list > .line > .col.factures > .sub.emises ").show();}
+    if(element=="facturesDébours"){$("body > #cont > div >.list > .line > .col.factures > .sub.debours").show();}
+    //.................................................statu filter.................................................
+    if(element == "statutSegmentation"){$("body > #cont > div >.list > .line > .col.Statut > .sub.segment ").show();}
+    if(element=="statutValue"){$("body > #cont > div >.list > .line > .col.Statut > .sub.plusmoins ").show();}
+    if(element=="statutCreance"){$("body > #cont > div >.list > .line > .col.Statut > .sub.solde").show();}
+    //.................................................operation filter.................................................
+    if(element == "operationsEnCours"){$("body > #cont > div >.list > .line > .col.Operation > .sub.op_encours ").show();}
+    if(element=="operationsValide"){$("body > #cont > div >.list > .line > .col.Operation > .sub.op_rd ").show();}
+    if(element=="operationsAdministraftif"){$("body > #cont > div >.list > .line > .col.Operation > .sub.op_admin").show();}
+    //.................................................Provisions filter.................................................
+    // if(element == "dossierCode"){$("body > #cont > div >.list > .line > .col.Provisions > .sub.op_encours ").show();}
+    // if(element=="dossierNom"){$("body > #cont > div >.list > .line > .col.Provisions > .sub.op_rd ").show();}
+    // if(element=="dossierGroupe"){$("body > #cont > div >.list > .line > .col.Provisions > .sub.op_admin").show();}
+    //.................................................autres filter.................................................
+    if(element == "lettresMission"){$("body > #cont > div >.list > .labels-section > .lettre   ").show();}
+    if(element=="Montant"){$("body > #cont > div >.list > .labels-section > .montant  ").show();}
+    if(element=="SoldeValidé"){$("body > #cont > div >.list > .labels-section > .solde  ").show();}
+    if(element=="DossierVerrouillé"){$("body > #cont > div >.list > .labels-section > .ver ").show();}
+    if(element=="Commentaire"){$("body > #cont > div >.list > .labels-section > .value ").show();}
+
+
+  
+  });
+ 
+}
+
+/**
  * Save selected check boxes
  */
 function displayParamSave()
@@ -58,8 +105,15 @@ function displayParamSave()
         var code = $(this).attr("code"); if(code == undefined || code == null || code == "") return;
         displayParam.push(code);
     });
+
     if(displayParam.length == 0) { popError("Aucune colonnes séléctionnée"); return; }
-    else{popDown($("body > .popup.displayParam"));}
+    else
+    {
+      console.log(displayParam)
+      cheakboxFilter(displayParam);
+      
+      popDown($("body > .popup.displayParam"));
+    }
 
     // var obj = { index: { displayCol: displayParam } };
 }
@@ -83,8 +137,19 @@ function displayParam()
         , complete: function() { loaderHide(); }
         , success: function(data)
         {
-            try { var result = JSON.parse(data); } catch(error) { popError(); console.error(error);return; }
+            try 
+            { 
+              var result = JSON.parse(data); 
+
+            } 
+            catch(error) 
+            {
+               popError();
+                console.error(error);
+                return;
+            }
             if(result["code"] == 200) { popUp(result["html"]); displayParamAdapt(); return; }
+            $(".op > .btn.min.save > a").on("click",paramsFilter());
             popError(result["txt"], result["btn"]);
         }
     });
@@ -226,3 +291,5 @@ function fetchData() {
     },
   });
 }
+
+
