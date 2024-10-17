@@ -47,7 +47,7 @@ function displaySegme()
                { 
                 popUp(result["html"]);
                 displaySegmeAdapt();
-                $(".popup.displaySegme > div > .op > .btn.min.save").off("click").on("click",updateSegment())
+                $(".popup.displaySegme > div > .op > .btn.min.save").off("click").on("click",updateSegment() )
                 return; 
               }
             popError(result["txt"], result["btn"]);
