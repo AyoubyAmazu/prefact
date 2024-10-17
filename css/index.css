@@ -91,3 +91,5 @@ body > #cont > div > .list >.line .col .sub .value {flex: 1;text-align: right; /
 .popup.displaySegme > div > .checkbox > .data > .list > .option > a > .txt > aside { color : var(--red); display: inline;}
 
 .popup.displaySegme > div > .op > .btn { width: 70px; font-family: bld; }
+
+.popup.displayCommentaire > div > .textarea > .data > textarea {height: 100px;}

@@ -7,6 +7,54 @@ $(document).ready(function () {
   $("#cont > div > .op > .side > .btn.displayParam > a").off("click").on("click", function() { displayParam(); });
 });
 /**
+ * 
+ */
+function onCommentaireSave()
+{
+  $.ajax({
+    url: "index_commentaire.php"
+    , type: "POST"
+    , data: 
+    {
+      edit_comment: "",
+      comment: $(".popup.displayCommentaire > div > .textarea > .data > textarea").val(),
+    }
+    , beforeSend: function() { loaderShow(); }
+    , complete: function() { loaderHide(); }
+    , success: function(data)
+    {
+        try { var result = JSON.parse(data); } catch(error) { popError(); return; }
+        if(result["code"] == 200) { popUp(result["html"]); displayCommentaireAdapt(); return; }
+        popError(result["txt"], result["btn"]);
+    }
+  });
+}
+/**
+ * add clicks functionality to the popup box
+ */
+function displayCommentaireAdapt()
+{
+    $("body > .popup.displayCommentaire > div > .op > .btn.cancel > a").off("click").on("click", function(event) { popDown($(event.target).parents(".popup")); });
+    $("body > .popup.displayCommentaire > div > .op > .btn.save > a").off("click").on("click", function() { onCommentaireSave(); });
+}
+/**
+ * fetch commentair popup from php and displays it
+ */
+function displayCommentaire()
+{
+    $.ajax({
+        url: "index_commentaire.php"
+        , beforeSend: function() { loaderShow(); }
+        , complete: function() { loaderHide(); }
+        , success: function(data)
+        {
+            try { var result = JSON.parse(data); } catch(error) { popError(); return; }
+            if(result["code"] == 200) { popUp(result["html"]); displayCommentaireAdapt(); return; }
+            popError(result["txt"], result["btn"]);
+        }
+    });
+}
+/**
  * validats segment popup data
  */
 function displaySegmeSave()
@@ -215,17 +263,32 @@ function sortTableRows(code) {
     if (code.includes("dossierCode")) cls = ".col.dossier > .sub.code > a";
     if (code.includes("dossierNom")) cls = ".col.dossier > .sub.nom > a";
     if (code.includes("dossierGroupe")) cls = ".col.dossier > .sub.groupe > a";
+
     if (code.includes("tempsDuree")) cls = ".col.temps > .sub.duree > .value";
     if (code.includes("tempsCout")) cls = ".col.temps > .sub.cout > .value";
     if (code.includes("tempsDebours")) cls = ".col.temps > .sub.debours > .value";
 
+    if(code.includes("FacturesQuantités"))cls = ".col.factures > .sub.quantite ";
+    if(code.includes("FacturesEmises"))cls = ".col.factures > .sub.emises ";
+    if(code.includes("FacturesDebours"))cls = ".col.factures > .sub.debours";
+    //.................................................statu filter.................................................
+    if(code.includes("StatutSegmentation"))cls = ".col.Statut > .sub.segment ";
+    if(code.includes("StatutValue"))cls = ".col.Statut > .sub.plusmoins ";
+    if(code.includes("StatutCreance"))cls = ".col.Statut > .sub.solde";
+    //.................................................operation filter.................................................
+    if(code.includes("OperationsEncours"))cls = ".col.Operations > .sub.op_encours ";
+    if(code.includes("OperationsValid"))cls = ".col.Operations > .sub.op_rd > .value";
+    if(code.includes("OperationsAdmin")) cls = ".col.Operations > .sub.op_admin > .value";
+    //.................................................Provisions filter.................................................
+    // if(element == "dossierCode"))cls = ".col.Provisions > .sub.op_encours ";
+    // if(code.includes("dossierNom"))cls = ".col.Provisions > .sub.op_rd ";
+    // if(code.includes("dossierGroupe"))cls = ".col.Provisions > .sub.op_admin";cod
+
     if(asc === "ASC") { return $(cls, a.line).text().localeCompare($(cls, b.line).text()); }
     else { return $(cls, b.line).text().localeCompare($(cls, a.line).text()); }
   });
-  // console.log(lines);
-  lines.forEach(item => {
-    console.log(item.line, "======", item.label);
-    
+
+  lines.forEach(item => {    
     item.line.appendTo($("#cont > div > .list"))
     item.label.appendTo($("#cont > div > .list"))
   })
