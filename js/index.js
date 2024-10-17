@@ -58,7 +58,7 @@ function displayCommentaire()
  * validats segment popup data
  */
 function displaySegmeSave()
-{
+{ 
     var displaySegme = new Array();
     $("body > .popup.displaySegme > div > .checkbox > .data > .list > .option.on").each(function()
     {
@@ -66,7 +66,7 @@ function displaySegmeSave()
         displaySegme.push(code);
     });
     if(displaySegme.length == 0) { popError("Aucune colonnes séléctionnée"); return; }
-
+    updateSegment();
     // var obj = { index: { displaySegme: displaySegme } };
 }
 /**
@@ -74,7 +74,7 @@ function displaySegmeSave()
  */
 function displaySegmeAdapt()
 {
-    $("body > .popup.displaySegme > div > .checkbox > .data > .list > .option").not(".readonly").children("a").off("click").on("click", function(event) { formCheckboxExec($(event.target).parents(".option")); });
+    $("body > .popup.displaySegme > div > .checkbox > .data > .list > .option").not(".readonly").children("a").off("click").on("click", function(event) { formCheckboxUnique($(event.target).parents(".option")); });
     $("body > .popup.displaySegme > div > .op > .btn.cancel > a").off("click").on("click", function(event) { popDown($(event.target).parents(".popup")); });
     $("body > .popup.displaySegme > div > .op > .btn.save > a").off("click").on("click", function() { displaySegmeSave(); });
 }
@@ -85,7 +85,6 @@ function displaySegme()
 { 
     $.ajax({
         url: "index_segment.php"
-        
         , beforeSend: function() { loaderShow(); }
         , complete: function() { loaderHide(); }
         , success: function(data)
@@ -95,7 +94,6 @@ function displaySegme()
                { 
                 popUp(result["html"]);
                 displaySegmeAdapt();
-                $(".popup.displaySegme > div > .op > .btn.min.save").off("click").on("click",updateSegment())
                 return; 
               }
             popError(result["txt"], result["btn"]);
@@ -108,20 +106,22 @@ function displaySegme()
 function updateSegment()
 { 
   $.ajax({
-    type:"post",
+    type:"POST",
     url: "index_segment.php",
     data:
     {
-      Segment:$(".popup.displaySegme > div > .checkbox.col > .data > .list > .option.on").attr("code")
+      update_segment: "",
+      segment:$(".popup.displaySegme > div > .checkbox.col > .data > .list > .option.on").attr("code")
     }
-    , beforeSend: function() { loaderShow(); }
+    , beforeSend: function() { popDown(".popup");loaderShow(); }
     , complete: function() { loaderHide(); }
     , success: function(data)
     {
       loaderHide();
         try { var result = JSON.parse(data); } catch(error) { popError(); return; }
-        if(result["code"] == 200){popUp(result["html"]); return; }
+        if(result["code"] == 200){popUp(result["html"]);console.log($("body > .popup > div > .op > .btn.save > a"));$("body > .popup > div > .op > .btn.save > a").off("click").on("click", function() { console.log("test");popDown(".popup"); }); return; }
         popError(result["txt"], result["btn"]);
+        
     }
 });
 
