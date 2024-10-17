@@ -3,10 +3,14 @@
 require_once("config.php");
 
 if (isset($_POST["update_segment"])) {
-    $html = "<div class='popup displaySegme'><div>";
-    $html .= "<div class='label'>Modifier Segmentation</div>";
-    $html .= formBtn(array("key" => "save", "txt" => "Valider"));
-    $html .= "</div></div>";
+    $html = "<div class='popup'>";
+        $html.="<div>";
+        $html .= "<div class='label'>Modifier Segmentation</div>";
+        $html .="<div class='op'>";
+        $html .= formBtn(array("key" => "cancel", "txt" => "Fermer"));
+        $html .="</div>";
+        $html .= "</div>";
+    $html.="</div>";
     die(json_encode(array("code" => 200, "html" => $html)));
 };
 

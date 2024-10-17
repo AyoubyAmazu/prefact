@@ -7,7 +7,64 @@ $(document).ready(function () {
   $("#cont > div > .op > .side > .btn.displayParam > a").off("click").on("click", function() { displayParam(); });
 });
 /**
- * 
+ * Handles invalide solde popup click listners
+ */
+function displayInvalideAdapt()
+{
+    $("body > .popup.displayInvalide > div > .op > .btn.cancel > a").off("click").on("click", function(event) { popDown($(event.target).parents(".popup")); });
+    $("body > .popup.displayInvalide > div > .op > .btn.save > a").off("click").on("click", function() { displayInvalideSave(); });
+}
+/**
+ * Fetch the html of invalid solde popup
+ */
+function displayInvalide()
+{
+    $.ajax({
+        url: "index_invalide.php"
+        , beforeSend: function() { loaderShow(); }
+        , complete: function() { loaderHide(); }
+        , success: function(data)
+        {
+            try { var result = JSON.parse(data); } catch(error) { popError(); return; }
+            if(result["code"] == 200) { popUp(result["html"]); displayInvalideAdapt(); return; }
+            popError(result["txt"], result["btn"]);
+        }
+    });
+}
+/**
+ * Ajax sends post data of deverrouiller
+ */
+function displayDeverrouillerSave()
+{
+  // TODO add ajax post of deverrouiller
+}
+/**
+ * deverrouiller popup buttons click listener
+ */
+function displayDeverrouillerAdapt()
+{
+    $("body > .popup.displayDéverrouiller > div > .op > .btn.cancel > a").off("click").on("click", function(event) { popDown($(event.target).parents(".popup")); });
+    $("body > .popup.displayDéverrouiller > div > .op > .btn.save > a").off("click").on("click", function() { displayDeverrouillerSave(); });
+}
+/**
+ * Fetch the html of deverrouiller popup
+ */
+function displayDeverrouiller()
+{
+    $.ajax({    
+        url: "index_deverrouiller.php"
+        , beforeSend: function() { loaderShow(); }
+        , complete: function() { loaderHide(); }
+        , success: function(data)
+        {
+            try { var result = JSON.parse(data); } catch(error) { popError(); return; }
+            if(result["code"] == 200) { popUp(result["html"]); displayDeverrouillerAdapt(); return; }
+            popError(result["txt"], result["btn"]);
+        }
+    });
+}
+/**
+ * sends comment data to backend to update comment
  */
 function onCommentaireSave()
 {
@@ -111,6 +168,7 @@ function updateSegment()
     data:
     {
       update_segment: "",
+      adr: "",//TODO add adr of fact to edit
       segment:$(".popup.displaySegme > div > .checkbox.col > .data > .list > .option.on").attr("code")
     }
     , beforeSend: function() { popDown(".popup");loaderShow(); }
@@ -119,7 +177,7 @@ function updateSegment()
     {
       loaderHide();
         try { var result = JSON.parse(data); } catch(error) { popError(); return; }
-        if(result["code"] == 200){popUp(result["html"]);console.log($("body > .popup > div > .op > .btn.save > a"));$("body > .popup > div > .op > .btn.save > a").off("click").on("click", function() { console.log("test");popDown(".popup"); }); return; }
+        if(result["code"] == 200){popUp(result["html"]);$(".popup > div > .op > .btn.min.cancel > a").off("click").on("click", function() {popDown(".popup"); }); return; }
         popError(result["txt"], result["btn"]);
         
     }
@@ -377,7 +435,7 @@ function fetchData() {
 
     $("#cont > div > .list > .line > .col.op > .list >.btn.displaySegme > a").off("click").on("click", function() { displaySegme();});
     $("#cont > div > .list > .line > .col.op > .list >.btn.displayCommentaire > a").off("click").on("click", function() { displayCommentaire(); });
-    $("#cont > div > .list > .line > .col.op > .list >.btn.displayDéverrouiller > a").off("click").on("click", function() { displayDéverrouiller(); });
+    $("#cont > div > .list > .line > .col.op > .list >.btn.displayDéverrouiller > a").off("click").on("click", function() { displayDeverrouiller(); });
     $("#cont > div > .list > .line > .col.op > .list >.btn.displayInvalide > a").off("click").on("click", function() { displayInvalide(); });
   
 },
