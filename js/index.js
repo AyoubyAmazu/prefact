@@ -85,15 +85,46 @@ function displaySegme()
 { 
     $.ajax({
         url: "index_segment.php"
+        
         , beforeSend: function() { loaderShow(); }
         , complete: function() { loaderHide(); }
         , success: function(data)
         {
             try { var result = JSON.parse(data); } catch(error) { popError(); return; }
-            if(result["code"] == 200) { popUp(result["html"]); displaySegmeAdapt(); return; }
+            if(result["code"] == 200)
+               { 
+                popUp(result["html"]);
+                displaySegmeAdapt();
+                $(".popup.displaySegme > div > .op > .btn.min.save").off("click").on("click",updateSegment())
+                return; 
+              }
             popError(result["txt"], result["btn"]);
         }
     });
+}
+/**
+ * Update Segmentation
+ */
+function updateSegment()
+{ 
+  $.ajax({
+    type:"post",
+    url: "index_segment.php",
+    data:
+    {
+      Segment:$(".popup.displaySegme > div > .checkbox.col > .data > .list > .option.on").attr("code")
+    }
+    , beforeSend: function() { loaderShow(); }
+    , complete: function() { loaderHide(); }
+    , success: function(data)
+    {
+      loaderHide();
+        try { var result = JSON.parse(data); } catch(error) { popError(); return; }
+        if(result["code"] == 200){popUp(result["html"]); return; }
+        popError(result["txt"], result["btn"]);
+    }
+});
+
 }
 /**
  * function filter columns 
@@ -297,7 +328,7 @@ function sortTableRows(code) {
  * Shows popup the button of each row in the index table
  * @param {HTMLElement} div 
  */
-function openPopupMenu(div) {$(".list").addClass("off"); $(div).children(".list").removeClass("off");}
+function openPopupMenu(div) { $(div).children(".list").toggle(1);}
 /**
  * fetchs data from php using ajax
  */
@@ -340,12 +371,14 @@ function fetchData() {
         popError("Received an invalid response from the server.");
       }
       // declare on click functonality for each of rows buttons
-      $("body > #cont > div > .list > .line > .col.op > .btn > a").off("click").on("click", function(event) {openPopupMenu($(event.target).parents(".col")); });
+    $("body > #cont > div > .list > .line > .col.op > .btn > a").off("click").on("click", function(event) {openPopupMenu($(event.target).parents(".col")); });
+    $("body > #cont > div > .list.off > .line > .col.op > .btn > a").off("click").on("click", function(event) {popDown($(event.target).parents(".popup")); });
 
-  $("#cont > div > .list > .line > .col.op > .list >.btn.displaySegme > a").off("click").on("click", function() { displaySegme();});
-  $("#cont > div > .list > .line > .col.op > .list >.btn.displayCommentaire > a").off("click").on("click", function() { displayCommentaire(); });
-  $("#cont > div > .list > .line > .col.op > .list >.btn.displayDéverrouiller > a").off("click").on("click", function() { displayDéverrouiller(); });
-  $("#cont > div > .list > .line > .col.op > .list >.btn.displayInvalide > a").off("click").on("click", function() { displayInvalide(); });
+
+    $("#cont > div > .list > .line > .col.op > .list >.btn.displaySegme > a").off("click").on("click", function() { displaySegme();});
+    $("#cont > div > .list > .line > .col.op > .list >.btn.displayCommentaire > a").off("click").on("click", function() { displayCommentaire(); });
+    $("#cont > div > .list > .line > .col.op > .list >.btn.displayDéverrouiller > a").off("click").on("click", function() { displayDéverrouiller(); });
+    $("#cont > div > .list > .line > .col.op > .list >.btn.displayInvalide > a").off("click").on("click", function() { displayInvalide(); });
   
 },
     error: function (jqXHR, textStatus, errorThrown) {
