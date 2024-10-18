@@ -74,6 +74,7 @@ function onCommentaireSave()
     , data: 
     {
       edit_comment: "",
+      adr: "",
       comment: $(".popup.displayCommentaire > div > .textarea > .data > textarea").val(),
     }
     , beforeSend: function() { loaderShow(); }
@@ -97,8 +98,10 @@ function displayCommentaireAdapt()
 /**
  * fetch commentair popup from php and displays it
  */
-function displayCommentaire()
-{
+function displayCommentaire(adr, comment)
+{ 
+  console.log(comment, adr);
+  
     $.ajax({
         url: "index_commentaire.php"
         , beforeSend: function() { loaderShow(); }
@@ -106,7 +109,7 @@ function displayCommentaire()
         , success: function(data)
         {
             try { var result = JSON.parse(data); } catch(error) { popError(); return; }
-            if(result["code"] == 200) { popUp(result["html"]); displayCommentaireAdapt(); return; }
+            if(result["code"] == 200) { popUp(result["html"]);$(".popup > div > .textarea > .data > textarea").val(comment);displayCommentaireAdapt(); return; }
             popError(result["txt"], result["btn"]);
         }
     });
@@ -386,7 +389,7 @@ function sortTableRows(code) {
  * Shows popup the button of each row in the index table
  * @param {HTMLElement} div 
  */
-function openPopupMenu(div) { $(div).children(".list").toggle(1);}
+function openPopupMenu(div) { $(div).children(".list").toggleClass("on off");}
 /**
  * fetchs data from php using ajax
  */
@@ -431,10 +434,8 @@ function fetchData() {
       // declare on click functonality for each of rows buttons
     $("body > #cont > div > .list > .line > .col.op > .btn > a").off("click").on("click", function(event) {openPopupMenu($(event.target).parents(".col")); });
     $("body > #cont > div > .list.off > .line > .col.op > .btn > a").off("click").on("click", function(event) {popDown($(event.target).parents(".popup")); });
-
-
     $("#cont > div > .list > .line > .col.op > .list >.btn.displaySegme > a").off("click").on("click", function() { displaySegme();});
-    $("#cont > div > .list > .line > .col.op > .list >.btn.displayCommentaire > a").off("click").on("click", function() { displayCommentaire(); });
+    $("#cont > div > .list > .line > .col.op > .list >.btn.displayCommentaire > a").off("click").on("click", function(event) { displayCommentaire($(this).closest('.line').children('.col.dossier').children(".sub.code").children("a").text(), $(this).closest('.line').next(".labels-section").children(".comment").text()); });
     $("#cont > div > .list > .line > .col.op > .list >.btn.displayDéverrouiller > a").off("click").on("click", function() { displayDeverrouiller(); });
     $("#cont > div > .list > .line > .col.op > .list >.btn.displayInvalide > a").off("click").on("click", function() { displayInvalide(); });
   

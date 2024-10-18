@@ -7,6 +7,9 @@
     $cookie = cookieInit();
     
     if(isset($_POST['edit_comment']))
+    {
+        
+    }
 
     
     $html = "<div class='popup displayCommentaire'><div>";

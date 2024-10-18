@@ -161,12 +161,11 @@ foreach ($result as $v) {
         "icon" => "fa-solid fa-lock",
         "title" => "Additional Information"));
      $html .= "</div>";
-     $html .= "<span class='value'>" . $v["obs"] . "</span>";
-     $html .= "</p>";
+     $html .= "<span class='comment'>" . $v["obs"] . "</span>";
 
      $html .= "</div>";
 
-    $html .= "</>";
+    $html .= "</div>";
    }
 
 try {
