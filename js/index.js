@@ -171,7 +171,7 @@ function updateSegment()
     data:
     {
       update_segment: "",
-      adr: "",//TODO add adr of fact to edit
+      adr: $("body > #cont > div > .list > .line > .col.op > .list.on").closest(".line ").children(".col.dossier").children(".sub.code").children("a").text(),//TODO add adr of fact to edit
       segment:$(".popup.displaySegme > div > .checkbox.col > .data > .list > .option.on").attr("code")
     }
     , beforeSend: function() { popDown(".popup");loaderShow(); }
