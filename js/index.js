@@ -168,7 +168,7 @@ function updateSegment()
     data:
     {
       update_segment: "",
-      adr: "",//TODO add adr of fact to edit
+      adr: $("body > #cont > div > .list > .line > .col.op > .list.on").closest(".line ").children(".col.dossier").children(".sub.code").children("a").text(),//TODO add adr of fact to edit
       segment:$(".popup.displaySegme > div > .checkbox.col > .data > .list > .option.on").attr("code")
     }
     , beforeSend: function() { popDown(".popup");loaderShow(); }
@@ -386,7 +386,7 @@ function sortTableRows(code) {
  * Shows popup the button of each row in the index table
  * @param {HTMLElement} div 
  */
-function openPopupMenu(div) { $(div).children(".list").toggle(1);}
+function openPopupMenu(div) { $(div).children(".list").toggleClass("on off");}
 /**
  * fetchs data from php using ajax
  */
