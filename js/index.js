@@ -37,7 +37,23 @@ function displayInvalide()
  */
 function displayDeverrouillerSave()
 {
-  // TODO add ajax post of deverrouiller
+  $.ajax({
+    url: "index_deverrouiller.php"
+    , beforeSend: function() { loaderShow(); }
+    , complete: function() { loaderHide(); 
+    }
+    ,data:
+    {
+      deverroui: "",
+      adr: $("body > #cont > div > .list > .line > .col.op > .list.on").closest(".line ").children(".col.dossier").children(".sub.code").children("a").text()
+    }
+    , success: function(data)
+    {
+        try { var result = JSON.parse(data); } catch(error) { popError(); return; }
+        if(result["code"] == 200) { popUp(result["html"]); displayInvalideAdapt(); return; }
+        popError(result["txt"], result["btn"]);
+    }
+});
 }
 /**
  * deverrouiller popup buttons click listener
