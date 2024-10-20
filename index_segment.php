@@ -6,7 +6,7 @@ if (isset($_POST["update_segment"])) {
     $opts = array("ajax"=>true);
     $opts["conn"] = dbStart(array_merge($opts, array("db" => array("dia","prefact"))));
     $sql = "UPDATE adr SET segment = '".strtoupper($_POST["segment"])."' WHERE adr.code = '".$_POST["adr"]."'";
-   $update=   dbExec($sql, array_merge($opts, array("db" => "prefact")));
+    dbExec($sql, array_merge($opts, array("db" => "prefact")));
     $html = "<div class='popup'>";
         $html.="<div>";
         $html .= "<div class='label'>Modifier Segmentation</div>";

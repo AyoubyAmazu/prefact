@@ -1,6 +1,7 @@
 $(document).ready(function () {
   // $(".reset").on("click", resetFilter );
   $(".save").on("click", fetchData);
+  fetch();
   $(".checkbox .data .list").children().each(function (option) {$(this).on("click", function () { formCheckboxUnique($(this))});});
   $("#cont > div > .op > .side > .select.sortCol > .data > .list > .input > .data > input").off("input").on("input", function(event) { sortColSelectFilter($(event.target).parents(".select")); });
   $("#cont > div > .op > .side > .select.sortCol > .data > .list > .option").not(".readonly").children("a").off("click").on("click", function(event) { sortColSelectOption($(event.target).parents(".option")); });
@@ -73,7 +74,6 @@ function onCommentaireSave()
     , type: "POST"
     , data: 
     {
-      edit_comment: "",
       adr: $("body > #cont > div > .list > .line > .col.op > .list.on").closest(".line ").children(".col.dossier").children(".sub.code").children("a").text(),
       comment: $(".popup.displayCommentaire > div > .textarea > .data > textarea").val(),
     }
@@ -82,7 +82,7 @@ function onCommentaireSave()
     , success: function(data)
     {
         try { var result = JSON.parse(data); } catch(error) { popError(); return; }
-        if(result["code"] == 200) { popUp(result["html"]); displayCommentaireAdapt(); return; }
+        if(result["code"] == 200) { popDown($('.popup'));popUp(result["html"]); fetch();displayCommentaireAdapt(); return; }
         popError(result["txt"], result["btn"]);
     }
   });
@@ -100,7 +100,7 @@ function displayCommentaireAdapt()
  */
 function displayCommentaire()
 { 
-  
+  let comment = $("body > #cont > div > .list > .line > .col.op > .list.on").closest('.line').next(".labels-section").children(".comment").text();
     $.ajax({
         url: "index_commentaire.php"
         , beforeSend: function() { loaderShow(); }
@@ -179,7 +179,7 @@ function updateSegment()
     {
       loaderHide();
         try { var result = JSON.parse(data); } catch(error) { popError(); return; }
-        if(result["code"] == 200){popUp(result["html"]);$(".popup > div > .op > .btn.min.cancel > a").off("click").on("click", function() {popDown(".popup"); }); return; }
+        if(result["code"] == 200){popUp(result["html"]);fetch();$(".popup > div > .op > .btn.min.cancel > a").off("click").on("click", function() {popDown(".popup"); }); return; }
         popError(result["txt"], result["btn"]);
         
     }
@@ -425,7 +425,11 @@ function fetchData() {
     success: function (data) {
       
       try {
-        $("#cont > div > .list").append(data.data);
+        let table = $("#cont > div > .list");
+        let thead = $($("#cont > div > .list > .line.st"));
+        table.html("");
+        table.append(thead);
+        table.append(data.data)
       } catch (e) {
         console.error("Invalid JSON response:", data);
         popError("Received an invalid response from the server.");
@@ -434,7 +438,7 @@ function fetchData() {
     $("body > #cont > div > .list > .line > .col.op > .btn > a").off("click").on("click", function(event) {openPopupMenu($(event.target).parents(".col")); });
     $("body > #cont > div > .list.off > .line > .col.op > .btn > a").off("click").on("click", function(event) {popDown($(event.target).parents(".popup")); });
     $("#cont > div > .list > .line > .col.op > .list >.btn.displaySegme > a").off("click").on("click", function() { displaySegme();});
-    $("#cont > div > .list > .line > .col.op > .list >.btn.displayCommentaire > a").off("click").on("click", function(event) { displayCommentaire(); });
+    $("#cont > div > .list > .line > .col.op > .list >.btn.displayCommentaire > a").off("click").on("click", function() { displayCommentaire(); });
     $("#cont > div > .list > .line > .col.op > .list >.btn.displayDéverrouiller > a").off("click").on("click", function() { displayDeverrouiller(); });
     $("#cont > div > .list > .line > .col.op > .list >.btn.displayInvalide > a").off("click").on("click", function() { displayInvalide(); });
   
@@ -445,5 +449,11 @@ function fetchData() {
     },
   });
 }
+/**
+ * Munipulate search btn click
+ */
+function fetch() { 
+  $(".save").click();
+ }
 
 
