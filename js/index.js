@@ -74,7 +74,7 @@ function onCommentaireSave()
     , data: 
     {
       edit_comment: "",
-      adr: "",
+      adr: $("body > #cont > div > .list > .line > .col.op > .list.on").closest(".line ").children(".col.dossier").children(".sub.code").children("a").text(),
       comment: $(".popup.displayCommentaire > div > .textarea > .data > textarea").val(),
     }
     , beforeSend: function() { loaderShow(); }
@@ -98,9 +98,8 @@ function displayCommentaireAdapt()
 /**
  * fetch commentair popup from php and displays it
  */
-function displayCommentaire(adr, comment)
+function displayCommentaire()
 { 
-  console.log(comment, adr);
   
     $.ajax({
         url: "index_commentaire.php"
@@ -171,7 +170,7 @@ function updateSegment()
     data:
     {
       update_segment: "",
-      adr: $("body > #cont > div > .list > .line > .col.op > .list.on").closest(".line ").children(".col.dossier").children(".sub.code").children("a").text(),//TODO add adr of fact to edit
+      adr: $("body > #cont > div > .list > .line > .col.op > .list.on").closest(".line ").children(".col.dossier").children(".sub.code").children("a").text(),
       segment:$(".popup.displaySegme > div > .checkbox.col > .data > .list > .option.on").attr("code")
     }
     , beforeSend: function() { popDown(".popup");loaderShow(); }
@@ -435,7 +434,7 @@ function fetchData() {
     $("body > #cont > div > .list > .line > .col.op > .btn > a").off("click").on("click", function(event) {openPopupMenu($(event.target).parents(".col")); });
     $("body > #cont > div > .list.off > .line > .col.op > .btn > a").off("click").on("click", function(event) {popDown($(event.target).parents(".popup")); });
     $("#cont > div > .list > .line > .col.op > .list >.btn.displaySegme > a").off("click").on("click", function() { displaySegme();});
-    $("#cont > div > .list > .line > .col.op > .list >.btn.displayCommentaire > a").off("click").on("click", function(event) { displayCommentaire($(this).closest('.line').children('.col.dossier').children(".sub.code").children("a").text(), $(this).closest('.line').next(".labels-section").children(".comment").text()); });
+    $("#cont > div > .list > .line > .col.op > .list >.btn.displayCommentaire > a").off("click").on("click", function(event) { displayCommentaire(); });
     $("#cont > div > .list > .line > .col.op > .list >.btn.displayDéverrouiller > a").off("click").on("click", function() { displayDeverrouiller(); });
     $("#cont > div > .list > .line > .col.op > .list >.btn.displayInvalide > a").off("click").on("click", function() { displayInvalide(); });
   
