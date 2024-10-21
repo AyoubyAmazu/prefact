@@ -2,11 +2,11 @@
 <?php
 
     require_once("config.php");
-
     $user = auth(array("ajax" => true));
     $opts = array("ajax" => true, "user" => $user);
     $cookie = cookieInit();
     
+    if(isset($_POST["invalide"])){echo "<script>conoole.log('dazt')</script>";}
 
 
     

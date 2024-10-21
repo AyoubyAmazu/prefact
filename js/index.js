@@ -8,12 +8,35 @@ $(document).ready(function () {
   $("#cont > div > .op > .side > .btn.displayParam > a").off("click").on("click", function() { displayParam(); });
 });
 /**
+ * Ajax sends post data of Valide
+ */
+function displayInvalideSave()
+{
+  $.ajax({
+    url: "index_invalide.php"
+    , beforeSend: function() { loaderShow(); }
+    , complete: function() { loaderHide(); 
+    }
+    ,data:
+    {
+      invalide: "",
+      adr: $("body > #cont > div > .list > .line > .col.op > .list.on").closest(".line ").children(".col.dossier").children(".sub.code").children("a").text()
+    }
+    , success: function(data)
+    {
+        try { var result = JSON.parse(data); } catch(error) { popError(); return; }
+        if(result["code"] == 200) { popUp(result["html"]); return; }
+        popError(result["txt"], result["btn"]);
+    }
+});
+}
+/**
  * Handles invalide solde popup click listners
  */
 function displayInvalideAdapt()
 {
     $("body > .popup.displayInvalide > div > .op > .btn.cancel > a").off("click").on("click", function(event) { popDown($(event.target).parents(".popup")); });
-    $("body > .popup.displayInvalide > div > .op > .btn.save > a").off("click").on("click", function() { displayInvalideSave(); });
+    $("body > .popup.displayInvalide > div > .op > .btn.save > a").off("click").on("click", function() { fetch();displayInvalideSave(); });
 }
 /**
  * Fetch the html of invalid solde popup
@@ -75,7 +98,7 @@ function displayDeverrouiller()
         , success: function(data)
         {
             try { var result = JSON.parse(data); } catch(error) { popError(); return; }
-            if(result["code"] == 200) { popUp(result["html"]); displayDeverrouillerAdapt(); return; }
+            if(result["code"] == 200) { popDown($('.popup'));popUp(result["html"]); fetch();displayDeverrouillerAdapt(); return; }
             popError(result["txt"], result["btn"]);
         }
     });
@@ -151,7 +174,7 @@ function displaySegmeAdapt()
 {
     $("body > .popup.displaySegme > div > .checkbox > .data > .list > .option").not(".readonly").children("a").off("click").on("click", function(event) { formCheckboxUnique($(event.target).parents(".option")); });
     $("body > .popup.displaySegme > div > .op > .btn.cancel > a").off("click").on("click", function(event) { popDown($(event.target).parents(".popup")); });
-    $("body > .popup.displaySegme > div > .op > .btn.save > a").off("click").on("click", function() { displaySegmeSave(); });
+    $("body > .popup.displaySegme > div > .op > .btn.save > a").off("click").on("click", function() {fetch();displaySegmeSave(); });
 }
 /**
  * Fetch Segment Data
