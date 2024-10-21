@@ -432,6 +432,7 @@ function fetchData() {
       tgr: $(".tgr").attr('code'),
       tgra: $(".tgra").attr('code'),
     },
+    dataType: "text",
     beforeSend: function () {
       loaderShow();
     },
@@ -439,6 +440,7 @@ function fetchData() {
       loaderHide();
     },
     success: function (data) {
+      console.log(data);
       
       try {
         let table = $("#cont > div > .list");
