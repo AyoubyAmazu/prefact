@@ -40,6 +40,9 @@ $select .=$isAnd? " )": '';
 $result = dbSelect($select, array_merge($opts, array('db'=>'prefact')));
 $html = "";
 foreach ($result as $v) {
+   $isValide = $v["solde_valid"] === 0?false:true;
+   $isVerrouille = $v["verrouil"] === 0?false:true;
+
     $html .= "<div  class='line'>";
      $html .= "<div class='col dossier'>";
         $html .= "<div class='sub code'><a>"  . $v["code"] . "</a></div>";
@@ -124,8 +127,8 @@ foreach ($result as $v) {
             $html .= formBtn(array("key" => "crm", "txt" => "Ouvrir sur le CRM","ico"=>"fa-solid fa-arrow-up-right-from-square"));
             $html .= formBtn(array("key" => "displaySegme", "txt" => "Modifer le segmentation","ico"=>"fa-solid fa-layer-group"));
             $html .= formBtn(array("key" => "displayCommentaire", "txt" => "Modifer le commentaire","ico"=>"fa-solid fa-pencil"));
-            $html .= formBtn(array("key" => "displayDéverrouiller", "txt" => "Déverrouiller le dossier","ico"=>"fa-solid fa-lock-open"));
-            $html .= formBtn(array("key" => "displayInvalide", "txt" => "Invalider le solde","ico"=>"fa-solid fa-circle-xmark"));
+            $html .= formBtn(array("key" => "displayDéverrouiller", "extra"=>!$isValide?"close":"open","txt" => !$isVerrouille?"Déverrouiller le dossier":"Verrouiller le dossier","ico"=>!$isVerrouille ? "fa-solid fa-lock" : "fa-solid fa-lock-open"));
+            $html .= formBtn(array("key" => "displayInvalide", "extra"=>!$isValide?"valide":"invalide","txt" => !$isValide?"Invalider le solde":"Valider le solde","ico"=>!$isValide? "fa-solid fa-circle-check" : "fa-solid fa-circle-xmark"));
         $html .= "</div>";
       $html .= "</div>";
 
@@ -147,18 +150,18 @@ foreach ($result as $v) {
         "value" => "0 000 000,00",
         "title" => "Additional Information"));
      $html .= "</div>";
-
+   //   print_r($v["solde_valid"]);
      $html .= "<div class='solde'>";
         $html .= formLabel(array(
         "key" => "Solde validé",
-        "icon" => "fa-solid fa-circle-check",
+        "icon" => $isValide? "fa-solid fa-circle-check" : "fa-solid fa-circle-xmark",
         "title" => "Additional Information"));
      $html .= "</div>";
 
      $html .= "<div class='ver'>";
         $html .= formLabel(array(
         "key" => "Dossier verrouillé",
-        "icon" => "fa-solid fa-lock",
+        "icon" => $isVerrouille ? "fa-solid fa-lock" : "fa-solid fa-lock-open",
         "title" => "Additional Information"));
      $html .= "</div>";
      $html .= "<span class='comment'>" . $v["obs"] . "</span>";
