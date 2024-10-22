@@ -108,3 +108,37 @@ b { font-family: bld; font-weight: normal; }
 .popup#help > div > .logo > div { font-family: bld; font-size: 22px; line-height: 30px; }
 .popup#help > div > .legal { font-size: 10px; line-height: 14px; }
 .popup#help > div > .copy { font-size: 10px; line-height: 14px; }
+
+#title { display: flex; flex-direction: column; background-color: var(--dark1); }
+#title > div { flex-grow: 1; display: flex; flex-wrap: wrap; align-items: flex-start; gap: 10px; padding: 20px; }
+#title > div > .main { flex-grow: 1; display: flex; flex-direction: column; gap: 10px; }
+#title > div > .main > .adr { display: flex; flex-wrap: wrap; justify-content: center; gap: 0 5px; }
+#title > div > .main > .adr > .txt { width: 100%; font-family: bld; font-size: 19px; line-height: 26px; }
+#title > div > .main > .adr > .select.grp > .data { padding: 0 0 0 4px; border: none; background-color: var(--dark1); }
+#title > div > .main > .adr > .select.grp > .data > a { gap: 0; }
+#title > div > .main > .adr > .select.grp > .data > .list { left: 0; right: unset; width: max-content; min-width: calc(100% - 2px); }
+#title > div > .main > .op { display: flex; flex-wrap: wrap; justify-content: center; gap: 5px; }
+#title > div > .main > .op > .btn.toggle > a { flex-direction: row-reverse; }
+#title > div > .main > .op > .btn.toggle.on > a { color: var(--light); background-color: var(--dark); }
+#title > div > .main > .op > .btn.solde > a > .txt { display: flex; align-items: baseline; gap: 5px; }
+#title > div > .main > .op > .btn.solde > a > .txt > span { font-size: 10px; line-height: 14px; }
+#title > div > .main > .op > .btn.segment.red > a { font-family: bld; color: var(--light); background-color: var(--red); }
+#title > div > .main > .op > .btn.segment.gold > a { font-family: bld; color: var(--dark); background-color: var(--gold); }
+#title > div > .main > .op > .btn.segment.green > a { font-family: bld; color: var(--light); background-color: var(--blue); }
+#title > div > .main > .op > .btn.segment.dark > a { font-family: bld; color: var(--light); background-color: var(--dark); }
+#title > div > .main > .op > .btn.segment > a:hover { border-color: var(--dark); }
+#title > div > .main > .op > .display.cloture > .data > .txt { display: flex; align-items: baseline; gap: 5px; }
+#title > div > .main > .op > .display.cloture > .data > .txt > span { font-size: 10px; line-height: 14px; }
+#title > div > .main > .det { align-self: center; width: 100%; max-width: 900px; }
+#title > div > .main > .det[code="resp"] { display: flex; flex-wrap: wrap; gap: 5px 10px; }
+#title > div > .main > .det[code="resp"] > .display { flex-direction: row; width: calc((100% - 10px) / 2); }
+#title > div > .main > .det[code="resp"] > .display > .label { width: 30px; padding: 8px 5px; font-family: bld; text-align: center; border-radius: 5px 0 0 5px; background-color: var(--dark1); }
+#title > div > .main > .det[code="resp"] > .display > .data { border-radius: 0 5px 5px 0; }
+#title > div > .main > .det[code="resp"] > .display > .data > .code { width: 60px; padding: 2px 0; font-size: 10px; line-height: 14px; text-align: center; word-break: break-all; }
+#title > div > .main > .det[code="resp"] > .display > .data > .tel { width: 30px; padding: 2px 0; font-size: 10px; line-height: 14px; text-align: center; }
+#title > div > .main > .det[code="mission"] { display: flex; flex-wrap: wrap; gap: 5px 10px; }
+#title > div > .main > .det[code="mission"] > .display > .data > .txt { display: flex; gap: 5px; }
+#title > div > .main > .det.off { display: none; }
+#title > div > .op { display: flex; flex-wrap: wrap; gap: 5px; }
+#title > div > .op.l { justify-content: flex-start; }
+#title > div > .op.r { justify-content: flex-end; }
