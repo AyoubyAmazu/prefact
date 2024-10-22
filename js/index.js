@@ -14,14 +14,14 @@ function displayInvalideSave()
 {
   $.ajax({
     url: "index_invalide.php"
-    , beforeSend: function() { loaderShow(); }
-    , complete: function() { loaderHide(); 
-    }
+    ,type :"POST"
     ,data:
     {
-      invalide: "",
+      invalide: "adad",
       adr: $("body > #cont > div > .list > .line > .col.op > .list.on").closest(".line ").children(".col.dossier").children(".sub.code").children("a").text()
     }
+    , beforeSend: function() { loaderShow(); }
+    , complete: function() { loaderHide(); }
     , success: function(data)
     {
         try { var result = JSON.parse(data); } catch(error) { popError(); return; }
@@ -36,7 +36,7 @@ function displayInvalideSave()
 function displayInvalideAdapt()
 {
     $("body > .popup.displayInvalide > div > .op > .btn.cancel > a").off("click").on("click", function(event) { popDown($(event.target).parents(".popup")); });
-    $("body > .popup.displayInvalide > div > .op > .btn.save > a").off("click").on("click", function() { fetch();displayInvalideSave(); });
+    $("body > .popup.displayInvalide > div > .op > .btn.save > a").off("click").on("click", function() { displayInvalideSave(); });
 }
 /**
  * Fetch the html of invalid solde popup

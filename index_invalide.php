@@ -6,7 +6,11 @@
     $opts = array("ajax" => true, "user" => $user);
     $cookie = cookieInit();
     
-    if(isset($_POST["invalide"])){echo "<script>conoole.log('dazt')</script>";}
+    if(isset($_POST[" invalide"]))
+    {
+        echo "<script>console.log('dazt')</script>";
+        die(json_encode(array("code" => 200, "html" => '')));
+    }
 
 
     
