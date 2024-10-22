@@ -6,10 +6,19 @@
     $opts = array("ajax" => true, "user" => $user);
     $cookie = cookieInit();
     
-    if(isset($_POST[" invalide"]))
+    if(isset($_POST["valide"]))
     {
-        echo "<script>console.log('dazt')</script>";
-        die(json_encode(array("code" => 200, "html" => '')));
+        $opts["conn"] = dbStart(array_merge($opts, array("db" => array("dia","prefact"))));
+        $sql = "UPDATE `synthese` SET `solde_valid` = ".$_POST['valide']." WHERE `synthese`.`adr` = (SELECT `id` FROM `adr` WHERE `code` = '".$_POST["adr"]."')";
+        dbExec($sql, array_merge($opts, array("db" => "prefact")));
+        $html = "<div class='popup displayInvalide'><div>";
+        $html .= "<div class='label'>Mis à jour avec succès.</div>";
+        $html .= "<div class='op'>";
+        $html .= formBtn(array("key" => "cancel", "txt" => "Fermer"));
+        $html .= "</div>";
+        $html .= "</div></div>";
+    
+        die(json_encode(array("code" => 200, "html" => $html)));
     }
 
 

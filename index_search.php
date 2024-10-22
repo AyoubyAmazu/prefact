@@ -40,7 +40,7 @@ $select .=$isAnd? " )": '';
 $result = dbSelect($select, array_merge($opts, array('db'=>'prefact')));
 $html = "";
 foreach ($result as $v) {
-   $isValide = $v["solde_valid"] === 0?false:true;
+   $isValide = $v["solde_valid"] === 1;
    $isVerrouille = $v["verrouil"] === 1;
 
     $html .= "<div  class='line'>";
@@ -128,7 +128,7 @@ foreach ($result as $v) {
             $html .= formBtn(array("key" => "displaySegme", "txt" => "Modifer le segmentation","ico"=>"fa-solid fa-layer-group"));
             $html .= formBtn(array("key" => "displayCommentaire", "txt" => "Modifer le commentaire","ico"=>"fa-solid fa-pencil"));
             $html .= formBtn(array("key" => "displayDéverrouiller", "extra"=>array("extra"=>$isVerrouille?"open":"close"),"txt" => $isVerrouille?"Deverrouiller le dossier":"Verrouiller le dossier","ico"=>$isVerrouille ? "fa-solid fa-lock" : "fa-solid fa-lock-open"));
-            $html .= formBtn(array("key" => "displayInvalide","extra"=>array(!$isValide?"valide":"invalide"),"txt" => !$isValide?"Invalider le solde":"Valider le solde","ico"=>!$isValide? "fa-solid fa-circle-check" : "fa-solid fa-circle-xmark"));
+            $html .= formBtn(array("key" => "displayInvalide","extra"=>array($isValide ? "valide" : "invalide"),"txt" => $isValide ? "Invalider le solde" : "Valider le solde","ico"=>$isValide? "fa-solid fa-circle-xmark" : "fa-solid fa-circle-check"));
         $html .= "</div>";
       $html .= "</div>";
 
@@ -154,7 +154,7 @@ foreach ($result as $v) {
      $html .= "<div class='solde'>";
         $html .= formLabel(array(
         "key" => "Solde validé",
-        "icon" => $isValide? "fa-solid fa-circle-check" : "fa-solid fa-circle-xmark",
+        "icon" => $isValide ? "fa-solid fa-circle-check" : "fa-solid fa-circle-xmark",
         "title" => "Additional Information"));
      $html .= "</div>";
 

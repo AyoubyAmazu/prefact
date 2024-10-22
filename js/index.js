@@ -12,20 +12,24 @@ $(document).ready(function () {
  */
 function displayInvalideSave()
 {
+  let isValide = $("body > #cont > div > .list > .line > .col.op > .list.on > .displayInvalide").hasClass("valide");
   $.ajax({
     url: "index_invalide.php"
-    ,type :"POST"
+    ,type: "POST"
+    // ,dataType:"text"
     ,data:
     {
-      invalide: "adad",
-      adr: $("body > #cont > div > .list > .line > .col.op > .list.on").closest(".line ").children(".col.dossier").children(".sub.code").children("a").text()
+      valide: isValide ? 0 : 1,
+      adr: $("body > #cont > div > .list > .line > .col.op > .list.on").closest(".line ").children(".col.dossier").children(".sub.code").children("a").text(),
     }
     , beforeSend: function() { loaderShow(); }
     , complete: function() { loaderHide(); }
     , success: function(data)
     {
+      // console.log(data);
+      
         try { var result = JSON.parse(data); } catch(error) { popError(); return; }
-        if(result["code"] == 200) { popUp(result["html"]); return; }
+        if(result["code"] == 200) { popDown('.popup');popUp(result["html"]); displayInvalideAdapt();fetch();return; }
         popError(result["txt"], result["btn"]);
     }
 });
@@ -35,7 +39,7 @@ function displayInvalideSave()
  */
 function displayInvalideAdapt()
 {
-    $("body > .popup.displayInvalide > div > .op > .btn.cancel > a").off("click").on("click", function(event) { popDown($(event.target).parents(".popup")); });
+    $("body > .popup.displayInvalide > div > .op > .btn.cancel > a").off("click").on("click", function(event) {popDown($(event.target).parents(".popup")); });
     $("body > .popup.displayInvalide > div > .op > .btn.save > a").off("click").on("click", function() { displayInvalideSave(); });
 }
 /**
@@ -43,17 +47,17 @@ function displayInvalideAdapt()
  */
 function displayInvalide()
 {
-    $.ajax({
-        url: "index_invalide.php"
-        , beforeSend: function() { loaderShow(); }
-        , complete: function() { loaderHide(); }
-        , success: function(data)
-        {
-            try { var result = JSON.parse(data); } catch(error) { popError(); return; }
-            if(result["code"] == 200) { popUp(result["html"]); displayInvalideAdapt(); return; }
-            popError(result["txt"], result["btn"]);
-        }
-    });
+  $.ajax({
+    url: "index_invalide.php"
+    , beforeSend: function() { loaderShow(); }
+    , complete: function() { loaderHide(); }
+    , success: function(data)
+    {
+        try { var result = JSON.parse(data); } catch(error) { popError(); return; }
+        if(result["code"] == 200) { popUp(result["html"]); displayInvalideAdapt(); return; }
+        popError(result["txt"], result["btn"]);
+    }
+  });
 }
 /**
  * Ajax sends post data of deverrouiller

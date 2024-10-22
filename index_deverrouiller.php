@@ -12,8 +12,7 @@ if (isset($_POST["deverroui"])) {
     $sql = "UPDATE `synthese` SET `verrouil` = ".$_POST['deverroui']." WHERE `synthese`.`adr` = (SELECT `id` FROM `adr` WHERE `code` = '".$_POST["adr"]."')";
     dbExec($sql, array_merge($opts, array("db" => "prefact")));
     $html = "<div class='popup displayDéverrouiller'><div>";
-    $html .= "<div class='label'>updated Succesfully</div>";//TODO translate to french
-    $html .= "<div class='txt'>".$sql."</div>";
+    $html .= "<div class='label'>Mis à jour avec succès.</div>";
     $html .= "<div class='op'>";
     $html .= formBtn(array("key" => "cancel", "txt" => "Fermer"));
     $html .= "</div>";
