@@ -13,7 +13,7 @@ if (isset($_POST["deverroui"])) {
     dbExec($sql, array_merge($opts, array("db" => "prefact")));
     $html = "<div class='popup displayDéverrouiller'><div>";
     $html .= "<div class='label'>updated Succesfully</div>";//TODO translate to french
-    $html .= "<div class='txt'>".$_POST["deverroui"]."</div>";
+    $html .= "<div class='txt'>".$sql."</div>";
     $html .= "<div class='op'>";
     $html .= formBtn(array("key" => "cancel", "txt" => "Fermer"));
     $html .= "</div>";

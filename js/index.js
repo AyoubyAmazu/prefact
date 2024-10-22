@@ -61,7 +61,6 @@ function displayInvalide()
 function displayDeverrouillerSave()
 {
   let isOpne = $("body > #cont > div > .list > .line > .col.op > .list.on > .displayDéverrouiller").hasClass("open");
-  // console.log(isOpne);
   
   $.ajax({
     url: "index_deverrouiller.php"
@@ -101,7 +100,7 @@ function displayDeverrouiller()
         , success: function(data)
         {
             try { var result = JSON.parse(data); } catch(error) { popError(); return; }
-            if(result["code"] == 200) { popDown($('.popup'));popUp(result["html"]); fetch();displayDeverrouillerAdapt(); return; }
+            if(result["code"] == 200) { popDown($('.popup'));popUp(result["html"]);displayDeverrouillerAdapt(); return; }
             popError(result["txt"], result["btn"]);
         }
     });
