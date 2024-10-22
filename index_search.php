@@ -127,8 +127,8 @@ foreach ($result as $v) {
             $html .= formBtn(array("key" => "crm", "txt" => "Ouvrir sur le CRM","ico"=>"fa-solid fa-arrow-up-right-from-square"));
             $html .= formBtn(array("key" => "displaySegme", "txt" => "Modifer le segmentation","ico"=>"fa-solid fa-layer-group"));
             $html .= formBtn(array("key" => "displayCommentaire", "txt" => "Modifer le commentaire","ico"=>"fa-solid fa-pencil"));
-            $html .= formBtn(array("key" => "displayDéverrouiller", array("extra"=>!$isValide?"close":"open"),"txt" => !$isVerrouille?"Déverrouiller le dossier":"Verrouiller le dossier","ico"=>!$isVerrouille ? "fa-solid fa-lock" : "fa-solid fa-lock-open"));
-            $html .= formBtn(array("key" => "displayInvalide","extra"=>array(!$isValide?"valide":"invalide","txt" => !$isValide?"Invalider le solde":"Valider le solde"),"ico"=>!$isValide? "fa-solid fa-circle-check" : "fa-solid fa-circle-xmark"));
+            $html .= formBtn(array("key" => "displayDéverrouiller", "extra"=>array("extra"=>!$isValide?"close":"open"),"txt" => !$isVerrouille?"Déverrouiller le dossier":"Verrouiller le dossier","ico"=>!$isVerrouille ? "fa-solid fa-lock" : "fa-solid fa-lock-open"));
+            $html .= formBtn(array("key" => "displayInvalide","extra"=>array(!$isValide?"valide":"invalide"),"txt" => !$isValide?"Invalider le solde":"Valider le solde","ico"=>!$isValide? "fa-solid fa-circle-check" : "fa-solid fa-circle-xmark"));
         $html .= "</div>";
       $html .= "</div>";
 

@@ -60,20 +60,23 @@ function displayInvalide()
  */
 function displayDeverrouillerSave()
 {
+  let isOpne = $("body > #cont > div > .list > .line > .col.op > .list.on > .displayDéverrouiller").hasClass("open");
+  // console.log(isOpne);
+  
   $.ajax({
     url: "index_deverrouiller.php"
     , beforeSend: function() { loaderShow(); }
-    , complete: function() { loaderHide(); 
-    }
+    , complete: function() { loaderHide(); }
+    ,type: "POST"
     ,data:
     {
-      deverroui: "",
-      adr: $("body > #cont > div > .list > .line > .col.op > .list.on").closest(".line ").children(".col.dossier").children(".sub.code").children("a").text()
+      deverroui: isOpne ? 0 : 1,
+      adr: $("body > #cont > div > .list > .line > .col.op > .list.on").closest(".line ").children(".col.dossier").children(".sub.code").children("a").text(),
     }
     , success: function(data)
-    {
+    {      
         try { var result = JSON.parse(data); } catch(error) { popError(); return; }
-        if(result["code"] == 200) { popUp(result["html"]); displayInvalideAdapt(); return; }
+        if(result["code"] == 200) { popDown($(".popup"));popUp(result["html"]); displayDeverrouillerAdapt();fetch(); return; }
         popError(result["txt"], result["btn"]);
     }
 });
