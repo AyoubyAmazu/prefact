@@ -123,7 +123,7 @@ foreach ($result as $v) {
       $html .= "<div  class='col op'>";
          $html .= formBtn(array("key"=>"displayMenu" , "ico"=>"fa-solid fa-ellipsis-vertical" , "id"=>"popupMenu"));
          $html.="<div class='list off'>";
-            $html .= formBtn(array("key" => "syntheseDossier", "txt" => "Synthèse du dossier  ","ico"=>"fa-solid fa-eye","href"=>"synthese.php" ));
+            $html .= formBtn(array("key" => "recap", "ico" => "eye", "txt" => "Récap du dossier", "href" => APPurl . "recap.php?d=" . cryptSave($v["code"])));
             $html .= formBtn(array("key" => "crm", "txt" => "Ouvrir sur le CRM","ico"=>"fa-solid fa-arrow-up-right-from-square"));
             $html .= formBtn(array("key" => "displaySegme", "txt" => "Modifer le segmentation","ico"=>"fa-solid fa-layer-group"));
             $html .= formBtn(array("key" => "displayCommentaire", "txt" => "Modifer le commentaire","ico"=>"fa-solid fa-pencil"));

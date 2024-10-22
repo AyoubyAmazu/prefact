@@ -10,6 +10,7 @@
     define("APPterms", "");
     define("APPprivacy", "");
     define("APPversion", date("YmdHis"));
+    define("APPscript", $_SERVER["REQUEST_SCHEME"] . "://" . $_SERVER["HTTP_HOST"] . $_SERVER["SCRIPT_NAME"]);
 
     define("AUTHout", "");
     
@@ -20,7 +21,7 @@
     define("COOKIEsecure", false);
     define("COOKIEhttp", true);
 
-    define("CRYPTkey", "");
+    define("CRYPTkey", "ZuOiPk5L9PNIenhXmEWyy9T1IUoZrhVL");
     
     define("DATAresp", json_encode(array(
         "rd" => array("code" => "rd", "abr" => "RD", "txt" => "Responsable Déontologique", "all" => "Tous les responsables déontologiques", "num" => 1)
@@ -63,5 +64,5 @@
     require_once(APPlocal . "require/error.php");
     require_once(APPlocal . "require/form.php");
     require_once(APPlocal . "require/html.php");
-
+    require_once(APPlocal . "require/teams.php");
 ?>

@@ -95,7 +95,7 @@ input[type="password"]::-ms-clear { display: none; }
 
 .checkbox { display: flex; flex-direction: column; }
 .checkbox > .label { padding: 0 10px; text-align: left; }
-.checkbox > .data { flex-grow: 1; display: flex; padding: 5px 10px; border-radius: 5px; border: 1px solid var(--dark); -webkit-border-radius:; -moz-border-radius:; -ms-border-radius:; -o-border-radius:; }
+.checkbox > .data { flex-grow: 1; display: flex; padding: 5px 10px; border-radius: 5px; border: 1px solid var(--dark); -webkit-border-radius: 5px; -moz-border-radius: 5px; -ms-border-radius: 5px; -o-border-radius: 5px; }
 .checkbox > .data > .btn > a { border: none; }
 .checkbox > .data > .list { flex-grow: 1; display: flex; flex-wrap: wrap; justify-content: center; gap: 0 10px; }
 .checkbox > .data > .list > .option { display: flex; flex-direction: column; }
@@ -103,6 +103,20 @@ input[type="password"]::-ms-clear { display: none; }
 .checkbox > .data > .list > .option > a > .ico { flex-shrink: 0; color: var(--dark5); }
 .checkbox > .data > .list > .option > a > .txt { text-align: left; }
 .checkbox > .data > .list > .option.on > a > .ico { color: var(--dark);}
+
+.display { display: flex; flex-direction: column; }
+.display > .label { padding: 0 6px; font-size: 10px; line-height: 14px; text-align: left; }
+.display > .data { flex-grow: 1; display: flex; gap: 5px; padding: 5px; border-radius: 5px; border-radius: 5px; border: 1px solid var(--dark1); }
+.display > .data > .txt { flex-grow: 1; text-align: left; }
+.display > .data > .txt:empty::after { content: "-"; }
+.display > .data > .btn > a { padding: 1px 5px; font-size: 10px; line-height: 14px; }
+.display > .data > .btn > a > .ico { height: 14px; }
+.display > .data > .btn.min > a { align-items: center; padding: 1px; }
+.display > .data > .btn.min > a > .ico { width: 14px; }
+.display > .data > .btn.min > a > .txt { padding: 0 4px; }
+.display.c > .data > .txt { text-align: center; }
+.display.r > .data > .txt { text-align: right; }
+.display.off { display: none;}
 
 @media only screen and (max-width: 1600px) /* 1401 -> 1600 */ {}
 @media only screen and (max-width: 1400px) /* 1201 -> 1400 */ {}
