@@ -50,7 +50,6 @@
  
     
     
-    // TODO : CHECK sortCol IN displayCol (COOKIE)
  
     $sortNull = array("code" => "dossierCode", "txt" => "Code", "title" => "Trier par : Code du dossier", "attr" => array("parent='dossier'"), "parent" => "dossier");
  
@@ -70,7 +69,6 @@
     $sql .= ", (SELECT `temps_dur` FROM `synthese` x WHERE x.`adr` = z.`id` AND `annee` = " . $opts["filter"]["annee"] . " LIMIT 1) AS 'temps_dur'";
     $sql .= " FROM `adr` z" . ((count($where) == 0)? "" : (" WHERE " . implode(" AND ", $where)));
     $list = dbSelect($sql, array_merge($opts, array("db" => "prefact")));
-    $cont ="";
 
     $cont = "<div class='op'>";
         $cont .= "<div class='side'>";

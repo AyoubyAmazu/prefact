@@ -33,6 +33,7 @@ function htmlOpts($opts = array())
     if (!isset($opts["user"]["id"])) $opts["user"]["id"] = "";
     if (!isset($opts["user"]["soc"])) $opts["user"]["soc"] = "";
     if (!isset($opts["user"]["socList"])) $opts["user"]["socList"] = array();
+    if(!isset($opts["grp"])) $opts["grp"] = true;
 
     return $opts;
 }
@@ -121,7 +122,6 @@ function htmlFilter($opts = array())
         $html .= "</div>";
     $html .= "</div>";
     
-    // echo '<script>console.log(' . json_encode($opts["filter"]["codenaf"]) . ');</script>';
     return $html;
 }
 /**
@@ -293,15 +293,104 @@ function htmlFilterData($opts = array())
 }
 
 function htmlTitle($opts = array())
-{
-    $opts = htmlOpts($opts);
+    {
+        $dtMonth = json_decode(DTmonth, true);
+        $dataResp = json_decode(DATAresp, true);
+        $dataSegment = json_decode(DATAsegment, true);
+        $opts = htmlOpts($opts);
+        $cookie = cookieInit();
 
-    $html = "<div>";
-    // TO-DO
-    $html .= "</div>";
+        if($opts["adr"] === "" || $opts["adr"] === false) return "";
+        
+        $sql = "SELECT * FROM `adr` WHERE `id` = " . $opts["adr"] . " LIMIT 1";
+        $adr = dbSelect($sql, array_merge($opts, array("db" => "prefact")));
+        if(count($adr) == 0) err(array_merge($opts, array("txt" => "Dossier non trouvé", "det" => "ID: " . $opts["adr"], "btn" => APPurl)));
 
-    return $html;
-}
+        $grpCode = $adr[0]["grp"];
+        $grpTxt = $adr[0]["grp_txt"];
+        $grpList = array();
+        if($grpCode == "") $grpTxt = "";
+        elseif($opts["grp"])
+        {
+            $sql = "SELECT `id`, `code`, `txt` FROM `adr` WHERE `grp` LIKE '" . $grpCode . "' AND `id` <> " . $adr[0]["id"];
+            $result = dbSelect($sql, array_merge($opts, array("db" => "prefact")));
+            foreach($result as $v) array_push($grpList, array("code" => $v["code"], "txt" => $v["txt"], "href" => APPscript . "?d=" . $v["id"]));
+            usort($grpList, function ($a, $b) { return (($a["txt"] < $b["txt"]) ? -1 : (($a["txt"] > $b["txt"]) ? 1 : 0)); });
+        }
+        if($grpTxt == "") $grpTxt = $grpCode;
+        $grpSelected = array("txt" => $grpTxt, "title" => "Groupe : " . $grpTxt);
+
+        $segmentIco = ((in_array($adr[0]["segment"], array_keys($dataSegment)))? "" : "pencil");
+        $segmentTxt = ((in_array($adr[0]["segment"], array_keys($dataSegment)))? $dataSegment[$adr[0]["segment"]]["abr"] : "Segmentation");
+        $segmentTitle = implode(" : ", array_filter(array("Modifier la segmentation", ((in_array($adr[0]["segment"], array_keys($dataSegment)))? ($dataSegment[$adr[0]["segment"]]["abr"] . " - " . $dataSegment[$adr[0]["segment"]]["txt"]) : ""))));
+        $segmentColor = ((in_array($adr[0]["segment"], array_keys($dataSegment)))? $dataSegment[$adr[0]["segment"]]["color"] : "");
+        
+        $solde = (($adr[0]["solde"] == "")? "-" : (number_format(floatval($adr[0]["solde"]), 2, ",", " ") . " €"));
+
+        $clotureTxt = (($adr[0]["cloture"] == "")? "-" : $dtMonth[intval(substr($adr[0]["cloture"], 4, 2))]);
+        $clotureTitle = (($adr[0]["cloture"] == "")? "-" : dtDate($adr[0]["cloture"]));
+
+        $desc = "123";
+                
+        $sql = "SELECT * FROM `mission` WHERE `adr` = " . $opts["adr"] . " ORDER BY `date` DESC";
+        $mission = dbSelect($sql, array_merge($opts, array("db" => "prefact")));
+
+        $html = "<div>";
+            $html .= "<div class='op l'>" . formBtn(array("key" => "refresh", "ico" => "rotate", "title" => "Rafraichir les données manuelement")) . "</div>";
+            $html .= "<div class='main'>";
+                $html .= "<div class='adr'>";
+                    $html .= "<div class='txt' title='Nom du dossier : " . $adr[0]["txt"] . "'>" . $adr[0]["txt"] . "</div>";
+                    $html .= "<div class='code' title='Code du dossier : " . $adr[0]["code"] . "'>" . $adr[0]["code"] . "</div>";
+                    if(count($grpList) != 0) $html .= "<div class='sep'>-</div>" . formSelect(array("key" => "grp", "selected" => $grpSelected, "list" => $grpList, "code" => true));
+                    elseif($grpTxt != "") $html .= "<div class='sep'>-</div><div class='grp'>" . $grpTxt . "</div>";
+                $html .= "</div>";
+                $html .= "<div class='op'>";
+                    if($desc != "") $html .= formBtn(array("key" => "desc", "ico" => "angle-" . (($cookie["title"]["desc"])? "up" : "down"), "txt" => "Description", "attr" => array("code='desc'"), "extra" => array_filter(array("toggle", (($cookie["title"]["desc"])? "on" : "")))));
+                    $html .= formBtn(array("key" => "resp", "ico" => "angle-" . (($cookie["title"]["resp"])? "up" : "down"), "txt" => "Responsables", "attr" => array("code='resp'"), "extra" => array_filter(array("toggle", (($cookie["title"]["resp"])? "on" : "")))));
+                    if(count($mission) != 0) $html .= formBtn(array("key" => "mission", "ico" => "angle-" . (($cookie["title"]["mission"])? "up" : "down"), "txt" => "Lettres de mission", "attr" => array("code='mission'"), "extra" => array_filter(array("toggle", (($cookie["title"]["mission"])? "on" : "")))));
+                    $html .= formBtn(array("key" => "solde", "txt" => "<span>Solde :</span><b>" . $solde . "</b>", "title" => "Afficher le détail du solde : " . $solde, "href" => "", "target" => "_blank"));
+                    $html .= formDisplay(array("key" => "cloture", "txt" => "<span>Clôture :</span><b>" . $clotureTxt . "</b>", "title" => "Prochaine date de cloture : " . $clotureTitle));
+                    $html .= formBtn(array("key" => "segment", "ico" => $segmentIco, "txt" => $segmentTxt, "title" => $segmentTitle, "extra" => array_filter(array($segmentColor))));
+                    $html .= formBtn(array("key" => "crm", "ico" => "up-right-from-square", "txt" => "CRM", "title" => "Ouvrir sur le CRM", "href" => "", "target" => "_blank"));
+                $html .= "</div>";
+                if($desc != "") $html .= "<div class='det" . (($cookie["title"]["desc"])? "" : " off") . "' code='desc'>" . formDisplay(array("txt" => $desc, "title" => "Description du dossier dans le CRM")) . "</div>";
+                $html .= "<div class='det" . (($cookie["title"]["resp"])? "" : " off") . "' code='resp'>";
+                    foreach($dataResp as $v)
+                    {
+                        $code = (($adr[0][$v["code"]] == "")? "" : $adr[0][$v["code"]]);
+                        $txt = (($adr[0][$v["code"] . "_txt"] == "")? "" : $adr[0][$v["code"] . "_txt"]);
+                        if($txt == "") $txt = $code;
+                        $op = array();
+                        array_push($op, array("type" => "post", "txt" => "<div class='code'>" . $code . "</div>"));
+                        array_push($op, array("type" => "post", "txt" => "<div class='tel'>" . $adr[0][$v["code"] . "_tel"] . "</div>"));
+                        array_push($op, array("type" => "post", "txt" => formBtn(array("key" => "teams", "ico" => "comments", "title" => "Contacter par Teams", "href" => teams(array($adr[0][$v["code"] . "_email"])), "readonly" => ($adr[0][$v["code"] . "_email"] == "")))));
+                        array_push($op, array("type" => "post", "txt" => formBtn(array("key" => "mail", "ico" => "envelope", "title" => "Contacter par Email", "href" => (($adr[0][$v["code"] . "_email"] == "")? "" : ("mailto:" . $adr[0][$v["code"] . "_email"])), "readonly" => ($adr[0][$v["code"] . "_email"] == "")))));
+                        $title = $v["txt"] . " (" . $v["abr"] . ")" . (($txt == "")? "" : (" : " . $txt . (($code == "" || $code == $txt)? "" : (" (" . $code . ")"))));
+                        $html .= formDisplay(array("key" => $v["code"], "label" => $v["abr"], "txt" => $txt, "title" => $title, "op" => $op));
+                    }
+                $html .= "</div>";
+                if(count($mission) != 0)
+                {
+                    $off = false;
+                    $offY = "";
+                    $html .= "<div class='det" . (($cookie["title"]["mission"])? "" : " off") . "' code='mission'>";
+                        foreach($mission as $v)
+                        {
+                            $y = intval(substr($v["date"], 0, 4));
+                            if($offY == "") $offY = $y; elseif($offY != $y) $off = true;
+                            $txt = "<span>" . dtDate($v["date"]) . " :</span><b>" . number_format(floatval($v["montant"]), 2, ",", " ") . " €</b>";
+                            $title = "Lettre de mission :\n- Date : " . dtDate($v["date"]) . "\n- Montant : " . number_format(floatval($v["montant"]), 2, ",", " ") . " €";
+                            $html .= formDisplay(array("txt" => $txt, "title" => $title, "attr" => array("y='" . $y . "'"), "off" => $off));
+                        }
+                        if($off) $html .= formBtn(array("key" => "plus", "ico" => "ellipsis", "title" => "Afficher plus"));
+                    $html .= "</div>";
+                }
+            $html .= "</div>";
+            $html .= "<div class='op r'>" . formBtn(array("key" => "cancel", "ico" => "xmark", "title" => "Revenir à la liste des dossiers")) . "</div>";
+        $html .= "</div>";
+
+        return $html;
+    }
 /**
  * Creates html of footer
  * @return string html

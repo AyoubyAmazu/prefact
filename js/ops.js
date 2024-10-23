@@ -76,7 +76,34 @@ function filterDel()
         obj["filter"][k] = "";
     });
 
-    // cookieSave(obj, true);
+    cookieSave(obj, true);
+}
+
+function titleToggle(div)
+{
+    var code = $(div).attr("code"); if(code == undefined || code == null || code == "") return;
+    $("#title > div > .main > .det[code='" + code + "']").toggleClass("off");
+    if($("#title > div > .main > .det[code='" + code + "']").hasClass("off")) $(div).removeClass("on").children("a").children(".ico").children("i").addClass("fa-angle-down").removeClass("fa-angle-up");
+    else $(div).addClass("on").children("a").children(".ico").children("i").removeClass("fa-angle-down").addClass("fa-angle-up");
+    var obj = { title: {} }; obj["title"][code] = !$("#title > div > .main > .det[code='" + code + "']").hasClass("off");
+    cookieSave(obj, false);
+}
+
+function cookieSave(obj, url)
+{
+    if(obj == undefined || obj == null || obj == "") return;
+    if(url == undefined || url == null || url == "") url = false;
+
+    $.ajax({
+        url: APPurl + "cookie.php", method: "post", data: { obj: JSON.stringify(obj) }
+        , beforeSend: function() { if(url !== false) loaderShow(); }
+        , success: function(data)
+        {
+            try { var result = JSON.parse(data); } catch(error) { popError(); if(url !== false) loaderHide(); return; }
+            if(result["code"] == 200) { if(url === true) location.reload(); else if(url !== false) window.open(url, "_self"); return; }
+            popError(result["txt"], result["btn"], result["det"]); if(url !== false) loaderHide();
+        }
+    });
 }
 
 $(document).ready(function()
@@ -89,4 +116,7 @@ $(document).ready(function()
     $("#filter > div > .select > .data > .list > .option > a").off("click").on("click", function(event) { formSelectOption($(event.target).parents(".option")); });
     $("#filter > div > .op > .btn.reset > a").off("click").on("click", function() { filterDel(); });
     $("#cont > div >.op > .side > .sortCol > .data > a").off("click").on("click", function(event) { formSelectInit($(event.target).parents(".select")); });
+    $("#title > div > .main > .adr > .select.grp > .data > a").off("click").on("click", function(event) { formSelectInit($(event.target).parents(".select")); });
+    $("#title > div > .main > .adr > .select.grp > .data > input").off("input").on("input", function(event) { formSelectFilter($(event.target).parents(".select")); });
+    $("#title > div > .main > .op > .btn.toggle > a").off("click").on("click", function(event) { titleToggle($(event.target).parents(".btn")); });
 });

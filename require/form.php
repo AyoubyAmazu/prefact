@@ -42,7 +42,48 @@
 
         return $html;
     }
+    function formDisplay($opts = array())
+    {
+        if(!isset($opts["key"])) $opts["key"] = ""; $opts["key"] = str_replace("'", "&apos;", $opts["key"]);
+        if(!isset($opts["align"])) $opts["align"] = ""; if(!in_array($opts["align"], array("c", "r"))) $opts["align"] = "";
+        if(!isset($opts["label"])) $opts["label"] = ""; $opts["label"] = str_replace("'", "&apos;", $opts["label"]);
+        if(!isset($opts["txt"])) $opts["txt"] = ""; $opts["txt"] = str_replace("'", "&apos;", $opts["txt"]);
+        if(!isset($opts["title"])) $opts["title"] = ""; if($opts["title"] == "") $opts["title"] = implode(" : ", array_filter(array_unique(array($opts["label"], $opts["txt"])))); $opts["title"] = str_replace("'", "&apos;", $opts["title"]);
+        if(!isset($opts["off"])) $opts["off"] = false;
+        if(!isset($opts["extra"])) $opts["extra"] = array();
+        if(!isset($opts["attr"])) $opts["attr"] = array();
+        if(!isset($opts["op"])) $opts["op"] = array();
 
+        $div = array();
+        array_push($div, "display");
+        if($opts["align"] != "") array_push($div, $opts["align"]);
+        if($opts["key"] != "") array_push($div, $opts["key"]);
+        if(count($opts["extra"]) != 0) $div = array_merge($div, $opts["extra"]);
+        if($opts["off"]) array_push($div, "off");
+
+        $attr = array();
+        array_push($attr, "class='" . implode(" ", $div) . "'");
+        if(count($opts["attr"]) != 0) $attr = array_merge($attr, $opts["attr"]);
+        
+        $label = array();
+        array_push($label, "class='label'");
+        if($opts["title"] != "") array_push($label, "title='" . $opts["title"] . "'");
+                
+        $data = array();
+        array_push($data, "class='txt'");
+        if($opts["title"] != "") array_push($data, "title='" . $opts["title"] . "'");
+
+        $html = "<div " . implode(" ", $attr) . ">";
+            if($opts["label"] != "") $html .= "<div " . implode(" ", $label) . ">" . $opts["label"] . "</div>";
+            $html .= "<div class='data'>";
+                foreach($opts["op"] as $v) if($v["type"] == "pre") $html .= $v["txt"];
+                $html .= "<div " . implode(" ", $data) . ">" . $opts["txt"] . "</div>";
+                foreach($opts["op"] as $v) if($v["type"] == "post") $html .= $v["txt"];
+            $html .= "</div>";
+        $html .= "</div>";
+
+        return $html;
+    }
     function formInput($opts = array())
     {
         if(!isset($opts["key"])) $opts["key"] = ""; $opts["key"] = str_replace("'", "&apos;", $opts["key"]);
