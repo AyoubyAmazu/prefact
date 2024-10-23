@@ -150,17 +150,16 @@ foreach ($result as $v) {
         "value" => "0 000 000,00",
         "title" => "Additional Information"));
      $html .= "</div>";
-   //   print_r($v["solde_valid"]);
      $html .= "<div class='solde'>";
         $html .= formLabel(array(
-        "key" => "Solde validé",
+        "key" => $isValide ?"Solde validé":"Solde Invalidé",
         "icon" => $isValide ? "fa-solid fa-circle-check" : "fa-solid fa-circle-xmark",
         "title" => "Additional Information"));
      $html .= "</div>";
 
      $html .= "<div class='ver'>";
         $html .= formLabel(array(
-        "key" => "Dossier verrouillé",
+        "key" => $isVerrouille?"Dossier verrouillé":"Dossier Deverrouillé",
         "icon" => $isVerrouille ? "fa-solid fa-lock-open" : "fa-solid fa-lock",
         "title" => "Additional Information"));
      $html .= "</div>";
