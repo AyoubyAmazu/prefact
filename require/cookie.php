@@ -21,6 +21,10 @@
         if(!isset($obj["index"]["sortDir"])) $obj["index"]["sortDir"] = "ASC";
         if(!isset($obj["index"]["displayCol"])) $obj["index"]["displayCol"] = array("dossierCode", "dossierNom");
 
+        if(!isset($obj["title"])) $obj["title"] = array();
+        if(!isset($obj["title"]["desc"])) $obj["title"]["desc"] = false;
+        if(!isset($obj["title"]["resp"])) $obj["title"]["resp"] = false;
+        if(!isset($obj["title"]["mission"])) $obj["title"]["mission"] = false;
 
         return $obj;
     }

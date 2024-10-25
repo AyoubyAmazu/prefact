@@ -2,7 +2,7 @@ body > #cont > div > .op { display: flex; flex-wrap: wrap; justify-content: spac
 body > #cont > div > .op > .side { display: flex; flex-wrap: wrap; gap: 10px; font-weight: bld; }
 body > #cont > div > .op > .side > .select.sortCol { flex-direction: row; align-items: center; gap: 0 5px; width: 300px; }
 body > #cont > div > .op > .side > .select.sortCol > .label { padding: 0; font-size: 13px; line-height: 18px; font-family: bld;}
-body > #cont > div > .op > .side > .select.sortCol > .data  {font-size: 13px; line-height: 18px; font-family: bld; padding: 0%;}
+body > #cont > div > .op > .side > .select.sortCol > .data  {font-size: 13px; line-height: 18px; font-family: bld; padding: 3px;}
 body > #cont > div > .op > .side > .select.sortCol > .data > .list > .option.readonly > a > div  {font-size: 13px; line-height: 18px; font-family: bld;  }
 body > #cont > div > .op > .side > .select.sortCol > .data > .list > .option > a > div  {font-size: 13px; line-height: 18px; font-family: txt;   }
 body > #cont > div > .op > .side > .checkbox.sortDir > .data > .list {font-size: 13px; line-height: 18px; font-family: bld;}

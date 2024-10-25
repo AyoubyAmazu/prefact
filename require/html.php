@@ -302,7 +302,10 @@ function htmlTitle($opts = array())
 
         if($opts["adr"] === "" || $opts["adr"] === false) return "";
         
-        $sql = "SELECT * FROM `adr` WHERE `id` = " . $opts["adr"] . " LIMIT 1";
+        $sql = "SELECT a.*, 
+       (SELECT `solde` FROM `synthese` s WHERE s.`adr` = a.code) AS synthese_data
+       FROM `adr` AS a 
+       WHERE a.`code` = '".$opts['adr']."'";
         $adr = dbSelect($sql, array_merge($opts, array("db" => "prefact")));
         if(count($adr) == 0) err(array_merge($opts, array("txt" => "Dossier non trouvé", "det" => "ID: " . $opts["adr"], "btn" => APPurl)));
 
@@ -312,7 +315,7 @@ function htmlTitle($opts = array())
         if($grpCode == "") $grpTxt = "";
         elseif($opts["grp"])
         {
-            $sql = "SELECT `id`, `code`, `txt` FROM `adr` WHERE `grp` LIKE '" . $grpCode . "' AND `id` <> " . $adr[0]["id"];
+            $sql = "SELECT `id`, `code`, `txt` FROM `adr` WHERE `grp` LIKE '" . $grpCode . "' AND `id` = " . $adr[0]["id"];
             $result = dbSelect($sql, array_merge($opts, array("db" => "prefact")));
             foreach($result as $v) array_push($grpList, array("code" => $v["code"], "txt" => $v["txt"], "href" => APPscript . "?d=" . $v["id"]));
             usort($grpList, function ($a, $b) { return (($a["txt"] < $b["txt"]) ? -1 : (($a["txt"] > $b["txt"]) ? 1 : 0)); });
@@ -332,7 +335,7 @@ function htmlTitle($opts = array())
 
         $desc = "123";
                 
-        $sql = "SELECT * FROM `mission` WHERE `adr` = " . $opts["adr"] . " ORDER BY `date` DESC";
+        $sql = "SELECT * FROM `mission` WHERE `adr` = '" . $opts["adr"] . "' ORDER BY `date` DESC";
         $mission = dbSelect($sql, array_merge($opts, array("db" => "prefact")));
 
         $html = "<div>";
@@ -362,9 +365,9 @@ function htmlTitle($opts = array())
                         if($txt == "") $txt = $code;
                         $op = array();
                         array_push($op, array("type" => "post", "txt" => "<div class='code'>" . $code . "</div>"));
-                        array_push($op, array("type" => "post", "txt" => "<div class='tel'>" . $adr[0][$v["code"] . "_tel"] . "</div>"));
-                        array_push($op, array("type" => "post", "txt" => formBtn(array("key" => "teams", "ico" => "comments", "title" => "Contacter par Teams", "href" => teams(array($adr[0][$v["code"] . "_email"])), "readonly" => ($adr[0][$v["code"] . "_email"] == "")))));
-                        array_push($op, array("type" => "post", "txt" => formBtn(array("key" => "mail", "ico" => "envelope", "title" => "Contacter par Email", "href" => (($adr[0][$v["code"] . "_email"] == "")? "" : ("mailto:" . $adr[0][$v["code"] . "_email"])), "readonly" => ($adr[0][$v["code"] . "_email"] == "")))));
+                        // array_push($op, array("type" => "post", "txt" => "<div class='tel'>" . $adr[0][$v["code"] . "_tel"] . "</div>"));
+                        // array_push($op, array("type" => "post", "txt" => formBtn(array("key" => "teams", "ico" => "comments", "title" => "Contacter par Teams", "href" => teams(array($adr[0][$v["code"] . "_email"])), "readonly" => ($adr[0][$v["code"] . "_email"] == "")))));
+                        // array_push($op, array("type" => "post", "txt" => formBtn(array("key" => "mail", "ico" => "envelope", "title" => "Contacter par Email", "href" => (($adr[0][$v["code"] . "_email"] == "")? "" : ("mailto:" . $adr[0][$v["code"] . "_email"])), "readonly" => ($adr[0][$v["code"] . "_email"] == "")))));
                         $title = $v["txt"] . " (" . $v["abr"] . ")" . (($txt == "")? "" : (" : " . $txt . (($code == "" || $code == $txt)? "" : (" (" . $code . ")"))));
                         $html .= formDisplay(array("key" => $v["code"], "label" => $v["abr"], "txt" => $txt, "title" => $title, "op" => $op));
                     }
