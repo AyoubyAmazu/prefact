@@ -328,8 +328,7 @@ function htmlTitle($opts = array())
         $segmentTitle = implode(" : ", array_filter(array("Modifier la segmentation", ((in_array($adr[0]["segment"], array_keys($dataSegment)))? ($dataSegment[$adr[0]["segment"]]["abr"] . " - " . $dataSegment[$adr[0]["segment"]]["txt"]) : ""))));
         $segmentColor = ((in_array($adr[0]["segment"], array_keys($dataSegment)))? $dataSegment[$adr[0]["segment"]]["color"] : "");
         
-        $solde = (($adr[0]["solde"] == "")? "-" : (number_format(floatval($adr[0]["solde"]), 2, ",", " ") . " €"));
-
+        $solde = (($adr[0]["synthese_data"] == "")? "-" : (number_format(floatval($adr[0]["synthese_data"]), 2, ",", " ") . " €"));
         $clotureTxt = (($adr[0]["cloture"] == "")? "-" : $dtMonth[intval(substr($adr[0]["cloture"], 4, 2))]);
         $clotureTitle = (($adr[0]["cloture"] == "")? "-" : dtDate($adr[0]["cloture"]));
 
