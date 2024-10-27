@@ -14,7 +14,7 @@ body > #cont > div > .op > .side > .select.sortAnalyse > .data > .list > .option
 
 /* years select */
 body > #cont > div > .years {display: flex; flex-wrap: wrap; justify-content: space-around;}
-body > #cont > div > .years > .btn.year > a {background-color: transparent;}
+body > #cont > div > .years > .btn.year > a {width:80px;background-color: transparent;}
 body > #cont > div > .years > .btn.year > a:hover {background-color: var(--dark);}
 body > #cont > div > .years > .btn.angleRight {align-self: center;}
 

@@ -94,6 +94,7 @@ function formSelectHide(div) { $(((div == undefined || div == null || div == "")
  */
 function formSelectInit(div)
 {
+    
     if($(div).hasClass("on")) { formSelectHide(div); return; }
     formSelectHide();
     formSelectShow(div);

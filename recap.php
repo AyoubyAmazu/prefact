@@ -54,7 +54,6 @@
 
     $cont .= "<div class='top'>";
     $cont .= "<div class='bell'>";
-    $cont .= formBtn(array("key"=>"bell", "ico"=>"fa-solid fa-bell", "id"=>"bell"));
     $cont .= "</div>";
     $cont .= "<div class='labl'>";
     $cont .= formLabel(array("key"=>"<a href=synthese_collab.php>2023</a>" ,));
@@ -219,8 +218,7 @@
     $cont .=  formLabel(array("key"=>"Validé le 00/00/0000 par USERID"));
     $cont .= "</div>";
     $cont .= "</div>";
-    
-    $cont .= "</div>"; //closing ALL
+    $cont .= "</div>"; 
     $cont .= "</fieldset>";
     $cont .= "</div>";
 
