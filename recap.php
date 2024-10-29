@@ -37,6 +37,7 @@
     $cont .= "</div>";
     $cont .= "<div class='years'>";
 
+    // TODO: Select Facture Years From Db
     $visibleYears = 10; 
     $startingYear = 2023;
 
@@ -49,6 +50,7 @@
 
 
     $cont .= "<div class='fields'>";
+    // TODO Select data of facture in each year
     $cont .= "<fieldset class='field one'>";
     $cont .= "<div class='all'>";
 
