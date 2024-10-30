@@ -17,6 +17,7 @@ body > #cont > div > .years {display: flex;width:100%;gap:10px;}
 body > #cont > div > .years > .btn.angleRight {align-self: center;}
 body > #cont > div > .years > .yearsDiv {display: flex;justify-content:space-around; flex-wrap: wrap; width:100%;}
 body > #cont > div > .years > .yearsDiv > .btn.year > a {width:80px;background-color: transparent;}
+body > #cont > div > .years > .yearsDiv > .btn.year.selected > a {background-color: var(--dark2);}
 body > #cont > div > .years > .yearsDiv > .btn.year > a:hover {background-color: var(--dark);}
 
 
@@ -104,7 +105,6 @@ body > #cont > div > .fields > .field > .all > .bottom > .provs.valid > .label{ 
 body > #cont > div > .fields > .field > .all > .bottom > .provs.valid > .label > .label-key{  font-style: italic; }
 
 
-/* ! hseser */
 body > #cont > div > .fields > .field > .all > .top >  .vertica  > .btn > a { border-radius: 5px; border: none; display:inline-flex; align-content: left; border: 1px solid var(--dark); -webkit-border-radius:5px; -moz-border-radius:5px; -ms-border-radius:5px; -o-border-radius:5px;background-color:transparent; }
 body > #cont > div > .fields > .field > .all > .top >  .vertica  > .btn > a:hover {background-color:var(--dark); }
 body > #cont > div > .fields > .field > .all > .top >  .vertica  > .list  {width: 220px; margin-left: -206px; margin-top: -15px;   position: absolute; align-content: start; border: 1px solid var(--dark); background-color : var(--light); overflow: visible; z-index: 1;}
