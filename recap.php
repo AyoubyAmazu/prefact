@@ -12,8 +12,6 @@
 
     $anaList = array();
    array_push($anaList, array("code" => "analyseannuelle", "txt" => "Analyse annuelle", "title" => "analyse annuelle",));
-   array_push($anaList, array("code" => "analysemensuelle", "txt" => "Analyse mensuelle", "title" => "analyse mensuelle","href"=>"syntheseFac.php"));
-   array_push($anaList, array("code" => "analysemission", "txt" => "Analyse par mission", "title" => "Analyse par mission"));
    array_push($anaList, array("code" => "analysecollaborateur", "txt" => "Analyse par collaborateur", "title" => "Analyse par collaborateur" , "href"=>"synthese_collab.php"));
    $sortNull = array("code" => "Trier", "txt" => "analyse annuelle ", "title" => "analyse annuelle");
 
@@ -38,13 +36,18 @@
     $cont .= "<div class='years'>";
 
     // TODO: Select Facture Years From Db
-    $visibleYears = 10; 
-    $startingYear = 2023;
-
-    for ($i = 0; $i < $visibleYears; $i++) {
-        $year = $startingYear - $i;
+    $select = "select distinct AnneeChoix from z_fact.rech_fact where Adr_Id ='" . $getD."'";
+    $years = array_column(dbSelect($select, array_merge($opts, array("db" => "prefact"))), "AnneeChoix");
+    sort($years);
+    // $cont .= json_encode($years);
+    // $visibleYears = 10; 
+    // $startingYear = 2023;
+    $cont .="<div class='yearsDiv'>";
+    foreach($years as $year)
+    {
         $cont .= formBtn(array("key"=>$year, "txt"=>$year . "<div>+0.00</div>", "title"=>"l'Année", "class"=>"sliderButton", "extra"=>array("year")));
     }
+    $cont .="</div>";
     $cont .= formBtn(array("key"=>"angleRight", "ico"=>"fa-solid fa-angle-right", "title"=>"scroll right"));
     $cont .= "</div>";
 

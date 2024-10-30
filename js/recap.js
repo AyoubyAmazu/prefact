@@ -165,7 +165,6 @@ function displayRappelSave()
 
 function displayRappelAdapt()
 {
-    
     $("body > .popup.displayRappel > div > .op > .btn.cancel > a").off("click").on("click", function(event) { popDown($(event.target).parents("div")); });
     $("body > .popup.displayRappel > div > .op > .btn.save > a").off("click").on("click", function() { displayRappelList(); });
 }
