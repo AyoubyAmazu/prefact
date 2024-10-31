@@ -21,8 +21,8 @@ body > #cont > div > .years > .yearsDiv > .btn.year.selected > a {background-col
 body > #cont > div > .years > .yearsDiv > .btn.year > a:hover {background-color: var(--dark);}
 
 
-body > #cont > div > .fields { display: flexbox;  margin-right: 20px; }
-body > #cont > div > .fields > .field { display: inline; align-items: center; text-decoration: none; border-radius: 5px; border: 1px solid var(--dark); margin-top: 5px; width: 500px; gap: 20px; margin-left: 20px; margin-right: 20px; -webkit-border-radius:; -moz-border-radius:; -ms-border-radius:; -o-border-radius:; }
+body > #cont > div > .fields { display: flex;flex-wrap:wrap;  margin-right: 20px; }
+body > #cont > div > .fields > .field { display:flex;width:20%;padding:15px; align-items: center; text-decoration: none; border-radius: 5px; border: 1px solid var(--dark); margin-top: 5px; width: 500px; gap: 20px; margin-left: 20px; margin-right: 20px; -webkit-border-radius:5px; -moz-border-radius:5px; -ms-border-radius:5px; -o-border-radius:5px; }
 body > #cont > div > .fields > .field > .all >  .top { display: flex; justify-content: space-between; margin-top: 10px; }
 body > #cont > div > .fields > .field > .all >  .top > .labl {font-family: bld; font-size: larger; margin-top: 5px;}
 body > #cont > div > .fields > .field > .all >  .chiffre > .label {text-align: center;justify-content: center; font-style: italic;}
