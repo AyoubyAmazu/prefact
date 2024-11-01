@@ -2,21 +2,22 @@
 require_once("config.php");
 
 $opts = array();
-$opts["conn"] = dbStart(array_merge($opts, array("db" => array("dia", "prefact"))));
+$opts["conn"] = dbStart(array_merge($opts, array("db" => array("dia", "prefact", "fact"))));
 $opts["user"] = auth($opts);
 $opts['user']['socList'] = array();
 $cookie = cookieInit();
 $getD = ((isset($_POST["adr"])) ? cryptDel($_POST["adr"]) : false);
-if ($getD == false) die(json_encode(array("code" => 400, "html" => "Invalid Id")));
+if (!$getD) die(json_encode(array("code" => 400, "html" => "Invalid Id")));
 
 if (isset($_POST["years"])) {
     $html = '';
     foreach ($_POST["years"] as $year) {
-        $html .=fieldHtml(array("year"=>$year));
+        $select = "select *, (SELECT SUM(`t`.`Total_facture`) as total_fact FROM `travaux_detail` t WHERE `t`.`IdFact` = $getD) AS code from `rech_fact` where `Adr_Id`= '$getD' and `AnneeChoix` = '$year'";
+        $result = dbSelect($select, array_merge($opts, array("db" => "fact")));
+        $html .=fieldHtml(array("year"=>$year, "debour"=>$result["DeboursFact"]));
     }
     die(json_encode(array("code" => 200, "html" => $html)));
 }
-
 function fieldHtml($opts = array())
 {
     $html = "<div class='field'>";
@@ -25,7 +26,7 @@ function fieldHtml($opts = array())
     $html .= "<div class='bell'>";
     $html .= "</div>";
     $html .= "<div class='labl'>";
-    $html .= formLabel(array("key"=>"<a href=synthese_collab.php>".$opts["year"]."</a>" ,));
+    $html .= formLabel(array("key"=>"<a href=''>".$opts["year"]."</a>" ,));
     $html .= "</div>";
     $html .= "<div class='vertica'>";
     $html .= formBtn(array("key"=>"vertica", "ico"=>"fa-solid fa-ellipsis-vertical", "id"=>"vertica"));
@@ -57,7 +58,7 @@ function fieldHtml($opts = array())
     $html .= "<span class='labele pay'>PAYE / SOCIAL</span> <span class='val pay'>  0,00  </span>";
     $html .= "</div>";
     $html .= "<div class='value debours'>";
-    $html .= "<span class='labele deb'>DEBOURS</span> <span class='val deb'>  0,00  </span>";
+    $html .= "<span class='labele deb'>DEBOURS</span> <span class='val deb'>".$opts['debour']."</span>";
     $html .= "</div>";
     $html .= "<div class='value frais'>";
     $html .= "<span class='labele frais'>FRAIS</span> <span class='val frais'>  0,00  </span>";
@@ -160,7 +161,6 @@ function fieldHtml($opts = array())
     $html .= "</div>";
     $html .= "</div>";
     $html .= "</div>";
-
     $html .= "<div class='letotalX'>";
     $html .= "<div class='totalY'>";
     $html .= "<span class='labele totA'>TOTAL</span> <span class='val totA'>  0,00  </span>";
@@ -169,14 +169,11 @@ function fieldHtml($opts = array())
     $html .= "<span class='labele totB'>TOTAL</span> <span class='val totB'>  0,00  </span>";
     $html .= "</div>";
     $html .= "</div>";
-
     $html .= "<div class='tota'>";
     $html .= " <span class='value tota'>  +0,00  </span>";
     $html .= "</div>";
-
     $html .= "<hr>";
     $html .= "<div class='bottom'>";
-    
     $html .= "<div class='provs'>";
     $html .=  formLabel(array("key"=>"<a href=provision.php>Provision année suivante : 0,00</a>"));
     $html .= "</div>";
