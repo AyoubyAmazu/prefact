@@ -74,7 +74,7 @@
         $cont .= "<div class='side'>";
             $cont .= formSelect(array("key" => "sortCol", "label" => "Trier par", "selected" => $sortSelected, "list" => $sortList));
             $cont .= formCheckbox(array("key" => "sortDir", "list" => $dirList));
-            $cont .= formBtn(array("key" => "displayParam", "ico" => "wrench", "txt" => "Paramètres", "id"=>"popupLink", "list"=> $sortList ));
+            $cont .= formBtn(array("key" => "displayParam", "ico" => "table-columns", "txt" => "Column", "id"=>"popupLink", "list"=> $sortList ));
         $cont .= "</div>";
         $cont .= "<div class='side'>";
             $cont .= formBtn(array("key" => "stats", "ico" => "chart-pie", "txt" => "Statistiques"));
