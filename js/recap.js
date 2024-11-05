@@ -29,6 +29,7 @@ function displayField()
         // , complete: function() { loaderHide(); }
         , success: function(data)
         {
+            // console.log(data);
             try { var result = JSON.parse(data);console.log(data);} catch(error) { popError(); return; }
             if(result["code"] == 200) {$("body > #cont > div > .fields").html(result.html);displayFieldAdapt(); return; }
             popError(result["txt"], result["btn"]);
