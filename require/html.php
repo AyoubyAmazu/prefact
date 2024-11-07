@@ -329,8 +329,8 @@ function htmlTitle($opts = array())
         $segmentColor = ((in_array($adr[0]["segment"], array_keys($dataSegment)))? $dataSegment[$adr[0]["segment"]]["color"] : "");
         
         $solde = (($adr[0]["synthese_data"] == "")? "-" : (number_format(floatval($adr[0]["synthese_data"]), 2, ",", " ") . " €"));
-        $clotureTxt = (($adr[0]["cloture"] == "")? "-" : $dtMonth[intval(substr($adr[0]["cloture"], 4, 2))]);
-        $clotureTitle = (($adr[0]["cloture"] == "")? "-" : dtDate($adr[0]["cloture"]));
+        // $clotureTxt = (($adr[0]["cloture"] == "")? "-" : $dtMonth[intval(substr($adr[0]["cloture"], 4, 2))]);
+        // $clotureTitle = (($adr[0]["cloture"] == "")? "-" : dtDate($adr[0]["cloture"]));
 
         $desc = "123";
                 
@@ -351,7 +351,7 @@ function htmlTitle($opts = array())
                     $html .= formBtn(array("key" => "resp", "ico" => "angle-" . (($cookie["title"]["resp"])? "up" : "down"), "txt" => "Responsables", "attr" => array("code='resp'"), "extra" => array_filter(array("toggle", (($cookie["title"]["resp"])? "on" : "")))));
                     if(count($mission) != 0) $html .= formBtn(array("key" => "mission", "ico" => "angle-" . (($cookie["title"]["mission"])? "up" : "down"), "txt" => "Lettres de mission", "attr" => array("code='mission'"), "extra" => array_filter(array("toggle", (($cookie["title"]["mission"])? "on" : "")))));
                     $html .= formBtn(array("key" => "solde", "txt" => "<span>Solde :</span><b>" . $solde . "</b>", "title" => "Afficher le détail du solde : " . $solde, "href" => "", "target" => "_blank"));
-                    $html .= formDisplay(array("key" => "cloture", "txt" => "<span>Clôture :</span><b>" . $clotureTxt . "</b>", "title" => "Prochaine date de cloture : " . $clotureTitle));
+                    // $html .= formDisplay(array("key" => "cloture", "txt" => "<span>Clôture :</span><b>" . $clotureTxt . "</b>", "title" => "Prochaine date de cloture : " . $clotureTitle));
                     $html .= formBtn(array("key" => "segment", "ico" => $segmentIco, "txt" => $segmentTxt, "title" => $segmentTitle, "extra" => array_filter(array($segmentColor))));
                     $html .= formBtn(array("key" => "crm", "ico" => "up-right-from-square", "txt" => "CRM", "title" => "Ouvrir sur le CRM", "href" => "", "target" => "_blank"));
                 $html .= "</div>";
