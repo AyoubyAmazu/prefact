@@ -51,7 +51,7 @@
     $years = array_column(dbSelect($select, array_merge($opts, array("db" => "prefact"))), "AnneeChoix");
     rsort($years);
     
-    
+   
     $selected = 3;
     $cont .="<div class='yearsDiv'>";
     foreach($years as $year)

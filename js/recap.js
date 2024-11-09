@@ -25,8 +25,6 @@ function displayField()
             adr:adr,
             years: selectedYears,
         }
-        // , beforeSend: function() { loaderShow(); }
-        // , complete: function() { loaderHide(); }
         , success: function(data)
         {
             // console.log(data);

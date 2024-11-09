@@ -13,10 +13,11 @@ body > #cont > div > .op > .side > .select.sortAnalyse > .data > .list > .option
 body > #cont > div > .op > .side > .select.sortAnalyse > .data > .list > .option.readonly > a { padding: 5px; color: var(--dark); background-color: var(--dark1); }
 
 /* years row css */
-body > #cont > div > .years {display: flex;width:100%;gap:10px;}
+body > #cont > div > .years {display: flex;width:100%;gap:15px;}
 body > #cont > div > .years > .btn.angleRight {align-self: center;}
-body > #cont > div > .years > .yearsDiv {display: flex;justify-content:space-around; flex-wrap: wrap; width:100%;}
+body > #cont > div > .years > .yearsDiv {display: flex;flex-wrap: wrap;gap:10px;justify-content:center; width:100%;}
 body > #cont > div > .years > .yearsDiv > .btn.year > a {width:80px;background-color: transparent;}
+body > #cont > div > .years > .yearsDiv > .btn.year > a > .txt > div {font-size: 10px; line-height: 14px;}
 body > #cont > div > .years > .yearsDiv > .btn.year.selected > a {background-color: var(--dark2);}
 body > #cont > div > .years > .yearsDiv > .btn.year > a:hover {color: var(--dark);}
 
