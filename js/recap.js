@@ -5,7 +5,7 @@ $(document).ready(function () {
     $("body > #cont > div > .op > .side > .select.sortAnalyse > .data > .list > .option").not(".readonly").children("a").off("click").on("click", function (event) { sortColSelectOption($(event.target).parents(".option")); });
     // $("body > #cont > div > .years > .yearsDiv > .btn.year").each(function () {$(this).off("click").on("click", function name(event) {$(event.target).parent(".btn").toggleClass("selected");displayField();});})
     displayField();
-    
+    // TODO EDIT
 });
 /**
  * Gets fields data from back-end
