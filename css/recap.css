@@ -21,102 +21,100 @@ body > #cont > div > .years > .yearsDiv > .btn.year > a > .txt > div {font-size:
 body > #cont > div > .years > .yearsDiv > .btn.year.selected > a {background-color: var(--dark2);}
 body > #cont > div > .years > .yearsDiv > .btn.year > a:hover {color: var(--dark);}
 
+body > #cont > div > .main{display:flex; width:100%;}
 
-body > #cont > div > .fields { display: flex;flex-wrap:wrap;  margin-right: 20px; }
-body > #cont > div > .fields > .field { display:flex;width:20%;padding:15px; align-items: center; text-decoration: none; border-radius: 5px; border: 1px solid var(--dark); margin-top: 5px; width: 500px; gap: 20px; margin-left: 20px; margin-right: 20px; -webkit-border-radius:5px; -moz-border-radius:5px; -ms-border-radius:5px; -o-border-radius:5px; }
-body > #cont > div > .fields > .field > .all >  .top { display: flex; justify-content: space-between; margin-top: 10px; }
-body > #cont > div > .fields > .field > .all >  .top > .labl {font-family: bld; font-size: larger; margin-top: 5px;}
-body > #cont > div > .fields > .field > .all >  .chiffre > .label {text-align: center;justify-content: center; font-style: italic;}
-body > #cont > div > .fields > .field > .all >  .table {display: flex; border-top: 1px solid var(--dark) ; margin-top: 10px;  border-bottom: 1px solid var(--dark); }
-body > #cont > div > .fields > .field > .all >  .table > .donne { border-right: 1px solid var(--dark);width: 50%; margin-top: 5px; margin-bottom: 5px;}
-body > #cont > div > .fields > .field > .all >  .table > .donne > .value {text-align: left; justify-content: left; align-items: left; display: flex; font-size: 13px; line-height: 18px; font-family: bld;margin-bottom: 5px; }
-body > #cont > div > .fields > .field > .all >  .table > .donne > .value.paye {margin-bottom: 29px;}
-body > #cont > div > .fields > .field > .all >  .table > .donne >.value > .labele {flex: 1;text-align: left; margin-left: 10px; }
-body > #cont > div > .fields > .field > .all >  .table > .donne >.value > .val {flex: 1;text-align: right; margin-right: 10px;}
+/* Angle buttons */
+body > #cont > div > .main > .pre-angle > div{height:100%;}
+body > #cont > div > .main > .pre-angle > div > a{align-items:center;}
+body > #cont > div > .main > .post-angle > div{height:100%;}
+body > #cont > div > .main > .post-angle > div > a{align-items:center;}
 
+/* fields blocks */
+body > #cont > div > .main > .fields { display: flex;flex-wrap:wrap;width:100%;gap:10px;justify-content:center;}
+body > #cont > div > .main > .fields > .field { display:flex;width:20%;padding:5px; align-items: center; text-decoration: none; border-radius: 5px; border: 1px solid var(--dark); margin-top: 5px; width: calc(80%/3);-webkit-border-radius:5px; -moz-border-radius:5px; -ms-border-radius:5px; -o-border-radius:5px; font-size: 10px; line-height: 14px;}
+body > #cont > div > .main > .fields > .field > .all {width:100%;}
+body > #cont > div > .main > .fields > .field > .all >  .top { display: flex; justify-content: space-between; margin-top: 10px; width:100%; }
+body > #cont > div > .main > .fields > .field > .all >  .top > .labl {font-family: bld; font-size: larger; margin-top: 5px;}
+body > #cont > div > .main > .fields > .field > .all >  .chiffre > .label {text-align: center;justify-content: center; font-style: italic;}
+body > #cont > div > .main > .fields > .field > .all >  .table {display: flex; border-top: 1px solid var(--dark) ; margin-top: 10px;  border-bottom: 1px solid var(--dark);width:100%;}
+body > #cont > div > .main > .fields > .field > .all >  .table > .donne { border-right: 1px solid var(--dark);width: 50%; margin-top: 5px; margin-bottom: 5px;}
+body > #cont > div > .main > .fields > .field > .all >  .table > .donne > .value {text-align: left; justify-content: left; align-items: left; display: flex; font-size: 13px; line-height: 18px; font-family: bld;margin-bottom: 5px; }
+body > #cont > div > .main > .fields > .field > .all >  .table > .donne > .value.paye {margin-bottom: 29px;}
+body > #cont > div > .main > .fields > .field > .all >  .table > .donne >.value > .labele {font-size:10px;text-align: left; margin-right: 20px; }
+body > #cont > div > .main > .fields > .field > .all >  .table > .donne >.value > .val {font-size:10px;text-align: right; margin-right: 10px;}
 
+body > #cont > div > .main > .fields > .field > .all >  .table > .donneTrav {display: flex;flex-direction: column;justify-content: flex-start;  width: 50%; margin-top: 6px; margin-bottom: 5px;}
+body > #cont > div > .main > .fields > .field > .all >  .table > .donneTrav > .value { text-align: right; justify-content: right; align-items: right; display: flex; font-size: 13px; line-height: 18px; font-family: bld;margin-bottom: 5px; }
 
-body > #cont > div > .fields > .field > .all >  .table > .donneTrav {  display: flex;flex-direction: column;justify-content: flex-start;  width: 50%; margin-top: 6px; margin-bottom: 5px;}
-body > #cont > div > .fields > .field > .all >  .table > .donneTrav > .value { text-align: right; justify-content: right; align-items: right; display: flex; font-size: 13px; line-height: 18px; font-family: bld;margin-bottom: 5px; }
+body > #cont > div > .main > .fields > .field > .all >  .table > .donneTrav > .value > .labele {font-size:10px;text-align: left; margin-left: 10px;  }
+body > #cont > div > .main > .fields > .field > .all >  .table > .donneTrav > .value > .val {font-size:10px;text-align: left; margin-right: -200px }
 
-body > #cont > div > .fields > .field > .all >  .table > .donneTrav > .value > .labele {flex: 1;text-align: left; margin-left: 10px;  }
-body > #cont > div > .fields > .field > .all >  .table > .donneTrav > .value > .val {flex: 1;text-align: left; margin-right: -190px }
+body > #cont > div > .main > .fields > .field > .all >  .tableX {display: flex;  ; margin-top: 5px;  }
+body > #cont > div > .main > .fields > .field > .all >  .tableX > .donneCompta { border-right: 1px solid var(--dark);width: 50%; margin-top: 5px; margin-bottom: 5px;}
+body > #cont > div > .main > .fields > .field > .all >  .tableX > .donneCompta > .value {text-align: left; justify-content: left; align-items: left; display: flex; font-size: 13px; line-height: 18px; font-family: bld;margin-bottom: 5px; }
+body > #cont > div > .main > .fields > .field > .all >  .tableX > .donneCompta > .value > .labele {flex: 1;text-align: left; margin-left: 10px; }
+body > #cont > div > .main > .fields > .field > .all >  .tableX > .donneCompta >.value > .val {flex: 1;text-align: right; margin-right: 10px;}
+body > #cont > div > .main > .fields > .field > .all >  .tableX > .donneComptaB {  display: flex;flex-direction: column;justify-content: flex-start;  width: 50%; margin-top: 6px; margin-bottom: 5px;}
+body > #cont > div > .main > .fields > .field > .all >  .tableX > .donneComptaB > .value { text-align: right; justify-content: right; align-items: right; display: flex; font-size: 13px; line-height: 18px; font-family: bld;margin-bottom: 5px; }
+body > #cont > div > .main > .fields > .field > .all >  .tableX > .donneComptaB > .value > .labele {flex: 1;text-align: left; margin-left: 10px;  }
+body > #cont > div > .main > .fields > .field > .all >  .tableX > .donneComptaB > .value > .val {flex: 1;text-align: left; margin-right: -190px }
 
-body > #cont > div > .fields > .field > .all >  .tableX {display: flex;  ; margin-top: 5px;  }
-body > #cont > div > .fields > .field > .all >  .tableX > .donneCompta { border-right: 1px solid var(--dark);width: 50%; margin-top: 5px; margin-bottom: 5px;}
-body > #cont > div > .fields > .field > .all >  .tableX > .donneCompta > .value {text-align: left; justify-content: left; align-items: left; display: flex; font-size: 13px; line-height: 18px; font-family: bld;margin-bottom: 5px; }
-body > #cont > div > .fields > .field > .all >  .tableX > .donneCompta > .value > .labele {flex: 1;text-align: left; margin-left: 10px; }
-body > #cont > div > .fields > .field > .all >  .tableX > .donneCompta >.value > .val {flex: 1;text-align: right; margin-right: 10px;}
-body > #cont > div > .fields > .field > .all >  .tableX > .donneComptaB {  display: flex;flex-direction: column;justify-content: flex-start;  width: 50%; margin-top: 6px; margin-bottom: 5px;}
-body > #cont > div > .fields > .field > .all >  .tableX > .donneComptaB > .value { text-align: right; justify-content: right; align-items: right; display: flex; font-size: 13px; line-height: 18px; font-family: bld;margin-bottom: 5px; }
-body > #cont > div > .fields > .field > .all >  .tableX > .donneComptaB > .value > .labele {flex: 1;text-align: left; margin-left: 10px;  }
-body > #cont > div > .fields > .field > .all >  .tableX > .donneComptaB > .value > .val {flex: 1;text-align: left; margin-right: -190px }
+body > #cont > div > .main > .fields > .field > .all >  .letotal {display: flex;  ; margin-top: 5px; background-color: var(--dark1);  }
+body > #cont > div > .main > .fields > .field > .all >  .letotal > .totalA { border-right: 1px solid var(--dark);width: 50%; margin-top: 5px; margin-bottom: 5px;}
+body > #cont > div > .main > .fields > .field > .all >  .letotal > .totalA {text-align: left; justify-content: left; align-items: left; display: flex; font-size: 13px; line-height: 18px; font-family: bld;margin-bottom: 5px; }
+body > #cont > div > .main > .fields > .field > .all >  .letotal > .totalA  > .labele {flex: 1;text-align: left; margin-left: 10px; }
+body > #cont > div > .main > .fields > .field > .all >  .letotal > .totalA  > .val {flex: 1;text-align: right; margin-right: 10px;}
+body > #cont > div > .main > .fields > .field > .all >  .letotal > .totalB {  display: flex; ;justify-content: flex-start;  width: 50%; margin-top: 6px; margin-bottom: 5px;}
+body > #cont > div > .main > .fields > .field > .all >  .letotal > .totalB  { text-align: right; justify-content: right; align-items: right; display: flex; font-size: 13px; line-height: 18px; font-family: bld;margin-bottom: 5px; }
+body > #cont > div > .main > .fields > .field > .all >  .letotal > .totalB  > .labele {flex: 1; text-align: left; margin-left: 10px;  }
+body > #cont > div > .main > .fields > .field > .all >  .letotal > .totalB  > .val {flex: 1; text-align: right; margin-right: 10px; }
 
-body > #cont > div > .fields > .field > .all >  .letotal {display: flex;  ; margin-top: 5px; background-color: var(--dark1);  }
-body > #cont > div > .fields > .field > .all >  .letotal > .totalA { border-right: 1px solid var(--dark);width: 50%; margin-top: 5px; margin-bottom: 5px;}
-body > #cont > div > .fields > .field > .all >  .letotal > .totalA {text-align: left; justify-content: left; align-items: left; display: flex; font-size: 13px; line-height: 18px; font-family: bld;margin-bottom: 5px; }
-body > #cont > div > .fields > .field > .all >  .letotal > .totalA  > .labele {flex: 1;text-align: left; margin-left: 10px; }
-body > #cont > div > .fields > .field > .all >  .letotal > .totalA  > .val {flex: 1;text-align: right; margin-right: 10px;}
-body > #cont > div > .fields > .field > .all >  .letotal > .totalB {  display: flex; ;justify-content: flex-start;  width: 50%; margin-top: 6px; margin-bottom: 5px;}
-body > #cont > div > .fields > .field > .all >  .letotal > .totalB  { text-align: right; justify-content: right; align-items: right; display: flex; font-size: 13px; line-height: 18px; font-family: bld;margin-bottom: 5px; }
-body > #cont > div > .fields > .field > .all >  .letotal > .totalB  > .labele {flex: 1; text-align: left; margin-left: 10px;  }
-body > #cont > div > .fields > .field > .all >  .letotal > .totalB  > .val {flex: 1; text-align: right; margin-right: 10px; }
-
-body > #cont > div > .fields > .field > .all >  .tableY {display: flex;  ; margin-top: 5px;  }
-body > #cont > div > .fields > .field > .all >  .tableY > .donneHono { border-right: 1px solid var(--dark);width: 50%; margin-top: 5px; margin-bottom: 5px;}
-body > #cont > div > .fields > .field > .all >  .tableY > .donneHono > .value {text-align: left; justify-content: left; align-items: left; display: flex; font-size: 13px; line-height: 18px; font-family: bld;margin-bottom: 5px; }
-body > #cont > div > .fields > .field > .all >  .tableY > .donneHono > .value > .labele {flex: 1;text-align: left; margin-left: 10px; }
-body > #cont > div > .fields > .field > .all >  .tableY > .donneHono >.value > .val {flex: 1;text-align: right; margin-right: 10px;}
-body > #cont > div > .fields > .field > .all >  .tableY > .donneVirt {  display: flex;flex-direction: column;justify-content: flex-start;  width: 50%; margin-top: 6px; margin-bottom: 5px;}
-body > #cont > div > .fields > .field > .all >  .tableY > .donneVirt > .value { text-align: right; justify-content: right; align-items: right; display: flex; font-size: 13px; line-height: 18px; font-family: bld;margin-bottom: 5px; }
-body > #cont > div > .fields > .field > .all >  .tableY > .donneVirt > .value > .labele {flex: 1;text-align: left; margin-left: 10px;  }
-body > #cont > div > .fields > .field > .all >  .tableY > .donneVirt > .value > .val {flex: 1;text-align: left; margin-right: -190px }
-body > #cont > div > .fields > .field > .all >  .tableY > .donneVirt > .value.virt > .labele.virt > .btn > a {border: none; overflow: hidden;  white-space: nowrap; margin-right: 50px; overflow: hidden; text-overflow: ellipsis; width: 135px;}
-body > #cont > div > .fields > .field > .all >  .tableY > .donneVirt > .value.virt > .labele.virt > .btn > a:hover {background-color: var(--light);}
-body > #cont > div > .fields > .field > .all >  .tableY > .donneVirt > .value.virt > .labele.virt > .btn > a > .txt {color: var(--dark);}
-
-
-
-
-
-
-
-
-body > #cont > div > .fields > .field > .all >  .letotalX {display: flex;  ; margin-top: 5px; background-color: var(--dark1);  }
-body > #cont > div > .fields > .field > .all >  .letotalX > .totalY { border-right: 1px solid var(--dark);width: 50%; margin-top: 5px; margin-bottom: 5px;}
-body > #cont > div > .fields > .field > .all >  .letotalX > .totalY {text-align: left; justify-content: left; align-items: left; display: flex; font-size: 13px; line-height: 18px; font-family: bld;margin-bottom: 5px; }
-body > #cont > div > .fields > .field > .all >  .letotalX > .totalY  > .labele {flex: 1;text-align: left; margin-left: 10px; }
-body > #cont > div > .fields > .field > .all >  .letotalX > .totalY  > .val {flex: 1;text-align: right; margin-right: 10px;}
-body > #cont > div > .fields > .field > .all >  .letotalX > .totalZ {  display: flex; ;justify-content: flex-start;  width: 50%; margin-top: 6px; margin-bottom: 5px;}
-body > #cont > div > .fields > .field > .all >  .letotalX > .totalZ  { text-align: right; justify-content: right; align-items: right; display: flex; font-size: 13px; line-height: 18px; font-family: bld;margin-bottom: 5px; }
-body > #cont > div > .fields > .field > .all >  .letotalX > .totalZ  > .labele {flex: 1; text-align: left; margin-left: 10px;  }
-body > #cont > div > .fields > .field > .all >  .letotalX > .totalZ  > .val {flex: 1; text-align: right; margin-right: 10px; }
-
-body > #cont > div > .fields > .field > .all >  .tota  {display: flex;  ; margin-top: 20px; justify-content: center; margin-bottom: 10px; border-bottom: 1 px solid var(--dark);  }
-body > #cont > div > .fields > .field > .all >  .tota >  .value.tota {display: flex;  font-weight: bold; font-size: 19px; line-height: 26px; color:var(--green) ;  }
-body > #cont > div > .fields > .field > .all >  .tota >  .value.totaA {display: flex;  font-weight: bold; font-size: 19px; line-height: 26px; color:var(--red) ;  }
-body > #cont > div > .fields > .field > .all >  .tota >  .value.totaB {display: flex;  font-weight: bold; font-size: 19px; line-height: 26px; color:var(--green) ;  }
-body > #cont > div > .fields > .field > .all > hr {border-bottom: 1px solid  var(--dark);}
-body > #cont > div > .fields > .field > .all >  .provs { border-top: 10px; }
-
-body > #cont > div > .fields > .field > .all > .bottom    {justify-content: space-between;}
-body > #cont > div > .fields > .field > .all > .bottom > .provs > .label.Provision {  justify-content: left; text-align: justify; font-size: 13px; line-height: 18px; font-weight: bold; }
-body > #cont > div > .fields > .field > .all > .bottom > .provs.comment > .label  { font-size: 13px; line-height: 18px; font-weight: bold; max-width: 550px; justify-content: left; text-align: justify;margin-top: 10px; }
-body > #cont > div > .fields > .field > .all > .bottom > .provs.valid > .label{ justify-content: right; text-align: right; font-style: italic;  margin-top: 10px; }
-body > #cont > div > .fields > .field > .all > .bottom > .provs.valid > .label > .label-key{  font-style: italic; }
+body > #cont > div > .main > .fields > .field > .all >  .tableY {display: flex;  ; margin-top: 5px;  }
+body > #cont > div > .main > .fields > .field > .all >  .tableY > .donneHono { border-right: 1px solid var(--dark);width: 50%; margin-top: 5px; margin-bottom: 5px;}
+body > #cont > div > .main > .fields > .field > .all >  .tableY > .donneHono > .value {text-align: left; justify-content: left; align-items: left; display: flex; font-size: 13px; line-height: 18px; font-family: bld;margin-bottom: 5px; }
+body > #cont > div > .main > .fields > .field > .all >  .tableY > .donneHono > .value > .labele {flex: 1;text-align: left; margin-left: 10px; }
+body > #cont > div > .main > .fields > .field > .all >  .tableY > .donneHono >.value > .val {flex: 1;text-align: right; margin-right: 10px;}
+body > #cont > div > .main > .fields > .field > .all >  .tableY > .donneVirt {  display: flex;flex-direction: column;justify-content: flex-start;  width: 50%; margin-top: 6px; margin-bottom: 5px;}
+body > #cont > div > .main > .fields > .field > .all >  .tableY > .donneVirt > .value { text-align: right; justify-content: right; align-items: right; display: flex; font-size: 13px; line-height: 18px; font-family: bld;margin-bottom: 5px; }
+body > #cont > div > .main > .fields > .field > .all >  .tableY > .donneVirt > .value > .labele {flex: 1;text-align: left; margin-left: 10px;  }
+body > #cont > div > .main > .fields > .field > .all >  .tableY > .donneVirt > .value > .val {flex: 1;text-align: left; margin-right: -190px }
+body > #cont > div > .main > .fields > .field > .all >  .tableY > .donneVirt > .value.virt > .labele.virt > .btn > a {border: none; overflow: hidden;  white-space: nowrap; margin-right: 50px; overflow: hidden; text-overflow: ellipsis; width: 135px;}
+body > #cont > div > .main > .fields > .field > .all >  .tableY > .donneVirt > .value.virt > .labele.virt > .btn > a:hover {background-color: var(--light);}
+body > #cont > div > .main > .fields > .field > .all >  .tableY > .donneVirt > .value.virt > .labele.virt > .btn > a > .txt {color: var(--dark);}
 
 
-body > #cont > div > .fields > .field > .all > .top >  .vertica  > .btn > a { border-radius: 5px; border: none; display:inline-flex; align-content: left; border: 1px solid var(--dark); -webkit-border-radius:5px; -moz-border-radius:5px; -ms-border-radius:5px; -o-border-radius:5px;background-color:transparent; }
-body > #cont > div > .fields > .field > .all > .top >  .vertica  > .btn > a:hover {background-color:var(--dark); }
-body > #cont > div > .fields > .field > .all > .top >  .vertica  > .list  {width: 220px; margin-left: -206px; margin-top: -15px;   position: absolute; align-content: start; border: 1px solid var(--dark); background-color : var(--light); overflow: visible; z-index: 1;}
-body > #cont > div > .fields > .field > .all > .top >  .vertica  > .list >.btn > a {border: none; display: inline-flex ;height: 20px; justify-content: left; font-size: 13px; line-height: 18px; font-family: bld;}
-body > #cont > div > .fields > .field > .all > .top >  .vertica  > .list >.btn > a{ border-radius: 0px;} 
-body > #cont > div > .fields > .field > .all > .top >  .vertica  > .list.off { display: none; }
-body > #cont > div > .fields > .field > .all > .top >  .vertica  > .btnmenu > .btn >  a  {border: none; }
+body > #cont > div > .main > .fields > .field > .all >  .letotalX {display: flex;  ; margin-top: 5px; background-color: var(--dark1);  }
+body > #cont > div > .main > .fields > .field > .all >  .letotalX > .totalY { border-right: 1px solid var(--dark);width: 50%; margin-top: 5px; margin-bottom: 5px;}
+body > #cont > div > .main > .fields > .field > .all >  .letotalX > .totalY {text-align: left; justify-content: left; align-items: left; display: flex; font-size: 13px; line-height: 18px; font-family: bld;margin-bottom: 5px; }
+body > #cont > div > .main > .fields > .field > .all >  .letotalX > .totalY  > .labele {flex: 1;text-align: left; margin-left: 10px; }
+body > #cont > div > .main > .fields > .field > .all >  .letotalX > .totalY  > .val {flex: 1;text-align: right; margin-right: 10px;}
+body > #cont > div > .main > .fields > .field > .all >  .letotalX > .totalZ {  display: flex; ;justify-content: flex-start;  width: 50%; margin-top: 6px; margin-bottom: 5px;}
+body > #cont > div > .main > .fields > .field > .all >  .letotalX > .totalZ  { text-align: right; justify-content: right; align-items: right; display: flex; font-size: 13px; line-height: 18px; font-family: bld;margin-bottom: 5px; }
+body > #cont > div > .main > .fields > .field > .all >  .letotalX > .totalZ  > .labele {flex: 1; text-align: left; margin-left: 10px;  }
+body > #cont > div > .main > .fields > .field > .all >  .letotalX > .totalZ  > .val {flex: 1; text-align: right; margin-right: 10px; }
+
+body > #cont > div > .main > .fields > .field > .all >  .tota  {display: flex;  ; margin-top: 20px; justify-content: center; margin-bottom: 10px; border-bottom: 1 px solid var(--dark);  }
+body > #cont > div > .main > .fields > .field > .all >  .tota >  .value.tota {display: flex;  font-weight: bold; font-size: 19px; line-height: 26px; color:var(--green) ;  }
+body > #cont > div > .main > .fields > .field > .all >  .tota >  .value.totaA {display: flex;  font-weight: bold; font-size: 19px; line-height: 26px; color:var(--red) ;  }
+body > #cont > div > .main > .fields > .field > .all >  .tota >  .value.totaB {display: flex;  font-weight: bold; font-size: 19px; line-height: 26px; color:var(--green) ;  }
+body > #cont > div > .main > .fields > .field > .all > hr {border-bottom: 1px solid  var(--dark);}
+body > #cont > div > .main > .fields > .field > .all >  .provs { border-top: 10px; }
+
+body > #cont > div > .main > .fields > .field > .all > .bottom    {justify-content: space-between;}
+body > #cont > div > .main > .fields > .field > .all > .bottom > .provs > .label.Provision {  justify-content: left; text-align: justify; font-size: 13px; line-height: 18px; font-weight: bold; }
+body > #cont > div > .main > .fields > .field > .all > .bottom > .provs.comment > .label  { font-size: 13px; line-height: 18px; font-weight: bold; max-width: 550px; justify-content: left; text-align: justify;margin-top: 10px; }
+body > #cont > div > .main > .fields > .field > .all > .bottom > .provs.valid > .label{ justify-content: right; text-align: right; font-style: italic;  margin-top: 10px; }
+body > #cont > div > .main > .fields > .field > .all > .bottom > .provs.valid > .label > .label-key{  font-style: italic; }
 
 
+body > #cont > div > .main > .fields > .field > .all > .top >  .vertica  > .btn > a { border-radius: 5px; border: none; display:inline-flex; align-content: left; border: 1px solid var(--dark); -webkit-border-radius:5px; -moz-border-radius:5px; -ms-border-radius:5px; -o-border-radius:5px;background-color:transparent; }
+body > #cont > div > .main > .fields > .field > .all > .top >  .vertica  > .btn > a:hover {background-color:var(--dark); }
+body > #cont > div > .main > .fields > .field > .all > .top >  .vertica  > .list  {width: 220px; margin-left: -206px; margin-top: -15px;   position: absolute; align-content: start; border: 1px solid var(--dark); background-color : var(--light); overflow: visible; z-index: 1;}
+body > #cont > div > .main > .fields > .field > .all > .top >  .vertica  > .list >.btn > a {border: none; display: inline-flex ;height: 20px; justify-content: left; font-size: 13px; line-height: 18px; font-family: bld;}
+body > #cont > div > .main > .fields > .field > .all > .top >  .vertica  > .list >.btn > a{ border-radius: 0px;} 
+body > #cont > div > .main > .fields > .field > .all > .top >  .vertica  > .list.off { display: none; }
+body > #cont > div > .main > .fields > .field > .all > .top >  .vertica  > .btnmenu > .btn >  a  {border: none; }
 
-
-body > #cont > div > .fields > .field > .all > .table  > .donneTrav > .show {display: none; margin-bottom: 5px;  width: 100%; }
-body > #cont > div > .fields > .field > .all > .table  > .donneTrav > .show > .travauxSublabel {display:inline-block;  flex:1; text-align: right; width: 70%; margin-bottom: 5px; font-style: italic; font-weight: bold;font-size: 13px; line-height: 18px;  }
-body > #cont > div > .fields > .field > .all > .table  > .donneTrav > .show > .val {flex: 1;text-align: right; margin-left: 45px; font-size: 13px; line-height: 18px; font-family: bld;  }
+body > #cont > div > .main > .fields > .field > .all > .table  > .donneTrav > .show {display: none; margin-bottom: 5px;  width: 100%; }
+body > #cont > div > .main > .fields > .field > .all > .table  > .donneTrav > .show > .travauxSublabel {display:inline-block;  flex:1; text-align: right; width: 70%; margin-bottom: 5px; font-style: italic; font-weight: bold;font-size: 13px; line-height: 18px;  }
+body > #cont > div > .main > .fields > .field > .all > .table  > .donneTrav > .show > .val {flex: 1;text-align: right; margin-left: 45px; font-size: 13px; line-height: 18px; font-family: bld;  }

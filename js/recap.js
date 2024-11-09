@@ -11,7 +11,7 @@ $(document).ready(function () {
  * Gets fields data from back-end
  */
 function displayField()
-{
+{   
     const params = new URLSearchParams(window.location.search);
     let adr = params.get("d");
     let selectedYears = [];
@@ -29,7 +29,7 @@ function displayField()
         {
             // console.log(data);
             try { var result = JSON.parse(data);console.log(data);} catch(error) { popError(); return; }
-            if(result["code"] == 200) {$("body > #cont > div > .fields").html(result.html);displayFieldAdapt(); return; }
+            if(result["code"] == 200) {$("body > #cont > div > .main > .fields").html(result.html);displayFieldAdapt(); return; }
             popError(result["txt"], result["btn"]);
         }
       });
