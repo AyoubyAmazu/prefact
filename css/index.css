@@ -83,6 +83,8 @@ body > #cont > div > .list >.line .col .sub .value {flex: 1;text-align: right; /
 .popup.displayParam > div > .checkbox > .data > .list > .option:nth-of-type(1) { border-radius: 5px 5px 0 0; -webkit-border-radius: 5px 5px 0 0; -moz-border-radius: 5px 5px 0 0; -ms-border-radius: 5px 5px 0 0; -o-border-radius: 5px 5px 0 0; }
 .popup.displayParam > div > .op > .btn { width: 70px; }
 
+body > #cont > div > .list > .line > .col.op > .btn > a  {padding: 6px;}
+
 .popup.displaySegme > div { max-width: 390px }
 .popup.displaySegme > div > .checkbox > .data > .list { padding: 10px 0px;  flex-direction: column; gap: 3px 0; } 
 .popup.displaySegme > div > .checkbox > .data > .list > .option > a { padding: 3px 0px; font-family: bld; cursor: auto;}

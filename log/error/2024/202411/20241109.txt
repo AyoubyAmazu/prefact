@@ -1,0 +1,1 @@
+09/11/2024 15:13:20 | RRO | Erreur de d'execution d'une requête SQL | /recap_field.php | fact | select *, (SELECT SUM(`t`.`Total_facture`) as total_fact FROM `travaux_detail` t WHERE `t`.`IdFact` = ADR001) AS code from `rech_fact` where `Adr_Id`= 'ADR001' and `AnneeChoix` = '2022' | SQLSTATE[42S22]: Column not found: 1054 Unknown column 'ADR001' in 'where clause'

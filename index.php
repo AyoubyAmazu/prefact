@@ -94,8 +94,8 @@
             $cont .= "<div class='col'>  </div>";
         $cont .= "</div>";
 
-// Data
-$cont .= "</div>";
+        // Data
+        $cont .= "</div>";
     
     $html = html(array_merge($opts, array("cont" => $cont, "script" => "index")));
     die($html);
