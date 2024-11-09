@@ -73,6 +73,12 @@ body > #cont > div > .list >.line .col .sub .value {flex: 1;text-align: right; /
 .gold  {color : var(--gold);}
 .black  {color : var(--black);}
 
+
+.dark {
+    background-color: var(--dark);
+    a > div > i{color: aliceblue;}
+}
+
 .popup.displayParam > div { max-width: 200px; }
 .popup.displayParam > div > .checkbox > .data { padding: 0 0 5px 0; }
 .popup.displayParam > div > .checkbox > .data > .list { flex-direction: column; gap: 5px 0; }

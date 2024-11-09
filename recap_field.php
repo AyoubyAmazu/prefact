@@ -12,9 +12,9 @@ if (!$getD) die(json_encode(array("code" => 400, "html" => "Invalid Id")));
 if (isset($_POST["years"])) {
     $html = '';
     foreach ($_POST["years"] as $year) {
-        $select = "select *, (SELECT SUM(`t`.`Total_facture`) as total_fact FROM `travaux_detail` t WHERE `t`.`IdFact` = $getD) AS code from `rech_fact` where `Adr_Id`= '$getD' and `AnneeChoix` = '$year'";
-        $result = dbSelect($select, array_merge($opts, array("db" => "fact")));
-        $html .=fieldHtml(array("year"=>$year, "debour"=>$result["DeboursFact"]));
+        // $select = "select *, (SELECT SUM(`t`.`Total_facture`) as total_fact FROM `travaux_detail` t WHERE `t`.`IdFact` = $getD) AS code from `rech_fact` where `Adr_Id`= '$getD' and `AnneeChoix` = '$year'";
+        // $result = dbSelect($select, array_merge($opts, array("db" => "fact")));
+        $html .=fieldHtml(array("year"=>$year));
     }
     die(json_encode(array("code" => 200, "html" => $html)));
 }
@@ -58,7 +58,7 @@ function fieldHtml($opts = array())
     $html .= "<span class='labele pay'>PAYE / SOCIAL</span> <span class='val pay'>  0,00  </span>";
     $html .= "</div>";
     $html .= "<div class='value debours'>";
-    $html .= "<span class='labele deb'>DEBOURS</span> <span class='val deb'>".$opts['debour']."</span>";
+    // $html .= "<span class='labele deb'>DEBOURS</span> <span class='val deb'>".$opts['debour']."</span>";
     $html .= "</div>";
     $html .= "<div class='value frais'>";
     $html .= "<span class='labele frais'>FRAIS</span> <span class='val frais'>  0,00  </span>";
