@@ -5,6 +5,7 @@ $(document).ready(function () {
     $("body > #cont > div > .op > .side > .select.sortAnalyse > .data > .list > .option").not(".readonly").children("a").off("click").on("click", function (event) { sortColSelectOption($(event.target).parents(".option")); });
     // $("body > #cont > div > .years > .yearsDiv > .btn.year").each(function () {$(this).off("click").on("click", function name(event) {$(event.target).parent(".btn").toggleClass("selected");displayField();});})
     displayField();
+    returnBtn();
     // TODO EDIT
 });
 /**
@@ -249,6 +250,13 @@ function displayVirementAdapt()
     $("body > .popup.displayVirement > div > .op > .btn.min.cancel > a").off("click").on("click", function(event) { popDown($(event.target).parents("div")); });
     $("body > .popup.displayVirement > div > .op > .btn.min.save > a").off("click").on("click", function() { displayCommentaireSave(); });
 }
+
+function returnBtn(){
+
+    $("body > #title > div > .op.r > .btn.min.cancel ").click(function(){window.location.href = 'index.php';})
+
+}
+
 
 
 
