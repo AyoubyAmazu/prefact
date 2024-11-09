@@ -37,14 +37,16 @@
 
     $select = "select distinct AnneeChoix from z_fact.rech_fact where Adr_Id ='" . $getD."'";
     $years = array_column(dbSelect($select, array_merge($opts, array("db" => "prefact"))), "AnneeChoix");
-    sort($years);
+    rsort($years);
     // $cont .= json_encode($years);
     // $visibleYears = 10; 
     // $startingYear = 2023;
+    $selected = 3;
     $cont .="<div class='yearsDiv'>";
     foreach($years as $year)
     {
-        $cont .= formBtn(array("key"=>$year, "txt"=>$year . "<div>+0.00</div>", "title"=>"l'Année", "class"=>"sliderButton", "extra"=>array("year")));
+        $selected--;
+        $cont .= formBtn(array("key"=>$year, "txt"=>$year . "<div>+0.00</div>", "title"=>"l'Année", "class"=>"sliderButton", "extra"=>array("year", $selected >= 0?"selected":"")));
     }
     $cont .="</div>";
     $cont .= formBtn(array("key"=>"angleRight", "ico"=>"fa-solid fa-angle-right", "title"=>"scroll right"));

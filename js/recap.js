@@ -3,8 +3,8 @@ $(document).ready(function () {
     $("body > #cont > div > .op > .side > .select.sortAnalyse > .data > a").off("click").on("click", function (event) { formSelectInit($(event.target).parents(".select"));});
     $("body > #cont > div > .op > .side > .select.sortAnalyse > .data > .list > .input.filter > .data > input").off("input").on("input", function (event) { sortColSelectFilter($(event.target).parents(".select")); });
     $("body > #cont > div > .op > .side > .select.sortAnalyse > .data > .list > .option").not(".readonly").children("a").off("click").on("click", function (event) { sortColSelectOption($(event.target).parents(".option")); });
-    $("body > #cont > div > .years > .yearsDiv > .btn.year").each(function () {$(this).off("click").on("click", function name(event) {$(event.target).parent(".btn").toggleClass("selected");displayField();});})
-    
+    // $("body > #cont > div > .years > .yearsDiv > .btn.year").each(function () {$(this).off("click").on("click", function name(event) {$(event.target).parent(".btn").toggleClass("selected");displayField();});})
+    displayField();
     
 });
 /**
@@ -25,8 +25,6 @@ function displayField()
             adr:adr,
             years: selectedYears,
         }
-        // , beforeSend: function() { loaderShow(); }
-        // , complete: function() { loaderHide(); }
         , success: function(data)
         {
             // console.log(data);
