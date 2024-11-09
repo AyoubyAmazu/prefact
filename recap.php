@@ -33,14 +33,25 @@
     $cont .= formSelect(array("key" => "sortAnalyse", "label" => "Affichage", "title"=>"trier par : analyse" , "selected"=> $sortSelected , "list" => $anaList ));
     $cont .= "</div>";
     $cont .= "</div>";
+    $cont .= "<div class='main'>";
+    $cont .="<div class='pre-angle'>";
+    $cont .= formBtn(array("key"=>"angleLeft", "ico"=>"fa-solid fa-angle-left", "title"=>"scroll right"));
+    $cont .="</div>";
+
+    $cont .= "<div class='fields'>";
+    $cont .= "</div>";
+    
+    $cont .="<div class='post-angle'>";
+    $cont .= formBtn(array("key"=>"angleRight", "ico"=>"fa-solid fa-angle-right", "title"=>"scroll right"));
+    $cont .="</div>";
+    $cont .= "</div>";
     $cont .= "<div class='years'>";
 
     $select = "select distinct AnneeChoix from z_fact.rech_fact where Adr_Id ='" . $getD."'";
     $years = array_column(dbSelect($select, array_merge($opts, array("db" => "prefact"))), "AnneeChoix");
     rsort($years);
-    // $cont .= json_encode($years);
-    // $visibleYears = 10; 
-    // $startingYear = 2023;
+    
+   
     $selected = 3;
     $cont .="<div class='yearsDiv'>";
     foreach($years as $year)
@@ -49,11 +60,6 @@
         $cont .= formBtn(array("key"=>$year, "txt"=>$year . "<div>+0.00</div>", "title"=>"l'Année", "class"=>"sliderButton", "extra"=>array("year", $selected >= 0?"selected":"")));
     }
     $cont .="</div>";
-    $cont .= formBtn(array("key"=>"angleRight", "ico"=>"fa-solid fa-angle-right", "title"=>"scroll right"));
-    $cont .= "</div>";
-
-
-    $cont .= "<div class='fields'>";
     $cont .= "</div>";
 
     $html = html(array_merge($opts, array("cont" => $cont, "script" => "recap", "adr" => $getD)));
