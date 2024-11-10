@@ -1,5 +1,6 @@
 $(document).ready(function () {
     sortColAdapt();
+    $("body > #title > div > .main > .op > .segment > a").off("click").on("click", function(){displaySegme()});
     $("body > #cont > div > .op > .side > .select.sortAnalyse > .data > a").off("click").on("click", function (event) { formSelectInit($(event.target).parents(".select"));});
     $("body > #cont > div > .op > .side > .select.sortAnalyse > .data > .list > .input.filter > .data > input").off("input").on("input", function (event) { sortColSelectFilter($(event.target).parents(".select")); });
     $("body > #cont > div > .op > .side > .select.sortAnalyse > .data > .list > .option").not(".readonly").children("a").off("click").on("click", function (event) { sortColSelectOption($(event.target).parents(".option")); });
@@ -48,6 +49,78 @@ function displayFieldAdapt()
     $('body > #cont > div > .fields > .field > .all > .table  > .donneTrav > .value > .labele').on('click',function(){  
     var list = $('body > #cont > div > .fields > .field > .all > .table > .donneTrav > .travaux-sublabels');
     if (list.css('display') === 'none') {list.css('display', 'initial');} else {list.css('display', 'none');} })
+}
+/**
+ * Update Segmentation
+ */
+function updateSegment()
+{ 
+  $.ajax({
+    type:"POST",
+    url: "index_segment.php",
+    data:
+    {
+      update_segment: "",
+      adr: $("body > #cont > div > .list > .line > .col.op > .list.on").closest(".line ").children(".col.dossier").children(".sub.code").children("a").text(),
+      segment:$(".popup.displaySegme > div > .checkbox.col > .data > .list > .option.on").attr("code")
+    }
+    , beforeSend: function() { popDown(".popup");loaderShow(); }
+    , complete: function() { loaderHide(); }
+    , success: function(data)
+    {
+      loaderHide();
+        try { var result = JSON.parse(data); } catch(error) { popError(); return; }
+        if(result["code"] == 200){popUp(result["html"]);fetch();$(".popup > div > .op > .btn.min.cancel > a").off("click").on("click", function() {popDown(".popup"); }); return; }
+        popError(result["txt"], result["btn"]);
+        
+    }
+});
+}
+/**
+ * validats segment popup data
+ */
+function displaySegmeSave()
+{ 
+    var displaySegme = new Array();
+    $("body > .popup.displaySegme > div > .checkbox > .data > .list > .option.on").each(function()
+    {
+        var code = $(this).attr("code"); if(code == undefined || code == null || code == "") return;
+        displaySegme.push(code);
+    });
+    if(displaySegme.length == 0) { popError("Aucune colonnes séléctionnée"); return; }
+    updateSegment();
+    // var obj = { index: { displaySegme: displaySegme } };
+}
+/**
+ * Fetch Segment Data
+ */
+function displaySegme()
+{ 
+    $.ajax({
+        url: "index_segment.php"
+        , beforeSend: function() { loaderShow(); }
+        , complete: function() { loaderHide(); }
+        , success: function(data)
+        {
+            try { var result = JSON.parse(data); } catch(error) { popError(); return; }
+            if(result["code"] == 200)
+               { 
+                popUp(result["html"]);
+                displaySegmeAdapt();
+                return; 
+              }
+            popError(result["txt"], result["btn"]);
+        }
+    });
+}
+/**
+ * Adds functionaltiy to segment popup
+ */
+function displaySegmeAdapt()
+{
+    $("body > .popup.displaySegme > div > .checkbox > .data > .list > .option").not(".readonly").children("a").off("click").on("click", function(event) { formCheckboxUnique($(event.target).parents(".option")); });
+    $("body > .popup.displaySegme > div > .op > .btn.cancel > a").off("click").on("click", function(event) { popDown($(event.target).parents(".popup")); });
+    $("body > .popup.displaySegme > div > .op > .btn.save > a").off("click").on("click", function() {fetch();displaySegmeSave(); });
 }
 function sortColSelectFilter(div) {
     formSelectFilter(div);
@@ -252,5 +325,3 @@ function displayVirementAdapt()
 }
 
 
-
-    
