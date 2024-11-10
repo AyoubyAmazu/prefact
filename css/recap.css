@@ -112,10 +112,34 @@ body > #cont > div > .main > .fields > .field > .all > .top >  .vertica  > .btn 
 body > #cont > div > .main > .fields > .field > .all > .top >  .vertica  > .btn > a:hover {background-color:var(--dark); }
 body > #cont > div > .main > .fields > .field > .all > .top >  .vertica  > .list  {width: 220px; margin-left: -206px; margin-top: -15px;   position: absolute; align-content: start; border: 1px solid var(--dark); background-color : var(--light); overflow: visible; z-index: 1;}
 body > #cont > div > .main > .fields > .field > .all > .top >  .vertica  > .list >.btn > a {border: none; display: inline-flex ;height: 20px; justify-content: left; font-size: 13px; line-height: 18px; font-family: bld;}
-body > #cont > div > .main > .fields > .field > .all > .top >  .vertica  > .list >.btn > a{ border-radius: 0px;} 
+body > #cont > div > .main > .fields > .field > .all > .top >  .vertica  > .list >.btn > a{ border-radius: 0px;}
 body > #cont > div > .main > .fields > .field > .all > .top >  .vertica  > .list.off { display: none; }
 body > #cont > div > .main > .fields > .field > .all > .top >  .vertica  > .btnmenu > .btn >  a  {border: none; }
 
 body > #cont > div > .main > .fields > .field > .all > .table  > .donneTrav > .show {display: none; margin-bottom: 5px;  width: 100%; }
 body > #cont > div > .main > .fields > .field > .all > .table  > .donneTrav > .show > .travauxSublabel {display:inline-block;  flex:1; text-align: right; width: 70%; margin-bottom: 5px; font-style: italic; font-weight: bold;font-size: 13px; line-height: 18px;  }
 body > #cont > div > .main > .fields > .field > .all > .table  > .donneTrav > .show > .val {flex: 1;text-align: right; margin-left: 45px; font-size: 13px; line-height: 18px; font-family: bld;  }
+
+/* Popup */
+.popup.displayParam > div { max-width: 200px; }
+.popup.displayParam > div > .checkbox > .data { padding: 0 0 5px 0; }
+.popup.displayParam > div > .checkbox > .data > .list { flex-direction: column; gap: 5px 0; }
+.popup.displayParam > div > .checkbox > .data > .list > .option > a { padding: 0 15px; }
+.popup.displayParam > div > .checkbox > .data > .list > .option.readonly { background-color: var(--dark1); }
+.popup.displayParam > div > .checkbox > .data > .list > .option.readonly > a { padding: 5px 10px; font-family: bld; cursor: auto; }
+.popup.displayParam > div > .checkbox > .data > .list > .option.readonly > a > .ico { display: none; }
+.popup.displayParam > div > .checkbox > .data > .list > .option:nth-of-type(1) { border-radius: 5px 5px 0 0; -webkit-border-radius: 5px 5px 0 0; -moz-border-radius: 5px 5px 0 0; -ms-border-radius: 5px 5px 0 0; -o-border-radius: 5px 5px 0 0; }
+.popup.displayParam > div > .op > .btn { width: 70px; }
+
+body > #cont > div > .list > .line > .col.op > .btn > a  {padding: 6px;}
+
+.popup.displaySegme > div { max-width: 390px }
+.popup.displaySegme > div > .checkbox > .data > .list { padding: 10px 0px;  flex-direction: column; gap: 3px 0; }
+.popup.displaySegme > div > .checkbox > .data > .list > .option > a { padding: 3px 0px; font-family: bld; cursor: auto;}
+.popup.displaySegme > div > .checkbox > .data > .list > .option > a > .txt > span  {  color : var(--green);}
+.popup.displaySegme > div > .checkbox > .data > .list > .option > a > .txt > div { color: var(--gold); display: inline; }
+.popup.displaySegme > div > .checkbox > .data > .list > .option > a > .txt > aside { color : var(--red); display: inline;}
+
+.popup.displaySegme > div > .op > .btn { width: 70px; font-family: bld; }
+
+.popup.displayCommentaire > div > .textarea > .data > textarea {height: 100px;}
