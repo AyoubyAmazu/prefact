@@ -32,33 +32,23 @@ body > #cont > div > .main > .post-angle > div > a{align-items:center;}
 
 /* fields blocks */
 body > #cont > div > .main > .fields { display: flex;flex-wrap:wrap;width:100%;gap:10px;justify-content:center;}
-body > #cont > div > .main > .fields > .field { display:flex;width:20%;padding:5px; align-items: center; text-decoration: none; border-radius: 5px; border: 1px solid var(--dark); margin-top: 5px; width: calc(80%/3);-webkit-border-radius:5px; -moz-border-radius:5px; -ms-border-radius:5px; -o-border-radius:5px; font-size: 10px; line-height: 14px;}
+body > #cont > div > .main > .fields > .field { display:flex;width:20%;padding:5px; align-items: center; text-decoration: none; border-radius: 5px; border: 1px solid var(--dark); margin-top: 5px; width: calc(93%/3);-webkit-border-radius:5px; -moz-border-radius:5px; -ms-border-radius:5px; -o-border-radius:5px; font-size: 10px; line-height: 14px;}
 body > #cont > div > .main > .fields > .field > .all {width:100%;}
 body > #cont > div > .main > .fields > .field > .all >  .top { display: flex; justify-content: space-between; margin-top: 10px; width:100%; }
 body > #cont > div > .main > .fields > .field > .all >  .top > .labl {font-family: bld; font-size: larger; margin-top: 5px;}
 body > #cont > div > .main > .fields > .field > .all >  .chiffre > .label {text-align: center;justify-content: center; font-style: italic;}
 body > #cont > div > .main > .fields > .field > .all >  .table {display: flex; border-top: 1px solid var(--dark) ; margin-top: 10px;  border-bottom: 1px solid var(--dark);width:100%;}
-body > #cont > div > .main > .fields > .field > .all >  .table > .donne { border-right: 1px solid var(--dark);width: 50%; margin-top: 5px; margin-bottom: 5px;}
-body > #cont > div > .main > .fields > .field > .all >  .table > .donne > .value {text-align: left; justify-content: left; align-items: left; display: flex; font-size: 13px; line-height: 18px; font-family: bld;margin-bottom: 5px; }
-body > #cont > div > .main > .fields > .field > .all >  .table > .donne > .value.paye {margin-bottom: 29px;}
-body > #cont > div > .main > .fields > .field > .all >  .table > .donne >.value > .labele {font-size:10px;text-align: left; margin-right: 20px; }
-body > #cont > div > .main > .fields > .field > .all >  .table > .donne >.value > .val {font-size:10px;text-align: right; margin-right: 10px;}
+body > #cont > div > .main > .fields > .field > .all >  .table > .donne { border-right: 1px solid var(--dark);width: 50%; margin-top: 5px; margin-bottom: 5px;display: flex;flex-direction:column;text-wrap: nowrap;}
+body > #cont > div > .main > .fields > .field > .all >  .table > .donne > div { display: flex; gap:10px;align-items: center;justify-content: flex-start; font-weight: bold;width: 50%;text-wrap: nowrap}
 
-body > #cont > div > .main > .fields > .field > .all >  .table > .donneTrav {display: flex;flex-direction: column;justify-content: flex-start;  width: 50%; margin-top: 6px; margin-bottom: 5px;}
-body > #cont > div > .main > .fields > .field > .all >  .table > .donneTrav > .value { text-align: right; justify-content: right; align-items: right; display: flex; font-size: 13px; line-height: 18px; font-family: bld;margin-bottom: 5px; }
+body > #cont > div > .main > .fields > .field > .all >  .table > .donneTrav {display: flex;flex-direction: column;justify-content: flex-start;  width: 50%; margin-top: 6px; margin-bottom: 5px; margin-left: 5px;}
+body > #cont > div > .main > .fields > .field > .all >  .table > .donneTrav > div { display: flex; gap:10px;align-items: center;justify-content: flex-start; font-weight: bold;width: 50%;text-wrap: nowrap}
 
-body > #cont > div > .main > .fields > .field > .all >  .table > .donneTrav > .value > .labele {font-size:10px;text-align: left; margin-left: 10px;  }
-body > #cont > div > .main > .fields > .field > .all >  .table > .donneTrav > .value > .val {font-size:10px;text-align: left; margin-right: -200px }
-
-body > #cont > div > .main > .fields > .field > .all >  .tableX {display: flex;  ; margin-top: 5px;  }
-body > #cont > div > .main > .fields > .field > .all >  .tableX > .donneCompta { border-right: 1px solid var(--dark);width: 50%; margin-top: 5px; margin-bottom: 5px;}
-body > #cont > div > .main > .fields > .field > .all >  .tableX > .donneCompta > .value {text-align: left; justify-content: left; align-items: left; display: flex; font-size: 13px; line-height: 18px; font-family: bld;margin-bottom: 5px; }
-body > #cont > div > .main > .fields > .field > .all >  .tableX > .donneCompta > .value > .labele {flex: 1;text-align: left; margin-left: 10px; }
-body > #cont > div > .main > .fields > .field > .all >  .tableX > .donneCompta >.value > .val {flex: 1;text-align: right; margin-right: 10px;}
-body > #cont > div > .main > .fields > .field > .all >  .tableX > .donneComptaB {  display: flex;flex-direction: column;justify-content: flex-start;  width: 50%; margin-top: 6px; margin-bottom: 5px;}
-body > #cont > div > .main > .fields > .field > .all >  .tableX > .donneComptaB > .value { text-align: right; justify-content: right; align-items: right; display: flex; font-size: 13px; line-height: 18px; font-family: bld;margin-bottom: 5px; }
-body > #cont > div > .main > .fields > .field > .all >  .tableX > .donneComptaB > .value > .labele {flex: 1;text-align: left; margin-left: 10px;  }
-body > #cont > div > .main > .fields > .field > .all >  .tableX > .donneComptaB > .value > .val {flex: 1;text-align: left; margin-right: -190px }
+body > #cont > div > .main > .fields > .field > .all >  .tableX {display: flex; margin-top: 10px;  border-bottom: 1px solid var(--dark);width:100%;}
+body > #cont > div > .main > .fields > .field > .all >  .tableX > .donneCompta { border-right: 1px solid var(--dark);width: 50%; margin-top: 5px; margin-bottom: 5px;justify-content: space-around;}
+body > #cont > div > .main > .fields > .field > .all >  .tableX > .donneCompta > div { display: flex; gap:10px;align-items: center;justify-content: flex-start; font-weight: bold;width: 50%;text-wrap: nowrap;}
+body > #cont > div > .main > .fields > .field > .all >  .tableX > .donneComptaB {width: 50%; margin-top: 5px; margin-bottom: 5px;justify-content: space-around;margin-left: 10px}
+body > #cont > div > .main > .fields > .field > .all >  .tableX > .donneComptaB > div { display: flex; gap:10px;align-items: center;justify-content: flex-start; font-weight: bold;width: 50%;text-wrap: nowrap;}
 
 body > #cont > div > .main > .fields > .field > .all >  .letotal {display: flex;  ; margin-top: 5px; background-color: var(--dark1);  }
 body > #cont > div > .main > .fields > .field > .all >  .letotal > .totalA { border-right: 1px solid var(--dark);width: 50%; margin-top: 5px; margin-bottom: 5px;}
@@ -72,16 +62,12 @@ body > #cont > div > .main > .fields > .field > .all >  .letotal > .totalB  > .v
 
 body > #cont > div > .main > .fields > .field > .all >  .tableY {display: flex;  ; margin-top: 5px;  }
 body > #cont > div > .main > .fields > .field > .all >  .tableY > .donneHono { border-right: 1px solid var(--dark);width: 50%; margin-top: 5px; margin-bottom: 5px;}
-body > #cont > div > .main > .fields > .field > .all >  .tableY > .donneHono > .value {text-align: left; justify-content: left; align-items: left; display: flex; font-size: 13px; line-height: 18px; font-family: bld;margin-bottom: 5px; }
-body > #cont > div > .main > .fields > .field > .all >  .tableY > .donneHono > .value > .labele {flex: 1;text-align: left; margin-left: 10px; }
-body > #cont > div > .main > .fields > .field > .all >  .tableY > .donneHono >.value > .val {flex: 1;text-align: right; margin-right: 10px;}
-body > #cont > div > .main > .fields > .field > .all >  .tableY > .donneVirt {  display: flex;flex-direction: column;justify-content: flex-start;  width: 50%; margin-top: 6px; margin-bottom: 5px;}
-body > #cont > div > .main > .fields > .field > .all >  .tableY > .donneVirt > .value { text-align: right; justify-content: right; align-items: right; display: flex; font-size: 13px; line-height: 18px; font-family: bld;margin-bottom: 5px; }
-body > #cont > div > .main > .fields > .field > .all >  .tableY > .donneVirt > .value > .labele {flex: 1;text-align: left; margin-left: 10px;  }
-body > #cont > div > .main > .fields > .field > .all >  .tableY > .donneVirt > .value > .val {flex: 1;text-align: left; margin-right: -190px }
-body > #cont > div > .main > .fields > .field > .all >  .tableY > .donneVirt > .value.virt > .labele.virt > .btn > a {border: none; overflow: hidden;  white-space: nowrap; margin-right: 50px; overflow: hidden; text-overflow: ellipsis; width: 135px;}
+body > #cont > div > .main > .fields > .field > .all >  .tableY > .donneHono > div { display: flex; gap:10px;align-items: center;justify-content: flex-start; font-weight: bold;width: 50%;text-wrap: nowrap;}
+body > #cont > div > .main > .fields > .field > .all >  .tableY > .donneVirt {  display: flex;flex-direction: column;justify-content: flex-start;  width: 50%; margin-top: 6px; margin-bottom: 5px;margin-left: 10px;}
+body > #cont > div > .main > .fields > .field > .all >  .tableY > .donneVirt > div { display: flex; gap:10px;align-items: center;justify-content: flex-start; font-weight: bold;width: 50%;text-wrap: nowrap;}
+body > #cont > div > .main > .fields > .field > .all >  .tableY > .donneVirt > .value.virt > .labele.virt > .btn > a {border: none; overflow: hidden;  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 130px;}
 body > #cont > div > .main > .fields > .field > .all >  .tableY > .donneVirt > .value.virt > .labele.virt > .btn > a:hover {background-color: var(--light);}
-body > #cont > div > .main > .fields > .field > .all >  .tableY > .donneVirt > .value.virt > .labele.virt > .btn > a > .txt {color: var(--dark);}
+body > #cont > div > .main > .fields > .field > .all >  .tableY > .donneVirt > .value.virt > .labele.virt > .btn > a > .txt {color: var(--dark);text-wrap: wrap}
 
 
 body > #cont > div > .main > .fields > .field > .all >  .letotalX {display: flex;  ; margin-top: 5px; background-color: var(--dark1);  }
