@@ -26,8 +26,6 @@ function displayField()
             adr:adr,
             years: selectedYears,
         }
-        // , beforeSend: function() { loaderShow(); }
-        // , complete: function() { loaderHide(); }
         , success: function(data)
         {
             try { var result = JSON.parse(data);console.log(data);} catch(error) { popError(); return; }
@@ -54,14 +52,14 @@ function displayFieldAdapt()
  * Update Segmentation
  */
 function updateSegment()
-{ 
+{
   $.ajax({
     type:"POST",
     url: "index_segment.php",
     data:
     {
       update_segment: "",
-      adr: $("body > #cont > div > .list > .line > .col.op > .list.on").closest(".line ").children(".col.dossier").children(".sub.code").children("a").text(),
+      adr: $("body > #title > div > .main > .adr > .code ").text(),
       segment:$(".popup.displaySegme > div > .checkbox.col > .data > .list > .option.on").attr("code")
     }
     , beforeSend: function() { popDown(".popup");loaderShow(); }
@@ -70,9 +68,9 @@ function updateSegment()
     {
       loaderHide();
         try { var result = JSON.parse(data); } catch(error) { popError(); return; }
-        if(result["code"] == 200){popUp(result["html"]);fetch();$(".popup > div > .op > .btn.min.cancel > a").off("click").on("click", function() {popDown(".popup"); }); return; }
+        if(result["code"] == 200){popUp(result["html"]);$(".popup > div > .op > .btn.min.cancel > a").off("click").on("click", function() {popDown(".popup");location.reload()}); return; }
         popError(result["txt"], result["btn"]);
-        
+
     }
 });
 }
@@ -89,10 +87,22 @@ function displaySegmeSave()
     });
     if(displaySegme.length == 0) { popError("Aucune colonnes séléctionnée"); return; }
     updateSegment();
-    // var obj = { index: { displaySegme: displaySegme } };
+    var obj = { index: { displaySegme: displaySegme } };
 }
 /**
- * Fetch Segment Data
+ * Adds functionaltiy to segment popup
+ */
+function displaySegmeAdapt()
+{
+    let segemnt = $("body > #cont > div > div[segment]").attr("segment").toLowerCase();
+    $("body > .popup.displaySegme > div > .checkbox > .data > .list > .option[code="+segemnt+"]").addClass("on");
+    $("body > .popup.displaySegme > div > .checkbox > .data > .list > .option[code="+segemnt+"] > a > div > i").toggleClass(" fa-circle fa-circle-dot");
+    $("body > .popup.displaySegme > div > .checkbox > .data > .list > .option").not(".readonly").children("a").off("click").on("click", function(event) { formCheckboxUnique($(event.target).parents(".option")); });
+    $("body > .popup.displaySegme > div > .op > .btn.cancel > a").off("click").on("click", function(event) { popDown($(event.target).parents(".popup")); });
+    $("body > .popup.displaySegme > div > .op > .btn.save > a").off("click").on("click", function() {displaySegmeSave();});
+}
+/**
+ * Fetch Segment Popup
  */
 function displaySegme()
 { 
@@ -112,15 +122,6 @@ function displaySegme()
             popError(result["txt"], result["btn"]);
         }
     });
-}
-/**
- * Adds functionaltiy to segment popup
- */
-function displaySegmeAdapt()
-{
-    $("body > .popup.displaySegme > div > .checkbox > .data > .list > .option").not(".readonly").children("a").off("click").on("click", function(event) { formCheckboxUnique($(event.target).parents(".option")); });
-    $("body > .popup.displaySegme > div > .op > .btn.cancel > a").off("click").on("click", function(event) { popDown($(event.target).parents(".popup")); });
-    $("body > .popup.displaySegme > div > .op > .btn.save > a").off("click").on("click", function() {fetch();displaySegmeSave(); });
 }
 function sortColSelectFilter(div) {
     formSelectFilter(div);

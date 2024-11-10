@@ -15,6 +15,7 @@
    array_push($anaList, array("code" => "analysecollaborateur", "txt" => "Analyse par collaborateur", "title" => "Analyse par collaborateur" , "href"=>"synthese_collab.php"));
    $sortNull = array("code" => "Trier", "txt" => "analyse annuelle ", "title" => "analyse annuelle");
 
+
     $k = array_search($cookie["index"]["sortCol"], array_column($anaList, "code"));
     if($k === false) $sortSelected = $sortNull;
     else
@@ -23,7 +24,11 @@
        $sortSelected = array("code" => $anaList[$k2]["code"]);
     }
 
-    $cont = "<div class='op'>";
+    $select = "SELECT `segment` FROM prefact.adr where code='$getD';";
+    $segemnt = array_column(dbSelect($select, array_merge($opts, array("db" => "prefact"))), "segment");
+
+    $cont = "<div hidden segment='".$segemnt[0]."'></div>";
+    $cont .= "<div class='op'>";
     $cont .= "<div class='side'>";
     $cont .= formBtn(array("key" => "facturation", "ico" => "fa-solid fa-file-invoice", "txt" => "Facturation", "href"=>"resultat.php"));
     $cont .= formBtn(array("key" => "tarifs", "ico" => "fa-solid fa-user", "txt" => "Tarifs social" , "href"=>"tarifs_social.php"));
