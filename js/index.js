@@ -433,7 +433,19 @@ function sortTableRows(code) {
  * Shows popup the button of each row in the index table
  * @param {HTMLElement} div 
  */
-function openPopupMenu(div) { $(div).children(".list").toggleClass("on off");}
+function openPopupMenu(div) {
+   $(div).children(".list").toggleClass("on off ");
+   $(div).children(".displayMenu").toggleClass("dark");
+   $(document).click(function(event) {
+    // Check if the clicked element is not a .list
+    if (!$(event.target).closest($(div)).length) {
+      // Remove 'on' and add 'off' to all .list elements
+      $(div).children(".list").removeClass('on').addClass('off');
+      $(div).children(".displayMenu").removeClass("dark");
+    }
+  });
+  
+  }
 /**
  * fetchs data from php using ajax
  */

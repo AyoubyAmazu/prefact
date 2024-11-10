@@ -58,7 +58,7 @@ function fieldHtml($opts = array())
     $html .= "<span class='labele pay'>PAYE / SOCIAL</span> <span class='val pay'>  0,00  </span>";
     $html .= "</div>";
     $html .= "<div class='value debours'>";
-    $html .= "<span class='labele deb'>DEBOURS</span> <span class='val deb'></span>";
+    // $html .= "<span class='labele deb'>DEBOURS</span> <span class='val deb'>".$opts['debour']."</span>";
     $html .= "</div>";
     $html .= "<div class='value frais'>";
     $html .= "<span class='labele frais'>FRAIS</span> <span class='val frais'>  0,00  </span>";

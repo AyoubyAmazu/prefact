@@ -1,1 +1,0 @@
-30/10/2024 18:24:29 | RRO | Erreur de d'execution d'une requête SQL | /recap.php | prefact | select distinct AnneeChoix from z_fact.rech_fact where Adr_Id =BDR002 | SQLSTATE[42S22]: Column not found: 1054 Unknown column 'BDR002' in 'where clause'
