@@ -30,7 +30,7 @@ function displayField()
         , success: function(data)
         {
             // console.log(data);
-            try { var result = JSON.parse(data);console.log(data);} catch(error) { popError(); return; }
+            try { var result = JSON.parse(data);} catch(error) { popError(); return; }
             if(result["code"] == 200) {$("body > #cont > div > .main > .fields").html(result.html);displayFieldAdapt(); return; }
             popError(result["txt"], result["btn"]);
         }
@@ -41,14 +41,15 @@ function displayField()
  */
 function displayFieldAdapt()
 {
-    $("body > #cont > div > .fields > .field > .all > .top > .vertica ").off("click").on("click", function (event) { openPopupMenu($(event.target).parents(".vertica")); });
-    $("body > #cont > div > .fields > .field > .all > .top > .vertica > .list > .btn.commentaire > a").off("click").on("click", function() { displayCommentaire(); });
-    $("body > #cont > div > .fields > .field > .all > .top > .vertica > .list > .btn.recap > a").off("click").on("click", function() { displayRecap(); });
-    $("body > #cont > div > .fields > .field > .all > .top > .vertica > .list > .btn.rappel > a").off("click").on("click", function() { displayRappelList(); });
-    $("body > #cont > div > .fields > .field > .all >  .tableY > .donneVirt > .value.virt > .labele.virt > .btn > a").off("click").on("click", function() { displayVirement(); });
-    $('body > #cont > div > .fields > .field > .all > .table  > .donneTrav > .value > .labele').on('click',function(){  
-    var list = $('body > #cont > div > .fields > .field > .all > .table > .donneTrav > .travaux-sublabels');
-    if (list.css('display') === 'none') {list.css('display', 'initial');} else {list.css('display', 'none');} })
+    $("body > #cont > div > .main > .fields > .field > .all > .top > .vertica ").off("click").on("click", function (event) { openPopupMenu($(event.target).parents(".vertica")); });
+    $("body > #cont > div > .main > .fields > .field > .all > .top > .vertica > .list > .btn.commentaire > a").off("click").on("click", function() { displayCommentaire(); });
+    $("body > #cont > div > .main > .fields > .field > .all > .top > .vertica > .list > .btn.recap > a").off("click").on("click", function() { displayRecap(); });
+    $("body > #cont > div > .main > .fields > .field > .all > .top > .vertica > .list > .btn.rappel > a").off("click").on("click", function() { displayRappelList(); });
+    $("body > #cont > div > .main > .fields > .field > .all >  .tableY > .donneVirt > .value.virt > .labele.virt > .btn > a").off("click").on("click", function() { displayVirement(); });
+    $('body > #cont > div > .main > .fields > .field > .all > .table  > .donneTrav > .value > .labele').on('click',function(){
+        // console.log($(this).parent().parent().children(".travaux-sublabels"));
+        $(this).parent().parent().children(".travaux-sublabels").toggleClass("show");
+    });
 }
 /**
  * Update Segmentation
