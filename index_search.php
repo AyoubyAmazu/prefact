@@ -73,7 +73,7 @@ foreach ($result as $v) {
         $html .= "</div>";
      $html .= "</div>";
      $html .= "<div class='col Statut'>";
-        $html .= "<div class='sub segment'>";
+        $html .= "<div class='sub segment' code='".$v['segment']."'>";
         $segment = $v["segment"];
         $defaultColor = 'black';
         $colors = array('A' => 'green', 'B' => 'green', 'C' => 'green', 'D' => 'gold', 'E' => 'red', 'Z' => 'black');
