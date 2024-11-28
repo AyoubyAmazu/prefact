@@ -75,7 +75,7 @@ function updateSegment()
         popError(result["txt"], result["btn"]);
 
     }
-});
+ });
 }
 /**
  * validats segment popup data

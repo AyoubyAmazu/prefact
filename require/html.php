@@ -9,8 +9,8 @@ function html($opts = array())
     $html .= "<head>" . htmlHead($opts) . "</head>";
     $html .= "<body>";
     $html .= "<div id='header'>" . htmlHeader($opts) . "</div>";
-    if ($opts["adr"] === "") $html .= "<div id='filter'>" . htmlFilter($opts) . "</div>";
-    elseif ($opts["adr"] !== false) $html .= "<div id='title'>" . htmlTitle($opts) . "</div>";
+    // if ($opts["adr"] === "") $html .= "<div id='filter'>" . htmlFilter($opts) . "</div>";
+    // elseif ($opts["adr"] !== false) $html .= "<div id='title'>" . htmlTitle($opts) . "</div>";
     $html .= "<div id='cont'><div>" . $opts["cont"] . "</div></div>";
     $html .= "<div id='footer'>" . htmlFooter() . "</div>";
     $html .= "<div id='loader'>" . htmlLoader() . "</div>";
