@@ -74,8 +74,7 @@
         $html .= "<th class='last-3'>Duree</th>";
         $html .= "<th class='last-3'>PV</th>";
         $html .= "</tr>";
-
-        
+ 
 
         foreach ($list as $row) {
 
@@ -85,11 +84,11 @@
                 $html .= "<tr>";
                 $formattedDate = date("d/m/Y", strtotime($row['TEMPS_DATE']));
         
-                $html .= "<td>" .formBtn(array("key" => "first-check", "ico" => "fa-circle")). "</td>";
+                $html .= "<td>" .formCheckbox(array("key" => "sortDir", "list" => array(array("code" => "ASC", "txt" => "Ascendant", "value" => ($cookie["index"]["sortDir"] == "ASC"))))). "</td>";
                 $html .= "<td class='centered-td'>" . $formattedDate . "</td>";
                 $html .= "<td class='centered-td code-row'><a href='#'>" . $row['COL_CODE'] . "</a></td>";
-                $html .= "<td class='centered-td prest-column'><p class='click' onclick='myFunction(this)'><span class='center_span' id='popupTextSpan1'>" . $row['PREST_CODE'] . "</span><input class='popuptext' id='myPopup1' type='text' /></p></td>";
-                $html .= "<td><p class='click' onclick='myFunction(this)'><span centered-span id='popupTextSpan1'>" . $row['EXO_CODE'] . "</span><input class='popuptext' id='myPopup2' type='text' /></p></td>";
+                $html .= "<td class='centered-td prest-column'><p class='click' onclick='myFunction(this)'><span class='center_span' id='popupTextSpan1'>" .formInput(array("key" => "prest_code", "type" => "text", "align" => "c",  "value" =>  $row['PREST_CODE'])) . "</span></p></td>";
+                $html .= "<td><p class='click' onclick='myFunction(this)'><span centered-span id='popupTextSpan1'>" . formInput(array("key" => "exo_code", "type" => "text", "align" => "c",  "value" =>  $row['EXO_CODE'])) . "</span></p></td>";
                 $html .= "<td>" . $row['TEMPS_MEMO'] . "</td>";
                 $html .= "<td class='qnt'>" . $row['TEMPS_M_QTE'] . "</td>";
                 $html .= "<td class='duree'>" . $row['TEMPS_DUREE'] . "</td>";
@@ -137,9 +136,9 @@
         
                 $html .= "<td>" .formBtn(array("key" => "first-check", "ico" => "fa-circle")). "</td>";
                 $html .= "<td class='centered-td'>" . $formattedDate . "</td>";
-                $html .= "<td class='centered-td code-row'><a href='#'>" . $row['COL_CODE'] . "</a></td>";
-                $html .= "<td class='centered-td prest-column'><p class='click' onclick='myFunction(this)'><span class='center_span' id='popupTextSpan1'>" . $row['PREST_CODE'] . "</span><input class='popuptext' id='myPopup1' type='text' /></p></td>";
-                $html .= "<td><p class='click' onclick='myFunction(this)'><span centered-span id='popupTextSpan1'>" . $row['EXO_CODE'] . "</span><input class='popuptext' id='myPopup2' type='text' /></p></td>";
+                $html .= "<td class='centered-td code-row'><a href='#'>" . formInput(array("key" => "col_code", "type" => "text", "align" => "c",  "value" =>  $row['COL_CODE'])). "</a></td>";
+                $html .= "<td class='centered-td prest-column'><p class='click' onclick='myFunction(this)'><span class='center_span' id='popupTextSpan1'>" . formInput(array("key" => "prest_code", "type" => "text", "align" => "c",  "value" =>  $row['PREST_CODE'])) . "</span></p></td>";
+                $html .= "<td><p class='click' onclick='myFunction(this)'><span centered-span id='popupTextSpan1'>" . formInput(array("key" => "exo_code", "type" => "text", "align" => "c",  "value" =>  $row['EXO_CODE'])). "</span></p></td>";
                 $html .= "<td>" . $row['TEMPS_MEMO'] . "</td>";
                 $html .= "<td class='qnt'>" . $row['TEMPS_M_QTE'] . "</td>";
                 $html .= "<td class='duree'>" . $row['TEMPS_DUREE'] . "</td>";
@@ -191,7 +190,7 @@
                 $html .= "<td>" .formBtn(array("key" => "first-check", "ico" => "fa-circle")). "</td>";
                 $html .= "<td class='centered-td'>" . $formattedDate . "</td>";
                 $html .= "<td class='centered-td code-row'><a href='#'>" . $row['COL_CODE'] . "</a></td>";
-                $html .= "<td class='centered-td prest-column'><p class='click' onclick='myFunction(this)'><span class='center_span' id='popupTextSpan1'>" . $row['PREST_CODE'] . "</span><input class='popuptext' id='myPopup1' type='text' /></p></td>";
+                $html .= "<td class='centered-td prest-column'><p class='click' onclick='myFunction(this)'><span class='center_span' id='popupTextSpan1'>" . formInput(array("key"=>"prest_code", "type"=>"text", "align"=>"c","value"=>$row['PREST_CODE'] )) . "</span><input class='popuptext' id='myPopup1' type='text' /></p></td>";
                 $html .= "<td><p class='click' onclick='myFunction(this)'><span centered-span id='popupTextSpan1'>" . $row['EXO_CODE'] . "</span><input class='popuptext' id='myPopup2' type='text' /></p></td>";
                 $html .= "<td>" . $row['TEMPS_MEMO'] . "</td>";
                 $html .= "<td class='qnt'>" . $row['TEMPS_M_QTE'] . "</td>";
@@ -243,8 +242,8 @@
                  $html .= "<td>" .formBtn(array("key" => "first-check", "ico" => "fa-circle")). "</td>";
                  $html .= "<td class='centered-td'>" . $formattedDate . "</td>";
                  $html .= "<td class='centered-td code-row'><a href='#'>" . $row['COL_CODE'] . "</a></td>";
-                 $html .= "<td class='centered-td prest-column'><p class='click' onclick='myFunction(this)'><span class='center_span' id='popupTextSpan1'>" . $row['PREST_CODE'] . "</span><input class='popuptext' id='myPopup1' type='text' /></p></td>";
-                 $html .= "<td><p class='click' onclick='myFunction(this)'><span centered-span id='popupTextSpan1'>" . $row['EXO_CODE'] . "</span><input class='popuptext' id='myPopup2' type='text' /></p></td>";
+                 $html .= "<td class='centered-td prest-column'><p class='click' onclick='myFunction(this)'><span class='center_span' id='popupTextSpan1'>" . formInput(array("key"=>"prest_code", "align"=>"c", "value"=>$row['PREST_CODE'])) . "</span></p></td>";
+                 $html .= "<td><p class='click' onclick='myFunction(this)'><span centered-span id='popupTextSpan1'>" . formInput(array("key"=>"exo_code", "align"=>"c", "value"=>$row['EXO_CODE'])) . "</span></p></td>";
                  $html .= "<td>" . $row['TEMPS_MEMO'] . "</td>";
                  $html .= "<td class='qnt'>" . $row['TEMPS_M_QTE'] . "</td>";
                  $html .= "<td class='duree'>" . $row['TEMPS_DUREE'] . "</td>";
@@ -296,8 +295,8 @@
                  $html .= "<td>" .formBtn(array("key" => "first-check", "ico" => "fa-circle")). "</td>";
                  $html .= "<td class='centered-td'>" . $formattedDate . "</td>";
                  $html .= "<td class='centered-td code-row'><a href='#'>" . $row['COL_CODE'] . "</a></td>";
-                 $html .= "<td class='centered-td prest-column'><p class='click' onclick='myFunction(this)'><span class='center_span' id='popupTextSpan1'>" . $row['PREST_CODE'] . "</span><input class='popuptext' id='myPopup1' type='text' /></p></td>";
-                 $html .= "<td><p class='click' onclick='myFunction(this)'><span centered-span id='popupTextSpan1'>" . $row['EXO_CODE'] . "</span><input class='popuptext' id='myPopup2' type='text' /></p></td>";
+                 $html .= "<td class='centered-td prest-column'><p class='click' onclick='myFunction(this)'><span class='center_span' id='popupTextSpan1'>" . formInput(array("key"=>"prest_code", "align"=>"c", "value"=>$row['PREST_CODE'])) . "</span></p></td>";
+                 $html .= "<td><p class='click' onclick='myFunction(this)'><span centered-span id='popupTextSpan1'>" . formInput(array("key"=>"exo_code", "align"=>"c", "value"=>$row['EXO_CODE'])) . "</span></p></td>";
                  $html .= "<td>" . $row['TEMPS_MEMO'] . "</td>";
                  $html .= "<td class='qnt'>" . $row['TEMPS_M_QTE'] . "</td>";
                  $html .= "<td class='duree'>" . $row['TEMPS_DUREE'] . "</td>";

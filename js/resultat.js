@@ -1,6 +1,7 @@
 
 // the start of checking specific lines //
 $(document).ready(function () {
+    $(".checkbox .data .list").children().each(function (option) {$(this).on("click", function () { formCheckboxUnique($(this))});});
     const tableClasses = ['fieldset1', 'fieldset2', 'fieldset3', 'fieldset4', 'fieldset5'];
     // the start of checking a specific prest line //
     function processButtonClickPrest(button) {
