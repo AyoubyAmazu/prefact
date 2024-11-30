@@ -64,7 +64,7 @@
     $html .= "<legend>Travaux Comptable et fiscaux</legend>";
     $html .= "<table id='myTable'  class='customers '>";
         $html .= "<tr>";
-        $html .= "<th class='first-1'>".formBtn(array("key" => "first-check", "ico" => "check"));"</th>"; 
+        $html .= "<th class='first-1'>".formBtn(array("key" => "first-check", "ico" => "check-double"));"</th>"; 
         $html .= "<th class='second-2'>Date</th>";
         $html .= "<th class='second-2 collab-header'><p onclick=\"sortTable('myTable')\">Collab</p></th>";
         $html .= "<th class='second-2 prest-header'><p onclick=\"sortTableByPrest('myTable')\">Prest</p></th>";
@@ -84,7 +84,7 @@
                 $html .= "<tr>";
                 $formattedDate = date("d/m/Y", strtotime($row['TEMPS_DATE']));
         
-                $html .= "<td>" .formCheckbox(array("key" => "sortDir", "list" => array(array("code" => "ASC", "txt" => "Ascendant", "value" => ($cookie["index"]["sortDir"] == "ASC"))))). "</td>";
+                $html .= "<td>" .formBtn(array("key" => "first-check", "ico" => "check")). "</td>";
                 $html .= "<td class='centered-td'>" . $formattedDate . "</td>";
                 $html .= "<td class='centered-td code-row'><a href='#'>" . $row['COL_CODE'] . "</a></td>";
                 $html .= "<td class='centered-td prest-column'><p class='click' onclick='myFunction(this)'><span class='center_span' id='popupTextSpan1'>" .formInput(array("key" => "prest_code", "type" => "text", "align" => "c",  "value" =>  $row['PREST_CODE'])) . "</span></p></td>";
