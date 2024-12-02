@@ -129,27 +129,15 @@ $(document).ready(function () {
 function handleDateSorting(table, isSorted) {
   let rws = table.children("tbody").children("tr");
   table.children("tbody").html("");
-  sort(rws, isSorted);
+  rws.sort((a, b) => {
+    const aDate = new Date(a.querySelector(".date").textContent);
+    const bDate = new Date(b.querySelector(".date").textContent);
+    return isSorted ? bDate - aDate : aDate - bDate;
+  });
   rws.each(function(){table.children("tbody").append($(this))});
 
-  function sort(list, isDes) {
-    if (isDes) {
-        list.sort(function (a, b) {
-            console.log($(a).children(".date").text().trim());
-            console.log(new Date($(a).children(".date").text().trim()));
-            return new Date($(a).children(".date").text()) < new Date($(b).children(".date").text());
-          });
-    }else{
-        rws.sort(function (a, b) {
-            console.log($(a).children(".date").text().trim());
-            console.log(new Date($(a).children(".date").text().trim()));
-            return new Date($(a).children(".date").text()) > new Date($(b).children(".date").text());
-          });
-    }
-  }
+  
 }
-
-// the end of checking specific lines //
 
 // the start of the checkboxes script //
 
