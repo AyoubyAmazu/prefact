@@ -569,3 +569,12 @@ $(document).ready(function () {
       sortColSelectOption($(event.target).parents(".option"));
     });
 });
+
+
+//  the script of checkead and not cheacked
+
+$(document).on('click', '.first-check', function () {
+  $(this.firstChild.firstChild.firstChild).toggleClass('fa-check');
+});
+
+// 
