@@ -102,9 +102,9 @@ body > #cont > div > .main > .fields > .field > .all > .top >  .vertica  > .list
 body > #cont > div > .main > .fields > .field > .all > .top >  .vertica  > .list.off { display: none; }
 body > #cont > div > .main > .fields > .field > .all > .top >  .vertica  > .btnmenu > .btn >  a  {border: none; }
 
-body > #cont > div > .main > .fields > .field > .all > .table  > .donneTrav > .show {display: none; margin-bottom: 5px;  width: 100%; }
-body > #cont > div > .main > .fields > .field > .all > .table  > .donneTrav > .show > .travauxSublabel {display:inline-block;  flex:1; text-align: right; width: 70%; margin-bottom: 5px; font-style: italic; font-weight: bold;font-size: 13px; line-height: 18px;  }
-body > #cont > div > .main > .fields > .field > .all > .table  > .donneTrav > .show > .val {flex: 1;text-align: right; margin-left: 45px; font-size: 13px; line-height: 18px; font-family: bld;  }
+body > #cont > div > .main > .fields > .field > .all > .table  > .donneTrav > .travaux-sublabels {display: none; margin-bottom: 5px;  width: 100%; }
+body > #cont > div > .main > .fields > .field > .all > .table  > .donneTrav > .travaux-sublabels.show {display: flex; flex-direction: column; width: 70%; margin-bottom: 5px;font-style: italic; font-weight: bold;align-items: flex-start;margin-left: 25px;}
+body > #cont > div > .main > .fields > .field > .all > .table  > .donneTrav > .travauxSublabel > div { display: flex; gap:10px;text-align:start;align-items: flex-start;justify-content: flex-start; font-weight: bold;width: 50%;text-wrap: nowrap;}
 
 /* Popup */
 .popup.displayParam > div { max-width: 200px; }

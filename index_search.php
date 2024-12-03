@@ -54,7 +54,7 @@ foreach ($result as $v) {
         $html .= "<span class='label'>Durée</span> <span class='value'>" . $v["temps_dur"] . "</span>";
         $html .= "</div>";
         // $html .= "<div class='sub cout'>";
-        // $html .= "<span class='label'>Coût de revient</span> <span class='value'>" . $v["ReportAntTemps"] . "</span>";
+        // $html .= "<span class='label'>Coût de revient</span> <span class='value'>" . $v["ReportAntTemp"] . "</span>";
         // $html .= "</div>";
         $html .= "<div class='sub debours'>";
         $html .= "<span class='label'>Débours</span> <span class='value'>" . $v["temps_debours"] . "</span>";
