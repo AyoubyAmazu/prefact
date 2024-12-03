@@ -220,3 +220,11 @@ body > .cont > .data > .main > div > fieldset > .customers > tbody > tr > td > .
   }
 
   /*------------------------------- end of responsive code -------------------------------*/
+  
+  
+  
+  /*------------------------------- start of ajouter a la facture -------------------------------*/
+
+  body > #cont >  div > .field > .add-table-btn {display: flex; justify-content: space-around; margin-top: 3px;}
+
+  /*------------------------------- end of ajouter a la facture -------------------------------*/
