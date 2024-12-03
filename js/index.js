@@ -208,9 +208,7 @@ function displaySegme()
 function currentSegme(){
   segment = $("body > #cont > div > .list > .line > .col.op > .list.on").closest(".line ").children(".col.Statut").children(".sub.segment").attr("code").toLowerCase();
     $(".popup.displaySegme > div > .checkbox > .data > .list > .option[code="+segment+"]").addClass("on");
-    $(".popup.displaySegme > div > .checkbox > .data > .list > .option[code="+segment+"] > a > div > i").toggleClass("fa-circle-dot fa-circle")
-
-  
+    $(".popup.displaySegme > div > .checkbox > .data > .list > .option[code="+segment+"] > a > div > i").toggleClass("fa-circle-dot fa-circle");
 }
 /**
  * Update Segmentation
