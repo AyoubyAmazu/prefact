@@ -1,12 +1,9 @@
 // the start of checking specific lines //
 $(document).ready(function () {
+    // date sorting
     let isSorted = false;
-  $("#cont > div > .field > table > thead > tr > .date").each(function () {
-    $(this).on("click", function (event) {
-      handleDateSorting($($(this).closest("table")), isSorted);
-      isSorted = !isSorted;
-    });
-  });
+  $("#cont > div > .field > table > thead > tr > .date").each(function () {$(this).on("click", function (event) {handleDateSorting($($(this).closest("table")), isSorted);isSorted = !isSorted;});});
+  
   $(".checkbox .data .list")
     .children()
     .each(function (option) {
@@ -120,6 +117,11 @@ $(document).ready(function () {
 
   // the end of checking a specific collab line //
 });
+
+function groupCollab()
+{
+
+}
 
 /**
  * sorts each table factories by date
