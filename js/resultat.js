@@ -1,26 +1,13 @@
 // the start of checking specific lines //
 $(document).ready(function () {
+    // date sorting
     let isSorted = false;
-  $("#cont > div > .field > table > thead > tr > .date").each(function () {
-    $(this).on("click", function (event) {
-      handleDateSorting($($(this).closest("table")), isSorted);
-      isSorted = !isSorted;
-    });
-  });
-  $(".checkbox .data .list")
-    .children()
-    .each(function (option) {
-      $(this).on("click", function () {
-        formCheckboxUnique($(this));
-      });
-    });
-  const tableClasses = [
-    "fieldset1",
-    "fieldset2",
-    "fieldset3",
-    "fieldset4",
-    "fieldset5",
-  ];
+  $("#cont > div > .field > table > thead > tr > .date").each(function () {$(this).on("click", function (event) {handleDateSorting($($(this).closest("table")), isSorted);isSorted = !isSorted;});});
+  // group collab
+  $("#cont > div > .field > table > thead > tr > .second-2.collab-header").each(function(){$(this).on("click", function(){groupCollab($(this).closest("table"))})})
+  
+  $(".checkbox .data .list").children().each(function (option) {$(this).on("click", function () {formCheckboxUnique($(this));});});
+  const tableClasses = ["fieldset1","fieldset2","fieldset3","fieldset4","fieldset5"];
   // the start of checking a specific prest line //
   function processButtonClickPrest(button) {
     const buttonTr = button.closest("tr");
@@ -61,7 +48,6 @@ $(document).ready(function () {
       "click",
       "tbody .total-row-prest td .btn.min.first-check a",
       function (event) {
-        console.log("hello");
         event.preventDefault();
         processButtonClickPrest($(this));
       }
@@ -287,69 +273,42 @@ function sortColAdapt() {
 
 //the end of list select open script
 
-// the starts of the collab sort //
+/**
+ * group each table facts by collab
+ * @param {HTMLElement} table 
+ */
+function groupCollab(table) {
+  let  i;
 
-function sortTable(tableId) {
-  var table, rows, switching, i, shouldSwitch;
-  table = document.getElementById(tableId);
-  if (table === null) {
-    console.log("Table not found with ID: " + tableId);
-    return;
-  }
-
-  var prestRowsDelete = table.querySelectorAll(
-    " tr > td > .btn.min.first-check > a > div > i"
-  );
-
-  prestRowsDelete.forEach(function (element) {
-    element.classList.remove("clicked");
-    element.classList.remove("fa-circle-check");
+  // let table = $("#"+tableId);
+  table.find("tr > td > .btn.min.first-check > a > div > i").each(function(){$(this).removeClass("fa-check")});
+  table.find(".total-row-collab").each(function () {table[0].deleteRow($(this[0]))});
+  let rows = table.find("tr");
+  table.find("tbody").html("")
+  rows.sort((a, b)=>{
+    const acode = $(a).find(".code-row > a").text().toLowerCase();
+    const bcode = $(b).find(".code-row > a").text().toLowerCase();
+    return acode.localeCompare(bcode);
   });
+  rows.each(function () {table.find("tbody").append($(this))});
 
-  var prestRows = table.querySelectorAll(".total-row-prest");
-  for (var i = 0; i < prestRows.length; i++) {
-    table.deleteRow(prestRows[i].rowIndex);
-  }
 
-  switching = true;
+  let currentcollab = null;
+  let collabTotals = {};
+  let dureeTotals = {};
+  let qntTotals = {};
 
-  while (switching) {
-    switching = false;
-    rows = table.rows;
-
-    for (i = 1; i < rows.length - 1; i++) {
-      shouldSwitch = false;
-      var x = rows[i].querySelector(".code-row").textContent;
-      var y = rows[i + 1].querySelector(".code-row").textContent;
-
-      if (x.toLowerCase() > y.toLowerCase()) {
-        shouldSwitch = true;
-        break;
-      }
-    }
-
-    if (shouldSwitch) {
-      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-      switching = true;
-    }
-  }
-
-  var currentcollab = null;
-  var collabTotals = {};
-  var dureeTotals = {};
-  var qntTotals = {};
-
-  for (i = 1; i < rows.length; i++) {
-    var collabCell = rows[i].querySelector(".code-row");
-    var amountCell = rows[i].querySelector(".amount");
-    var dureeCell = rows[i].querySelector(".duree");
-    var qntCell = rows[i].querySelector(".qnt");
+  rows.each(function (){
+    let collabCell = $(this).find(".code-row");
+    let amountCell = $(this).find(".amount");
+    let dureeCell = $(this).find(".duree");
+    let qntCell = $(this).find(".qnt");
 
     if (collabCell && amountCell && dureeCell && qntCell) {
-      var collabCode = collabCell.textContent.trim();
-      var amount = parseFloat(amountCell.textContent.replace(",", ""));
-      var duree = parseFloat(dureeCell.textContent);
-      var qnt = parseInt(qntCell.textContent);
+      let collabCode = collabCell.text().trim();
+      let amount = parseFloat(amountCell.text().replace(",", ""));
+      let duree = parseFloat(dureeCell.text());
+      let qnt = parseInt(qntCell.text());
 
       if (!isNaN(amount)) {
         collabTotals[collabCode] = (collabTotals[collabCode] || 0) + amount;
@@ -363,19 +322,19 @@ function sortTable(tableId) {
         qntTotals[collabCode] = (qntTotals[collabCode] || 0) + qnt;
       }
     }
-  }
+  });
 
   for (i = rows.length - 1; i >= 1; i--) {
-    var collab = rows[i].querySelector(".code-row").textContent;
+    let collab = rows[i].querySelector(".code-row").textContent;
 
     if (collab !== currentcollab) {
       currentcollab = collab;
 
-      var newRow = table.insertRow(i + 1);
+      let newRow = table[0].insertRow(i + 1);
 
       newRow.classList.add("total-row-collab");
 
-      var tdWithButton = document.createElement("td");
+      let tdWithButton = document.createElement("td");
 
       tdWithButton.innerHTML = formBtn({
         key: "first-check",
@@ -385,20 +344,26 @@ function sortTable(tableId) {
 
       newRow.appendChild(tdWithButton);
 
-      var textCell = newRow.insertCell(1);
+      let textCell = newRow.insertCell(1);
       textCell.textContent = "Cocher tout : " + collab;
       textCell.setAttribute("colspan", "5");
 
-      var totalQntCell = newRow.insertCell(2);
+      let totalQntCell = newRow.insertCell(2);
       totalQntCell.textContent = qntTotals[collab];
 
-      var totalDureeCell = newRow.insertCell(3);
+      let totalDureeCell = newRow.insertCell(3);
       totalDureeCell.textContent = dureeTotals[collab];
 
-      var totalAmountCell = newRow.insertCell(4);
+      let totalAmountCell = newRow.insertCell(4);
       totalAmountCell.textContent = collabTotals[collab];
     }
   }
+}
+/**
+ * checks all factories related when checking the grouping row
+ */
+function HandleCheckGroup() {
+  
 }
 
 // the end of the collab sort //
@@ -406,14 +371,14 @@ function sortTable(tableId) {
 // the starts of the prest sort //
 
 function sortTableByPrest(tableId) {
-  var table, rows, switching, i, shouldSwitch;
+  let table, rows, switching, i, shouldSwitch;
   table = document.getElementById(tableId);
   if (table === null) {
     console.log("Table not found with ID: " + tableId);
     return;
   }
 
-  var prestRowsDelete = table.querySelectorAll(
+  let prestRowsDelete = table.querySelectorAll(
     " tr > td > .btn.min.first-check > a > div > i"
   );
 
@@ -422,8 +387,8 @@ function sortTableByPrest(tableId) {
     element.classList.remove("fa-circle-check");
   });
 
-  var prestRows = table.querySelectorAll(".total-row-collab");
-  for (var i = 0; i < prestRows.length; i++) {
+  let prestRows = table.querySelectorAll(".total-row-collab");
+  for (let i = 0; i < prestRows.length; i++) {
     table.deleteRow(prestRows[i].rowIndex);
   }
 
@@ -435,8 +400,8 @@ function sortTableByPrest(tableId) {
 
     for (i = 1; i < rows.length - 1; i++) {
       shouldSwitch = false;
-      var x = rows[i].querySelector(".prest-column").textContent;
-      var y = rows[i + 1].querySelector(".prest-column").textContent;
+      let x = rows[i].querySelector(".prest-column").textContent;
+      let y = rows[i + 1].querySelector(".prest-column").textContent;
 
       if (x.toLowerCase() > y.toLowerCase()) {
         shouldSwitch = true;
@@ -450,22 +415,22 @@ function sortTableByPrest(tableId) {
     }
   }
 
-  var currentPrest = null;
-  var prestTotals = {};
-  var dureeTotals = {};
-  var qntTotals = {};
+  let currentPrest = null;
+  let prestTotals = {};
+  let dureeTotals = {};
+  let qntTotals = {};
 
   for (i = 1; i < rows.length; i++) {
-    var prestCell = rows[i].querySelector(".prest-column");
-    var amountCell = rows[i].querySelector(".amount");
-    var dureeCell = rows[i].querySelector(".duree");
-    var qntCell = rows[i].querySelector(".qnt");
+    let prestCell = rows[i].querySelector(".prest-column");
+    let amountCell = rows[i].querySelector(".amount");
+    let dureeCell = rows[i].querySelector(".duree");
+    let qntCell = rows[i].querySelector(".qnt");
 
     if (prestCell && amountCell && dureeCell && qntCell) {
-      var prestCode = prestCell.textContent.trim();
-      var amount = parseFloat(amountCell.textContent.replace(",", ""));
-      var duree = parseFloat(dureeCell.textContent);
-      var qnt = parseInt(qntCell.textContent);
+      let prestCode = prestCell.textContent.trim();
+      let amount = parseFloat(amountCell.textContent.replace(",", ""));
+      let duree = parseFloat(dureeCell.textContent);
+      let qnt = parseInt(qntCell.textContent);
 
       if (!isNaN(amount)) {
         prestTotals[prestCode] = (prestTotals[prestCode] || 0) + amount;
@@ -482,16 +447,16 @@ function sortTableByPrest(tableId) {
   }
 
   for (i = rows.length - 1; i >= 1; i--) {
-    var prest = rows[i].querySelector(".prest-column").textContent;
+    let prest = rows[i].querySelector(".prest-column").textContent;
 
     if (prest !== currentPrest) {
       currentPrest = prest;
 
-      var newRow = table.insertRow(i + 1);
+      let newRow = table.insertRow(i + 1);
 
       newRow.classList.add("total-row-prest");
 
-      var tdWithButton = document.createElement("td");
+      let tdWithButton = document.createElement("td");
 
       tdWithButton.innerHTML = formBtn({
         key: "first-check",
@@ -501,17 +466,17 @@ function sortTableByPrest(tableId) {
 
       newRow.appendChild(tdWithButton);
 
-      var textCell = newRow.insertCell(1);
+      let textCell = newRow.insertCell(1);
       textCell.textContent = "Cocher tout : " + prest;
       textCell.setAttribute("colspan", "5");
 
-      var totalQntCell = newRow.insertCell(2);
+      let totalQntCell = newRow.insertCell(2);
       totalQntCell.textContent = qntTotals[prest];
 
-      var totalDureeCell = newRow.insertCell(3);
+      let totalDureeCell = newRow.insertCell(3);
       totalDureeCell.textContent = dureeTotals[prest];
 
-      var totalAmountCell = newRow.insertCell(4);
+      let totalAmountCell = newRow.insertCell(4);
       totalAmountCell.textContent = prestTotals[prest];
     }
   }
@@ -525,17 +490,17 @@ $(document).ready(function () {
   $(
     "body > .cont > .data > .main > div > .all > .right-div > .affiche-exep > a"
   ).on("click", function () {
-    var targetElements = $(
+    let targetElements = $(
       "body > .cont > .data > .main > div > fieldset > .customers > tbody > tr"
     );
-    var button = $(this); // The button element
+    let button = $(this); // The button element
 
     if (targetElements.hasClass("hidden")) {
       targetElements.removeClass("hidden");
       button.addClass("clicked");
     } else {
       targetElements.each(function () {
-        var prestCode = $(this).find("td > p > span").text();
+        let prestCode = $(this).find("td > p > span").text();
 
         if (prestCode.trim().startsWith("@")) {
           $(this).addClass("hidden");

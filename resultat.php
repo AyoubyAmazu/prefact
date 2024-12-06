@@ -59,7 +59,7 @@ $html .= "</div>";
 
 
 // Travaux compta 
-$html .= formTable(array("legend" => "Travaux Comptable et fiscaux", "list" => $list), con: function ($opts): string {
+$html .= formTable(array("legend" => "Travaux Comptable et fiscaux", "id"=>"trav-com","list" => $list), con: function ($opts): string {
     if ((($opts["prest"] >= 200) && ($opts["prest"] < 400)) || (strpos($opts["prest"], 'T2') !== false && strpos($opts["prest"], 'T2', 0) == 0)) {
         return $opts['rw'];
     }
@@ -68,7 +68,7 @@ $html .= formTable(array("legend" => "Travaux Comptable et fiscaux", "list" => $
 
 // Travaux social
 
-$html .= formTable(array("legend" => "Travaux Sociaux", "list" => $list), con: function ($opts): string {
+$html .= formTable(array("legend" => "Travaux Sociaux", "id"=>"trav-soc", "list" => $list), con: function ($opts): string {
     if ((($opts["prest"] >= 400) && ($opts["prest"] < 500))) {
         return $opts['rw'];
     }
@@ -77,7 +77,7 @@ $html .= formTable(array("legend" => "Travaux Sociaux", "list" => $list), con: f
 
 // Travaux Conseil 
 
-$html .= formTable(array("legend" => "Travaux Conseil", "list" => $list), con: function ($opts): string {
+$html .= formTable(array("legend" => "Travaux Conseil", "id"=>"trav-cons","list" => $list), con: function ($opts): string {
     if ((($opts["prest"] >= 500) && ($opts["prest"] < 600)) || (($opts["prest"] >= 700) && ($opts["prest"] < 900))) {
         return $opts['rw'];
     }
@@ -86,7 +86,7 @@ $html .= formTable(array("legend" => "Travaux Conseil", "list" => $list), con: f
 
 // Travaux Juridiques 
 
-$html .= formTable(array("legend" => "Travaux Juridiques", "list" => $list), con: function ($opts): string {
+$html .= formTable(array("legend" => "Travaux Juridiques","id"=>"trav-juri", "list" => $list), con: function ($opts): string {
     if ((($opts["prest"] >= 600) && ($opts["prest"] < 700))) {
         return $opts['rw'];
     }
@@ -95,7 +95,7 @@ $html .= formTable(array("legend" => "Travaux Juridiques", "list" => $list), con
 
 // Travaux Abonnements 
 
-$html .= formTable(array("legend" => "Abonnements", "list" => $list), con: function ($opts): string {
+$html .= formTable(array("legend" => "Abonnements","id"=>"trav-abon", "list" => $list), con: function ($opts): string {
     if ((($opts["prest"] >= 900) && ($opts["prest"] < 999))) {
         return $opts['rw'];
     }
@@ -113,14 +113,14 @@ function formTable($opts = array(), $con): string
 {
     $html = "<fieldset class='field'>";
     $html .= "<legend>" . $opts['legend'] . "</legend>";
-    $html .= "<table class='customers'>";
+    $html .= "<table id ='".$opts['id']."' class='customers'>";
     $html .= "<thead>";
     $html .= "<tr>";
     $html .= "<th class='first-1'>" . formBtn(array("key" => "first-check", "ico" => "check-double"));
     $html .= "</th>";
     $html .= "<th class='second-2 date'>Date</th>";
-    $html .= "<th class='second-2 collab-header'><p onclick=\"sortTable('myTable5')\">Collab</p></th>";
-    $html .= "<th class='second-2 prest-header'><p onclick=\"sortTableByPrest('myTable5')\">Prest</p></th>";
+    $html .= "<th class='second-2 collab-header'><p onclick=\"sortTable('".$opts["id"]."')\">Collab</p></th>";
+    $html .= "<th class='second-2 prest-header'><p onclick=\"sortTableByPrest('".$opts["id"]."')\">Prest</p></th>";
     $html .= "<th class='no-line exercice'><div class='all-year'><p class='exerciceLabel'>Exercice</p></div></th>";
     $html .= "<th>Titre</th>";
     $html .= "<th class='last-3'>Qte</th>";
@@ -133,8 +133,8 @@ function formTable($opts = array(), $con): string
 
         $tblRow = "<tr class='rw'>";
         $formattedDate = date("m/d/Y", strtotime($row['TEMPS_DATE']));
-
-        $tblRow .= "<td>" . formBtn(array("key" => "first-check", "ico" => "fa-circle")) . "</td>";
+        // added unvalide icon on porpuse to give the chape of box to the button
+        $tblRow .= "<td>" . formBtn(array("key" => "first-check", "ico" => "fa-circle")) . "</td>"; 
         $tblRow .= "<td class='centered-td date'>" . $formattedDate . "</td>";
         $tblRow .= "<td class='centered-td code-row'><a href='#'>" . $row['COL_CODE'] . "</a></td>";
         $tblRow .= "<td class='centered-td prest-column'><p class='click' onclick='myFunction(this)'><span class='center_span' id='popupTextSpan1'>" . formInput(array("key" => "prest_code", "align" => "c", "value" => $row['PREST_CODE'])) . "</span></p></td>";
