@@ -1,13 +1,36 @@
 // the start of checking specific lines //
 $(document).ready(function () {
-    // date sorting
-    let isSorted = false;
-  $("#cont > div > .field > table > thead > tr > .date").each(function () {$(this).on("click", function (event) {handleDateSorting($($(this).closest("table")), isSorted);isSorted = !isSorted;});});
+  // date sorting
+  let isSorted = false;
+  $("#cont > div > .field > table > thead > tr > .date").each(function () {
+    $(this).on("click", function (event) {
+      handleDateSorting($($(this).closest("table")), isSorted);
+      isSorted = !isSorted;
+    });
+  });
   // group collab
-  $("#cont > div > .field > table > thead > tr > .second-2.collab-header").each(function(){$(this).on("click", function(){groupCollab($(this).closest("table"))})})
-  
-  $(".checkbox .data .list").children().each(function (option) {$(this).on("click", function () {formCheckboxUnique($(this));});});
-  const tableClasses = ["fieldset1","fieldset2","fieldset3","fieldset4","fieldset5"];
+  $("#cont > div > .field > table > thead > tr > .second-2.collab-header").each(
+    function () {
+      $(this).on("click", function () {
+        groupCollab($(this).closest("table"));
+      });
+    }
+  );
+
+  $(".checkbox .data .list")
+    .children()
+    .each(function (option) {
+      $(this).on("click", function () {
+        formCheckboxUnique($(this));
+      });
+    });
+  const tableClasses = [
+    "fieldset1",
+    "fieldset2",
+    "fieldset3",
+    "fieldset4",
+    "fieldset5",
+  ];
   // the start of checking a specific prest line //
   function processButtonClickPrest(button) {
     const buttonTr = button.closest("tr");
@@ -120,9 +143,9 @@ function handleDateSorting(table, isSorted) {
     const bDate = new Date(b.querySelector(".date").textContent);
     return isSorted ? bDate - aDate : aDate - bDate;
   });
-  rws.each(function(){table.children("tbody").append($(this))});
-
-  
+  rws.each(function () {
+    table.children("tbody").append($(this));
+  });
 }
 
 // the start of the checkboxes script //
@@ -275,30 +298,35 @@ function sortColAdapt() {
 
 /**
  * group each table facts by collab
- * @param {HTMLElement} table 
+ * @param {HTMLElement} table
  */
 function groupCollab(table) {
-  let  i;
+  let i;
 
   // let table = $("#"+tableId);
-  table.find("tr > td > .btn.min.first-check > a > div > i").each(function(){$(this).removeClass("fa-check")});
-  table.find(".total-row-collab").each(function () {table[0].deleteRow($(this[0]))});
+  table.find("tr > td > .btn.min.first-check > a > div > i").each(function () {
+    $(this).removeClass("fa-check");
+  });
+  table.find(".total-row-collab").each(function () {
+    table[0].deleteRow($(this[0]));
+  });
   let rows = table.find("tr");
-  table.find("tbody").html("")
-  rows.sort((a, b)=>{
+  table.find("tbody").html("");
+  rows.sort((a, b) => {
     const acode = $(a).find(".code-row > a").text().toLowerCase();
     const bcode = $(b).find(".code-row > a").text().toLowerCase();
     return acode.localeCompare(bcode);
   });
-  rows.each(function () {table.find("tbody").append($(this))});
-
+  rows.each(function () {
+    table.find("tbody").append($(this));
+  });
 
   let currentcollab = null;
   let collabTotals = {};
   let dureeTotals = {};
   let qntTotals = {};
 
-  rows.each(function (){
+  rows.each(function () {
     let collabCell = $(this).find(".code-row");
     let amountCell = $(this).find(".amount");
     let dureeCell = $(this).find(".duree");
@@ -358,17 +386,29 @@ function groupCollab(table) {
       totalAmountCell.textContent = collabTotals[collab];
     }
   }
+  handleCheckGroup();
 }
 /**
  * checks all factories related when checking the grouping row
  */
-function HandleCheckGroup() {
-  
+function handleCheckGroup() {
+  $("table > tbody > tr.total-row-collab > td > div > a").each(function () {
+    $(this).on("click", function () {
+      let code = $(this).attr("data-collab");
+      $(this)
+        .closest("tbody")
+        .find(".rw > .code-row > a")
+        .each(function () {
+          if ($(this).text() === code) {
+            $(this)
+              .closest(".rw")
+              .find("td > .first-check > a > .ico > i")
+              .addClass("fa-check");
+          }
+        });
+    });
+  });
 }
-
-// the end of the collab sort //
-
-// the starts of the prest sort //
 
 function sortTableByPrest(tableId) {
   let table, rows, switching, i, shouldSwitch;
@@ -535,11 +575,10 @@ $(document).ready(function () {
     });
 });
 
-
 //  the script of checkead and not cheacked
 
-$(document).on('click', '.first-check', function () {
-  $(this.firstChild.firstChild.firstChild).toggleClass('fa-check');
+$(document).on("click", ".first-check", function () {
+  $(this.firstChild.firstChild.firstChild).toggleClass("fa-check");
 });
 
-// 
+//
