@@ -28,7 +28,7 @@ if ($k === false) {
 
 
 
-$sql = "SELECT TEMPS_DATE, COL_CODE, PREST_CODE, EXO_CODE, TEMPS_MEMO, TEMPS_M_QTE, TEMPS_DUREE, TEMPS_M_PV";
+$sql = "SELECT TEMPS_ID, TEMPS_DATE, COL_CODE, PREST_CODE, EXO_CODE, TEMPS_MEMO, TEMPS_M_QTE, TEMPS_DUREE, TEMPS_M_PV";
 $sql .= " FROM temps";
 $sql .= " WHERE EXO_CODE = 2022 AND ADR_ID = 2856";
 $sql .= " ORDER BY TEMPS_DATE DESC";
@@ -133,7 +133,7 @@ function formTable($opts = array(), $con): string
     foreach ($opts["list"] as $row) {
         $prest = (strpos($row['PREST_CODE'], '@', 0) == 0) ? str_replace("@", "", $row['PREST_CODE']) : $row['PREST_CODE'];
 
-        $tblRow = "<tr class='rw'>";
+        $tblRow = "<tr class='rw' rw-id=".$row["TEMPS_ID"].">";
         $formattedDate = date("m/d/Y", strtotime($row['TEMPS_DATE']));
         // added unvalide icon on porpuse to give the chape of box to the button
         $tblRow .= "<td>" . formBtn(array("key" => "first-check", "ico" => "fa-circle")) . "</td>"; 
@@ -151,7 +151,7 @@ function formTable($opts = array(), $con): string
     }
     $html .= "</table>";
     $html .= "<div class='add-table-btn'>";
-    $html .= formBtn(array("key" => "Ajouter-facture", "ico" => "plus", "txt" => "Ajouter â la facture", "href" => "affiche_fact.php"));
+    $html .= formBtn(array("key" => "Ajouter-facture", "ico" => "plus", "txt" => "Ajouter â la facture"));
     $html .= formBtn(array("key" => "ne-pas-facturer", "ico" => "ban", "txt" => "Ne pas facturer"));
     $html .= "</div>";
     $html .= "</fieldset>";

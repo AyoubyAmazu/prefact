@@ -16,7 +16,6 @@ function displayInvalideSave()
   $.ajax({
     url: "index_invalide.php"
     ,type: "POST"
-    // ,dataType:"text"
     ,data:
     {
       valide: isValide ? 0 : 1,
