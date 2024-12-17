@@ -609,31 +609,30 @@ function sortPrest(tableId) {
     // Append rows belonging to the group
     groupedRows[group].forEach((row) => $tbody.append(row));
 
-    // Calculate the total for the "Total" column (assumed to be column 4)
+    // Calculate the total for the "Total_PV" column 
       const total_pv = groupedRows[group].reduce((sum, row) => {
-      const value = parseFloat($(row).find("td:last").text()) || 0; // Use the last column for _pvs
+      const value = parseFloat($(row).find("td:last").text()) || 0;
       return sum + value;
     }, 0);
 
-    // Calculate the total for the "Total" column (assumed to be column 4)
+    // Calculate the total for the "Total_duree" column
     const total_duree = groupedRows[group].reduce((sum, row) => {
-      const value = parseFloat($(row).find("td:eq(6)").text()) || 0; // Use the last column for _pvs
+      const value = parseFloat($(row).find("td:eq(6)").text()) || 0; 
       return sum + value;
     }, 0);
 
-    // Calculate the total for the "Total" column (assumed to be column 4)
+    // Calculate the total for the "Total_Qte" column
     const total_qte = groupedRows[group].reduce((sum, row) => {
-      const value = parseFloat($(row).find("td:eq(7)").text()) || 0; // Use the last column for _pvs
+      const value = parseFloat($(row).find("td:eq(7)").text()) || 0;
       return sum + value;
     }, 0);
-
 
     // Add a total row for the group
     $tbody.append(`
         <tr class="total-row-collab">
           <td>
             <div class="btn min first-check">
-              <a data-collab="KESA">
+              <a data-collab="${group}">
                 <div class="ico">
                   <i class="fa-solid fa-fa-circle"></i>
                 </div>
@@ -648,15 +647,4 @@ function sortPrest(tableId) {
         `);
   }
 }
-{
-  /* <tr class="total-row-collab">
-  <td>
-  <div class="btn min first-check">
-    <a data-collab="KESA"><div class="ico">
-      <i class="fa-solid fa-fa-circle"></i>
-      </div></a>
-      </div></td>
-      <td colspan="5">Cocher tout : KESA</td>
-      <td>0</td><td>4</td><td>232</td>
-      </tr> */
-}
+
