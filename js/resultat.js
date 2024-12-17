@@ -209,10 +209,9 @@ $(document).ready(function () {
         iconTd.removeClass("fa-circle-check");
       }
     });
-  });
-});
 
-// the end of the checkboxes script //
+  });
+}
 
 //the start of the input script//
 
@@ -386,15 +385,30 @@ function groupCollab(table) {
       totalAmountCell.textContent = collabTotals[collab];
     }
   }
+  handleCheckGroup();
 }
 /**
  * checks all factories related when checking the grouping row
  */
-function HandleCheckGroup() {}
+function handleCheckGroup() {
+  $("table > tbody > tr.total-row-collab > td > div > a").each(function () {
+    $(this).on("click", function () {
+      let code = $(this).attr("data-collab");
+      $(this)
+        .closest("tbody")
+        .find(".rw > .code-row > a")
+        .each(function () {
+          if ($(this).text() === code) {
+            $(this)
+              .closest(".rw")
+              .find("td > .first-check > a > .ico > i")
+              .addClass("fa-check");
+          }
+        });
+    });
+  });
+}
 
-// the end of the collab sort //
-
-// the starts of the prest sort //
 
 function sortTableByPrest(tableId) {
   let table, rows, switching, i, shouldSwitch;
@@ -562,8 +576,7 @@ $(document).ready(function () {
 });
 
 //  the script of checkead and not cheacked
-
-$(document).on("click", "tbody .first-check", function () {
+$(document).on("click", ".first-check", function () {
   $(this.firstChild.firstChild.firstChild).toggleClass("fa-check");
 });
 // ceack all the cheacked
