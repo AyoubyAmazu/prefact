@@ -12,7 +12,7 @@ $opts["conn"] = dbStart(array_merge($opts, array("db" => array("dia", "prefact")
 if (isset($_POST["add_fact"])) {
     foreach ($_POST["data"] as $v) {
         $row = getRow($v);
-        insertFact($row);
+        insertFact($row[0]);
     }
     die();
 }
@@ -38,11 +38,10 @@ function insertFact($data)
     global $opts;
     $query = "INSERT INTO facturation values( ";
     for ($i = 0; $i < sizeof($data); $i++) {
-        print_r($data[$i]);
-        if ($i == sizeof($data) - 1) $query .= $data[$i] . " )";
-        else $query .= $data[$i];
-        echo $query;
-    
+        $val = gettype($data[$i]) == "string"? "'".$data[$i]."'":$data[$i];
+        if ($i == sizeof($data) - 1) $query .= $val . " )";
+        else $query .= $val.",";
     }
-    // dbExec($query, array_merge($opts, array("db" => "dia")));
+        echo $query;
+     dbExec($query, array_merge($opts, array("db" => "dia")));
 }
