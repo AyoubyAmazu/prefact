@@ -16,10 +16,6 @@ $(document).ready(function () {
       });
     }
   );
-  // insert facture
-  $(".btn.Ajouter-facture").on("click", function (params) {
-    insertFacture($(this).closest("fieldset").find("table"))
-  });
 
   $(".checkbox .data .list")
     .children()
@@ -133,33 +129,6 @@ $(document).ready(function () {
 
   // the end of checking a specific collab line //
 });
-
-function insertFacture(table)
-{
-  let data = [];
-  $(table).find("tbody > .rw > td > .btn.min.first-check > a > .ico > .fa-check").closest(".rw").each(function (params) {
-    data.push($(this).attr("rw-id"));
-  });
-  $.ajax({
-    url: "create_resultat.php"
-    ,type: "POST"
-    // ,dataType:"text"
-    ,data:
-    {
-      add_fact:"",
-      data:data,
-    }
-    , beforeSend: function() { loaderShow(); }
-    , complete: function() { loaderHide(); }
-    , success: function(data)
-    { 
-        try { var result = JSON.parse(data); } catch(error) { popError(); return; }
-        if(result["code"] == 200) { popDown('.popup');}
-        popError(result["txt"], result["btn"]);
-    }
-});
-
-}
 
 /**
  * sorts each table factories by date
