@@ -209,9 +209,8 @@ $(document).ready(function () {
         iconTd.removeClass("fa-circle-check");
       }
     });
-
   });
-}
+});
 
 //the start of the input script//
 
@@ -301,8 +300,6 @@ function sortColAdapt() {
  */
 function groupCollab(table) {
   let i;
-
-  // let table = $("#"+tableId);
   table.find("tr > td > .btn.min.first-check > a > div > i").each(function () {
     $(this).removeClass("fa-check");
   });
@@ -402,13 +399,12 @@ function handleCheckGroup() {
             $(this)
               .closest(".rw")
               .find("td > .first-check > a > .ico > i")
-              .addClass("fa-check");
+              .toggleClass("fa-check");
           }
         });
     });
   });
 }
-
 
 function sortTableByPrest(tableId) {
   let table, rows, switching, i, shouldSwitch;
@@ -576,10 +572,10 @@ $(document).ready(function () {
 });
 
 //  the script of checkead and not cheacked
-$(document).on("click", ".first-check", function () {
-  $(this.firstChild.firstChild.firstChild).toggleClass("fa-check");
+$(document).on("click", "tr > td >.first-check > a", function () {
+  $(this.firstChild.firstChild).toggleClass("fa-check");
 });
-// ceack all the cheacked
+// cheack all the cheacked
 $(document).on("click", "thead .first-check", function () {
   $(this)
     .closest("table")
@@ -596,7 +592,7 @@ function sortPrest(tableId) {
   const $table = table;
   const $tbody = $table.find("tbody");
   const columnIndex = $table.find(".prest-header").index();
- 
+
   // Check if the table is already grouped
   if ($tbody.find(".total-row-collab").length > 0) {
     // Reset to original table
@@ -622,15 +618,15 @@ function sortPrest(tableId) {
     // Append rows belonging to the group
     groupedRows[group].forEach((row) => $tbody.append(row));
 
-    // Calculate the total for the "Total_PV" column 
-      const total_pv = groupedRows[group].reduce((sum, row) => {
+    // Calculate the total for the "Total_PV" column
+    const total_pv = groupedRows[group].reduce((sum, row) => {
       const value = parseFloat($(row).find("td:last").text()) || 0;
       return sum + value;
     }, 0);
 
     // Calculate the total for the "Total_duree" column
     const total_duree = groupedRows[group].reduce((sum, row) => {
-      const value = parseFloat($(row).find("td:eq(6)").text()) || 0; 
+      const value = parseFloat($(row).find("td:eq(6)").text()) || 0;
       return sum + value;
     }, 0);
 
@@ -659,5 +655,45 @@ function sortPrest(tableId) {
         </tr>
         `);
   }
+  handleCheckGroupPrest()
+}
+
+function handleCheckGroupPrest() {
+  $("table > tbody > tr.total-row-collab > td > div > a").each(function () {
+      // $(this).on("click",function(){console.log("done");})
+    $(this).on("click", function () {
+      $(this).find(".ico > i").toggleClass("fa-check");
+      let code = $(this).attr("data-collab");
+      $(this)
+        .closest("tbody")
+        .find(".rw > .prest-column > div > div > input")
+        .each(function () {
+          if ($(this).attr("value") === code){
+            $(this)
+              .closest(".rw")
+              .find("td > .first-check > a > .ico > i")
+              .toggleClass("fa-check");
+          }
+        });
+    });
+  });
+}
+
+{
+ /*  <tr class="total-row-collab">
+          <td>
+            <div class="btn min first-check">
+              <a data-collab="230">
+                <div class="ico">
+                  <i class="fa-solid fa-fa-circle"></i>
+                </div>
+              </a>
+            </div>
+          </td>
+          <td colspan="5">Cocher tout :  230</td>
+          <td>0</td>
+          <td>9.75</td>
+          <td>1753.5</td>
+      </tr>*/
 }
 

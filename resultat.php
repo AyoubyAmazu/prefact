@@ -121,7 +121,7 @@ function formTable($opts = array(), $con): string
     $html .= "<th class='second-2 date'>Date</th>";
 
     $html .= "<th class='second-2 collab-header'><p onclick=\"sortTable('".$opts["id"]."')\">Collab</p></th>";
-    $html .= "<th class='second-2 prest-header'><p onclick=\"sortTableByPrest('".$opts["id"]."')\">Prest</p></th>";
+    $html .= "<th class='second-2 prest-header'><p onclick=\"sortPrest('".$opts["id"]."')\">Prest</p></th>";
 
     $html .= "<th class='no-line exercice'><div class='all-year'><p class='exerciceLabel'>Exercice</p></div></th>";
     $html .= "<th>Titre</th>";
