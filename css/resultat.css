@@ -1,45 +1,44 @@
-body > .cont > .data > .main > div > .all {
+body > #cont > div > .all {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
 }
-body > .cont > .data > .main > div > .all > .right-div {
-    text-align: right;
-    display: inline-block;
+body > #cont > div > .all > .right-div {
+    display: flex;
 }
-body > .cont > .data > .main > div > .all > .left-div{
+body > #cont > div > .all > .left-div{
     text-align: left;
     display: inline-block;
 }
 
-body > .cont > .data > .main > div > .all > .right-div > div,
-body > .cont > .data > .main > div > .all > .left-div > div  {
+body > #cont > div > .all > .right-div > div,
+body > #cont > div > .left-div > div  {
     display: inline-block;
     margin-left: 5px;
 }
 
-body > .cont > .data > .main > div > .all > .left-div > div > a > div,
-body > .cont > .data > .main > div > .all > .right-div > div > a > div,
-body > .cont > .data > .main > div > .all > .left-div > div > div {
+body > #cont > div > .all > .left-div > div > a > div,
+body > #cont > div > .all > .right-div > div > a > div,
+body > #cont > div > .all > .left-div > div > div {
     font-family: bld;
 }
-body > .cont > .data > .main > div > .all > .right-div > .affiche-exep > .clicked {
+body > #cont > .all > .right-div > .affiche-exep > .clicked {
     background-color: var(--dark);
 }
-body > .cont > .data > .main > div > .all > .right-div > .affiche-exep > .clicked > .txt {
+body > #cont > div > .all > .right-div > .affiche-exep > .clicked > .txt {
     color: var(--light);
 }
 
 /*----------------------- Table ------------------------*/
-
-body > .cont > .data > .main > div > fieldset > .customers{
+body > #cont > div > fieldset{border-radius:5px;}
+body > #cont > div > fieldset > .customers{
     border-collapse: collapse;
     width: 95%;
     margin: 0 auto;
     margin-top: 20px;
 }
 
-body > .cont > .data > .main > div > fieldset > .customers > tbody > tr > td {
+body > #cont > div > fieldset > .customers > tbody > tr > td {
     border-top:none;
     border-left:none;
     border-right:none;
@@ -50,14 +49,14 @@ body > .cont > .data > .main > div > fieldset > .customers > tbody > tr > td {
     line-height: 18px;
 }
 
-body > .cont > .data > .main > div > fieldset > .customers > tbody > .total-row-prest > td{
+body > #cont > div > fieldset > .customers > tbody > .total-row-prest > td{
     background-color: var(--dark1);
 }
 
-body > .cont > .data > .main > div > fieldset > .customers > tbody > .total-row-collab > td{
+body > #cont > div > fieldset > .customers > tbody > .total-row-collab > td{
     background-color: var(--dark1);
 }
-body > .cont > .data > .main > div > fieldset > .customers > tbody > tr > th{
+body > #cont > div > fieldset > .customers > tbody > tr > th{
     border-top: 1px solid var(--dark);
     border-left:none;
     border-right:none;
@@ -67,83 +66,83 @@ body > .cont > .data > .main > div > fieldset > .customers > tbody > tr > th{
     font-family: bld;
 }
 
-body > .cont > .data > .main > div > fieldset > .customers > tbody > tr > .centered-td,
-body > .cont > .data > .main > div > fieldset > .customers > tbody > tr > td > p{
+body > #cont > div > fieldset > .customers > tbody > tr > .centered-td,
+body > #cont > div > fieldset > .customers > tbody > tr > td > p{
     text-align: center;
 }
 
 
-body > .cont > .data > .main > div > fieldset > .customers > tbody > tr > .last-3{
+body > #cont > div > fieldset > .customers > tbody > tr > .last-3{
     width: 60px;
     text-align: left;
 }
-body > .cont > .data > .main > div > fieldset > .customers > tbody > tr > .first-1{
+body > #cont > div > fieldset > .customers > tbody > tr > .first-1{
     width: 30px;
 }
 
-body > .cont > .data > .main > div > fieldset > .customers > tbody > tr > .second-2{
+body > #cont > div > fieldset > .customers > tbody > tr > .second-2{
     width: 50px;
     text-align: center;
 }
-body > .cont > .data > .main > div > fieldset > .customers > tbody > tr > .second-2 > p,
-body > .cont > .data > .main > div > fieldset > .customers > tbody > tr > td > .click{
+body > #cont > div > fieldset > .customers > tbody > tr > .second-2 > p,
+body > #cont > div > fieldset > .customers > tbody > tr > td > .click{
    cursor: pointer;
 }
 
-body > .cont > .data > .main > div > fieldset > .customers > tbody > tr > .no-line{
+body > #cont > div > fieldset > .customers > tbody > tr > .no-line{
     width: 50px;
 }
 
-body > .cont > .data > .main > div > fieldset {
+body > #cont > div > fieldset {
     border:  1px solid var(--dark1);
     border-radius: 15px;
 }
 
-body > .cont > .data > .main > div > fieldset > legend {
+body > #cont > div > fieldset > legend {
     font-family: bld;
     color: var(--dark);
     text-align: left;
     margin-left: 32px;
 }
 
-body > .cont > .data > .main > div > fieldset > .customers > tbody > tr > td > .btn > a {
+body > #cont > div > fieldset > .customers > tbody > tr > td > .btn > a {
     width: 5px;
     height: 5px;
 }
 
-body > .cont > .data > .main > div > fieldset > .customers > tbody > tr > th > .btn > a:hover{
+body > #cont > div > fieldset > .customers > tbody > tr > th > .btn > a:hover{
     background-color: var(--light);
     color: var(--dark);
 }
 
 
 
-body > .cont > .data > .main > div > fieldset > .customers > tbody > tr > td > .btn > a:hover
+body > #cont > div > fieldset > .customers > tbody > tr > td > .btn > a:hover
 {
     background-color:var(--dark5);
     
 }
 
-body > .cont > .data > .main > div > fieldset > .customers > tbody > tr > td > .btn > a
+body > #cont > div > fieldset > .customers > tbody > tr > td > .btn > a
 {
     background-color: var(--dark5);
     border: none;
 }
-body > .cont > .data > .main > div > fieldset > .customers > tbody > tr > th > .btn > a{
+body > #cont > div > fieldset > .customers > tbody > tr > th > .btn > a{
     background-color: none;
     border: none;
     width: 5px;
     height: 5px;
 }
 
-body > .cont > .data > .main > div > fieldset > .customers > tbody > tr > th > .btn > a {
+body > #cont > div > fieldset > .customers > tbody > tr > th > .btn > a {
     font-size: 19px;
     line-height: 26px;
 }
 
 
 
-body > .cont > .data > .main > div > fieldset > .customers > tbody > .hidden {
+body > #cont > div > fieldset > .customers > tbody > .hidden {
     display: none;
 }
 
@@ -154,19 +153,19 @@ body > .cont > .data > .main > div > fieldset > .customers > tbody > .hidden {
 
 /*---------------------- Ajouter facture Buttons -----------------------*/
 
-body > .cont > .data > .main > div > fieldset > .add-table-btn{
+body > #cont > div > fieldset > .add-table-btn{
     width: 30%;
     padding: 10px;
     padding-left: 35px;
     display: flex;
 }
 
-body > .cont > .data > .main > div > fieldset > .add-table-btn > .btn > a > .txt{
+body > #cont > div > fieldset > .add-table-btn > .btn > a > .txt{
     font-family: bld;
     font-size: 13px; 
     line-height: 18px;
 }
-body > .cont > .data > .main > div > fieldset > .add-table-btn > .btn{
+body > #cont > div > fieldset > .add-table-btn > .btn{
     margin-right: 10px;
 }
 
@@ -179,18 +178,18 @@ body > .cont > .data > .main > div > fieldset > .add-table-btn > .btn{
 /*---------------------- start of input popup -----------------------*/
 
 
-body > .cont > .data > .main > div > fieldset > .customers > tbody > tr > td > .click {
+body > #cont > div > fieldset > .customers > tbody > tr > td > .click {
     position: relative;
     cursor: pointer;
 }
 
-body > .cont > .data > .main > div > fieldset > .customers > tbody > tr > td > .click > #popupTextSpan1 {
+body > #cont > div > fieldset > .customers > tbody > tr > td > .click > #popupTextSpan1 {
     top: 0;
     left: 0;
     z-index: 1;
 }
 
-body > .cont > .data > .main > div > fieldset > .customers > tbody > tr > td > .click > .popuptext {
+body > #cont > div > fieldset > .customers > tbody > tr > td > .click > .popuptext {
     top: 0;
     left: 0;
     z-index: 2;
@@ -206,12 +205,12 @@ body > .cont > .data > .main > div > fieldset > .customers > tbody > tr > td > .
 /*------------------------------- start of responsive code -------------------------------*/
 
 @media screen and (max-width: 1500px) and (max-height: 800px) {
-    body > .cont > .data > .main > div > .all > .left-div > .affiche_pre_facture,
-    body > .cont > .data > .main > div > .all > .right-div > .basculer {
+    body > #cont > div > .data > .main > div > .all > .left-div > .affiche_pre_facture,
+    body > #cont > div > .data > .main > div > .all > .right-div > .basculer {
         padding-top: 10px;
     }
 
-    body > .cont > .data > .main > div > fieldset > .add-table-btn{
+    body > #cont > div > fieldset > .add-table-btn{
         width: 40%;
         padding: 10px;
         padding-left: 35px;
@@ -225,7 +224,7 @@ body > .cont > .data > .main > div > fieldset > .customers > tbody > tr > td > .
   
   /*------------------------------- start of ajouter a la facture -------------------------------*/
 
-  body > #cont >  div > .field > .add-table-btn {display: flex; justify-content: space-around; margin-top: 3px;}
+  body > #cont >  div > .field > .add-table-btn {width:100%;display: flex; justify-content: space-around; margin-top: 3px;}
 
   /*------------------------------- end of ajouter a la facture -------------------------------*/
 
