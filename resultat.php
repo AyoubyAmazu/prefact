@@ -39,17 +39,19 @@ $list = dbSelect($sql, array("db" => "dia"));
 
 
 $html = "<div class='all'>";
-$html .= "<div class='right-div'>";
-$html .= formBtn(array("key" => "affiche-exep", "txt" => "Afficher l'exceptionnel"));
-$html .= formBtn(array("key" => "presentation", "txt" => "Prestations facturèes"));
-$html .= formBtn(array("key" => "basculer", "txt" => "Basculer vers synthèse du dossier", "href" => "synthese.php"));
-$html .= "</div>";
 $html .= "<div class='left-div'>";
+$html .="<div>";
 $html .= formLabel(array(
     "key" => "Sèlection d'une facture non terminèe : ",
 ));
 $html .= formSelect(array("key" => "sortAnalyse", "selected" => $sortSelected, "list" => $youlist));
+$html .= "</div>";
 $html .= formBtn(array("key" => "affiche_pre_facture", "ico" => "eye", "txt" => "Afficher la pré-facture", "href" => "affiche_fact.php"));
+$html .= "</div>";
+$html .= "<div class='right-div'>";
+$html .= formBtn(array("key" => "affiche-exep", "txt" => "Afficher l'exceptionnel"));
+$html .= formBtn(array("key" => "presentation", "txt" => "Prestations facturèes"));
+$html .= formBtn(array("key" => "basculer", "txt" => "Basculer vers synthèse du dossier", "href" => "synthese.php"));
 $html .= "</div>";
 $html .= "</div>";
 

@@ -4,7 +4,8 @@ body > #cont > div > .all {
     align-items: flex-start;
 }
 body > #cont > div > .all > .right-div {
-    display: flex;
+    text-align: right;
+    display: inline-block;
 }
 body > #cont > div > .all > .left-div{
     text-align: left;
@@ -12,7 +13,7 @@ body > #cont > div > .all > .left-div{
 }
 
 body > #cont > div > .all > .right-div > div,
-body > #cont > div > .left-div > div  {
+body > #cont > div > .all > .left-div > div  {
     display: inline-block;
     margin-left: 5px;
 }
