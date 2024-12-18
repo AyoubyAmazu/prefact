@@ -18,7 +18,9 @@ $(document).ready(function () {
   );
   // show special
 //  console.log($("#cont > div > .all > .right-div > .affiche-exep > a"))
-  $("#cont > div > .all > .right-div > .affiche-exep > a").on("click", function () {filterSpecial();});
+  $("#cont > div > .all > .right-div > .affiche-exep > a").on("click", function () {
+    filterSpecial();
+  });
 
   $(".checkbox .data .list")
     .children()
@@ -34,6 +36,7 @@ $(document).ready(function () {
     "fieldset4",
     "fieldset5",
   ];
+
   // the start of checking a specific prest line //
   function processButtonClickPrest(button) {
     const buttonTr = button.closest("tr");
@@ -66,8 +69,8 @@ $(document).ready(function () {
   tableClasses.forEach((tableClass) => {
     const container = $(
       "body > .cont > .data > .main > div > fieldset." +
-        tableClass +
-        " > .customers"
+      tableClass +
+      " > .customers"
     );
 
     container.on(
@@ -115,8 +118,8 @@ $(document).ready(function () {
   tableClasses.forEach((tableClass) => {
     const container = $(
       "body > .cont > .data > .main > div > fieldset." +
-        tableClass +
-        " > .customers"
+      tableClass +
+      " > .customers"
     );
 
     container.on(
@@ -138,13 +141,23 @@ $(document).ready(function () {
  * @return {void}
  */
 function filterSpecial() {
-  let specials = [];
   $("#cont > div > .field > table").each(function () {
+  let specials = [];
     $(this).find("tbody > .rw ").each(function (inex) {
       if ($(this).find(".prest-column > .prest_code > .data > input").val()[0] === "@")
         specials.push($(this));
     })
-  console.log(specials);
+//    console.log(specials)
+//    console.log($(this).parent())
+    if (specials.length < 1) {
+      $(this).parent().remove();
+      return
+    }
+    let tbody = $(this).find("tbody");
+    tbody.empty();
+    specials.forEach((item) => {
+      tbody.append(item)
+    })
   });
 }
 
@@ -180,8 +193,8 @@ $(document).ready(function () {
   tableClasses.forEach((tableClass) => {
     const container = $(
       "body > .cont > .data > .main > div > fieldset." +
-        tableClass +
-        " > .customers"
+      tableClass +
+      " > .customers"
     );
 
     container.on("click", "tbody tr th .btn a", function (event) {
@@ -261,6 +274,7 @@ function myFunction(element) {
     }
   });
 }
+
 //the end of the input script//
 
 //the start of list select open script
@@ -287,7 +301,7 @@ function sortColSelectOption(div) {
     sortCol = "year";
   // Assuming you want to update the text in an element with class "selected-element"
   $(sortSelected).text(sortCol); // Update the text
-  var obj = { index: { sortCol: sortCol } };
+  var obj = {index: {sortCol: sortCol}};
   cookieSave(obj, true);
 }
 
@@ -298,8 +312,8 @@ function sortColAdapt() {
   if (code == undefined || code == null) code = "";
   var option = $(
     "body .cont .data .main div .all .left-div .select.sortAnalyse  > .data > .list > .option[code='" +
-      code +
-      "']"
+    code +
+    "']"
   );
   if (
     option == undefined ||
@@ -402,6 +416,7 @@ function groupCollab(table) {
   }
   handleCheckGroup();
 }
+
 /**
  * checks all factories related when checking the grouping row
  */
@@ -678,7 +693,7 @@ function sortPrest(tableId) {
 
 function handleCheckGroupPrest() {
   $("table > tbody > tr.total-row-collab > td > div > a").each(function () {
-      // $(this).on("click",function(){console.log("done");})
+    // $(this).on("click",function(){console.log("done");})
     $(this).on("click", function () {
       $(this).find(".ico > i").toggleClass("fa-check");
       let code = $(this).attr("data-collab");
@@ -686,7 +701,7 @@ function handleCheckGroupPrest() {
         .closest("tbody")
         .find(".rw > .prest-column > div > div > input")
         .each(function () {
-          if ($(this).attr("value") === code){
+          if ($(this).attr("value") === code) {
             $(this)
               .closest(".rw")
               .find("td > .first-check > a > .ico > i")
@@ -698,20 +713,20 @@ function handleCheckGroupPrest() {
 }
 
 {
- /*  <tr class="total-row-collab">
-          <td>
-            <div class="btn min first-check">
-              <a data-collab="230">
-                <div class="ico">
-                  <i class="fa-solid fa-fa-circle"></i>
-                </div>
-              </a>
-            </div>
-          </td>
-          <td colspan="5">Cocher tout :  230</td>
-          <td>0</td>
-          <td>9.75</td>
-          <td>1753.5</td>
-      </tr>*/
+  /*  <tr class="total-row-collab">
+           <td>
+             <div class="btn min first-check">
+               <a data-collab="230">
+                 <div class="ico">
+                   <i class="fa-solid fa-fa-circle"></i>
+                 </div>
+               </a>
+             </div>
+           </td>
+           <td colspan="5">Cocher tout :  230</td>
+           <td>0</td>
+           <td>9.75</td>
+           <td>1753.5</td>
+       </tr>*/
 }
 
