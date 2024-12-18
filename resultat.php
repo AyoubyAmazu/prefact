@@ -151,7 +151,7 @@ function formTable($opts = array(), $con): string
     }
     $html .= "</table>";
     $html .= "<div class='add-table-btn'>";
-    $html .= formBtn(array("key" => "Ajouter-facture", "ico" => "plus", "txt" => "Ajouter â la facture", "href"=>"fact_a_valider.php"));
+    $html .= formBtn(array("key" => "Ajouter-facture", "ico" => "plus", "txt" => "Ajouter â la facture", "href"=>"affiche_fact.php"));
     $html .= formBtn(array("key" => "ne-pas-facturer", "ico" => "ban", "txt" => "Ne pas facturer"));
     $html .= "</div>";
     $html .= "</fieldset>";
