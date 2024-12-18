@@ -16,6 +16,9 @@ $(document).ready(function () {
       });
     }
   );
+  // show special
+//  console.log($("#cont > div > .all > .right-div > .affiche-exep > a"))
+  $("#cont > div > .all > .right-div > .affiche-exep > a").on("click", function () {filterSpecial();});
 
   $(".checkbox .data .list")
     .children()
@@ -129,6 +132,21 @@ $(document).ready(function () {
 
   // the end of checking a specific collab line //
 });
+
+/**
+ * sorts each table factories by date
+ * @return {void}
+ */
+function filterSpecial() {
+  let specials = [];
+  $("#cont > div > .field > table").each(function () {
+    $(this).find("tbody > .rw ").each(function (inex) {
+      if ($(this).find(".prest-column > .prest_code > .data > input").val()[0] === "@")
+        specials.push($(this));
+    })
+  console.log(specials);
+  });
+}
 
 /**
  * sorts each table factories by date
