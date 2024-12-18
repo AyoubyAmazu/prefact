@@ -202,4 +202,3 @@ $(document).ready(function () {
     $("body > .cont > .data > .main > div > .top > .first-line > .checkbox.bool > .data > .list > .option > a").off("click").on("click", function (event) { sortDirCheckboxUnique($(event.target).parents(".option")); });
 
 });
-
