@@ -30,6 +30,7 @@
     $cont = "<div hidden segment='".$segemnt[0]."'></div>";
     $cont .= "<div class='op'>";
     $cont .= "<div class='side'>";
+    /// Creation/resultat.php?Rech=oui&MoinsPlus='.$_SESSION['plus_moins_synthese'][$_GET['Code']][$annee_encours].'&Code='.$_GET['Code'].'&Utilise='.$_GET['Utilise'].
     $cont .= formBtn(array("key" => "facturation", "ico" => "fa-solid fa-file-invoice", "txt" => "Facturation", "href"=>"resultat.php"));
     $cont .= formBtn(array("key" => "tarifs", "ico" => "fa-solid fa-user", "txt" => "Tarifs social" , "href"=>"tarifs_social.php"));
     $cont .= formBtn(array("key" => "arret", "ico" => "fa-solid fa-square", "txt" => "Arrêt des travaux"));

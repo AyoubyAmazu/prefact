@@ -24,10 +24,10 @@ function sortDirCheckboxUnique(div) {
 
 // the start of the new fieldset script //
 var fieldsetCount = 1;
-$(document).on('click', 'body > .cont > .data > .main > div > .btn-last > .btn > a', function () {
+$(document).on('click', 'body > #cont >  div > .btn-last > .btn > a', function () {
     console.log('Button 2 clicked');
 
-    var newFieldsetStructure = $('body > .cont > .data > .main > div > .content > fieldset.second-field').first();
+    var newFieldsetStructure = $('body > #cont >  div > .content > fieldset.second-field').first();
 
     if (newFieldsetStructure.length > 0) {
         var newFieldsetStructureCopy = newFieldsetStructure.clone();
@@ -35,7 +35,7 @@ $(document).on('click', 'body > .cont > .data > .main > div > .btn-last > .btn >
         newFieldsetStructureCopy.removeClass('second-field');
         newFieldsetStructureCopy.addClass('third-field-' + fieldsetCount);
 
-        var destinationLocation2 = $('body > .cont > .data > .main > div > .content');
+        var destinationLocation2 = $('body > #cont >  div > .content');
         destinationLocation2.append(newFieldsetStructureCopy);
 
         fieldsetCount++;
@@ -52,7 +52,7 @@ $(document).on('click', 'body > .cont > .data > .main > div > .btn-last > .btn >
 
 // the start of the new table script //
 
-$(document).on('click', 'body > .cont > .data > .main > div > .content > fieldset > .btn-out > .btn.min.categorie-add > a', function () {
+$(document).on('click', 'body > #cont >  div > .content > fieldset > .btn-out > .btn.min.categorie-add > a', function () {
     console.log('Button clicked');
 
     var clonedTitleSection = $(this).closest('fieldset').find('.heart > .title.hide');
@@ -77,7 +77,7 @@ $(document).on('click', 'body > .cont > .data > .main > div > .content > fieldse
 
 // the start of removing a specific table //
 
-$(document).on('click', 'body > .cont > .data > .main > div > .content > fieldset > .heart > .title > .operation-remove > .btn.operation > a', function (event) {
+$(document).on('click', 'body > #cont >  div > .content > fieldset > .heart > .title > .operation-remove > .btn.operation > a', function (event) {
     event.preventDefault();
     console.log('remove button got clicked');
 
@@ -92,7 +92,7 @@ $(document).on('click', 'body > .cont > .data > .main > div > .content > fieldse
 
 // the start of removing a specific row //
 
-$(document).on('click', 'body > .cont > .data > .main > div > .content > fieldset > .heart > table > tbody > tr > td > .btn.min.operation-delete > a', function (event) {
+$(document).on('click', 'body > #cont >  div > .content > fieldset > .heart > table > tbody > tr > td > .btn.min.operation-delete > a', function (event) {
     event.preventDefault();
     console.log('delete button got clicked');
 
@@ -105,7 +105,7 @@ $(document).on('click', 'body > .cont > .data > .main > div > .content > fieldse
 
 // the start of removing a specific fieldset //
 
-$(document).on('click', 'body > .cont > .data > .main > div > .content > fieldset > .legend3 > .btn.min.categorie-remove > a', function (event) {
+$(document).on('click', 'body > #cont >  div > .content > fieldset > .legend3 > .btn.min.categorie-remove > a', function (event) {
     event.preventDefault();
     console.log('delete fieldset button got clicked');
     var row = $(this).closest('fieldset');
@@ -122,7 +122,7 @@ function autoResize(textarea) {
     textarea.style.height = textarea.scrollHeight + 'px';
   }
 
-$(document).on('input', 'body > .cont > .data > .main > div > .content > fieldset > .heart > table > tbody > tr > td > .textarea.textarea-container > .data > textarea', function () {
+$(document).on('input', 'body > #cont >  div > .content > fieldset > .heart > table > tbody > tr > td > .textarea.textarea-container > .data > textarea', function () {
     autoResize(this);
 });
 // the end of the textarea script //
@@ -131,8 +131,8 @@ $(document).on('input', 'body > .cont > .data > .main > div > .content > fieldse
 
 
 // the start of fill in the comment //
-$(document).on('click', 'body > .cont > .data > .main > div > .content > fieldset > .heart > table > tbody > tr > td > .btn.min.operation > a' ,function() {
-    var $container = $(this).closest('body > .cont > .data > .main > div > .content > fieldset > .heart > table > tbody > tr');
+$(document).on('click', 'body > #cont >  div > .content > fieldset > .heart > table > tbody > tr > td > .btn.min.operation > a' ,function() {
+    var $container = $(this).closest('body > #cont >  div > .content > fieldset > .heart > table > tbody > tr');
     var content = $container.find('.titre').text();
 
     var textarea = $(this).closest('table').find('tbody > tr > td > .textarea.textarea-container > .data > textarea');
@@ -199,6 +199,6 @@ $(document).ready(function () {
         sortColSelectOption($(event.target).parents(".option"));
     });
 
-    $("body > .cont > .data > .main > div > .top > .first-line > .checkbox.bool > .data > .list > .option > a").off("click").on("click", function (event) { sortDirCheckboxUnique($(event.target).parents(".option")); });
+    $("body > #cont >  div > .top > .first-line > .checkbox.bool > .data > .list > .option > a").off("click").on("click", function (event) { sortDirCheckboxUnique($(event.target).parents(".option")); });
 
 });

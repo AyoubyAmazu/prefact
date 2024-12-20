@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * Build html page
+ * @param array $opts
+ * @return string
+ */
 function html($opts = array())
 {
     $opts = htmlOpts($opts);
@@ -9,8 +13,8 @@ function html($opts = array())
     $html .= "<head>" . htmlHead($opts) . "</head>";
     $html .= "<body>";
     $html .= "<div id='header'>" . htmlHeader($opts) . "</div>";
-    // if ($opts["adr"] === "") $html .= "<div id='filter'>" . htmlFilter($opts) . "</div>";
-    // elseif ($opts["adr"] !== false) $html .= "<div id='title'>" . htmlTitle($opts) . "</div>";
+     if ($opts["adr"] === "") $html .= "<div id='filter'>" . htmlFilter($opts) . "</div>";
+     elseif ($opts["adr"] !== false) $html .= "<div id='title'>" . htmlTitle($opts) . "</div>";
     $html .= "<div id='cont'><div>" . $opts["cont"] . "</div></div>";
     $html .= "<div id='footer'>" . htmlFooter() . "</div>";
     $html .= "<div id='loader'>" . htmlLoader() . "</div>";
@@ -19,7 +23,11 @@ function html($opts = array())
 
     return $html;
 }
-
+/**
+ * Falidates and inialize parameters
+ * @param array $opts
+ * @return array
+ */
 function htmlOpts($opts = array())
 {
     if (!isset($opts["cont"])) $opts["cont"] = "";
@@ -38,6 +46,11 @@ function htmlOpts($opts = array())
     return $opts;
 }
 
+/**
+ * Creates the head tag for html
+ * @param array $opts
+ * @return string
+ */
 function htmlHead($opts = array())
 {
     $opts = htmlOpts($opts);
@@ -402,7 +415,7 @@ function htmlFooter()
     return "<div><i class='fa-regular fa-copyright'></i> " . APPauthor . ", " . date("Y") . " - Tous droits reservés</div>";
 }
 /**
- * Creates html of loader
+ * Creates html of a loader
  * @return string html
  */
 function htmlLoader()

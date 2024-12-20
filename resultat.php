@@ -1,7 +1,6 @@
 <?php
 
 require_once("config.php");
-
 $self = APPurl;
 $user = auth(array("script" => $self));
 $opts = array("user" => $user);
@@ -44,6 +43,8 @@ $html .="<div>";
 $html .= formLabel(array(
     "key" => "Sèlection d'une facture non terminèe : ",
 ));
+// "select * from factures where Code='".$_SESSION['code_actuel']."' and EnCours=1 and Provision=0 order by IdFact Asc"
+
 $html .= formSelect(array("key" => "sortAnalyse", "selected" => $sortSelected, "list" => $youlist));
 $html .= "</div>";
 $html .= formBtn(array("key" => "affiche_pre_facture", "ico" => "eye", "txt" => "Afficher la pré-facture", "href" => "affiche_fact.php"));
@@ -162,5 +163,5 @@ function formTable($opts = array(), $con): string
 
 
 
-$cont = html(array_merge($opts, array("cont" => $html, "script" => "resultat")));
+$cont = html(array_merge($opts, array("cont" => $html, "script" => "resultat", "adr"=>false)));
 die($cont);

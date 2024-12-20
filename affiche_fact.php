@@ -3,10 +3,8 @@ require_once("config.php");
 
 $self = APPurl;
 $user = auth(array("script" => $self));
-// $user = 'user';
 $opts = array("user" => $user);
-// $cookie = cookieInit();
-$filter = htmlFilter($opts);
+ $cookie = cookieInit();
 
 
 $sortList = array();
@@ -321,6 +319,6 @@ $html .= formLabel(array("key" => "Ajouter une nouvelle catègorie"));
 $html .= "</div>";
 
 
-echo html(array("user" => $user, "main" => $html, "title" => "", "script" => "affiche_fact", "type" => "filter", "filter" => $filter));
-die();
+$cont = html(array_merge($opts, array("cont" => $html, "script" => "affiche_fact", "adr"=>false)));
+die($cont);
 ?>

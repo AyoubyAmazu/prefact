@@ -1,7 +1,7 @@
 
 /*---------------------the start of header----------------------*/
 
-body > .cont > .data > .main > div > .top > .first-line{
+body > #cont > div > .top > .first-line{
     display: flex;
     flex-wrap: wrap;
     gap: 9px;
@@ -9,33 +9,36 @@ body > .cont > .data > .main > div > .top > .first-line{
     justify-content: center;
 }
 
-body > .cont > .data > .main > div > .top > .first-line > .table-info  {
+body > #cont > div > .top > .first-line > .table-info  {
     margin-top: 4px;
+    td{
+        border-radius: 5px;
+    }
 }
-body > .cont > .data > .main > div > .top > .first-line > div,
-body > .cont > .data > .main > div > .top > .first-line > .table-info > table,
-body > .cont > .data > .main > div > .content > fieldset > legend ,
-body > .cont > .data > .main > div > .content > fieldset > .legend2{
+body > #cont > div > .top > .first-line > div,
+body > #cont > div > .top > .first-line > .table-info > table,
+body > #cont > div > .content > fieldset > legend ,
+body > #cont > div > .content > fieldset > .legend2{
     font-family: bld;
 }
 
-body > .cont > .data > .main > div > .top  > .first-line > .table-info > table > tbody > tr > td {
+body > #cont > div > .top  > .first-line > .table-info > table > tbody > tr > td {
     border: 1px solid var(--dark);
     padding: 5px;
     background-color: var(--dark1);
 }
 
-body > .cont > .data > .main > div > .top  > .first-line > .table-info > table {
+body > #cont > div > .top  > .first-line > .table-info > table {
     border-collapse: separate;
 }
 
 
-body > .cont > .data > .main > div > .top  > .first-line > .table-info > table >  tbody > tr > .non-style{
+body > #cont > div > .top  > .first-line > .table-info > table >  tbody > tr > .non-style{
     border: none;
     background-color: var(--light);
 }
 
-body > .cont > .data > .main > div > .top > .first-line > .year > a {
+body > #cont > div > .top > .first-line > .year > a {
     pointer-events: none;
 }
 
@@ -44,40 +47,41 @@ body > .cont > .data > .main > div > .top > .first-line > .year > a {
 
 /*---------------------the start of Content----------------------*/
 
-body > .cont > .data > .main > div > .content{
+body > #cont > div > .content{
     margin-top: 5px;
 }
 
-body > .cont > .data > .main > div > .content > fieldset{
+body > #cont > div > .content > fieldset{
     border:  1px solid var(--dark1);
     border-radius: 15px;
     position: relative;
 }
 
-body > .cont > .data > .main > div > .content > .second-field{
+body > #cont > div > .content > .second-field{
     display: none;
 }
-body > .cont > .data > .main > div > .content > fieldset > legend{
+body > #cont > div > .content > fieldset > legend{
     text-align: left;
 }
 
-body > .cont > .data > .main > div > .content > fieldset > .legend2 > .input > .data {
+body > #cont > div > .content > fieldset > .legend2 > .input > .data {
     width: 120px;
 }
 
 
 
-body > .cont > .data > .main > div > .content > fieldset > .legend2{
+body > #cont > div > .content > fieldset > .legend2{
     position: absolute;
     top: -2.3em;
     right: 150px;
     background: var(--light);
     line-height:1.2em;
     display: flex;
-
+    align-items: center;
+    gap: 5px;
 }
 
-body > .cont > .data > .main > div > .content > fieldset > .legend3{
+body > #cont > div > .content > fieldset > .legend3{
     position: absolute;
     top: -2.3em;
     right: 2em;
@@ -87,32 +91,32 @@ body > .cont > .data > .main > div > .content > fieldset > .legend3{
 
 }
 
-body > .cont > .data > .main > div > .content > fieldset > .heart{
+body > #cont > div > .content > fieldset > .heart{
     margin: 0 auto;
     margin-top: 30px;
 }
 
-body > .cont > .data > .main > div > .content > fieldset > .heart > table{
+body > #cont > div > .content > fieldset > .heart > table{
     border-collapse: collapse;
     width: 80%;
     margin: 0 auto;
     margin-top: 10px;
 }
 
-body > .cont > .data > .main > div > .content > fieldset > .heart > .show{
+body > #cont > div > .content > fieldset > .heart > .show{
     display: none;
 }
 
-body > .cont > .data > .main > div > .content > fieldset > .heart > .title.hide {
+body > #cont > div > .content > fieldset > .heart > .title.hide {
     display: none;
 }
 
-body > .cont > .data > .main > div > .content > fieldset > .heart > .see {
+body > #cont > div > .content > fieldset > .heart > .see {
     margin-top: 40px;
 }
 
-body > .cont > .data > .main > div > .content > fieldset > .heart > table > tbody > tr > th,
-body > .cont > .data > .main > div > .content > fieldset > .heart > table > tbody > tr > td {
+body > #cont > div > .content > fieldset > .heart > table > tbody > tr > th,
+body > #cont > div > .content > fieldset > .heart > table > tbody > tr > td {
     border: 1px solid var(--dark1);
     padding: 7px;
     color: var(--dark);
@@ -121,100 +125,100 @@ body > .cont > .data > .main > div > .content > fieldset > .heart > table > tbod
 }
 
 
-body > .cont > .data > .main > div > .content > fieldset > .heart > table > tbody > tr > .total > div {
+body > #cont > div > .content > fieldset > .heart > table > tbody > tr > .total > div {
     display: flex;
     justify-content: flex-end;
 }
 
-body > .cont > .data > .main > div > .content > fieldset > .heart > table > tbody > tr > .total > div > .input > .data{
+body > #cont > div > .content > fieldset > .heart > table > tbody > tr > .total > div > .input > .data{
     width: 120px;
 }
 
-body > .cont > .data > .main > div > .content > fieldset > .heart > table > tbody > tr > .total > div > .btn > a {
+body > #cont > div > .content > fieldset > .heart > table > tbody > tr > .total > div > .btn > a {
     pointer-events: none;
     padding: 1px;
 }
 
 
-body > .cont > .data > .main > div > .content > fieldset > .heart > table  > tbody > tr > .operation{
+body > #cont > div > .content > fieldset > .heart > table  > tbody > tr > .operation{
     width: 20px;
 }
-body > .cont > .data > .main > div > .content > fieldset > .heart > table > tbody > tr > .titre{
+body > #cont > div > .content > fieldset > .heart > table > tbody > tr > .titre{
     text-align: left;
 }
 
 
-body > .cont > .data > .main > div > .content > fieldset > .heart > table  > tbody > tr > .operation >  .btn.min.action > a,
-body > .cont > .data > .main > div > .content > fieldset > .heart > table  > tbody > tr > td > .btn.min.operation > a,
-body > .cont > .data > .main > div > .content > fieldset > .heart > table  > tbody > tr > .btn-add > div > .btn > a,
-body > .cont > .data > .main > div >  .btn-last > .btn > a,
-body > .cont > .data > .main > div > .content > fieldset > .heart > table  > tbody > .area > td > div > .btn.min.comment-add > a{
+body > #cont > div > .content > fieldset > .heart > table  > tbody > tr > .operation >  .btn.min.action > a,
+body > #cont > div > .content > fieldset > .heart > table  > tbody > tr > td > .btn.min.operation > a,
+body > #cont > div > .content > fieldset > .heart > table  > tbody > tr > .btn-add > div > .btn > a,
+body > #cont > div >  .btn-last > .btn > a,
+body > #cont > div > .content > fieldset > .heart > table  > tbody > .area > td > div > .btn.min.comment-add > a{
     border: none;
     font-size: 19px;
     line-height: 26px;
 }
 
-body > .cont > .data > .main > div > .content > fieldset > .heart > table  > tbody > tr > .operation >  .btn.min.action > a:hover,
-body > .cont > .data > .main > div > .content > fieldset > .heart > table  > tbody > tr > td > .btn.min.operation > a:hover,
-body > .cont > .data > .main > div > .content > fieldset > .heart > table  > tbody > tr > .btn-add > div > .btn > a:hover,
-body > .cont > .data > .main > div > .btn-last > .btn > a:hover,
-body > .cont > .data > .main > div > .content > fieldset > .heart > table  > tbody > .area > td > div > .btn.min.comment-add > a:hover{
+body > #cont > div > .content > fieldset > .heart > table  > tbody > tr > .operation >  .btn.min.action > a:hover,
+body > #cont > div > .content > fieldset > .heart > table  > tbody > tr > td > .btn.min.operation > a:hover,
+body > #cont > div > .content > fieldset > .heart > table  > tbody > tr > .btn-add > div > .btn > a:hover,
+body > #cont > div > .btn-last > .btn > a:hover,
+body > #cont > div > .content > fieldset > .heart > table  > tbody > .area > td > div > .btn.min.comment-add > a:hover{
     background-color: var(--light);
     color: var(--grey);
 }
 
-body > .cont > .data > .main > div > .content > fieldset > .btn-out{
+body > #cont > div > .content > fieldset > .btn-out{
     gap: 5px;
 }
 
-body > .cont > .data > .main > div > .content > fieldset > .heart > table  > tbody > tr > .btn-add {
+body > #cont > div > .content > fieldset > .heart > table  > tbody > tr > .btn-add {
     border: none;
 }
-body > .cont > .data > .main > div > .content > fieldset > .heart > table  > tbody > tr > .btn-add > div {
+body > #cont > div > .content > fieldset > .heart > table  > tbody > tr > .btn-add > div {
     display: flex;
     justify-content: center;
 
 }
 
-body > .cont > .data > .main > div > .content > fieldset > .heart > .title{
+body > #cont > div > .content > fieldset > .heart > .title{
     display: flex;
     margin-left: 10%;
     width: 80%;
     justify-content: space-between;
 }
 
-body > .cont > .data > .main > div > .content > fieldset > .heart > .title > .operation-remove{
+body > #cont > div > .content > fieldset > .heart > .title > .operation-remove{
     display: flex;
     gap: 4px;
 }
 
-body > .cont > .data > .main > div > .content > fieldset > .heart > .title > .title-content {
+body > #cont > div > .content > fieldset > .heart > .title > .title-content {
     display: flex;
 }
 
 
-body > .cont > .data > .main > div > .content > fieldset > .heart > .title > .title-content >  .input {
+body > #cont > div > .content > fieldset > .heart > .title > .title-content >  .input {
     width: 200px;
 }
 
-body > .cont > .data > .main > div > .content > fieldset > .btn-out{
+body > #cont > div > .content > fieldset > .btn-out{
     display: flex;
 }
 /*
-body > .cont > .data > .main > div > .content > fieldset > .btn-out > .btn > a {
+body > #cont > div > .content > fieldset > .btn-out > .btn > a {
 }
 */
 
-body > .cont > .data > .main > div > .btn-last{
+body > #cont > div > .btn-last{
     display: flex;
     gap: 4px;
 }
 
-body > .cont > .data > .main > div > .content > fieldset > .heart > table > tbody > tr > td > div > .textarea-container{
+body > #cont > div > .content > fieldset > .heart > table > tbody > tr > td > div > .textarea-container{
     width: 40%;
 }
 
-body > .cont > .data > .main > div > .content > fieldset > .heart > table > tbody > .area > td > div{
+body > #cont > div > .content > fieldset > .heart > table > tbody > .area > td > div{
     display: flex;
     justify-content: center;
     gap: 4px;
