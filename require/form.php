@@ -430,3 +430,54 @@
     
         return $html;
     }
+
+    function formDp($opts = array())
+    {
+        if(!isset($opts["key"])) $opts["key"] = ""; $opts["key"] = str_replace("'", "&apos;", $opts["key"]);
+        if(!isset($opts["label"])) $opts["label"] = ""; $opts["label"] = str_replace("'", "&apos;", $opts["label"]);
+        if(!isset($opts["placeholder"])) $opts["placeholder"] = ""; $opts["placeholder"] = str_replace("'", "&apos;", $opts["placeholder"]);
+        if(!isset($opts["title"])) $opts["title"] = ""; if($opts["title"] == "") $opts["title"] = implode(" - ", array_filter(array($opts["label"], $opts["placeholder"]))); $opts["title"] = str_replace("'", "&apos;", $opts["title"]);
+        if(!isset($opts["value"])) $opts["value"] = ""; $opts["value"] = str_replace("'", "&apos;", $opts["value"]);
+        if(!isset($opts["required"])) $opts["required"] = false;
+        if(!isset($opts["readonly"])) $opts["readonly"] = false;
+        if(!isset($opts["off"])) $opts["off"] = false;
+        if(!isset($opts["extra"])) $opts["extra"] = array();
+        if(!isset($opts["attr"])) $opts["attr"] = array();
+        if(!isset($opts["op"])) $opts["op"] = array();
+
+        $div = array();
+        array_push($div, "dp");
+        if($opts["key"] != "") array_push($div, $opts["key"]);
+        if(count($opts["extra"]) != 0) $div = array_merge($div, $opts["extra"]);
+        if($opts["required"]) array_push($div, "required");
+        if($opts["readonly"]) array_push($div, "readonly");
+        if($opts["off"]) array_push($div, "off");
+
+        $attr = array();
+        array_push($attr, "class='" . implode(" ", $div) . "'");
+        if(count($opts["attr"]) != 0) $attr = array_merge($attr, $opts["attr"]);
+
+        $label = array();
+        array_push($label, "class='label'");
+        if($opts["title"] != "") array_push($label, "title='" . $opts["title"] . "'");
+
+        $data = array();
+        array_push($data, "type='text'");
+        if($opts["placeholder"] != "") array_push($data, "placeholder='" . $opts["placeholder"] . "'");
+        if($opts["title"] != "") array_push($data, "title='" . $opts["title"] . "'");
+        if($opts["value"] != "") array_push($data, "value='" . $opts["value"] . "'");
+        if($opts["readonly"]) array_push($data, "readonly");
+
+        $html = "<div " . implode(" ", $attr) . ">";
+            if($opts["label"] != "") $html .= "<div " . implode(" ", $label) . ">" . $opts["label"] . "</div>";
+            $html .= "<div class='data'>";
+                foreach($opts["op"] as $v) if($v["type"] == "pre") $html .= $v["txt"];
+                $html .= "<input " . implode(" ", $data) . ">";
+                $html .= formBtn(array("key" => "cal", "ico" => "calendar", "title" => "Calendrier"));
+
+                foreach($opts["op"] as $v) if($v["type"] == "post") $html .= $v["txt"];
+            $html .= "</div>";
+        $html .= "</div>";
+
+        return $html;
+    }

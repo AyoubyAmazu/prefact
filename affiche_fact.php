@@ -7,6 +7,8 @@ $opts = array("user" => $user);
  $cookie = cookieInit();
 
 
+//?TODO recuperer et afficher la facture en cours
+//* $select_detail="(select * from detail where IdFact='".$fact."' and (IdTrav<27 or IdTrav>=33) )union (select * from detail where IdFact='".$fact."' and (IdTrav between 27 and 32)) order by IdTrav, IdDetail asc"
 $sortList = array();
 array_push($sortList, array("code" => "year", "txt" => "2021/05/08", "title" => "year"));
 array_push($sortList, array("code" => "year", "txt" => "2023/08/15", "title" => "year"));

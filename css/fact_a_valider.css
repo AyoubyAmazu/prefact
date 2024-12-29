@@ -1,0 +1,68 @@
+body > #cont > div > .hd { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px;   }
+body > #cont > div > .hd > .left { display: flex; flex-wrap: wrap; gap: 10px; font-weight: bld; }
+body > #cont > div > .hd > .left > .btn > a { font-size: 13px; line-height: 18px; font-family: bld;}
+
+body > #cont > div > .centre > table {display: flex; border-collapse: collapse;justify-content: center; margin-top: 20px;}
+
+body > #cont > div > .centre > table > tbody > tr > td:nth-child(even) {background-color: var(--dark1); /* Background color for even columns */}
+body > #cont > div > .centre > table > tbody > tr > td:nth-child(odd) { background-color: var(--light) /* Background color for odd columns */}
+body > #cont > div > .centre > table > tbody > tr > th:nth-child(even) {background-color: var(--dark1); /* Background color for even columns */}
+body > #cont > div > .centre > table > tbody > tr > th:nth-child(odd) { background-color: var(--light) /* Background color for odd columns */}
+
+
+body > #cont > div > .centre > table > tbody > tr > th {
+    border: 1px solid var(--dark);
+    padding: 5px 20px;
+    border-right: none;
+    border-left: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 15%;
+    
+
+    
+}
+
+
+
+
+
+
+body > #cont > div > .centre > table > tbody > tr > th.rd {
+    width: 60px;
+}
+body > #cont > div > .centre > table > tbody > tr > td {
+    width: 150px; height: 30px;
+}
+body > #cont > div > .centre > table > tbody > tr {border-bottom: 1px solid var(--dark); margin-bottom: 20px;}
+body > #cont > div > .centre > table > tbody > tr.comm { height: 50px; }
+
+
+
+body > #cont > div > .centre > table > tbody > tr.comm > td > .recherch > .input.rech { flex-direction: row; align-items: center; gap: 0 5px; width: 300px; font-family: bld; width: 40%; display: flex;  }
+
+
+
+
+
+body > #cont > div > .centre > table > tbody > tr > td > .verticalB  > .btn > a {top:0; right: 0; bottom: 0; left: 0; border-radius: 0px; border: none; display:inline-flex; align-content: left; }
+body > #cont > div > .centre > table > tbody > tr > td > .verticalB  > .list  {width: 220px; margin-left: -206px; margin-top: -15px;   position: absolute; align-content: start; border: 1px solid var(--dark); background-color : var(--light); overflow: visible; z-index: 1;}
+body > #cont > div > .centre > table > tbody > tr > td > .verticalB   > .list >.btn > a {border: none; display: inline-flex ;height: 20px; justify-content: left; font-size: 13px; line-height: 18px; font-family: bld;}
+body > #cont > div > .centre > table > tbody > tr > td > .verticalB   > .list >.btn > a{ border-radius: 0px;} 
+body > #cont > div > .centre > table > tbody > tr > td > .verticalB   > .list.off { display: none; }
+body > #cont > div > .centre > table > tbody > tr > td > .verticalB   > .btnmenu > .btn >  a  {border: none; }
+
+
+body > #cont > div > .centre > table > tbody > tr > td >  .checkbox > .checkbox.verr > .data{  border: none;}
+body > #cont > div > .centre > table > tbody > tr > td >  .date > .dp.date > .data {  border: none;}
+
+
+
+.popup.displayRappelList > div > .op > .btn  { width: 70px; font-family: bld;}
+.popup.displayRappelList > .div > .contenue > .input { display: flex;   width: 100%; border-bottom: 1px solid var(--dark1); }
+
+
+
+
+
