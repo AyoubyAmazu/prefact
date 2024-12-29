@@ -103,7 +103,7 @@ function formSelectInit(div)
     $(div).children(".data").children(".list").scrollTop(0);
 }
 /**
- * Filters select option on the select input
+ * Filters select's options of a select input
  * @param {HTMLElement} div
  */
 function formSelectFilter(div)
