@@ -1,6 +1,7 @@
 
 /*---------------------the start of header----------------------*/
 
+
 body > #cont > div > .top > .first-line{
     display: flex;
     flex-wrap: wrap;
@@ -20,6 +21,12 @@ body > #cont > div > .top > .first-line > .table-info > table,
 body > #cont > div > .content > fieldset > legend ,
 body > #cont > div > .content > fieldset > .legend2{
     font-family: bld;
+}
+
+body > #cont > div > .content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
 body > #cont > div > .top  > .first-line > .table-info > table > tbody > tr > td {

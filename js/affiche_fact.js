@@ -1,4 +1,17 @@
+$(document).ready(function () {
+    $("body > #cont >  div .top .first-line .select.selection_facture_list .data a").off("click").on("click", function (event) {
+        formSelectInit($(event.target).parents(".select"));
+    });
+    $("body #cont >  div .top .first-line .select.selection_facture_list .data .list .input.filter .data input").off("input").on("input", function (event) {
+        sortColSelectFilter($(event.target).parents(".select"));
+    });
+    $("body #cont >  div .top .first-line .select.selection_facture_list .data .list .option a").off("click").on("click", function (event) {
+        sortColSelectOption($(event.target).parents(".option"));
+    });
 
+    $("body > #cont >  div > .top > .first-line > .checkbox.bool > .data > .list > .option > a").on("click", function (event) { sortDirCheckboxUnique($(event.target).parents(".option")); });
+
+});
 //the start of list select open script
 function sortColSelectFilter(div) {
     formSelectFilter(div);
@@ -152,7 +165,7 @@ $(document).on('click', 'body > #cont >  div > .content > fieldset > .heart > ta
 
 
 
-$(document).on('click', 'body .cont .data .main div .content fieldset .heart table tbody tr th .btn.min.action a', function() {
+$(document).on('click', 'body #cont >  div .content fieldset .heart table tbody tr th .btn.min.action a', function() {
     console.log('hello there');
     var $table = $(this).closest('table');
     var rows = $table.find('tbody > tr').get();
@@ -174,31 +187,18 @@ $(document).on('click', 'body .cont .data .main div .content fieldset .heart tab
 
 // the start of the dynamically added field select //
 
-    $(document).on('click', 'body .cont .data .main div .content fieldset legend .select.selection_facture_list .data a', function (event) {
+    $(document).on('click', 'body #cont >  div .content fieldset legend .select.selection_facture_list .data a', function (event) {
         formSelectInit($(event.target).parents(".select"));
     });
 
-    $(document).on('input', 'body .cont .data .main div .content fieldset legend .select.selection_facture_list .data .list .input.filter .data input', function (event) {
+    $(document).on('input', 'body #cont >  div .content fieldset legend .select.selection_facture_list .data .list .input.filter .data input', function (event) {
         sortColSelectFilter($(event.target).parents(".select"));
     });
 
-    $(document).on('click', 'body .cont .data .main div .content fieldset legend .select.selection_facture_list .data .list .option a', function (event) {
+    $(document).on('click', 'body #cont >  div .content fieldset legend .select.selection_facture_list .data .list .option a', function (event) {
         sortColSelectOption($(event.target).parents(".option"));
     });
 // the start of the dynamically added field select //
 
 
-$(document).ready(function () {
-    $("body .cont .data .main div .top .first-line .select.selection_facture_list .data a").off("click").on("click", function (event) {
-        formSelectInit($(event.target).parents(".select"));
-    });
-    $("body .cont .data .main div .top .first-line .select.selection_facture_list .data .list .input.filter .data input").off("input").on("input", function (event) {
-        sortColSelectFilter($(event.target).parents(".select"));
-    });
-    $("body .cont .data .main div .top .first-line .select.selection_facture_list .data .list .option a").off("click").on("click", function (event) {
-        sortColSelectOption($(event.target).parents(".option"));
-    });
 
-    $("body > #cont >  div > .top > .first-line > .checkbox.bool > .data > .list > .option > a").off("click").on("click", function (event) { sortDirCheckboxUnique($(event.target).parents(".option")); });
-
-});
