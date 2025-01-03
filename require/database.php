@@ -38,7 +38,6 @@
     {
         if(!isset($opts["db"])) $opts["db"] = "prefact";
         if(!isset($opts["conn"])) $opts["conn"] = dbStart(array_merge($opts, array("db" => array($opts["db"]))));
-
         try { $opts["conn"][$opts["db"]] -> exec($sql); }
         catch(Exception $e) { err(array_merge($opts, array("txt" => "Erreur de d'execution d'une requête SQL", "det" => $opts["db"] . " | " . $sql . " | " . $e -> getMessage()))); }
     }
