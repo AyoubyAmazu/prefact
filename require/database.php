@@ -34,12 +34,26 @@
         return $result;
     }
     
+    // function dbExec($sql, $opts = array())
+    // {
+    //     if(!isset($opts["db"])) $opts["db"] = "prefact";
+    //     if(!isset($opts["conn"])) $opts["conn"] = dbStart(array_merge($opts, array("db" => array($opts["db"]))));
+    //     try { $opts["conn"][$opts["db"]] -> exec($sql); }
+    //     catch(Exception $e) { err(array_merge($opts, array("txt" => "Erreur de d'execution d'une requête SQL", "det" => $opts["db"] . " | " . $sql . " | " . $e -> getMessage()))); }
+    // }
     function dbExec($sql, $opts = array())
     {
-        if(!isset($opts["db"])) $opts["db"] = "prefact";
-        if(!isset($opts["conn"])) $opts["conn"] = dbStart(array_merge($opts, array("db" => array($opts["db"]))));
-        try { $opts["conn"][$opts["db"]] -> exec($sql); }
-        catch(Exception $e) { err(array_merge($opts, array("txt" => "Erreur de d'execution d'une requête SQL", "det" => $opts["db"] . " | " . $sql . " | " . $e -> getMessage()))); }
+        if (!isset($opts["db"])) $opts["db"] = "prefact";
+        if (!isset($opts["conn"])) $opts["conn"] = dbStart(array_merge($opts, array("db" => array($opts["db"]))));
+    
+        // Log the SQL query and connection status
+        error_log("Executing SQL: " . $sql);
+        error_log("Database: " . $opts["db"]);
+    
+        try {
+            $opts["conn"][$opts["db"]]->exec($sql);
+        } catch (Exception $e) {
+            err(array_merge($opts, array("txt" => "Erreur de d'execution d'une requête SQL", "det" => $opts["db"] . " | " . $sql . " | " . $e->getMessage())));
+        }
     }
-
 ?>

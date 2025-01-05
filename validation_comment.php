@@ -8,7 +8,7 @@ $cookie = cookieInit();
 if(isset($_POST["saveComment"])){
     $update_query = "UPDATE factures SET CommentairesFacture = '".$_POST["saveComment"]."' WHERE IdFact = '".$_POST["idFact"]."'";
     dbExec($update_query, array("db"=>"fact"));
-    die(["code"=>200]);
+    die(json_encode(['code'=>200]));
 }
 
 $html = "<div class='popup displayRappelList'><div>";
