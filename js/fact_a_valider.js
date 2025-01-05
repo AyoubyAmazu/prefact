@@ -5,6 +5,8 @@ $(document).ready(function () {
     $("body > #cont > div > .centre > table > tbody > tr > td >  .checkbox  > .verr > .data > .list > .option > a").off("click").on("click", function (event) {CheckboxUnique($(event.target).parents(".option"));});
     $("body > #cont > div > .centre > table > tbody > tr > td > .verticalB > .list > .btn.commentaire > a").on("click", function () {displayCommentPopup($(this).closest(".list"));});
     $(window).on("click", function (event) {if (!$(event.target).closest(".verticalB").length) {$("body > #cont > div > .centre > table > tbody > tr > td > .verticalB > .list ").addClass("off");}});
+    $("body > #cont > div > .centre > table > tbody > tr > td > .verticalB > .list > .close").click(function(){anuller_fact($(this));});
+    search();
 });
 function displayCommentPopup(list)
 {
@@ -31,7 +33,6 @@ function displayRappelListAdapt(comment, idFact) {
     });
     $("body > .popup.displayRappelList > div > .op > .btn.save > a").on("click", function () {
         let mComment = $("body > .popup.displayRappelList > div > .contenue > .comment > .data > input").val();
-        console.log(comment == mComment)
         if(comment == mComment) {
             popDown($(event.target).parents("div"));
             return;
@@ -61,4 +62,32 @@ function CheckboxUnique(div) {
     formCheckboxExec(div);
 }
 
+function anuller_fact(div){
+    id = div.parents().attr("factId");
+    $.ajax({
+        url: "fact_a_valider.php"
+        ,type:"POST"
+        ,data:{facture_id: id}
+        , beforeSend: function() { loaderShow(); }
+        , complete: function() { loaderHide(); }
+        , success: function(data){
+            try { var result = JSON.parse(data); }
+            catch(error) { popError(); return; }
+            if(result["code"] == 200) { popDown($(event.target).parents("div")); location.reload(); // Refresh the page
+                return; }
+            popError(result["txt"], result["btn"]);
+        }
+    });
 
+}
+function search() {
+    $("body > #cont > div > .centre > table > tbody > .comm > td > div > div > .data > input").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("table tbody .row").filter(function() {
+            // $(this).toggle($(this).find(".nom_dossier").text().toLowerCase().indexOf(value) > -1);
+            var nomDossier = $(this).find(".nom_dossier").text().toLowerCase();
+            var codeDossier = $(this).find(".code_dossier").text().toLowerCase();
+            $(this).toggle(nomDossier.indexOf(value) > -1 || codeDossier.indexOf(value) > -1);
+        });
+    });
+};

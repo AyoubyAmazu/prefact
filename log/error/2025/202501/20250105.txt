@@ -1,0 +1,34 @@
+05/01/2025 16:32:58 | Erreur de d'execution d'une requête SQL | /validation_comment.php | fact | UPDATE factures SET CommentairesFacture = 'sdfsdfsd' WHERE IdFact = '38238'' | SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''38238''' at line 1
+05/01/2025 16:54:06 | CED | Erreur de d'execution d'une requête SQL | /fact_a_valider.php | fact | UPDATE factures
+           SET Encours = 2
+           WHERE idFact = 38238'; | SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''' at line 3
+05/01/2025 16:54:41 | CED | Erreur de d'execution d'une requête SQL | /fact_a_valider.php | fact | UPDATE factures
+           SET Encours = 2
+           WHERE idFact = 38238'; | SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''' at line 3
+05/01/2025 16:55:09 | CED | Erreur de d'execution d'une requête SQL | /fact_a_valider.php | fact | UPDATE factures
+           SET Encours = 2
+           WHERE idFact = 38238'; | SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''' at line 3
+05/01/2025 16:59:50 | CED | Erreur de d'execution d'une requête SQL | /fact_a_valider.php | fact | UPDATE factures
+           SET Encours = 2
+           WHERE idFact = 38238'; | SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''' at line 3
+05/01/2025 17:00:05 | CED | Erreur de d'execution d'une requête SQL | /fact_a_valider.php | fact | UPDATE factures
+           SET Encours = 2
+           WHERE idFact = 62699'; | SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''' at line 3
+05/01/2025 17:01:08 | CED | Erreur de d'execution d'une requête SQL | /fact_a_valider.php | fact | UPDATE factures
+           SET Encours = 2
+           WHERE idFact = 63138'; | SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''' at line 3
+05/01/2025 17:03:19 | CED | Erreur de d'execution d'une requête SQL | /fact_a_valider.php | fact | UPDATE factures
+           SET Encours = 2
+           WHERE idFact = 63138'; | SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''' at line 3
+05/01/2025 17:05:51 | CED | Erreur de d'execution d'une requête SQL | /fact_a_valider.php | fact | UPDATE factures.z_fact
+           SET Encours = 2
+           WHERE idFact = 63138'; | SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''' at line 3
+05/01/2025 17:07:14 | CED | Erreur de d'execution d'une requête SQL | /fact_a_valider.php | fact | UPDATE factures.z_fact
+           SET Encours = 2
+           WHERE idFact = `63138'` | SQLSTATE[42000]: Syntax error or access violation: 1049 Unknown database 'factures'
+05/01/2025 17:07:31 | CED | Erreur de d'execution d'une requête SQL | /fact_a_valider.php | fact | UPDATE factures.z_fact
+           SET Encours = 2
+           WHERE idFact = 63138' | SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''' at line 3
+05/01/2025 17:09:04 | CED | Erreur de d'execution d'une requête SQL | /fact_a_valider.php | fact | UPDATE factures.z_fact
+           SET Encours = 2
+           WHERE idFact = '63138' | SQLSTATE[42000]: Syntax error or access violation: 1049 Unknown database 'factures'

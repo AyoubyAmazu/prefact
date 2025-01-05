@@ -106,11 +106,11 @@ function composeFactRow(array $fact): void
 
    if(isset($_GET["a_valid"]) && $fact["EnCours"]!=3) return;
 
-   $html .= "<tr>";
+   $html .= "<tr class = 'row'>";
    $html .= "<td class='left'>" . $rd["COL_CODE_N1"] . "</td>";
    $html .= "<td>" . $collab["CodeCollab"] . "</td>";
-   $html .= "<td>" . $fact["Code"] . "</td>";
-   $html .= "<td>" . $fact["Dossier"] . "</td>";
+   $html .= "<td class = 'code_dossier'>" . $fact["Code"] . "</td>";
+   $html .= "<td class = 'nom_dossier' >" . $fact["Dossier"] . "</td>";
    $html .= "<td>";
    $html .= "<div class='date'>";
    $html .= formDp(array("key" => "date", "value" => formatFactureDate($fact["DateFacture"], $fact["Date"])));
@@ -193,9 +193,9 @@ function socListQueris(): string
 function formatFactureDate(string $factDate, string $date): string
 {
    if ($factDate == "-") {
-      $annee = substr(date, -4);
-      $mois = substr(date, -7, 2);
-      $jour = substr(date, 0, 2);
+      $annee = substr($date, -4);
+      $mois = substr($date, -7, 2);
+      $jour = substr($date, 0, 2);
       return $annee . $mois . $jour;
    } else return date('Y-m-d', strtotime($factDate));
 }
@@ -230,6 +230,17 @@ function formateDateDIa(string $dateDia): string
    }
 }
 
+if(isset($_POST["facture_id"])) {
+   $id = $_POST["facture_id"];
+   $sql = "UPDATE z_fact.factures
+           SET Encours = 2
+           WHERE idFact = '$id";
+   dbExec($sql, array_merge($opts, array("db" => "fact")));
+  die(json_encode(['code'=>200]));
+}
 echo html(array("user" => $user, "cont" => composePage(), "title" => "", "script" => "fact_a_valider", "adr" => false));
 
+
+
 die();
+
