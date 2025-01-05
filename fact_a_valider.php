@@ -132,7 +132,8 @@ function composeFactRow(array $fact): void
    $html .= "<td>";
    $html .= "<div class='verticalB'>";
    $html .= formBtn(array("key" => "icoVertica", "ico" => "fa-solid fa-ellipsis-vertical"));
-   $html .= "<div class='list off'>";
+   $html .= "<div class='list off' factId=".$fact["IdFact"]."'>";
+   $html .= "<input class='comment' hidden='true' value='".$fact["CommentairesFacture"]."'/>";
    $html .= formBtn(array("key" => "open", "txt" => "ouvrir la facture", "ico" => "fa-solid fa-envelope-open-text", "href" => "validation_recap.php"));
    $html .= formBtn(array("key" => "commentaire", "txt" => "Ajouter un commentaire", "ico" => "fa-solid fa-pencil"));
    $html .= formBtn(array("key" => "close", "txt" => "Annuler la facture", "ico" => "fa-solid fa-ban"));
