@@ -384,5 +384,13 @@ function deleteDetail(int $id): never
 	die(json_encode(['success' => 200]));
 }
 
+if (isset($_POST["facture_id"])){
+	$id = $_POST["facture_id"];
+	$sql = "UPDATE z_fact.factures SET EnCours = 3 WHERE IdFact = '$id'";
+	dbExec($sql, opts: array("db"=>"fact"));
+	die(json_encode(['code'=>200]));
+}
+
 $cont = html(array_merge($opts, array("cont" => composePage(), "script" => "affiche_fact", "adr" => false)));
+
 die($cont);
