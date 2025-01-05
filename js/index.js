@@ -494,6 +494,8 @@ function fetchData() {
         table.html("");
         table.append(thead);
         table.append(data.data)
+        console.log(data);
+        
       } catch (e) {
         console.error("Invalid JSON response:", data);
         popError("Received an invalid response from the server.");

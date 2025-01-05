@@ -171,7 +171,7 @@ foreach ($result as $v) {
    }
 
 try {
-    echo json_encode(['success' => 200, 'data' => $html]);
+    echo json_encode(['success' => 200, 'data' => $html, "result"=>$result, "select"=>$select, "post"=>$_POST]);
 } catch (Exception $e) {
     error_log($e->getMessage());
     echo json_encode(['success' => false, 'error' => 'An error occurred.']);

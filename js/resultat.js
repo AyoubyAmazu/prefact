@@ -133,10 +133,11 @@ $(document).ready(function () {
       }
     );
   });
+  $("#cont > div > .all > .left-div > div > .select > .data > .list > .option")
+  .on("click", function(){/*selectFact($(this).attr("code"))*/})
 
   // the end of checking a specific collab line //
 });
-
 /**
  * sorts each table factories by date
  * @return {void}
@@ -711,23 +712,5 @@ function handleCheckGroupPrest() {
         });
     });
   });
-}
-
-{
-  /*  <tr class="total-row-collab">
-           <td>
-             <div class="btn min first-check">
-               <a data-collab="230">
-                 <div class="ico">
-                   <i class="fa-solid fa-fa-circle"></i>
-                 </div>
-               </a>
-             </div>
-           </td>
-           <td colspan="5">Cocher tout :  230</td>
-           <td>0</td>
-           <td>9.75</td>
-           <td>1753.5</td>
-       </tr>*/
 }
 
