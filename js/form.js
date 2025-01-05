@@ -120,10 +120,16 @@ function formSelectFilter(div)
 
 function formSelectOption(div)
 {
-    var code = $(div).attr("code"); if(code == undefined || code == null) code = ""; $(div).parents(".select").attr("code", code);
-    var txt = $(div).children("a").html(); if(txt == undefined || txt == null) txt = ""; $(div).parents(".select").children(".data").children("a").children(".main").html(txt);
-    var title = $(div).children("a").attr("title"); if(title == undefined || title == null) title = ""; $(div).parents(".select").children(".data").children("a").attr("title", title);
-    formSelectHide($(div).parents(".select"));
+    
+    $(div).children(".list").children(".option").on("click",function()
+    {
+        var code = $(this).attr("code"); if(code == undefined || code == null) code = ""; $(this).parents(".select").attr("code", code);
+        var txt = $(this).children("a").html();if(txt == undefined || txt == null) txt = ""; $(this).parents(".select").children(".data").children("a").children(".main").html(txt);
+        var title = $(this).children("a").attr("title"); if(title == undefined || title == null) title = ""; $(this).parents(".select").children(".data").children("a").attr("title", title);
+        console.log($(div).html())
+        formSelectHide($(div));
+    })
+   
 }
 
 /**
@@ -148,6 +154,13 @@ function formCheckboxUnique(div)
         if($(this).hasClass("on")) $(this).children("a").children(".ico").children("i").addClass("fa-circle-dot").removeClass("fa-circle");
         else $(this).children("a").children(".ico").children("i").addClass("fa-circle").removeClass("fa-circle-dot");
     });
+}
+function selectAdapt(div)
+{
+    formSelectInit(div)
+    formSelectOption(div.children());
+    formSelectFilter(div);
+
 }
 
 

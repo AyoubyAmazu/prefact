@@ -21,7 +21,8 @@ $(document).ready(function () {
   $("#cont > div > .all > .right-div > .affiche-exep > a").on("click", function () {
     filterSpecial();
   });
-
+  $(".select").on("click",function(){selectAdapt($(this));});
+  
   $(".checkbox .data .list")
     .children()
     .each(function (option) {
