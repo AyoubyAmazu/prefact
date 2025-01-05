@@ -6,7 +6,7 @@ $opts = array("ajax" => true, "user" => $user);
 $cookie = cookieInit();
 
 if(isset($_POST["saveComment"])){
-    $update_query = "UPDATE factures SET CommentairesFacture = '".$_POST["saveComment"]."' WHERE IdFact = '".$_POST["idFact"];
+    $update_query = "UPDATE factures SET CommentairesFacture = '".$_POST["saveComment"]."' WHERE IdFact = '".$_POST["idFact"]."'";
     dbExec($update_query, array("db"=>"fact"));
     die(json_encode(['code'=>200]));
 }

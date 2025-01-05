@@ -132,7 +132,7 @@ function composeFactRow(array $fact): void
    $html .= "<td>";
    $html .= "<div class='verticalB'>";
    $html .= formBtn(array("key" => "icoVertica", "ico" => "fa-solid fa-ellipsis-vertical"));
-   $html .= "<div class='list off' factId=".$fact["IdFact"]."'>";
+   $html .= "<div class='list off' factId='".$fact["IdFact"]."'>";
    $html .= "<input class='comment' hidden='true' value='".$fact["CommentairesFacture"]."'/>";
    $html .= formBtn(array("key" => "open", "txt" => "ouvrir la facture", "ico" => "fa-solid fa-envelope-open-text", "href" => "validation_recap.php"));
    $html .= formBtn(array("key" => "commentaire", "txt" => "Ajouter un commentaire", "ico" => "fa-solid fa-pencil"));
@@ -234,7 +234,7 @@ if(isset($_POST["facture_id"])) {
    $id = $_POST["facture_id"];
    $sql = "UPDATE z_fact.factures
            SET Encours = 2
-           WHERE idFact = '$id";
+           WHERE idFact = '$id'";
    dbExec($sql, array_merge($opts, array("db" => "fact")));
   die(json_encode(['code'=>200]));
 }
