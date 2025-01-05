@@ -2,6 +2,7 @@
 
     require_once("config.php");
 
+    session_start();
     $opts = array();
     $opts["conn"] = dbStart(array_merge($opts, array("db" => array("dia", "prefact"))));
     $opts["user"] = auth($opts);
@@ -9,6 +10,8 @@
     $cookie = cookieInit();
     $getD = ((isset($_GET["d"]))? cryptDel($_GET["d"]) : false);
     if($getD == false) err(array_merge($opts, array("txt" => "Erreur d'accès", "btn" => APPurl)));
+    // TODO: save dossier id in session
+    $_SESSION["dossier"] = 20249;
 
     $anaList = array();
    array_push($anaList, array("code" => "analyseannuelle", "txt" => "Analyse annuelle", "title" => "analyse annuelle",));

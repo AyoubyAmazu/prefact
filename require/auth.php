@@ -4,9 +4,9 @@
     {
         if(!isset($opts["ajax"])) $opts["ajax"] = false;
 
-        //$user = FSCauth(array("script" => APPself, "ajax" => $opts["ajax"]));
+        // $user = FSCauth(array("script" => APPself, "ajax" => $opts["ajax"]));
 
-//        $user = array("id" => "JBC", "first" => "Jean-Baptiste", "last" => "CAZAUX", "email" => "jb.cazaux@fidsud.fr", "admin" => false);
+    //    $user = array("id" => "JBC", "first" => "Jean-Baptiste", "last" => "CAZAUX", "email" => "jb.cazaux@fidsud.fr", "admin" => false);
         // $user = array("id" => "MAOD", "first" => "Marie", "last" => "Onteiral-Diaz", "email" => "marie.onteiral-diaz@fidsud.fr", "admin" => false);
         // $user = array("id" => "SIM", "first" => "Siham", "last" => "Moufid", "email" => "siham.moufid@fidsud.fr", "admin" => false);
         $user = array("id" => "CED", "first" => "Cédric", "last" => "DEVORA", "email" => "cedric.devora@fidsud.fr", "admin" => false);

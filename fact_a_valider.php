@@ -59,7 +59,6 @@ function composePage(): string
       if ($fact["EnCours"] == 3) composeFactRow($fact);
    }
 
-
    $html .= "</table>";
    $html .= "</div>";
 
@@ -176,7 +175,7 @@ function socListQueris(): string
    $condition = array("AULAB", "JUCAR", "AGB", "LUV");
 
    if (!empty($opts["user"]["socList"]))
-      $str = " in ( " . implode(", ", $opts["user"]["socList"]) . " )))";
+      $str .= " in ( '" . implode("', '", $opts["user"]["socList"]) . "' )))";
    else $str = "";
 
    if (in_array($opts["user"]["id"], $condition))

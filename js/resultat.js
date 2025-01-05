@@ -136,10 +136,11 @@ $(document).ready(function () {
       }
     );
   });
+  $("#cont > div > .all > .left-div > div > .select > .data > .list > .option")
+  .on("click", function(){/*selectFact($(this).attr("code"))*/})
 
   // the end of checking a specific collab line //
 });
-
 /**
  * sorts each table factories by date
  * @return {void}
@@ -715,5 +716,4 @@ function handleCheckGroupPrest() {
     });
   });
 }
-
 

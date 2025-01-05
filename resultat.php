@@ -1,110 +1,113 @@
 <?php
 
 require_once("config.php");
+session_start();
 $self = APPurl;
 $user = auth(array("script" => $self));
 $opts = array("user" => $user);
 $opts["conn"] = dbStart(array_merge($opts, array("db" => array("dia", "prefact"))));
 $cookie = cookieInit();
 
+// all queries of this page
+//$select = "select distinct EXO_CODE from expert_fidsud.temps where TEMPS_DATE>='" . $date_deb . "' and TEMPS_DATE<='" . $date_fin . "' and ADR_ID = (select ADR_ID from expert_fidsud.adresse where ADR_CODE='" . $_SESSION['code_actuel'] . "') order by EXO_CODE asc";
+$dossier_id = $_SESSION["dossier"];
+$select_fact = "select * from factures where Code=(select ADR_CODE from expert_fidsud.adresse where ADR_ID = $dossier_id) and EnCours=1 and Provision=0 order by IdFact Asc";
 
 
-$youlist = array();
-array_push($youlist, array("code" => "year", "txt" => "2021/05/08", "title" => "2021/05/08"));
-array_push($youlist, array("code" => "year", "txt" => "2023/08/15", "title" => "2021/05/08"));
-array_push($youlist, array("code" => "year", "txt" => "2023/08/01", "title" => "2023/08/01"));
-
-$sortNull = array("code" => "nouvelle_facture", "txt" => "Nouvelle facture");
-
-$k = array_search($cookie["index"]["sortCol"], array_column($youlist, "code"));
-if ($k === false) {
-    $sortSelected = $sortNull;
-} else {
-    $k2 = array_search($youlist[$k]["code"], array_column($youlist, "code"));
-    $sortSelected = array("code" => $youlist[$k]["code"]);
-}
+// $temps_sql = "SELECT t.* FROM expert_fidsud.temps t LEFT JOIN z_fact.prestations p ON t.Temps_Id = p.Temps_Id ";
+$temps_sql = "SELECT t.*
+FROM expert_fidsud.temps t
+WHERE t.ADR_ID =$dossier_id AND NOT EXISTS (
+    SELECT 1
+    FROM z_fact.prestations p
+    WHERE t.Temps_Id = p.Temps_Id 
+);";
 
 
+// $list = dbSelect($temps_sql, array("db" => "dia"));
 
 
-$sql = "SELECT TEMPS_ID, TEMPS_DATE, COL_CODE, PREST_CODE, EXO_CODE, TEMPS_MEMO, TEMPS_M_QTE, TEMPS_DUREE, TEMPS_M_PV";
-$sql .= " FROM temps";
-$sql .= " WHERE EXO_CODE = 2022 AND ADR_ID = 2856";
-$sql .= " ORDER BY TEMPS_DATE DESC";
-$sql .= " LIMIT 50";
-$list = dbSelect($sql, array("db" => "dia"));
+/**
+ * creates pages html
+ */
+function composePage(): string
+{
 
 
-
-
-$html = "<div class='all'>";
-$html .= "<div class='left-div'>";
-$html .="<div>";
-$html .= formLabel(array(
-    "key" => "Sèlection d'une facture non terminèe : ",
-));
-// "select * from factures where Code='".$_SESSION['code_actuel']."' and EnCours=1 and Provision=0 order by IdFact Asc"
-
-$html .= formSelect(array("key" => "sortAnalyse", "selected" => $sortSelected, "list" => $youlist));
-$html .= "</div>";
-$html .= formBtn(array("key" => "affiche_pre_facture", "ico" => "eye", "txt" => "Afficher la pré-facture", "href" => "affiche_fact.php"));
-$html .= "</div>";
-$html .= "<div class='right-div'>";
-$html .= formBtn(array("key" => "affiche-exep", "txt" => "Afficher l'exceptionnel"));
-$html .= formBtn(array("key" => "presentation", "txt" => "Prestations facturèes"));
-$html .= formBtn(array("key" => "basculer", "txt" => "Basculer vers synthèse du dossier", "href" => "synthese.php"));
-$html .= "</div>";
-$html .= "</div>";
-
-
-
-
-
-
-// Travaux compta 
-$html .= formTable(array("legend" => "Travaux Comptable et fiscaux", "id"=>"trav-com","list" => $list), con: function ($opts): string {
-    if ((($opts["prest"] >= 200) && ($opts["prest"] < 400)) || (strpos($opts["prest"], 'T2') !== false && strpos($opts["prest"], 'T2', 0) == 0)) {
-        return $opts['rw'];
-    }
-    return "";
-});
+    $html = composeHead();
+    // Travaux compta
+    $html .= formTable(array("legend" => "Travaux Comptable et fiscaux", "id" => "trav-com"), con: function ($opts): string {
+        if ((($opts["prest"] >= 200) && ($opts["prest"] < 400)) || (strpos($opts["prest"], 'T2') !== false && strpos($opts["prest"], 'T2', 0) == 0)) {
+            return $opts['rw'];
+        }
+        return "";
+    });
 
 // Travaux social
 
-$html .= formTable(array("legend" => "Travaux Sociaux", "id"=>"trav-soc", "list" => $list), con: function ($opts): string {
-    if ((($opts["prest"] >= 400) && ($opts["prest"] < 500))) {
-        return $opts['rw'];
-    }
-    return "";
-});
+    $html .= formTable(array("legend" => "Travaux Sociaux", "id" => "trav-soc"), con: function ($opts): string {
+        if ((($opts["prest"] >= 400) && ($opts["prest"] < 500))) {
+            return $opts['rw'];
+        }
+        return "";
+    });
 
 // Travaux Conseil 
 
-$html .= formTable(array("legend" => "Travaux Conseil", "id"=>"trav-cons","list" => $list), con: function ($opts): string {
-    if ((($opts["prest"] >= 500) && ($opts["prest"] < 600)) || (($opts["prest"] >= 700) && ($opts["prest"] < 900))) {
-        return $opts['rw'];
-    }
-    return "";
-});
+    $html .= formTable(array("legend" => "Travaux Conseil", "id" => "trav-cons"), con: function ($opts): string {
+        if ((($opts["prest"] >= 500) && ($opts["prest"] < 600)) || (($opts["prest"] >= 700) && ($opts["prest"] < 900))) {
+            return $opts['rw'];
+        }
+        return "";
+    });
 
 // Travaux Juridiques 
 
-$html .= formTable(array("legend" => "Travaux Juridiques","id"=>"trav-juri", "list" => $list), con: function ($opts): string {
-    if ((($opts["prest"] >= 600) && ($opts["prest"] < 700))) {
-        return $opts['rw'];
-    }
-    return "";
-});
+    $html .= formTable(array("legend" => "Travaux Juridiques", "id" => "trav-juri"), con: function ($opts): string {
+        if ((($opts["prest"] >= 600) && ($opts["prest"] < 700))) {
+            return $opts['rw'];
+        }
+        return "";
+    });
 
 // Travaux Abonnements 
 
-$html .= formTable(array("legend" => "Abonnements","id"=>"trav-abon", "list" => $list), con: function ($opts): string {
-    if ((($opts["prest"] >= 900) && ($opts["prest"] < 999))) {
-        return $opts['rw'];
-    }
-    return "";
-});
+    $html .= formTable(array("legend" => "Abonnements", "id" => "trav-abon"), con: function ($opts): string {
+        if ((($opts["prest"] >= 900) && ($opts["prest"] < 999))) {
+            return $opts['rw'];
+        }
+        return "";
+    });
+    return $html;
+}
 
+/**
+ * Creates filters part of the page
+ * @return string
+ */
+function composeHead(): string
+{
+    $factsList = factsSelectOptions();
+
+    $html = "<div class='all'>";
+    $html .= "<div class='left-div'>";
+    $html .= "<div>";
+    $html .= formLabel(array(
+        "key" => "Sèlection d'une facture non terminèe : ",
+    ));
+
+    $html .= formSelect(array("key" => "sortAnalyse", "selected" => $factsList["cookie"], "list" => $factsList["list"]));
+    $html .= "</div>";
+    $html .= formBtn(array("key" => "affiche_pre_facture", "ico" => "eye", "txt" => "Afficher la pré-facture", "href" => "affiche_fact.php"));
+    $html .= "</div>";
+    $html .= "<div class='right-div'>";
+    $html .= formBtn(array("key" => "affiche-exep", "txt" => "Afficher l'exceptionnel"));
+    $html .= formBtn(array("key" => "presentation", "txt" => "Prestations facturèes"));
+    $html .= formBtn(array("key" => "basculer", "txt" => "Basculer vers synthèse du dossier", "href" => "synthese.php"));
+    $html .= "</div>";
+    $html .= "</div>";
+    return $html;
+}
 
 /**
  * Form Factures tables html
@@ -114,17 +117,19 @@ $html .= formTable(array("legend" => "Abonnements","id"=>"trav-abon", "list" => 
  */
 function formTable($opts = array(), $con): string
 {
+    global $temps_sql;
+    $temps_list = dbSelect($temps_sql, array("db" => "dia"));
     $html = "<fieldset class='field'>";
     $html .= "<legend>" . $opts['legend'] . "</legend>";
-    $html .= "<table id ='".$opts['id']."' class='customers'>";
+    $html .= "<table id ='" . $opts['id'] . "' class='customers'>";
     $html .= "<thead>";
     $html .= "<tr>";
     $html .= "<th class='first-1'>" . formBtn(array("key" => "first-check", "ico" => "check-double"));
     $html .= "</th>";
     $html .= "<th class='second-2 date'>Date</th>";
 
-    $html .= "<th class='second-2 collab-header'><p onclick=\"sortTable('".$opts["id"]."')\">Collab</p></th>";
-    $html .= "<th class='second-2 prest-header'><p onclick=\"sortPrest('".$opts["id"]."')\">Prest</p></th>";
+    $html .= "<th class='second-2 collab-header'><p onclick=\"sortTable('" . $opts["id"] . "')\">Collab</p></th>";
+    $html .= "<th class='second-2 prest-header'><p onclick=\"sortPrest('" . $opts["id"] . "')\">Prest</p></th>";
 
     $html .= "<th class='no-line exercice'><div class='all-year'><p class='exerciceLabel'>Exercice</p></div></th>";
     $html .= "<th>Titre</th>";
@@ -133,13 +138,13 @@ function formTable($opts = array(), $con): string
     $html .= "<th class='last-3'>PV</th>";
     $html .= "</tr>";
     $html .= "</thead>";
-    foreach ($opts["list"] as $row) {
+    foreach ($temps_list as $row) {
         $prest = (strpos($row['PREST_CODE'], '@', 0) == 0) ? str_replace("@", "", $row['PREST_CODE']) : $row['PREST_CODE'];
 
-        $tblRow = "<tr class='rw' rw-id=".$row["TEMPS_ID"].">";
+        $tblRow = "<tr class='rw' rw-id=" . $row["TEMPS_ID"] . ">";
         $formattedDate = date("m/d/Y", strtotime($row['TEMPS_DATE']));
         // added unvalide icon on porpuse to give the chape of box to the button
-        $tblRow .= "<td>" . formBtn(array("key" => "first-check", "ico" => "fa-circle")) . "</td>"; 
+        $tblRow .= "<td>" . formBtn(array("key" => "first-check", "ico" => "fa-circle")) . "</td>";
         $tblRow .= "<td class='centered-td date'>" . $formattedDate . "</td>";
         $tblRow .= "<td class='centered-td code-row'><a href='#'>" . $row['COL_CODE'] . "</a></td>";
         $tblRow .= "<td class='centered-td prest-column'><p class='click' onclick='myFunction(this)'><span class='center_span' id='popupTextSpan1'>" . formInput(array("key" => "prest_code", "align" => "c", "value" => $row['PREST_CODE'])) . "</span></p></td>";
@@ -154,14 +159,32 @@ function formTable($opts = array(), $con): string
     }
     $html .= "</table>";
     $html .= "<div class='add-table-btn'>";
-    $html .= formBtn(array("key" => "Ajouter-facture", "ico" => "plus", "txt" => "Ajouter â la facture", "href"=>"affiche_fact.php"));
+    $html .= formBtn(array("key" => "Ajouter-facture", "ico" => "plus", "txt" => "Ajouter â la facture", "href" => "affiche_fact.php"));
     $html .= formBtn(array("key" => "ne-pas-facturer", "ico" => "ban", "txt" => "Ne pas facturer"));
     $html .= "</div>";
     $html .= "</fieldset>";
     return $html;
 }
 
+/**
+ * Creates facts select options
+ * @return array
+ */
+function factsSelectOptions(): array
+{
+    global $cookie, $select_fact;
+    // var_dump($select_fact);
+    $facts = dbSelect($select_fact, array("db"=>"fact"));
+    $list = array(array("code" => "nouvelle_facture", "txt" => "Nouvelle facture"));
+    foreach($facts as $fact){
+        array_push($list, array("code" => $fact["IdFact"], "txt" => $fact["Date"], "title" => "date de facture"));
+    }
+    $_selected = array("code" => "nouvelle_facture", "txt" => "Nouvelle facture");
 
+    $cookie = array_search($cookie["index"]["sortCol"], array_column($list, "code"));
+    if ($cookie !== false)  $_selected = array("code" => $list[$cookie]["code"]);
+    return array("list" => $list, "cookie" => $_selected);
+}
 
-$cont = html(array_merge($opts, array("cont" => $html, "script" => "resultat", "adr"=>false)));
+$cont = html(array_merge($opts, array("cont" => composePage(), "script" => "resultat", "adr" => false)));
 die($cont);
