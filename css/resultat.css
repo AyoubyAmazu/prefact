@@ -107,8 +107,8 @@ body > #cont > div > fieldset > legend {
 }
 
 body > #cont > div > fieldset > .customers > tbody > tr > td > .btn > a {
-    width: 5px;
-    height: 5px;
+    width: 9px;
+    height: 9px;
 }
 
 body > #cont > div > fieldset > .customers > tbody > tr > th > .btn > a:hover{
@@ -140,9 +140,6 @@ body > #cont > div > fieldset > .customers > tbody > tr > th > .btn > a {
     font-size: 19px;
     line-height: 26px;
 }
-
-
-
 body > #cont > div > fieldset > .customers > tbody > .hidden {
     display: none;
 }
@@ -170,7 +167,10 @@ body > #cont > div > fieldset > .add-table-btn > .btn{
     margin-right: 10px;
 }
 
-
+#cont > div > fieldset > table > tbody > .rw > td > .btn.min.first-check > a > .ico, #cont > div > fieldset > table > tbody > .total-row-collab > td > .btn.min.first-check > a > .ico {
+    display: flex;
+    justify-content:center;
+}
 
 /*---------------------- End Of Ajouter facture Buttons -----------------------*/
 
@@ -225,7 +225,7 @@ body > #cont > div > fieldset > .customers > tbody > tr > td > .click > .popupte
   
   /*------------------------------- start of ajouter a la facture -------------------------------*/
 
-  body > #cont >  div > .field > .add-table-btn {width:100%;display: flex; justify-content: space-around; margin-top: 3px;}
+  /* body > #cont >  div > .field > .add-table-btn {width:100%;display: flex; justify-content: space-around; margin-top: 3px;} */
 
   /*------------------------------- end of ajouter a la facture -------------------------------*/
 

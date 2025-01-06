@@ -1,8 +1,6 @@
 <?php
 
     require_once("config.php");
-
-    session_start();
     $opts = array();
     $opts["conn"] = dbStart(array_merge($opts, array("db" => array("dia", "prefact"))));
     $opts["user"] = auth($opts);
@@ -10,8 +8,6 @@
     $cookie = cookieInit();
     $getD = ((isset($_GET["d"]))? cryptDel($_GET["d"]) : false);
     if($getD == false) err(array_merge($opts, array("txt" => "Erreur d'accès", "btn" => APPurl)));
-    // TODO: save dossier id in session
-    $_SESSION["dossier"] = 20249;
 
     $anaList = array();
    array_push($anaList, array("code" => "analyseannuelle", "txt" => "Analyse annuelle", "title" => "analyse annuelle",));
@@ -34,7 +30,7 @@
     $cont .= "<div class='op'>";
     $cont .= "<div class='side'>";
     /// Creation/resultat.php?Rech=oui&MoinsPlus='.$_SESSION['plus_moins_synthese'][$_GET['Code']][$annee_encours].'&Code='.$_GET['Code'].'&Utilise='.$_GET['Utilise'].
-    $cont .= formBtn(array("key" => "facturation", "ico" => "fa-solid fa-file-invoice", "txt" => "Facturation", "href"=>"resultat.php"));
+    $cont .= formBtn(array("key" => "facturation", "ico" => "fa-solid fa-file-invoice", "txt" => "Facturation", "href"=>"resultat.php?d=".$_GET["d"]));
     $cont .= formBtn(array("key" => "tarifs", "ico" => "fa-solid fa-user", "txt" => "Tarifs social" , "href"=>"tarifs_social.php"));
     $cont .= formBtn(array("key" => "arret", "ico" => "fa-solid fa-square", "txt" => "Arrêt des travaux"));
     $cont .= "</div>";
