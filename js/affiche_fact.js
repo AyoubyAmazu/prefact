@@ -50,8 +50,8 @@ $(document).ready(function () {
       sortColSelectOption($(event.target).parents(".option"));
     }
   );
-  $("#cont >  div > .content > fieldset > .heart > table > tbody > tr > td > .btn.min.operation-delete > a").on("click", function () {deletePres($(this).closest("tr"));});
-  $("#cont >  div > .content > fieldset > .legend3 > .btn.min.categorie-remove > a").on("click",function () {deleteDetail($(this).closest("fieldset"));});
+  $("#cont >  div > .content > fieldset > .heart > table > tbody > tr > td > .btn.min.operation-delete > a").on("click", function () {deletePres($("#cont >  div > .content > fieldset "));});
+  $("#cont >  div > .content > fieldset > .legend3 > .btn.min.categorie-remove > a").on("click",function () {deleteDetail($("#cont >  div > .content > fieldset"));});
 
     // enoyer validation
     $("#cont > div > .top > div > .envoyer-valid").on("click", function () {envoyer_validation();});
@@ -298,41 +298,3 @@ function deleteDetail(field) {
         }
     });
   }
-//   function envoyer_validation(id) {
-//     console.log("Sending validation for facture_id:", id); // Log the ID being sent
-
-//     $.ajax({
-//         url: "envoyer_a_validation.php",
-//         type: "POST",
-//         data: { facture_id: id },
-//         beforeSend: function() {
-//             console.log("AJAX request is about to be sent."); // Log before sending the request
-//             loaderShow();
-//         },
-//         complete: function() {
-//             console.log("AJAX request completed."); // Log after the request is complete
-//             loaderHide();
-//         },
-//         success: function(data) {
-//             console.log("AJAX request successful. Data received:", data); // Log the received data
-//             try {
-//                 var result = JSON.parse(data);
-//             } catch (error) {
-//                 console.error("Error parsing JSON response:", error); // Log JSON parsing errors
-//                 popError();
-//                 return;
-//             }
-//             if (result["code"] == 200) {
-//                 console.log("Validation successful. Showing popup."); // Log successful validation
-//                 popUp(result["html"]);
-//                 return;
-//             }
-//             console.error("Validation failed. Error message:", result["txt"]); // Log validation errors
-//             popError(result["txt"], result["btn"]);
-//         },
-//         error: function(jqXHR, textStatus, errorThrown) {
-//             console.error("AJAX request failed. Status:", textStatus, "Error:", errorThrown); // Log AJAX errors
-//             popError("An error occurred while sending the request.");
-//         }
-//     });
-// }
