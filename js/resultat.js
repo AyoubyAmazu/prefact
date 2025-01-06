@@ -16,8 +16,10 @@ $(document).ready(function () {
       });
     }
   );
+
+
   // show special
-//  console.log($("#cont > div > .all > .right-div > .affiche-exep > a"))
+  //  console.log($("#cont > div > .all > .right-div > .affiche-exep > a"))
   $("#cont > div > .all > .right-div > .affiche-exep > a").on("click", function () {
     filterSpecial();
   });
@@ -65,6 +67,7 @@ $(document).ready(function () {
         }
       }
     });
+
   }
 
   tableClasses.forEach((tableClass) => {
