@@ -91,7 +91,7 @@ function composeFilters()
 	$exerList = fetchExerciceList();
 	$html = "";
 
-	$html .= formBtn(array("key" => "envoyer-valid", "txt" => "Envoyer â la validation"));
+	$html .= formBtn(array("key" => "envoyer-valid", "txt" => "Envoyer â la validation", "href"=>"fact_a_valider.php"));
 	$html .= formBtn(array("key" => "inserer-ligne", "txt" => "Inserer nouvelles lignes"));
 	$html .= formBtn(array("key" => "enregistre-fac", "txt" => "Enregistrer cette facture sans envoyer"));
 	$html .= formBtn(array("key" => "supprimer-fac", "txt" => "Supprimer cette facture"));

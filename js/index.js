@@ -2,9 +2,9 @@ $(document).ready(function () {
   // $(".reset").on("click", resetFilter );
   $(".save").on("click", fetchData);
   fetch();
-  $(".checkbox .data .list").children().each(function (option) {$(this).on("click", function () { formCheckboxUnique($(this))});});
+  $(".checkbox .data .list").children().each(function (option) {$(this).on("click", function () { formCheckboxUnique($(this));sortTableRows();});});
   $("#cont > div > .op > .side > .select.sortCol > .data > .list > .input > .data > input").off("input").on("input", function(event) { sortColSelectFilter($(event.target).parents(".select")); });
-  $("#cont > div > .op > .side > .select.sortCol > .data > .list > .option").not(".readonly").children("a").off("click").on("click", function(event) { sortColSelectOption($(event.target).parents(".option")); });
+  $("#cont > div > .op > .side > .select.sortCol > .data > .list > .option").not(".readonly").children("a").on("click", function(event) { sortColSelectOption($(event.target).parents(".option")); });
   $("#cont > div > .op > .side > .btn.displayParam > a").off("click").on("click", function() { displayParam(); });
 });
 /**
@@ -276,9 +276,6 @@ function cheakboxFilter(listparams)
     if(element=="SoldeValidé"){$("body > #cont > div >.list > .labels-section > .solde  ").show();}
     if(element=="DossierVerrouillé"){$("body > #cont > div >.list > .labels-section > .ver ").show();}
     if(element=="Commentaire"){$("body > #cont > div >.list > .labels-section > .value ").show();}
-
-
-  
   });
  
 }
@@ -298,9 +295,7 @@ function displayParamSave()
     if(displayParam.length == 0) { popError("Aucune colonnes séléctionnée"); return; }
     else
     {
-      console.log(displayParam)
       cheakboxFilter(displayParam);
-      
       popDown($("body > .popup.displayParam"));
     }
 
@@ -351,9 +346,9 @@ function sortColSelectOption(div)
 {
     formSelectOption(div);
     sortColAdapt();
-    var sortCol = $(div).attr("code"); if(sortCol == undefined || sortCol == null || sortCol == "") sortCol = "dossierCode";
-    var obj = { index: { sortCol: sortCol } };
-    sortTableRows(sortCol);
+    let code = $(div).attr("code"); if(code == undefined || code == null || code == "") code = "dossierCode";
+    var obj = { index: { sortCol: code } };
+    sortTableRows(code);
 }
 /**
  * Displays the name and root of selected option 
@@ -389,6 +384,9 @@ function sortColSelectFilter(div)
  * @param {String} code 
  */
 function sortTableRows(code) { 
+  if(code == null)
+    code = $("#cont > div > .op > .side > .select.sortCol").attr("code"); if(code == undefined || code == null || code == "") code = "dossierCode";
+  
   let asc = $(".checkbox.sortDir > .data > .list > .option.on").attr("code")
 
   let lines = $("#cont > div > .list .line").map(function () {
