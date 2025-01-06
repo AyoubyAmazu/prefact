@@ -127,7 +127,6 @@ $(document).ready(function () {
       "click",
       "tbody .total-row-collab td .btn.min.first-check a",
       function (event) {
-        console.log("hello 2");
         event.preventDefault();
         processButtonClickCollab($(this));
       }
