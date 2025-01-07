@@ -1,2 +1,37 @@
 07/01/2025 00:04:24 | Erreur de d'execution d'une requête SQL | /resultat.php | fact | select * from factures where Code=(select ADR_CODE from expert_fidsud.adresse where ADR_ID = ) and EnCours=1 and Provision=0 order by IdFact Asc | SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ') and EnCours=1 and Provision=0 order by IdFact Asc' at line 1
 07/01/2025 00:04:26 | Erreur de d'execution d'une requête SQL | /resultat.php | fact | select * from factures where Code=(select ADR_CODE from expert_fidsud.adresse where ADR_ID = ) and EnCours=1 and Provision=0 order by IdFact Asc | SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ') and EnCours=1 and Provision=0 order by IdFact Asc' at line 1
+07/01/2025 00:22:16 | CED | Erreur d'accès | /resultat.php
+07/01/2025 00:22:29 | CED | Dossier non trouvé | /resultat.php | ID: 20249
+07/01/2025 00:22:33 | CED | Dossier non trouvé | /resultat.php | ID: 20249
+07/01/2025 00:22:46 | CED | Dossier non trouvé | /resultat.php | ID: 20249
+07/01/2025 00:22:56 | CED | Dossier non trouvé | /resultat.php | ID: 20249
+07/01/2025 00:23:08 | CED | Dossier non trouvé | /resultat.php | ID: 20249
+07/01/2025 00:39:15 | CED | Erreur d'accès | /resultat.php
+07/01/2025 00:39:15 | CED | Dossier non trouvé | /resultat.php | ID: 20249
+07/01/2025 00:39:36 | CED | Dossier non trouvé | /resultat.php | ID: 20249
+07/01/2025 00:39:51 | CED | Dossier non trouvé | /resultat.php | ID: 20249
+07/01/2025 00:40:53 | CED | Dossier non trouvé | /resultat.php | ID: 20249
+07/01/2025 00:41:09 | CED | Dossier non trouvé | /resultat.php | ID: 20249
+07/01/2025 00:42:06 | CED | Dossier non trouvé | /resultat.php | ID: 20249
+07/01/2025 00:44:16 | Erreur de d'execution d'une requête SQL | /resultat.php | fact | select * from factures where Code=(select ADR_CODE from expert_fidsud.adresse where ADR_ID = ADR002) and EnCours=1 and Provision=0 order by IdFact Asc | SQLSTATE[42S22]: Column not found: 1054 Unknown column 'ADR002' in 'where clause'
+07/01/2025 00:44:21 | Erreur de d'execution d'une requête SQL | /resultat.php | fact | select * from factures where Code=(select ADR_CODE from expert_fidsud.adresse where ADR_ID = ADR002) and EnCours=1 and Provision=0 order by IdFact Asc | SQLSTATE[42S22]: Column not found: 1054 Unknown column 'ADR002' in 'where clause'
+07/01/2025 00:45:11 | Erreur de d'execution d'une requête SQL | /resultat.php | fact | select * from factures where Code=(select ADR_CODE from expert_fidsud.adresse where ADR_ID = ADR004) and EnCours=1 and Provision=0 order by IdFact Asc | SQLSTATE[42S22]: Column not found: 1054 Unknown column 'ADR004' in 'where clause'
+07/01/2025 00:46:13 | Erreur de d'execution d'une requête SQL | /resultat.php | fact | select * from factures where Code=(select ADR_CODE from expert_fidsud.adresse where ADR_ID = ADR004) and EnCours=1 and Provision=0 order by IdFact Asc | SQLSTATE[42S22]: Column not found: 1054 Unknown column 'ADR004' in 'where clause'
+07/01/2025 00:46:40 | Erreur de d'execution d'une requête SQL | /resultat.php | fact | select * from factures where Code=(select ADR_CODE from expert_fidsud.adresse where ADR_ID = ADR004) and EnCours=1 and Provision=0 order by IdFact Asc | SQLSTATE[42S22]: Column not found: 1054 Unknown column 'ADR004' in 'where clause'
+07/01/2025 00:46:42 | Erreur de d'execution d'une requête SQL | /resultat.php | fact | select * from factures where Code=(select ADR_CODE from expert_fidsud.adresse where ADR_ID = ADR004) and EnCours=1 and Provision=0 order by IdFact Asc | SQLSTATE[42S22]: Column not found: 1054 Unknown column 'ADR004' in 'where clause'
+07/01/2025 00:46:44 | Erreur de d'execution d'une requête SQL | /resultat.php | fact | select * from factures where Code=(select ADR_CODE from expert_fidsud.adresse where ADR_ID = ADR004) and EnCours=1 and Provision=0 order by IdFact Asc | SQLSTATE[42S22]: Column not found: 1054 Unknown column 'ADR004' in 'where clause'
+07/01/2025 00:47:41 | Erreur de d'execution d'une requête SQL | /resultat.php | fact | select * from factures where Code=(select ADR_CODE from expert_fidsud.adresse where ADR_ID = ADR004) and EnCours=1 and Provision=0 order by IdFact Asc | SQLSTATE[42S22]: Column not found: 1054 Unknown column 'ADR004' in 'where clause'
+07/01/2025 00:48:01 | Erreur de d'execution d'une requête SQL | /resultat.php | dia | SELECT t.*
+FROM expert_fidsud.temps t
+WHERE t.ADR_ID =ADR004 AND NOT EXISTS (
+    SELECT 1
+    FROM z_fact.prestations p
+    WHERE t.Temps_Id = p.Temps_Id 
+); | SQLSTATE[42S22]: Column not found: 1054 Unknown column 'ADR004' in 'where clause'
+07/01/2025 01:03:36 | CED | Dossier non trouvé | /resultat.php | ID: 34021
+07/01/2025 01:09:52 | CED | Dossier non trouvé | /resultat.php | ID: 14557
+07/01/2025 01:12:18 | CED | Dossier non trouvé | /resultat.php | ID: 14557
+07/01/2025 01:12:56 | CED | Dossier non trouvé | /resultat.php | ID: 14557
+07/01/2025 01:14:22 | CED | Dossier non trouvé | /resultat.php | ID: 14557
+07/01/2025 01:14:23 | CED | Dossier non trouvé | /resultat.php | ID: 14557
+07/01/2025 01:16:07 | CED | Dossier non trouvé | /resultat.php | ID: 14557
