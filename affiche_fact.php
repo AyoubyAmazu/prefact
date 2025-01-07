@@ -7,7 +7,7 @@ $opts = array("user" => $user);
 $opts["conn"] = dbStart(array_merge($opts, array("db" => array("dia", "fact"))));
 $getD = ((isset($_GET["d"]))? cryptDel($_GET["d"]) : false);
 if($getD == false) err(array_merge($opts, array("txt" => "Erreur d'accès", "btn" => APPurl)));
-$getD = "20249"; // TODO Delete whene data is merged
+$getD = 20249; // TODO Delete whene data is merged
 
 handleRequest();
 $cookie = cookieInit();
@@ -43,7 +43,7 @@ $delete_prest_by_id = "DELETE FROM prestation WHERE IdPrest = :idPrest";
 function composePage(): string
 {
 
-	$html = "";
+	$html = " ";
 	$html .= "<div class='top'>";
 	$html .= "<div class='first-line'>";
 	$html .= composeFilters();
@@ -394,6 +394,6 @@ if (isset($_POST["facture_id"])){
 	die(json_encode(['code'=>200]));
 }
 
-$cont = html(array_merge($opts, array("cont" => composePage(), "script" => "affiche_fact", "adr" => $getD)));
+$cont = html(array_merge($opts, array("cont" => composePage(), "script" => "affiche_fact", "adr" => false)));
 
 die($cont);
