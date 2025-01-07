@@ -9,17 +9,16 @@ $opts["conn"] = dbStart(array_merge($opts, array("db" => array("dia", "prefact")
 $cookie = cookieInit();
 $getD = ((isset($_GET["d"]))? cryptDel($_GET["d"]) : false);
 if($getD == false) err(array_merge($opts, array("txt" => "Erreur d'accès", "btn" => APPurl)));
-$getD = 20249; // TODO Delete whene data is merged
-
+$getD = 14557;
 // all queries of this page
 //$select = "select distinct EXO_CODE from expert_fidsud.temps where TEMPS_DATE>='" . $date_deb . "' and TEMPS_DATE<='" . $date_fin . "' and ADR_ID = (select ADR_ID from expert_fidsud.adresse where ADR_CODE='" . $_SESSION['code_actuel'] . "') order by EXO_CODE asc";
-$select_fact = "select * from factures where Code=(select ADR_CODE from expert_fidsud.adresse where ADR_ID = $getD) and EnCours=1 and Provision=0 order by IdFact Asc";
+$select_fact = "select * from factures where Code=(select ADR_CODE from expert_fidsud.adresse where ADR_ID = '$getD') and EnCours=1 and Provision=0 order by IdFact Asc";
 
 
 // $temps_sql = "SELECT t.* FROM expert_fidsud.temps t LEFT JOIN z_fact.prestations p ON t.Temps_Id = p.Temps_Id ";
 $temps_sql = "SELECT t.*
 FROM expert_fidsud.temps t
-WHERE t.ADR_ID =$getD AND NOT EXISTS (
+WHERE t.ADR_ID ='$getD' AND NOT EXISTS (
     SELECT 1
     FROM z_fact.prestations p
     WHERE t.Temps_Id = p.Temps_Id 

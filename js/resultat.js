@@ -16,6 +16,8 @@ $(document).ready(function () {
       });
     }
   );
+  delet_empty_table();
+  empty_message();
 
 
   // show special
@@ -716,3 +718,21 @@ function handleCheckGroupPrest() {
   });
 }
 
+function delet_empty_table() {
+  $("#cont > div > .field > table").each(function () {
+    if ($(this).find("tbody > tr").length === 0) {
+      $(this).parent().remove();
+    }
+    
+  });
+}
+
+function empty_message(){
+      // Check if there are any tables left
+      if ($("#cont > div > .field > table").length === 0) {
+        // Display a message or hide a specific element
+        $("#cont > div").append("<p>No tables available.</p>"); // Example: Display a message
+        // or
+        // $("#cont > div").hide(); // Example: Hide the container
+    }
+}
