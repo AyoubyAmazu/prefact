@@ -318,7 +318,7 @@ function htmlTitle($opts = array())
         $sql = "SELECT a.*, 
        (SELECT `solde` FROM `synthese` s WHERE s.`adr` = a.code) AS synthese_data
        FROM `adr` AS a 
-       WHERE a.`code` = '".$opts['adr']."'";
+       WHERE a.`code` = '".$opts['adr']."' ";
         $adr = dbSelect($sql, array_merge($opts, array("db" => "prefact")));
         if(count($adr) == 0) err(array_merge($opts, array("txt" => "Dossier non trouvé", "det" => "ID: " . $opts["adr"], "btn" => APPurl)));
 

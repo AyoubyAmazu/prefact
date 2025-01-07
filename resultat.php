@@ -100,7 +100,7 @@ function composeHead(): string
 
     $html .= formSelect(array("key" => "sortAnalyse", "selected" => $factsList["cookie"], "list" => $factsList["list"]));
     $html .= "</div>";
-    $html .= formBtn(array("key" => "affiche_pre_facture", "ico" => "eye", "txt" => "Afficher la pré-facture", "href" => "affiche_fact.php"));
+    $html .= formBtn(array("key" => "affiche_pre_facture", "ico" => "eye", "txt" => "Afficher la pré-facture", "href" => "affiche_fact.php?d=".$_GET["d"]));
     $html .= "</div>";
     $html .= "<div class='right-div'>";
     $html .= formBtn(array("key" => "affiche-exep", "txt" => "Afficher l'exceptionnel"));

@@ -50,7 +50,7 @@ $(document).ready(function () {
       sortColSelectOption($(event.target).parents(".option"));
     }
   );
-  $("#cont >  div > .content > fieldset > .heart > table > tbody > tr > td > .btn.min.operation-delete > a").on("click", function () {deletePres($("#cont >  div > .content > fieldset "));});
+  $("#cont >  div > .content > fieldset > .heart > table > tbody > tr > td > .btn.min.operation-delete > a").on("click", function () {deletePres($(this).closest("tr"));});
   $("#cont >  div > .content > fieldset > .legend3 > .btn.min.categorie-remove > a").on("click",function () {deleteDetail($("#cont >  div > .content > fieldset"));});
 
     // enoyer validation
@@ -225,65 +225,71 @@ $(document).on(
  * sends ajax request with the id of prest row to be deleted
  */
 function deletePres(row) {
-  $.ajax({
-    type: "POST",
-    url: "./affiche_fact.php",
-    data: { delete_prest: row.attr("id") },
-    dataType: "json",
-    beforeSend: function () {
-      loaderShow();
-    },
-    complete: function () {
-      loaderHide();
-    },
-    success: function (data) {
-        console.log(data);
+  row.remove();
+
+  // $.ajax({
+  //   type: "POST",
+  //   url: "./affiche_fact.php",
+  //   data: { delete_prest: row.attr("id") },
+  //   dataType: "json",
+  //   beforeSend: function () {
+  //     loaderShow();
+  //   },
+  //   complete: function () {
+  //     loaderHide();
+  //   },
+  //   success: function (data) {
+  //       console.log(data);
         
-        if(data.success == 200){
-            row.remove();
-        }
-        else popError("An error occurred while processing your request.");
-    },
-    error: function (jqXHR, textStatus, errorThrown) {
-      console.error("AJAX Error: " + textStatus, errorThrown);
-      popError("An error occurred while processing your request."); // Display a user-friendly error message
-    },
-  });
+  //       if(data.success == 200){
+  //           row.remove();
+  //       }
+  //       else popError("An error occurred while processing your request.");
+  //   },
+  //   error: function (jqXHR, textStatus, errorThrown) {
+  //     console.error("AJAX Error: " + textStatus, errorThrown);
+  //     popError("An error occurred while processing your request."); // Display a user-friendly error message
+  //   },
+  // });
 }
 
 /**
  * sends ajax request with the id of detail field to be deleted 
  */
 function deleteDetail(field) {
-    $.ajax({
-      type: "POST",
-      url: "./affiche_fact.php",
-      data: { delete_detail: field.attr("id") },
-      dataType: "json",
-      beforeSend: function () {
-        loaderShow();
-      },
-      complete: function () {
-        loaderHide();
-      },
-      success: function (data) {
-          console.log(data);
+  field.remove();
+
+    // $.ajax({
+    //   type: "POST",
+    //   url: "./affiche_fact.php",
+    //   data: { delete_detail: field.attr("id") },
+    //   dataType: "json",
+    //   beforeSend: function () {
+    //     loaderShow();
+    //   },
+    //   complete: function () {
+    //     loaderHide();
+    //   },
+    //   success: function (data) {
+    //       console.log(data);
           
-          if(data.success == 200){
-              field.remove();
-          }
-          else popError("An error occurred while processing your request.");
-      },
-      error: function (jqXHR, textStatus, errorThrown) {
-        console.error("AJAX Error: " + textStatus, errorThrown);
-        popError("An error occurred while processing your request."); // Display a user-friendly error message
-      },
-    });
+    //       if(data.success == 200){
+    //           field.remove();
+    //       }
+    //       else popError("An error occurred while processing your request.");
+    //   },
+    //   error: function (jqXHR, textStatus, errorThrown) {
+    //     console.error("AJAX Error: " + textStatus, errorThrown);
+    //     popError("An error occurred while processing your request."); // Display a user-friendly error message
+    //   },
+    // });
   }
 
 
   function envoyer_validation(){
-    id = $("body > #cont > div > .content > .first-field ").attr("id");
+    let id = $("#cont > div > .content > .first-field ").attr("id");
+    let location = $("#cont > div > .top > .first-line > .envoyer-valid > a").attr("href");
+    
    $.ajax({
         url: "affiche_fact.php"
         ,type:"POST"
@@ -293,7 +299,7 @@ function deleteDetail(field) {
         , success: function(data){
             try { var result = JSON.parse(data); }
             catch(error) { popError(); return; }
-            if(result["code"] == 200) { popUp(result["html"]); window.location.href = "fact_a_valider.php";  return; }
+            if(result["code"] == 200) { popUp(result["html"]); window.location.href = location;  return; }
             popError(result["txt"], result["btn"]);
         }
     });

@@ -5,6 +5,10 @@ $self = APPurl;
 $user = auth(array("script" => $self));
 $opts = array("user" => $user);
 $opts["conn"] = dbStart(array_merge($opts, array("db" => array("dia", "fact"))));
+$getD = ((isset($_GET["d"]))? cryptDel($_GET["d"]) : false);
+if($getD == false) err(array_merge($opts, array("txt" => "Erreur d'accès", "btn" => APPurl)));
+$getD = "20249"; // TODO Delete whene data is merged
+
 handleRequest();
 $cookie = cookieInit();
 $factId = 2454;
@@ -91,13 +95,12 @@ function composeFilters()
 	$exerList = fetchExerciceList();
 	$html = "";
 
-	$html .= formBtn(array("key" => "envoyer-valid", "txt" => "Envoyer â la validation", "href"=>"fact_a_valider.php"));
-	$html .= formBtn(array("key" => "inserer-ligne", "txt" => "Inserer nouvelles lignes"));
-	$html .= formBtn(array("key" => "enregistre-fac", "txt" => "Enregistrer cette facture sans envoyer"));
-	$html .= formBtn(array("key" => "supprimer-fac", "txt" => "Supprimer cette facture"));
+	$html .= formBtn(array("key" => "envoyer-valid", "txt" => "Envoyer â la validation", "href"=>"fact_a_valider.php?d=".$_GET["d"]));
+	$html .= formBtn(array("key" => "inserer-ligne", "txt" => "Inserer nouvelles lignes", "href"=>"resultat.php?d=".$_GET["d"]));
+	$html .= formBtn(array("key" => "supprimer-fac", "txt" => "Supprimer cette facture", "href"=>"resultat.php?d=".$_GET["d"]));
 	$html .= formBtn(array("key" => "archiver-fac", "txt" => "Archiver la facture"));
 	$html .= formBtn(array("key" => "visualisation-fac", "txt" => "Visualisation de la facture", "href" => "visualisation.php"));
-	$html .= formBtn(array("key" => "basculer", "txt" => "Basculer vers synthèse du dossier", "href" => "synthese.php"));
+	$html .= formBtn(array("key" => "basculer", "txt" => "Basculer vers synthèse du dossier", "href" => "recap.php?d=".$_GET["d"]));
 	$html .= formBtn(array("key" => "modele-fac", "txt" => "Modèle facture autre dossier", "href" => "recup_model.php"));
 	$html .= formBtn(array("key" => "facture-fae", "txt" => "Facture FAE"));
 	$html .= formBtn(array("key" => "tarifs-soc", "txt" => "Tarifs Social", "href" => "tarifs_social.php"));
@@ -391,6 +394,6 @@ if (isset($_POST["facture_id"])){
 	die(json_encode(['code'=>200]));
 }
 
-$cont = html(array_merge($opts, array("cont" => composePage(), "script" => "affiche_fact", "adr" => false)));
+$cont = html(array_merge($opts, array("cont" => composePage(), "script" => "affiche_fact", "adr" => $getD)));
 
 die($cont);
