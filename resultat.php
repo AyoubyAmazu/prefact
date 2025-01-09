@@ -24,8 +24,6 @@ $select_checked_tmps = "SELECT temps_id from facture_temps WHERE fact_det_id in
 $tmps_non_fact = dbSelect($select_non_fact, array("db"=>"prefact"));
 $tmps_used = dbSelect($select_checked_tmps, array("db"=>"prefact"));
 
-
-
 /**
  * creates pages html
  */
@@ -39,6 +37,8 @@ function composePage(): string
         $sql = str_replace(":p", $cat["prest_start"], $temps_sql);
         $tmp_list = dbSelect($sql, array("db"=>"dia"));
         $tmp_list = array_filter($tmp_list, function($item) use($tmps_non_fact, $tmps_used){
+            if(sizeof($tmps_non_fact) > 0) $tmps_non_fact = $tmps_non_fact[0];
+            if(sizeof($tmps_used) > 0) $tmps_used = $tmps_used[0];
             return !in_array($item["TEMPS_ID"], $tmps_non_fact) && !in_array($item["TEMPS_ID"], $tmps_used);
         });
         $html .= formTable(array("legend" => $cat["nom"], "id" => "trav-com", "list"=>$tmp_list));
