@@ -117,7 +117,7 @@ function formTable($opts = array()): string
     }
     $html .= "</table>";
     $html .= "<div class='add-table-btn'>";
-    $html .= formBtn(array("key" => "Ajouter-facture", "ico" => "plus", "txt" => "Ajouter â la facture", "href" => "affiche_fact.php?d=".$_GET["d"]));
+    $html .= formBtn(array("key" => "Ajouter-facture", "ico" => "plus", "txt" => "Ajouter â la facture"));
     $html .= formBtn(array("key" => "ne-pas-facturer", "ico" => "ban", "txt" => "Ne pas facturer"));
     $html .= "</div>";
     $html .= "</fieldset>";
@@ -134,7 +134,7 @@ function factsSelectOptions(): array
     $facts = dbSelect($select_fact, array("db"=>"prefact"));
     $list = array(array("code" => "nouvelle_facture", "txt" => "Nouvelle facture"));
     foreach($facts as $fact){
-        array_push($list, array("code" => $fact["IdFact"], "txt" => $fact["Date"], "title" => "date de facture"));
+        array_push($list, array("code" => $fact["id"], "txt" => $fact["date"], "title" => "date de facture"));
     }
     $_selected = array("code" => "nouvelle_facture", "txt" => "Nouvelle facture");
 
@@ -142,6 +142,7 @@ function factsSelectOptions(): array
     if ($cookie !== false)  $_selected = array("code" => $list[$cookie]["code"]);
     return array("list" => $list, "cookie" => $_selected);
 }
+
 
 $cont = html(array_merge($opts, array("cont" => composePage(), "script" => "resultat", "adr" => $getD)));
 die($cont);
