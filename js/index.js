@@ -25,8 +25,6 @@ function displayInvalideSave()
     , complete: function() { loaderHide(); }
     , success: function(data)
     {
-      // console.log(data);
-      
         try { var result = JSON.parse(data); } catch(error) { popError(); return; }
         if(result["code"] == 200) { popDown('.popup');popUp(result["html"]); displayInvalideAdapt();fetch();return; }
         popError(result["txt"], result["btn"]);
@@ -64,7 +62,7 @@ function displayInvalide()
 function displayDeverrouillerSave()
 {
   let isOpne = $("body > #cont > div > .list > .line > .col.op > .list.on > .displayDéverrouiller").hasClass("open");
-  
+
   $.ajax({
     url: "index_deverrouiller.php"
     , beforeSend: function() { loaderShow(); }
@@ -76,7 +74,7 @@ function displayDeverrouillerSave()
       adr: $("body > #cont > div > .list > .line > .col.op > .list.on").closest(".line ").children(".col.dossier").children(".sub.code").children("a").text(),
     }
     , success: function(data)
-    {      
+    {
         try { var result = JSON.parse(data); } catch(error) { popError(); return; }
         if(result["code"] == 200) { popDown($(".popup"));popUp(result["html"]); displayDeverrouillerAdapt();fetch(); return; }
         popError(result["txt"], result["btn"]);
@@ -96,7 +94,7 @@ function displayDeverrouillerAdapt()
  */
 function displayDeverrouiller()
 {
-    $.ajax({    
+    $.ajax({
         url: "index_deverrouiller.php"
         , beforeSend: function() { loaderShow(); }
         , complete: function() { loaderHide(); }
@@ -116,9 +114,9 @@ function onCommentaireSave()
   $.ajax({
     url: "index_commentaire.php"
     , type: "POST"
-    , data: 
+    , data:
     {
-      adr: $("body > #cont > div > .list > .line > .col.op > .list.on").closest(".line ").children(".col.dossier").children(".sub.code").children("a").text(),
+      adr: $("#cont > div > .list > .line.edit").attr("code"),
       comment: $(".popup.displayCommentaire > div > .textarea > .data > textarea").val(),
     }
     , beforeSend: function() { loaderShow(); }
@@ -136,14 +134,14 @@ function onCommentaireSave()
  */
 function displayCommentaireAdapt()
 {
-    $("body > .popup.displayCommentaire > div > .op > .btn.cancel > a").off("click").on("click", function(event) { popDown($(event.target).parents(".popup")); });
-    $("body > .popup.displayCommentaire > div > .op > .btn.save > a").off("click").on("click", function() { onCommentaireSave(); });
+    $("body > .popup.displayCommentaire > div > .op > .btn.cancel > a").off("click").on("click", function(event) { popDown($(event.target).parents(".popup"));rmvOnEdit(); });
+    $("body > .popup.displayCommentaire > div > .op > .btn.save > a").off("click").on("click", function() { onCommentaireSave();});
 }
 /**
  * fetch commentair popup from php and displays it
  */
 function displayCommentaire()
-{ 
+{
   let comment = $("body > #cont > div > .list > .line > .col.op > .list.on").closest('.line').next(".labels-section").children(".comment").text();
     $.ajax({
         url: "index_commentaire.php"
@@ -161,9 +159,9 @@ function displayCommentaire()
  * validats segment popup data
  */
 function displaySegmeSave()
-{ 
+{
     var displaySegme = new Array();
-    $("body > .popup.displaySegme > div > .checkbox > .data > .list > .option.on").each(function()
+    $("body > .popup.displaySegme > div > .checkbox > .data > .list.edit").each(function()
     {
         var code = $(this).attr("code"); if(code == undefined || code == null || code == "") return;
         displaySegme.push(code);
@@ -185,7 +183,7 @@ function displaySegmeAdapt()
  * Fetch Segment Data
  */
 function displaySegme()
-{ 
+{
     $.ajax({
         url: "index_segment.php"
         , beforeSend: function() { loaderShow(); }
@@ -194,11 +192,11 @@ function displaySegme()
         {
             try { var result = JSON.parse(data); } catch(error) { popError(); return; }
             if(result["code"] == 200)
-               { 
+               {
                 popUp(result["html"]);
                 displaySegmeAdapt();
                 currentSegme();
-                return; 
+                return;
               }
             popError(result["txt"], result["btn"]);
         }
@@ -213,14 +211,14 @@ function currentSegme(){
  * Update Segmentation
  */
 function updateSegment()
-{ 
+{
   $.ajax({
     type:"POST",
     url: "index_segment.php",
     data:
     {
       update_segment: "",
-      adr: $("body > #cont > div > .list > .line > .col.op > .list.on").closest(".line ").children(".col.dossier").children(".sub.code").children("a").text(),
+      adr: $("body > #cont > div > .list > .line.edit").closest(".line ").children(".col.dossier").children(".sub.code").children("a").text(),
       segment:$(".popup.displaySegme > div > .checkbox.col > .data > .list > .option.on").attr("code")
     }
     , beforeSend: function() { popDown(".popup");loaderShow(); }
@@ -231,17 +229,17 @@ function updateSegment()
         try { var result = JSON.parse(data); } catch(error) { popError(); return; }
         if(result["code"] == 200){popUp(result["html"]);fetch();$(".popup > div > .op > .btn.min.cancel > a").off("click").on("click", function() {popDown(".popup"); }); return; }
         popError(result["txt"], result["btn"]);
-        
+
     }
 });
 
 }
 /**
- * function filter columns 
- * @param {array} listparams 
+ * function filter columns
+ * @param {array} listparams
  */
 function cheakboxFilter(listparams)
-{ 
+{
   $("body > #cont > div >.list > .line > div > div  ").hide();
   $("body > #cont > div >.list >  .labels-section ").children().hide();
 
@@ -277,7 +275,7 @@ function cheakboxFilter(listparams)
     if(element=="DossierVerrouillé"){$("body > #cont > div >.list > .labels-section > .ver ").show();}
     if(element=="Commentaire"){$("body > #cont > div >.list > .labels-section > .value ").show();}
   });
- 
+
 }
 
 /**
@@ -321,12 +319,12 @@ function displayParam()
         , complete: function() { loaderHide(); }
         , success: function(data)
         {
-            try 
-            { 
-              var result = JSON.parse(data); 
+            try
+            {
+              var result = JSON.parse(data);
 
-            } 
-            catch(error) 
+            }
+            catch(error)
             {
                popError();
                 console.error(error);
@@ -340,7 +338,7 @@ function displayParam()
 }
 /**
  * Selects an option from sortCol select
- * @param {HTMLElement} div 
+ * @param {HTMLElement} div
  */
 function sortColSelectOption(div)
 {
@@ -351,7 +349,7 @@ function sortColSelectOption(div)
     sortTableRows(code);
 }
 /**
- * Displays the name and root of selected option 
+ * Displays the name and root of selected option
  */
 function sortColAdapt()
 {
@@ -364,7 +362,7 @@ function sortColAdapt()
 }
 /**
  * filters select options from the inner input of select
- * @param {HTMLElement} div 
+ * @param {HTMLElement} div
  */
 function sortColSelectFilter(div)
 {
@@ -381,19 +379,19 @@ function sortColSelectFilter(div)
 }
 /**
  * Sorts table lines
- * @param {String} code 
+ * @param {String} code
  */
-function sortTableRows(code) { 
+function sortTableRows(code) {
   if(code == null)
     code = $("#cont > div > .op > .side > .select.sortCol").attr("code"); if(code == undefined || code == null || code == "") code = "dossierCode";
-  
+
   let asc = $(".checkbox.sortDir > .data > .list > .option.on").attr("code")
 
   let lines = $("#cont > div > .list .line").map(function () {
     if ($(this).hasClass("st")) return null;
     let line = $(this);
     let label = $(this).next('.labels-section');
-    
+
     return {line: line, label: label}
   }).get().filter((item) => {return item !== null});
 
@@ -427,14 +425,14 @@ function sortTableRows(code) {
     else { return $(cls, b.line).text().localeCompare($(cls, a.line).text()); }
   });
 
-  lines.forEach(item => {    
+  lines.forEach(item => {
     item.line.appendTo($("#cont > div > .list"))
     item.label.appendTo($("#cont > div > .list"))
   })
  }
 /**
  * Shows popup the button of each row in the index table
- * @param {HTMLElement} div 
+ * @param {HTMLElement} div
  */
 function openPopupMenu(div) {
    $(div).children(".list").toggleClass("on off ");
@@ -447,7 +445,7 @@ function openPopupMenu(div) {
       $(div).children(".displayMenu").removeClass("dark");
     }
   });
-  
+
   }
 /**
  * fetchs data from php using ajax
@@ -485,7 +483,7 @@ function fetchData() {
     },
     success: function (data) {
       // console.log(data);
-      
+
       try {
         let table = $("#cont > div > .list");
         let thead = $($("#cont > div > .list > .line.st"));
@@ -493,7 +491,7 @@ function fetchData() {
         table.append(thead);
         table.append(data.data)
         console.log(data);
-        
+
       } catch (e) {
         console.error("Invalid JSON response:", data);
         popError("Received an invalid response from the server.");
@@ -501,11 +499,11 @@ function fetchData() {
       // declare on click functonality for each of rows buttons
     $("body > #cont > div > .list > .line > .col.op > .btn > a").off("click").on("click", function(event) {openPopupMenu($(event.target).parents(".col")); });
     $("body > #cont > div > .list.off > .line > .col.op > .btn > a").off("click").on("click", function(event) {popDown($(event.target).parents(".popup")); });
-    $("#cont > div > .list > .line > .col.op > .list >.btn.displaySegme > a").off("click").on("click", function() { displaySegme();});
-    $("#cont > div > .list > .line > .col.op > .list >.btn.displayCommentaire > a").off("click").on("click", function() { displayCommentaire(); });
+    $("#cont > div > .list > .line > .col.op > .list >.btn.displaySegme > a").off("click").on("click", function() { displaySegme();onEdit($(this))});
+    $("#cont > div > .list > .line > .col.op > .list >.btn.displayCommentaire > a").off("click").on("click", function() { displayCommentaire();onEdit($(this))});
     $("#cont > div > .list > .line > .col.op > .list >.btn.displayDéverrouiller > a").off("click").on("click", function() { displayDeverrouiller(); });
     $("#cont > div > .list > .line > .col.op > .list >.btn.displayInvalide > a").off("click").on("click", function() { displayInvalide(); });
-  
+
 },
     error: function (jqXHR, textStatus, errorThrown) {
       console.error("AJAX Error: " + textStatus, errorThrown);
@@ -514,10 +512,22 @@ function fetchData() {
   });
 }
 /**
+ * Adds edit class to table lines indecating that an editing process is on
+ */
+function onEdit(line)
+{
+    $(line).addClass("edit");
+}
+/**
+ * Remove edit class from table lines indecating no editing process is on
+ */
+function rmvOnEdit()
+{
+    $("#cont > div > .list > .line").removeClass("edit");
+}
+/**
  * Munipulate search btn click
  */
-function fetch() { 
+function fetch() {
   $(".save").click();
  }
-
-
