@@ -29,7 +29,6 @@
     $cont = "<div hidden segment='".$segemnt[0]."'></div>";
     $cont .= "<div class='op'>";
     $cont .= "<div class='side'>";
-    /// Creation/resultat.php?Rech=oui&MoinsPlus='.$_SESSION['plus_moins_synthese'][$_GET['Code']][$annee_encours].'&Code='.$_GET['Code'].'&Utilise='.$_GET['Utilise'].
     $cont .= formBtn(array("key" => "facturation", "ico" => "fa-solid fa-file-invoice", "txt" => "Facturation", "href"=>"resultat.php?d=".$_GET["d"]));
     $cont .= formBtn(array("key" => "tarifs", "ico" => "fa-solid fa-user", "txt" => "Tarifs social" , "href"=>"tarifs_social.php"));
     $cont .= formBtn(array("key" => "arret", "ico" => "fa-solid fa-square", "txt" => "Arrêt des travaux"));
@@ -45,7 +44,7 @@
 
     $cont .= "<div class='fields'>";
     $cont .= "</div>";
-    
+
     $cont .="<div class='post-angle'>";
     $cont .= formBtn(array("key"=>"angleRight", "ico"=>"fa-solid fa-angle-right", "title"=>"scroll right"));
     $cont .="</div>";
@@ -55,8 +54,8 @@
     $select = "select distinct AnneeChoix from z_fact.rech_fact where Adr_Id ='" . $getD."'";
     $years = array_column(dbSelect($select, array_merge($opts, array("db" => "prefact"))), "AnneeChoix");
     rsort($years);
-    
-   
+
+
     $selected = 3;
     $cont .="<div class='yearsDiv'>";
     foreach($years as $year)

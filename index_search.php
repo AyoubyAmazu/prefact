@@ -17,7 +17,7 @@ $resps = array();
 
 foreach($dataResp as $v){if (isset($_POST[$v['code']]) and $_POST[$v['code']] != '' and $_POST[$v['code']] != '-') $resps[$v['code']] = $_POST[$v['code']];}
 
-$select = "SELECT s.*, 
+$select = "SELECT s.*,
        (SELECT a.code FROM `adr` a WHERE a.id = s.adr) AS code,
        (SELECT a.txt FROM `adr` a WHERE a.id = s.adr) AS txt,
        (SELECT a.segment FROM `adr` a WHERE a.id = s.adr) AS segment,
@@ -81,12 +81,12 @@ foreach ($result as $v) {
         $html .= "<span class='label'>segment</span> <span style='color: $color;'>  $segment </span>";
         $html .= "</div>";
         $html .= "<div class='sub plusmoins'>";
-        $html .= "<span class='label '>+/-value</span>";      
-        if (strpos($v["plusmoins"], '-') === 0) 
+        $html .= "<span class='label '>+/-value</span>";
+        if (strpos($v["plusmoins"], '-') === 0)
                   {
             $html.="<span class='value red'>" . $v["plusmoins"] . "</span>";
-                  }  
-           elseif (strpos($v["plusmoins"], '+') === 0) 
+                  }
+           elseif (strpos($v["plusmoins"], '+') === 0)
                   {
              $html .= "<span class='value green'>" . $v["plusmoins"] . "</span>";
                   }
@@ -134,8 +134,8 @@ foreach ($result as $v) {
 
 
     $html .= "</div>"; // Closing div for the "line"
-    
-    
+
+
     $html .= "<div  class='labels-section'>";
      $html .= "<div  class='lettre'>";
         $html .= formLabel(array(

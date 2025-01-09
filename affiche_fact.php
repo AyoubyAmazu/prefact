@@ -4,9 +4,9 @@ require_once("config.php");
 $self = APPurl;
 $user = auth(array("script" => $self));
 $opts = array("user" => $user);
-$opts["conn"] = dbStart(array_merge($opts, array("db" => array("dia", "fact"))));
+$opts["conn"] = dbStart(array_merge($opts, array("db" => array("dia", "fact", "prefact"))));
 $getD = ((isset($_GET["d"]))? cryptDel($_GET["d"]) : false);
-if($getD == false) err(array_merge($opts, array("txt" => "Erreur d'accès", "btn" => APPurl)));
+// if($getD == false) err(array_merge($opts, array("txt" => "Erreur d'accès", "btn" => APPurl)));
 $getD = 20249; // TODO Delete whene data is merged
 
 handleRequest();
@@ -21,14 +21,14 @@ $travSql = "SELECT * FROM z_fact.divers_travaux";
 // detail queries
 $detailSql = "SELECT d.*, dt.Description
 FROM ((SELECT * FROM detail WHERE IdFact = '$factId' AND (IdTrav < 27 OR IdTrav >= 33))
-    UNION(SELECT * FROM detail WHERE IdFact = '$factId' AND (IdTrav BETWEEN 27 AND 32))) 
+    UNION(SELECT * FROM detail WHERE IdFact = '$factId' AND (IdTrav BETWEEN 27 AND 32)))
 	AS d LEFT JOIN divers_travaux AS dt ON d.IdTrav = dt.IdDivers ORDER BY d.IdTrav, d.IdDetail ASC;";
 $delete_detail = "DELETE FROM detail WHERE IdDetail = ?";
-// travau 
+// travau
 $trvDetlSql = "SELECT * FROM travaux_detail WHERE IdFact = $factId AND IdTrav = :idTrav ORDER BY IdTrav ASC";
 // prestation queries
-$prestSql = "SELECT * from prestations where IdFact='" . $factId . "' 
-and IdDetail in (select IdDetail from detail where IdFact='" . $factId . "' 
+$prestSql = "SELECT * from prestations where IdFact='" . $factId . "'
+and IdDetail in (select IdDetail from detail where IdFact='" . $factId . "'
  and IdTrav=:idTrav)";
 $delete_prest_by_detail = "DELETE FROM prestation WHERE IdDetail = ?";
 $delete_prest_by_id = "DELETE FROM prestation WHERE IdPrest = :idPrest";
@@ -133,7 +133,7 @@ function composeDetailFields(): string
 	global $idDetail, $detailSql;
 	$factDetails = dbSelect($detailSql, array("db" => "fact"));
 	$html = "";
-	
+
 	foreach ($factDetails as $detail) {
 		$idDetail = $detail["IdDetail"];
 		$travDrvList = fetchTravDrvList($detail["Description"]);
@@ -238,7 +238,7 @@ function composeTravDetail($idTrav): string
 }
 
 /**
- * Show rows of 
+ * Show rows of
  * @return void
  */
 function composePrest($idTrav): string
@@ -268,7 +268,7 @@ function composePrest($idTrav): string
 
 /**
  * fetch from db travau drivers and selects from cookie if non return a defult item
- * @param string $travaux default travaux 
+ * @param string $travaux default travaux
  * @return array
  */
 function fetchTravDrvList(string $travaux): array
@@ -347,7 +347,7 @@ function handleRequest()
 {
 	if(isset($_POST["delete_prest"]))deletePrestById($_POST["delete_prest"]);
 	if(isset($_POST["delete_detail"]))deleteDetail($_POST["delete_detail"]);
-	
+
 }
 /**
  * delete prestation by id
@@ -394,6 +394,6 @@ if (isset($_POST["facture_id"])){
 	die(json_encode(['code'=>200]));
 }
 
-$cont = html(array_merge($opts, array("cont" => composePage(), "script" => "affiche_fact", "adr" => false)));
+$cont = html(array_merge($opts, array("cont" => composePage(), "script" => "affiche_fact", "adr" => $getD)));
 
 die($cont);

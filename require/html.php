@@ -115,7 +115,7 @@ function htmlFilter($opts = array())
 {
     $dataResp = json_decode(DATAresp, true);
     $opts = htmlOpts($opts);
-        
+
     $anneeOp = array();
     array_push($anneeOp, array("type" => "pre", "txt" => formBtn(array("key" => "prev", "ico" => "angle-left", "title" => "Année précedente"))));
     array_push($anneeOp, array("type" => "post", "txt" => formBtn(array("key" => "next", "ico" => "angle-right", "title" => "Année suivante"))));
@@ -134,7 +134,7 @@ function htmlFilter($opts = array())
             $html .= formBtn(array('key' => 'reset', 'ico' => 'rotate', "title" => "Réinitialiser le filtre"));
         $html .= "</div>";
     $html .= "</div>";
-    
+
     return $html;
 }
 /**
@@ -250,7 +250,7 @@ function htmlFilterData($opts = array())
             $filter["resp"]["selected"] = (($k === false) ? $respNull : $filter["resp"]["list"][$k]);
         }
     }
-    
+
     $filter["naf"] = array();
     $filter["naf"]["list"] = array();
     $filter["naf"]["selected"] = array();
@@ -314,11 +314,11 @@ function htmlTitle($opts = array())
         $cookie = cookieInit();
 
         if($opts["adr"] === "" || $opts["adr"] === false) return "";
-        
-        $sql = "SELECT a.*, 
+
+        $sql = "SELECT a.*,
        (SELECT `solde` FROM `synthese` s WHERE s.`adr` = a.code) AS synthese_data
-       FROM `adr` AS a 
-       WHERE a.`code` = ".$opts['adr'];
+       FROM `adr` AS a
+       WHERE a.`code` = '".$opts['adr']."'";
         $adr = dbSelect($sql, array_merge($opts, array("db" => "prefact")));
         if(count($adr) == 0) err(array_merge($opts, array("txt" => "Dossier non trouvé", "det" => "ID: " . $opts["adr"], "btn" => APPurl)));
 
@@ -340,13 +340,13 @@ function htmlTitle($opts = array())
         $segmentTxt = ((in_array($adr[0]["segment"], array_keys($dataSegment)))? $dataSegment[$adr[0]["segment"]]["abr"] : "Segmentation");
         $segmentTitle = implode(" : ", array_filter(array("Modifier la segmentation", ((in_array($adr[0]["segment"], array_keys($dataSegment)))? ($dataSegment[$adr[0]["segment"]]["abr"] . " - " . $dataSegment[$adr[0]["segment"]]["txt"]) : ""))));
         $segmentColor = ((in_array($adr[0]["segment"], array_keys($dataSegment)))? $dataSegment[$adr[0]["segment"]]["color"] : "");
-        
+
         $solde = (($adr[0]["synthese_data"] == "")? "-" : (number_format(floatval($adr[0]["synthese_data"]), 2, ",", " ") . " €"));
         // $clotureTxt = (($adr[0]["cloture"] == "")? "-" : $dtMonth[intval(substr($adr[0]["cloture"], 4, 2))]);
         // $clotureTitle = (($adr[0]["cloture"] == "")? "-" : dtDate($adr[0]["cloture"]));
 
         $desc = "123";
-                
+
         $sql = "SELECT * FROM `mission` WHERE `adr` = '" . $opts["adr"] . "' ORDER BY `date` DESC";
         $mission = dbSelect($sql, array_merge($opts, array("db" => "prefact")));
 

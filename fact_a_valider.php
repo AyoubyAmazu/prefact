@@ -245,4 +245,3 @@ echo html(array("user" => $user, "cont" => composePage(), "title" => "", "script
 
 
 die();
-
