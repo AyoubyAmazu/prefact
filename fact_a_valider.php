@@ -5,8 +5,11 @@ require_once("config.php");
 $self = APPurl;
 $user = auth(array("script" => $self));
 $opts = array("user" => $user);
-//print_r($opts);
 $cookie = cookieInit();
+$getD = ((isset($_GET["d"]))? cryptDel($_GET["d"]) : false);
+if($getD == false) err(array_merge($opts, array("txt" => "Erreur d'accès", "btn" => APPurl)));
+$getD = 20249; // TODO Delete whene data is merged
+
 $html = "";
 
 // queries of the page
@@ -74,10 +77,10 @@ function displayHead(): void
    global $html;
    $html .= "<div class='hd'>";
    $html .= "<div class='left'>";
-   $html .= formBtn(array("key" => "refresh", "ico" => "fa-solid fa-arrows-rotate", "title" => "refresh", "href" => "fact_a_valider.php"));
-   $html .= formBtn(array("key" => "facturesTerminé", "ico" => "fa-solid fa-file-contract", "txt" => "Factures terminées", "href" => "fact_a_valider.php?term=true"));
-   $html .= formBtn(array("key" => "facturesAvalider", "ico" => "fa-solid fa-file-signature", "txt" => "Factures à valider", "href" => "fact_a_valider.php?a_valid=true"));
-   $html .= formBtn(array("key" => "lesFactures", "ico" => "fa-solid fa-file-arrow-up", "txt" => "Toutes les factures", "href" => "fact_a_valider.php?all_facts=true"));
+   $html .= formBtn(array("key" => "refresh", "ico" => "fa-solid fa-arrows-rotate", "title" => "refresh", "href" => "fact_a_valider.php?d=".$_GET["d"]));
+   $html .= formBtn(array("key" => "facturesTerminé", "ico" => "fa-solid fa-file-contract", "txt" => "Factures terminées", "href" => "fact_a_valider.php?term=true&d=".$_GET["d"]));
+   $html .= formBtn(array("key" => "facturesAvalider", "ico" => "fa-solid fa-file-signature", "txt" => "Factures à valider", "href" => "fact_a_valider.php?a_valid=true&d=".$_GET["d"]));
+   $html .= formBtn(array("key" => "lesFactures", "ico" => "fa-solid fa-file-arrow-up", "txt" => "Toutes les factures", "href" => "fact_a_valider.php?all_facts=true&d=".$_GET["d"]));
    $html .= "</div>";
    $html .= "<div class='left'>";
    $html .= formBtn(array("key" => "print", "ico" => "fa-solid fa-print", "title" => "imprimé"));
@@ -237,9 +240,8 @@ if(isset($_POST["facture_id"])) {
    dbExec($sql, array_merge($opts, array("db" => "fact")));
   die(json_encode(['code'=>200]));
 }
-echo html(array("user" => $user, "cont" => composePage(), "title" => "", "script" => "fact_a_valider", "adr" => false));
+echo html(array("user" => $user, "cont" => composePage(), "title" => "", "script" => "fact_a_valider", "adr" => $getD));
 
 
 
 die();
-

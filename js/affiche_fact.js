@@ -1,4 +1,5 @@
 $(document).ready(function () {
+  $("body > #header").after("<div id='title'> <div> <div class='op l'> <div class='btn min refresh'> <a title='Rafraichir les données manuelement' ><div class='ico'><i class='fa-solid fa-rotate'></i></div ></a> </div> </div> <div class='main'> <div class='adr'> <div class='txt' title='Nom du dossier : Sample Text 21'> Sample Text 21 </div> <div class='code' title='Code du dossier : 20249'>20249</div> <div class='sep'>-</div> <div class='select grp' code=''> <div class='data'> <a title='Groupe : Group 21' ><div class='main'> <div class='txt'>Group 21</div> <div class='code'></div> </div> <div class='ico'><i class='fa-solid fa-angle-down'></i></div ></a> <div class='list'> <div class='input'> <div class='data'> <input type='text' title='Rechercher...' placeholder='Rechercher...' /> </div> </div> <div class='option' code='20249'> <a title='Sample Text 21' href='http://prefact.fr/resultat.php?d=21' ><div class='txt'>Sample Text 21</div> <div class='code'>20249</div></a > </div> </div> </div> </div> </div> <div class='op'> <div class='btn desc toggle' code='desc'> <a title='Description' ><div class='ico'><i class='fa-solid fa-angle-down'></i></div> <div class='txt'>Description</div></a > </div> <div class='btn resp toggle' code='resp'> <a title='Responsables' ><div class='ico'><i class='fa-solid fa-angle-down'></i></div> <div class='txt'>Responsables</div></a > </div> <div class='btn min solde'> <a title='Afficher le détail du solde : 4 000,00 €' target='_blank' ><div class='txt'><span>Solde :</span><b>4 000,00 €</b></div></a > </div> <div class='btn segment'> <a title='Modifier la segmentation' ><div class='ico'><i class='fa-solid fa-pencil'></i></div> <div class='txt'>Segmentation</div></a > </div> <div class='btn crm'> <a title='Ouvrir sur le CRM' target='_blank' ><div class='ico'> <i class='fa-solid fa-up-right-from-square'></i> </div> <div class='txt'>CRM</div></a > </div> </div> <div class='det off' code='desc'> <div class='display'> <div class='data'> <div class='txt' title='Description du dossier dans le CRM'> 123 </div> </div> </div> </div> <div class='det off' code='resp'> <div class='display rd'> <div class='label' title='Responsable Déontologique (RD) : Road 21 (RD21)' > RD </div> <div class='data'> <div class='txt' title='Responsable Déontologique (RD) : Road 21 (RD21)' > Road 21 </div> <div class='code'>RD21</div> </div> </div> <div class='display re'> <div class='label' title='Responsable Encadrement (RE) : Reader 21 (RE21)' > RE </div> <div class='data'> <div class='txt' title='Responsable Encadrement (RE) : Reader 21 (RE21)' > Reader 21 </div> <div class='code'>RE21</div> </div> </div> <div class='display rc'> <div class='label' title='Responsable Collaborateur (RC)'>RC</div> <div class='data'> <div class='txt' title='Responsable Collaborateur (RC)'></div> <div class='code'></div> </div> </div> <div class='display ra'> <div class='label' title='Responsable Auxiliaire (RA)'>RA</div> <div class='data'> <div class='txt' title='Responsable Auxiliaire (RA)'></div> <div class='code'></div> </div> </div> <div class='display res'> <div class='label' title='Responsable Encadrement Social (RES)'> RES </div> <div class='data'> <div class='txt' title='Responsable Encadrement Social (RES)' ></div> <div class='code'></div> </div> </div> <div class='display rs'> <div class='label' title='Responsable Social (RS)'>RS</div> <div class='data'> <div class='txt' title='Responsable Social (RS)'></div> <div class='code'></div> </div> </div> <div class='display rj'> <div class='label' title='Responsable Juridique (RJ)'>RJ</div> <div class='data'> <div class='txt' title='Responsable Juridique (RJ)'></div> <div class='code'></div> </div> </div> <div class='display rfp'> <div class='label' title='Responsable Fiscalité Personnel (RFP)'> RFP </div> <div class='data'> <div class='txt' title='Responsable Fiscalité Personnel (RFP)' ></div> <div class='code'></div> </div> </div> <div class='display tgr'> <div class='label' title='Responsable à Tanger (TGR)'>TGR</div> <div class='data'> <div class='txt' title='Responsable à Tanger (TGR)'></div> <div class='code'></div> </div> </div> <div class='display tgra'> <div class='label' title='Assistant à Tanger (TGRA)'>TGRA</div> <div class='data'> <div class='txt' title='Assistant à Tanger (TGRA)'></div> <div class='code'></div> </div> </div> </div> </div> <div class='op r'> <div class='btn min cancel'> <a title='Revenir à la liste des dossiers' ><div class='ico'><i class='fa-solid fa-xmark'></i></div ></a> </div> </div> </div> </div>");
   $(
     "body > #cont >  div .top .first-line .select.selection_facture_list .data a"
   )
@@ -50,7 +51,7 @@ $(document).ready(function () {
       sortColSelectOption($(event.target).parents(".option"));
     }
   );
-  $("#cont >  div > .content > fieldset > .heart > table > tbody > tr > td > .btn.min.operation-delete > a").on("click", function () {deletePres($("#cont >  div > .content > fieldset "));});
+  $("#cont >  div > .content > fieldset > .heart > table > tbody > tr > td > .btn.min.operation-delete > a").on("click", function () {deletePres($(this).closest("tr"));});
   $("#cont >  div > .content > fieldset > .legend3 > .btn.min.categorie-remove > a").on("click",function () {deleteDetail($("#cont >  div > .content > fieldset"));});
 
     // enoyer validation
@@ -225,65 +226,71 @@ $(document).on(
  * sends ajax request with the id of prest row to be deleted
  */
 function deletePres(row) {
-  $.ajax({
-    type: "POST",
-    url: "./affiche_fact.php",
-    data: { delete_prest: row.attr("id") },
-    dataType: "json",
-    beforeSend: function () {
-      loaderShow();
-    },
-    complete: function () {
-      loaderHide();
-    },
-    success: function (data) {
-        console.log(data);
+  row.remove();
+
+  // $.ajax({
+  //   type: "POST",
+  //   url: "./affiche_fact.php",
+  //   data: { delete_prest: row.attr("id") },
+  //   dataType: "json",
+  //   beforeSend: function () {
+  //     loaderShow();
+  //   },
+  //   complete: function () {
+  //     loaderHide();
+  //   },
+  //   success: function (data) {
+  //       console.log(data);
         
-        if(data.success == 200){
-            row.remove();
-        }
-        else popError("An error occurred while processing your request.");
-    },
-    error: function (jqXHR, textStatus, errorThrown) {
-      console.error("AJAX Error: " + textStatus, errorThrown);
-      popError("An error occurred while processing your request."); // Display a user-friendly error message
-    },
-  });
+  //       if(data.success == 200){
+  //           row.remove();
+  //       }
+  //       else popError("An error occurred while processing your request.");
+  //   },
+  //   error: function (jqXHR, textStatus, errorThrown) {
+  //     console.error("AJAX Error: " + textStatus, errorThrown);
+  //     popError("An error occurred while processing your request."); // Display a user-friendly error message
+  //   },
+  // });
 }
 
 /**
  * sends ajax request with the id of detail field to be deleted 
  */
 function deleteDetail(field) {
-    $.ajax({
-      type: "POST",
-      url: "./affiche_fact.php",
-      data: { delete_detail: field.attr("id") },
-      dataType: "json",
-      beforeSend: function () {
-        loaderShow();
-      },
-      complete: function () {
-        loaderHide();
-      },
-      success: function (data) {
-          console.log(data);
+  field.remove();
+
+    // $.ajax({
+    //   type: "POST",
+    //   url: "./affiche_fact.php",
+    //   data: { delete_detail: field.attr("id") },
+    //   dataType: "json",
+    //   beforeSend: function () {
+    //     loaderShow();
+    //   },
+    //   complete: function () {
+    //     loaderHide();
+    //   },
+    //   success: function (data) {
+    //       console.log(data);
           
-          if(data.success == 200){
-              field.remove();
-          }
-          else popError("An error occurred while processing your request.");
-      },
-      error: function (jqXHR, textStatus, errorThrown) {
-        console.error("AJAX Error: " + textStatus, errorThrown);
-        popError("An error occurred while processing your request."); // Display a user-friendly error message
-      },
-    });
+    //       if(data.success == 200){
+    //           field.remove();
+    //       }
+    //       else popError("An error occurred while processing your request.");
+    //   },
+    //   error: function (jqXHR, textStatus, errorThrown) {
+    //     console.error("AJAX Error: " + textStatus, errorThrown);
+    //     popError("An error occurred while processing your request."); // Display a user-friendly error message
+    //   },
+    // });
   }
 
 
   function envoyer_validation(){
-    id = $("body > #cont > div > .content > .first-field ").attr("id");
+    let id = $("#cont > div > .content > .first-field ").attr("id");
+    let location = $("#cont > div > .top > .first-line > .envoyer-valid > a").attr("href");
+    
    $.ajax({
         url: "affiche_fact.php"
         ,type:"POST"
@@ -293,7 +300,7 @@ function deleteDetail(field) {
         , success: function(data){
             try { var result = JSON.parse(data); }
             catch(error) { popError(); return; }
-            if(result["code"] == 200) { popUp(result["html"]); window.location.href = "fact_a_valider.php";  return; }
+            if(result["code"] == 200) { popUp(result["html"]); window.location.href = location;  return; }
             popError(result["txt"], result["btn"]);
         }
     });
