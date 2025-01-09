@@ -18,6 +18,7 @@ $(document).ready(function () {
   );
   delet_empty_table();
   empty_message();
+  ajouter_fact();
 
 
   // show special
@@ -735,4 +736,35 @@ function empty_message(){
         // or
         // $("#cont > div").hide(); // Example: Hide the container
     }
+}
+
+function ajouter_fact(){
+  $("#cont > div > .field > div > .Ajouter-facture > a").on("click", function () {
+      temps =[]
+      $("table > tbody > tr > td > div > a > div > .fa-check").each(function() {
+        let rwId = $(this).closest("tr").attr("rw-id");
+        if (rwId) {
+            temps.push(rwId);
+        }
+      });
+      let searchParams = new URLSearchParams(window.location.search)
+      let code_dossier=searchParams.get("d");
+      let fact_id = $("#cont > div > .all > .left-div > div > .select").attr("code");    
+      $.ajax({
+        url: "ajouter_facture.php?d="+code_dossier,
+        type: "POST",
+        data: {
+      "fact_id": fact_id,
+      "temps": temps,
+      }
+        , beforeSend: function() { loaderShow(); }
+        , complete: function() { loaderHide(); }
+        , success: function(data)
+        {
+            try { var result = JSON.parse(data); } catch(error) { popError(); return; }
+            if(result["code"] == 200) { window.location.href = "affiche_fact.php?"+code_dossier+",id="+result['id_fact']; return; }
+            popError(result["txt"], result["btn"]);
+        }
+      })
+})
 }
