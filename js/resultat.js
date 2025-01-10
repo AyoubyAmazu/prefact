@@ -152,8 +152,16 @@ $(document).ready(function () {
 function afficheFact()
 {
   let d = new URLSearchParams(window.location.search).get('d');
-  let f =  $("#cont > div > .all > .left-div > div > .select").attr("code");
-  window.location.href =`./affiche_fact.php?d=${d}&f=${f}`;
+  $("#cont > div > .all > .left-div > .btn.affiche_pre_facture > a").on("click", function(){
+    $(".popup.facts-check.hide").removeClass("hide");
+    $(".popup.facts-check > div > .op > .btn.cancel > a").on("click", function(){$(".popup.facts-check").addClass("hide");});
+    $(".popup.facts-check > div > .op > .btn.save > a").on("click", function(){
+      let d = new URLSearchParams(window.location.search).get('d');
+      let f =  $(this).closest(".op").parent().find(".checkbox").find(".data > .list > .option.on").attr("code");
+      window.location.href =`./affiche_fact.php?d=${d}&f=${f}`;
+
+    });
+  });
 }
 /**
  * sorts each table factories by date
@@ -749,8 +757,11 @@ function empty_message(){
 }
 
 function ajouter_fact(){
-  $("#cont > div > .field > div > .Ajouter-facture > a").on("click", function () {
-      temps =[]
+  $("#cont > div > .all > .left-div > .Ajouter-facture > a").on("click", function () {
+    $(".popup.facts-check.hide").removeClass("hide");
+    $(".popup.facts-check > div > .op > .btn.cancel > a").on("click", function(){$(".popup.facts-check").addClass("hide");});
+    $(".popup.facts-check > div > .op > .btn.save > a").on("click", function(){
+      temps =[] 
       $("table > tbody > tr > td > div > a > div > .fa-check").each(function() {
         let rwId = $(this).closest("tr").attr("rw-id");
         if (rwId) {
@@ -759,7 +770,7 @@ function ajouter_fact(){
       });
       let searchParams = new URLSearchParams(window.location.search)
       let code_dossier=searchParams.get("d");
-      let fact_id = $("#cont > div > .all > .left-div > div > .select").attr("code");    
+      let fact_id = $(this).closest(".op").parent().find(".checkbox").find(".data > .list > .option.on").attr("code");    
       $.ajax({
         url: "ajouter_facture.php?d="+code_dossier,
         type: "POST",
@@ -776,6 +787,7 @@ function ajouter_fact(){
             popError(result["txt"], result["btn"]);
         }
       })
+    });
 })
 }
 
