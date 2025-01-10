@@ -18,7 +18,8 @@ $exerciceSql = "SELECT distinct exo from facture order by exo Asc";
 $siteSql = "SELECT * from site order by Site Asc";
 $travSql = "SELECT * FROM prefact.cat;";
 // detail queries
-$fact_cat = "SELECT * FROM facture_cat WHERE facture_id = $factId ORDER BY id ASC";
+$fact_cat = "SELECT * FROM facture_cat  WHERE facture_id = $factId ORDER BY id ASC";
+$select_cat = "SELECT * FROM cat";
 $fact_det = "SELECT * FROM facture_det WHERE fact_cat_id = ?";
 $delete_detail = "DELETE FROM facture_det WHERE id = ?";
 $prestSql = "SELECT * from facture_temps where fact_det_id = ?";
@@ -124,11 +125,11 @@ function composeFactCat(): string
 	$html = "";
 
 	foreach ($fact_cat as $cat) {
-		// $travDrvList = fetchTravDrvList($cat["Description"]);
+		$travDrvList = fetchTravDrvList($cat["cat_id"]);
 
 		$html .= "<fieldset class='first-field' id=".$cat["id"]." >";
 		$html .= "<legend>";
-		// $html .= formSelect(array("key" => "selection_facture_list", "selected" => $travDrvList["cookie"], "list" => $travDrvList["list"]));
+		$html .= formSelect(array("key" => "selection_facture_list", "selected" => $travDrvList["cookie"], "list" => $travDrvList["list"]));
 		$html .= "</legend>";
 		$html .= "  <div class='legend2'>";
 		$html .= formLabel(array("key" => "Total Gènèral = ".$cat["amount"]." / Total Facturer = "));
@@ -257,28 +258,30 @@ function composePrest($factdet_id): string
 
 /**
  * fetch from db travau drivers and selects from cookie if non return a defult item
- * @param string $travaux default travaux
+ * @param int $cat_id default travaux
  * @return array
  */
-function fetchTravDrvList(string $travaux): array
+function fetchTravDrvList(int $cat_id): array
 {
-	global $travSql, $cookie;
-
-	$result = dbSelect($travSql, array("db" => "fact"));
+	global $select_cat, $cookie;
+	$result = dbSelect($select_cat, array("db" => "prefact"));
+	$selected = null;
 	$list = array();
-	// # IdDivers, Description, CodePresta, Classer
-	foreach ($result as $trav) array_push($list, array("code" => $trav["Description"], "txt" => $trav["Description"], "title" => $trav["Description"]));
-	if (!($travaux === "" | $travaux === "-")) return array("list" => $list, "cookie" => array("code" => "travaux", "txt" => $travaux));
+	
+	foreach ($result as $trav){ 
+		array_push($list, array("code" => $trav["nom"], "txt" => $trav["nom"], "title" => $trav["nom"]));
+		if ($trav["id"] == $cat_id) $selected =  array("code" => $trav["nom"], "txt" => $trav["nom"]);
+	}
 	$sortNulltable = array("code" => "table", "txt" => "Travaux Comptable et fiscaux");
 
 	$k = isset($cookie["table"]["sortCol"]) ? array_search($cookie["table"]["sortCol"], array_column($list, "code")) : false;
-	if ($k === false) {
-		$sortSelectedtable = $sortNulltable;
-	} else {
-		$k2 = array_search($list[$k]["parent"], array_column($list, "code"));
-		$sortSelectedtable = array("code" => $list[$k]["code"], "txt" => (($k2 === false) ? "" : ($list[$k2]["txt"] . " > ")) . $list[$k]["txt"], "title" => "Trier par : " . $list[$k]["title"]);
+	if ($k === false && $selected == null) {
+		$selected = $sortNulltable;
+	} else if($k !== false && $selected == null){
+		$k2 = array_search($list[$k], array_column($list, "code"));
+		$selected = array("code" => $list[$k]["code"], "txt" => (($k2 === false) ? "" : ($list[$k2]["txt"] . " > ")) . $list[$k]["txt"], "title" => "Trier par : " . $list[$k]["title"]);
 	}
-	return array("list" => $list, "cookie" => $sortSelectedtable);
+	return array("list" => $list, "cookie" => $selected);
 }
 
 /**

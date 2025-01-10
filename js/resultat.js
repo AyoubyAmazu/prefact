@@ -143,17 +143,17 @@ $(document).ready(function () {
   .on("click", function(){/*selectFact($(this).attr("code"))*/})
   // on click of affiche facture
   $("#cont > div > .all > .left-div > .btn.affiche_pre_facture").on("click", function () {
-    let code = $("#cont > div > .all > .left-div > div > .select.sortAnalyse").attr("code");
-    toggleButton(code);
+    afficheFact();
   });
 });
 /**
- * 
- * @param {string} code 
+ * navigate to affiche fact page
  */
-function toggleButton(code) {
-  if(code == "nouvelle_facture") $("#cont > div > .all > .left-div > .btn.affiche_pre_facture").addClass("readonly");
-  else $("#cont > div > .all > .left-div > .btn.affiche_pre_facture").removeClass("readonly");
+function afficheFact()
+{
+  let d = new URLSearchParams(window.location.search).get('d');
+  let f =  $("#cont > div > .all > .left-div > div > .select").attr("code");
+  window.location.href =`./affiche_fact.php?d=${d}&f=${f}`;
 }
 /**
  * sorts each table factories by date
@@ -166,8 +166,6 @@ function filterSpecial() {
       if ($(this).find(".prest-column > .prest_code > .data > input").val()[0] === "@")
         specials.push($(this));
     })
-//    console.log(specials)
-//    console.log($(this).parent())
     if (specials.length < 1) {
       $(this).parent().remove();
       return
@@ -341,7 +339,6 @@ function sortColAdapt() {
     option.length == 0
   )
     return;
-  toggleButton(code);
 }
 
 //the end of list select open script

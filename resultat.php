@@ -134,7 +134,7 @@ function factsSelectOptions(): array
     $facts = dbSelect($select_fact, array("db"=>"prefact"));
     $list = array();
     foreach($facts as $fact){
-        array_push($list, array("code" => $fact["id"], "txt" => $fact["date"], "title" => "date de facture"));
+        array_push($list, array("code" => cryptSave($fact["id"]), "txt" => $fact["date"], "title" => "date de facture"));
     }
     array_push($list,array("code" => "nouvelle_facture", "txt" => "Nouvelle facture"));
     if(sizeof($list) > 1) $_selected = $list[0];
