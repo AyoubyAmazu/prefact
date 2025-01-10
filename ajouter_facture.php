@@ -28,7 +28,19 @@ if(isset($_POST["fact_id"])){
             dbExec($sql, array("db"=>"prefact"));
         }
         die(json_encode(["code"=>200,"id_fact"=>$id_fact]));
-    }   
+    }else if (is_numeric($_POST["fact_id"]) && !empty($_POST["temps"])){
+        $fact_det_id ;
+        $fact_cat = dbSelect("SELECT id from facture_cat where facture_id ='".$_POST["fact_id"]."' AND cat_id='".$id_cat."'", array("db"=>"prefact"))[0]["id"];
+        $fact_det_id = dbSelect("SELECT max(id) as id FROM facture_det", array("db"=>"prefact"))[0]["id"]+1;
+        $sql = "insert into facture_det (id, fact_cat_id,titre,obs ,amount) values ($fact_det_id, $fact_cat, '-', '-',0)"; 
+        dbExec($sql, array("db"=>"prefact"));
+        foreach($_POST["temps"] as $temp){
+            $id = dbSelect("select max(id) as id from facture_temps", array("db"=>"prefact"))[0]["id"]+1;
+            $sql = "insert into facture_temps (id , fact_det_id , temps_id) values ($id, $fact_det_id, $temp)";
+            dbExec($sql, array("db"=>"prefact"));
+        }
+        die(json_encode(["code"=>400,"msg"=>"Veuillez selectionner des temps"]));
+    }
 
     
 }
