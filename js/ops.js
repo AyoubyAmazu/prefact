@@ -71,7 +71,7 @@ function filterDel()
     $("#filter > div > .select").each(function()
     {
         // console.log($(this));
-        
+
         var k = $(this).attr("resp"); if(k == undefined || k == null || k == "") return;
         obj["filter"][k] = "";
     });
@@ -119,4 +119,5 @@ $(document).ready(function()
     $("#title > div > .main > .adr > .select.grp > .data > a").off("click").on("click", function(event) { formSelectInit($(event.target).parents(".select")); });
     $("#title > div > .main > .adr > .select.grp > .data > input").off("input").on("input", function(event) { formSelectFilter($(event.target).parents(".select")); });
     $("#title > div > .main > .op > .btn.toggle > a").off("click").on("click", function(event) { titleToggle($(event.target).parents(".btn")); });
+    $(".btn.min.refresh").on("click", function () {location.reload()})
 });

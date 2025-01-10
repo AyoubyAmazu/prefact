@@ -43,7 +43,7 @@ foreach ($result as $v) {
    $isValide = $v["solde_valid"] === 1;
    $isVerrouille = $v["verrouil"] === 1;
 
-    $html .= "<div  class='line'>";
+    $html .= "<div  class='line' code=".$v["code"] .">";
      $html .= "<div class='col dossier'>";
         $html .= "<div class='sub code'><a>"  . $v["code"] . "</a></div>";
         $html .= "<div class='sub nom'>"   . $v["txt"] . "</div>";

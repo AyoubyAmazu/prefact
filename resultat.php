@@ -12,24 +12,35 @@ if($getD == false) err(array_merge($opts, array("txt" => "Erreur d'accès", "btn
 // dossier id
 $id = dbSelect("SELECT `id` FROM `adr` WHERE `code` = '$getD'", array("db"=>"prefact"))[0]["id"];
 // all queries of this page
-$temps_sql = "SELECT t.* FROM expert_fidsud.temps t WHERE t.ADR_ID =$id AND PREST_CODE LIKE ':p%' AND `LFACT_ID` = 0";
+$temps_sql = "SELECT * FROM expert_fidsud.temps WHERE ADR_ID =$id AND PREST_CODE LIKE ':p%' AND `LFACT_ID` = 0";
 $select_fact = "SELECT * FROM `facture` WHERE `adr_id` =$id AND `status`=1  ORDER BY `id` ASC";
 $select_cat = "SELECT * FROM prefact.cat;";
+$select_non_fact = "SELECT temps_id FROM temps_non_fact";
+$select_checked_tmps = "SELECT temps_id from facture_temps WHERE fact_det_id in
+(SELECT id FROM facture_det WHERE fact_cat_id in (SELECT id from facture_cat WHERE facture_id in
+(SELECT id FROM facture WHERE status in (1, 2, 3))))";
 
-
+// unavailable temps
+$tmps_non_fact = dbSelect($select_non_fact, array("db"=>"prefact"));
+$tmps_used = dbSelect($select_checked_tmps, array("db"=>"prefact"));
 
 /**
  * creates pages html
  */
 function composePage(): string
 {
-    global $select_cat, $temps_sql;
+    global $select_cat, $temps_sql, $tmps_non_fact, $tmps_used;
     $cats = dbSelect($select_cat, array("db"=>"prefact"));
 
     $html = composeHead();
     foreach($cats as $cat){
         $sql = str_replace(":p", $cat["prest_start"], $temps_sql);
         $tmp_list = dbSelect($sql, array("db"=>"dia"));
+        $tmp_list = array_filter($tmp_list, function($item) use($tmps_non_fact, $tmps_used){
+            if(sizeof($tmps_non_fact) > 0) $tmps_non_fact = $tmps_non_fact[0];
+            if(sizeof($tmps_used) > 0) $tmps_used = $tmps_used[0];
+            return !in_array($item["TEMPS_ID"], $tmps_non_fact) && !in_array($item["TEMPS_ID"], $tmps_used);
+        });
         $html .= formTable(array("legend" => $cat["nom"], "id" => "trav-com", "list"=>$tmp_list));
     }
     return $html;

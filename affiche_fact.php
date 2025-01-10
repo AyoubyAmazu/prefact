@@ -6,8 +6,7 @@ $user = auth(array("script" => $self));
 $opts = array("user" => $user);
 $opts["conn"] = dbStart(array_merge($opts, array("db" => array("dia", "fact", "prefact"))));
 $getD = ((isset($_GET["d"]))? cryptDel($_GET["d"]) : false);
-// if($getD == false) err(array_merge($opts, array("txt" => "Erreur d'accès", "btn" => APPurl)));
-$getD = 20249; // TODO Delete whene data is merged
+if($getD == false) err(array_merge($opts, array("txt" => "Erreur d'accès", "btn" => APPurl)));
 
 handleRequest();
 $cookie = cookieInit();
@@ -32,10 +31,6 @@ and IdDetail in (select IdDetail from detail where IdFact='" . $factId . "'
  and IdTrav=:idTrav)";
 $delete_prest_by_detail = "DELETE FROM prestation WHERE IdDetail = ?";
 $delete_prest_by_id = "DELETE FROM prestation WHERE IdPrest = :idPrest";
-
-
-
-
 
 /**
  * composes the page
