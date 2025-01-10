@@ -5,30 +5,25 @@ $self = APPurl;
 $user = auth(array("script" => $self));
 $opts = array("user" => $user);
 $opts["conn"] = dbStart(array_merge($opts, array("db" => array("dia", "fact", "prefact"))));
+$factId = ((isset($_GET["f"]))? cryptDel($_GET["f"]) : false);
 $getD = ((isset($_GET["d"]))? cryptDel($_GET["d"]) : false);
 if($getD == false) err(array_merge($opts, array("txt" => "Erreur d'accès", "btn" => APPurl)));
+if($factId == false) err(array_merge($opts, array("txt" => "Erreur d'accès", "btn" => APPurl)));
 
 handleRequest();
 $cookie = cookieInit();
-$factId = 2454;
-$idDetail = 0;
 
 // All queries of this page
-$exerciceSql = "SELECT distinct Millesime from factures order by Millesime Asc";
+$exerciceSql = "SELECT distinct exo from facture order by exo Asc";
 $siteSql = "SELECT * from site order by Site Asc";
-$travSql = "SELECT * FROM z_fact.divers_travaux";
+$travSql = "SELECT * FROM prefact.cat;";
 // detail queries
-$detailSql = "SELECT d.*, dt.Description
-FROM ((SELECT * FROM detail WHERE IdFact = '$factId' AND (IdTrav < 27 OR IdTrav >= 33))
-    UNION(SELECT * FROM detail WHERE IdFact = '$factId' AND (IdTrav BETWEEN 27 AND 32)))
-	AS d LEFT JOIN divers_travaux AS dt ON d.IdTrav = dt.IdDivers ORDER BY d.IdTrav, d.IdDetail ASC;";
-$delete_detail = "DELETE FROM detail WHERE IdDetail = ?";
-// travau
-$trvDetlSql = "SELECT * FROM travaux_detail WHERE IdFact = $factId AND IdTrav = :idTrav ORDER BY IdTrav ASC";
-// prestation queries
-$prestSql = "SELECT * from prestations where IdFact='" . $factId . "'
-and IdDetail in (select IdDetail from detail where IdFact='" . $factId . "'
- and IdTrav=:idTrav)";
+$fact_cat = "SELECT * FROM facture_cat WHERE facture_id = $factId ORDER BY id ASC";
+$fact_det = "SELECT * FROM facture_det WHERE fact_cat_id = ?";
+$delete_detail = "DELETE FROM facture_det WHERE id = ?";
+$prestSql = "SELECT * from facture_temps where fact_det_id = ?";
+$select_tmps = "SELECT * FROM temps WHERE TEMPS_ID = ?";
+
 $delete_prest_by_detail = "DELETE FROM prestation WHERE IdDetail = ?";
 $delete_prest_by_id = "DELETE FROM prestation WHERE IdPrest = :idPrest";
 
@@ -46,9 +41,8 @@ function composePage(): string
 
 	$html .= "</div>";
 	$html .= "</div>";
-	// $html .= "</div>";
 	$html .= "<div class='content'>";
-	$html .= composeDetailFields();
+	$html .= composeFactCat();
 	$html .= "</div>";
 	$html .= "<div class='btn-last'>";
 	$html .= formBtn(array("key" => "ajoute-catgorie", "ico" => "plus", "title" => "Ajouter une nouvelle catègorie"));
@@ -87,7 +81,7 @@ function composeFilters()
 {
 	global $cookie;
 	$siteList = fetchSitesList();
-	$exerList = fetchExerciceList();
+	// $exerList = fetchExerciceList();
 	$html = "";
 
 	$html .= formBtn(array("key" => "envoyer-valid", "txt" => "Envoyer â la validation", "href"=>"fact_a_valider.php?d=".$_GET["d"]));
@@ -100,7 +94,7 @@ function composeFilters()
 	$html .= formBtn(array("key" => "facture-fae", "txt" => "Facture FAE"));
 	$html .= formBtn(array("key" => "tarifs-soc", "txt" => "Tarifs Social", "href" => "tarifs_social.php"));
 	$html .= formLabel(array("key" => "Exercice client : "));
-	$html .= formSelect(array("key" => "selection_facture_list", "selected" => $exerList["cookie"], "list" => $exerList["list"]));
+	// $html .= formSelect(array("key" => "selection_facture_list", "selected" => $exerList["cookie"], "list" => $exerList["list"]));
 	$html .= formLabel(array("key" => "Site : "));
 	$html .= formSelect(array("key" => "selection_facture_list", "selected" => $siteList["cookie"], "list" => $siteList['list']));
 	$html .= formLabel(array("key" => "Date de la facture : "));
@@ -123,23 +117,22 @@ function composeFilters()
  * Summary of fetchInvoiceDetails
  * @return void
  */
-function composeDetailFields(): string
+function composeFactCat(): string
 {
-	global $idDetail, $detailSql;
-	$factDetails = dbSelect($detailSql, array("db" => "fact"));
+	global $fact_cat;
+	$fact_cat = dbSelect($fact_cat, array("db" => "prefact"));
 	$html = "";
 
-	foreach ($factDetails as $detail) {
-		$idDetail = $detail["IdDetail"];
-		$travDrvList = fetchTravDrvList($detail["Description"]);
+	foreach ($fact_cat as $cat) {
+		// $travDrvList = fetchTravDrvList($cat["Description"]);
 
-		$html .= "<fieldset class='first-field' id=".$detail["IdDetail"]." >";
+		$html .= "<fieldset class='first-field' id=".$cat["id"]." >";
 		$html .= "<legend>";
-		$html .= formSelect(array("key" => "selection_facture_list", "selected" => $travDrvList["cookie"], "list" => $travDrvList["list"]));
+		// $html .= formSelect(array("key" => "selection_facture_list", "selected" => $travDrvList["cookie"], "list" => $travDrvList["list"]));
 		$html .= "</legend>";
 		$html .= "  <div class='legend2'>";
-		$html .= formLabel(array("key" => "Total Gènèral = ".$detail["Total"]." / Total Facturer = "));
-		$html .= formInput(array("key" => "total-facture", "type" => "text", "value" => $detail["Total_facture"]));
+		$html .= formLabel(array("key" => "Total Gènèral = ".$cat["amount"]." / Total Facturer = "));
+		$html .= formInput(array("key" => "total-facture", "type" => "text", "value" => $cat["amount"]));
 		$html .= "</div>";
 		$html .= "  <div class='legend3'>";
 		$html .= formBtn(array("key" => "categorie-remove", "ico" => "trash", "title" => "Supprimer une Catègorie"));
@@ -156,7 +149,7 @@ function composeDetailFields(): string
 		$html .= "</div>";
 		$html .= "</div>";
 
-		$html .= composeTravDetail($detail["IdTrav"]);
+		$html .= composeFactDet($cat["id"]);
 
 		$html .= "<div class='title hide see'>";
 		$html .= "<div class='title-content'>";
@@ -203,25 +196,25 @@ function composeDetailFields(): string
 
 	return $html;
 }
-
-function composeTravDetail($idTrav): string
+// ! here
+function composeFactDet($idTrav): string
 {
-	global $trvDetlSql;
+	global $fact_det;
 
-	$trvDetlSql = str_replace(":idTrav", $idTrav, $trvDetlSql);
-	$result = dbSelect($trvDetlSql, array("db" => "fact"));
+	$select = str_replace("?", $idTrav, $fact_det);
+	$result = dbSelect($select, array("db" => "prefact"));
 	$html = "";
-	foreach ($result as $trav) {
-		$html .= "<table>";
+	foreach ($result as $detail) {
+		$html .= "<table detid=".$detail["id"].">";
 		$html .= "<tr>";
 		$html .= "<th class='operation'>" . formBtn(array("key" => "action", "ico" => "arrow-up"));
 		$html .= "</th>";
 		$html .= "<th>Date</th>";
 		$html .= "<th>Collab</th>";
 		$html .= "<th>Prest</th>";
-		$html .= "<th class='total' colspan='5'><div>" . formLabel(array("key" => "Total Gènèral = " . $trav["Total"] . " / Total Facturer = ")) . formInput(array("key" => "total-facture", "type" => "text", "value" => $trav["Total_facture"])) . "</div></th>";
+		$html .= "<th class='total' colspan='5'><div>" . formLabel(array("key" => "Total Gènèral = " . $detail["amount"] . " / Total Facturer = ")) . formInput(array("key" => "total-facture", "type" => "text", "value" => $detail["amount"])) . "</div></th>";
 		$html .= "</tr>";
-		$html .= composePrest($trav["IdTrav"]);
+		$html .= composePrest($detail["id"]);
 		$html .= "<tr class='area'>";
 		$html .= "<td colspan='9'><div>" . formTextarea(array("key" => "textarea-container")) . formBtn(array("key" => "comment-add", "ico" => "comment-medical"));
 		$html .= "</div></td>";
@@ -236,26 +229,27 @@ function composeTravDetail($idTrav): string
  * Show rows of
  * @return void
  */
-function composePrest($idTrav): string
+function composePrest($factdet_id): string
 {
-	global $prestSql, $idDetail;
-	$prestSql = str_replace(":idTrav", $idTrav, $prestSql);
-	$result = dbSelect($prestSql, array("db" => "fact"));
-	// var_dump($result);
+	global $prestSql, $select_tmps;
+	$select = str_replace("?", $factdet_id, $prestSql);
+	$result = dbSelect($select, array("db" => "prefact"));
 	$html = "";
 
-	foreach ($result as $prest) {
-		$html .= "<tr id=".$prest["IdPrest"].">";
+	foreach ($result as $fact_tmp) {
+		$_select = str_replace("?", $fact_tmp["temps_id"], $select_tmps);
+		$temp = dbSelect($_select, array("db"=>"dia"))[0]; 
+		$html .= "<tr id=".$fact_tmp["id"].">";
 		$html .= "<td>" . formBtn(array("key" => "operation-delete", "ico" => "xmark"));
 		$html .= "</td>";
-		$html .= "<td>" . $prest["DatePrest"] . "</td>";
-		$html .= "<td>" . $prest["Collab"] . "</td>";
-		$html .= "<td>" . $prest["CodePrest"] . "</td>";
-		$html .= "<td class='titre'>" . $prest["Libelle"] . "</td>";
+		$html .= "<td>" . date("m/d/Y", strtotime($temp['TEMPS_DATE'])) . "</td>";
+		$html .= "<td>" . $temp["COL_CODE"] . "</td>";
+		$html .= "<td>" . $temp["PREST_CODE"] . "</td>";
+		$html .= "<td class='titre'>" . $temp["TEMPS_MEMO"] . "</td>";
 		$html .= "<td>" . formBtn(array("key" => "operation", "ico" => "arrow-down")) . "</td>";
-		$html .= "<td>" . $prest["Quantite"] . "</td>";
-		$html .= "<td>" . $prest["Duree"] . "</td>";
-		$html .= "<td>" . $prest["Cout"] . "</td>";
+		$html .= "<td>" . $temp["TEMPS_M_QTE"] . "</td>";
+		$html .= "<td>" . $temp["TEMPS_DUREE"] . "</td>";
+		$html .= "<td>" . $temp["TEMPS_M_PV"] . "</td>";
 		$html .= "</tr>";
 	}
 	return $html;

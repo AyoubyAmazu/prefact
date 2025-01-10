@@ -25,7 +25,7 @@ if(isset($_POST["fact_id"])){
             $sql = "INSERT into facture_temps (fact_det_id , temps_id) values ($fact_det, $temp)";
             dbExec($sql, array("db"=>"prefact"));
         }
-        die(json_encode(["code"=>200,"id_fact"=>$id_fact]));
+        die(json_encode(["code"=>200,"id_fact"=>cryptSave($id_fact)]));
     }   
 
     
