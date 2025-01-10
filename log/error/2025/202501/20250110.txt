@@ -3,3 +3,11 @@
 10/01/2025 11:09:05 | Erreur de d'execution d'une requête SQL | /ajouter_facture.php | prefact | SELECT id from facture_cat where facture_id ='1 | SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''1' at line 1
 10/01/2025 11:09:13 | Erreur de d'execution d'une requête SQL | /ajouter_facture.php | prefact | SELECT id from facture_cat where facture_id ='1 | SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''1' at line 1
 10/01/2025 11:09:48 | Erreur de d'execution d'une requête SQL | /ajouter_facture.php | prefact | SELECT id from facture_cat where facture_id ='1 | SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''1' at line 1
+10/01/2025 22:11:18 | Erreur de d'execution d'une requête SQL | /ajouter_facture.php | prefact | INSERT into facture_temps (fact_det_id , temps_id) values (5, 8339558) | SQLSTATE[HY000]: General error: 1364 Field 'id' doesn't have a default value
+10/01/2025 22:22:44 | CED | Erreur d'accès | /affiche_fact.php
+10/01/2025 22:23:52 | CED | Erreur d'accès | /affiche_fact.php
+10/01/2025 22:23:58 | CED | Erreur d'accès | /affiche_fact.php
+10/01/2025 22:24:24 | CED | Erreur d'accès | /affiche_fact.php
+10/01/2025 22:24:47 | CED | Erreur d'accès | /affiche_fact.php
+10/01/2025 22:24:54 | CED | Erreur d'accès | /affiche_fact.php
+10/01/2025 22:25:26 | CED | Erreur d'accès | /affiche_fact.php

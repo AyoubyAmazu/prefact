@@ -741,9 +741,8 @@ function empty_message(){
 }
 
 function ajouter_fact(){
-  let cheacked_temps = $("table > tbody > tr > td > div > a > div > .fa-check")
-  if(cheacked_temps.length!=0){
   $("#cont > div > .field > div > .Ajouter-facture > a").on("click", function () {
+    let cheacked_temps = $("table > tbody > tr > td > div > a > div > .fa-check")
       temps =[]
       cheacked_temps.each(function() {
         let rwId = $(this).closest("tr").attr("rw-id");
@@ -766,12 +765,11 @@ function ajouter_fact(){
         , success: function(data)
         {
             try { var result = JSON.parse(data); } catch(error) { popError(); return; }
-            if(result["code"] == 200) { window.location.href = "affiche_fact.php?"+code_dossier+",id="+result['id_fact']; return; }
+            if(result["code"] == 200) { window.location.href = "affiche_fact.php?d="+code_dossier+",id="+result['id_fact']; return; }
             popError(result["txt"], result["btn"]);
         }
       })
   })
-}else{$("#cont > div > .field > div > .Ajouter-facture").addClass("readonly")}
 }
 
 function button_affiche_fact(){
