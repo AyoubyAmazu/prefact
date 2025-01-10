@@ -614,6 +614,7 @@ $(document).ready(function () {
 
 //  the script of checkead and not cheacked
 $(document).on("click", "tr > td >.first-check > a", function () {
+  
   $(this.firstChild.firstChild).toggleClass("fa-check");
 });
 // cheack all the cheacked
@@ -740,9 +741,11 @@ function empty_message(){
 }
 
 function ajouter_fact(){
+  let cheacked_temps = $("table > tbody > tr > td > div > a > div > .fa-check")
+  if(cheacked_temps.length!=0){
   $("#cont > div > .field > div > .Ajouter-facture > a").on("click", function () {
       temps =[]
-      $("table > tbody > tr > td > div > a > div > .fa-check").each(function() {
+      cheacked_temps.each(function() {
         let rwId = $(this).closest("tr").attr("rw-id");
         if (rwId) {
             temps.push(rwId);
@@ -767,7 +770,8 @@ function ajouter_fact(){
             popError(result["txt"], result["btn"]);
         }
       })
-})
+  })
+}else{$("#cont > div > .field > div > .Ajouter-facture").addClass("readonly")}
 }
 
 function button_affiche_fact(){
@@ -779,3 +783,4 @@ function button_affiche_fact(){
     }else{$("body > #cont > div > div > .left-div > .btn.affiche_pre_facture").removeClass("readonly");}
   });
 }
+

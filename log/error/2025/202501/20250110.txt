@@ -1,1 +1,5 @@
 10/01/2025 09:07:57 | CED | Erreur d'accès | /resultat.php
+10/01/2025 10:46:59 | CED | Erreur d'accès | /resultat.php
+10/01/2025 11:09:05 | Erreur de d'execution d'une requête SQL | /ajouter_facture.php | prefact | SELECT id from facture_cat where facture_id ='1 | SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''1' at line 1
+10/01/2025 11:09:13 | Erreur de d'execution d'une requête SQL | /ajouter_facture.php | prefact | SELECT id from facture_cat where facture_id ='1 | SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''1' at line 1
+10/01/2025 11:09:48 | Erreur de d'execution d'une requête SQL | /ajouter_facture.php | prefact | SELECT id from facture_cat where facture_id ='1 | SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''1' at line 1
