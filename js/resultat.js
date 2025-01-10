@@ -19,6 +19,7 @@ $(document).ready(function () {
   delet_empty_table();
   empty_message();
   ajouter_fact();
+    button_affiche_fact();
 
 
   // show special
@@ -767,4 +768,14 @@ function ajouter_fact(){
         }
       })
 })
+}
+
+function button_affiche_fact(){
+  if( $("body > #cont > div > div > .left-div > div > .select.sortAnalyse").attr("code")=="nouvelle_facture"){ $("body > #cont > div > div > .left-div > .btn.affiche_pre_facture").addClass("readonly");}
+  $("body > #cont > div > div > .left-div > div > .select.sortAnalyse > div > .list > .option").on("click", function () {
+      let selected = $(this).attr("code");
+    if(selected == "nouvelle_facture"){
+      $("body > #cont > div > div > .left-div > .btn.affiche_pre_facture").addClass("readonly");
+    }else{$("body > #cont > div > div > .left-div > .btn.affiche_pre_facture").removeClass("readonly");}
+  });
 }
