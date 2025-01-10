@@ -62,7 +62,7 @@ function composeHead(): string
 
     $html .= formSelect(array("key" => "sortAnalyse", "selected" => $factsList["cookie"], "list" => $factsList["list"]));
     $html .= "</div>";
-    $html .= formBtn(array("key" => "affiche_pre_facture", "ico" => "eye", "txt" => "Afficher la pré-facture", "href" => "affiche_fact.php?d=".$_GET["d"]));
+    $html .= formBtn(array("key" => "affiche_pre_facture", "ico" => "eye", "txt" => "Afficher la pré-facture"));
     $html .= "</div>";
     $html .= "<div class='right-div'>";
     $html .= formBtn(array("key" => "affiche-exep", "txt" => "Afficher l'exceptionnel"));
@@ -132,11 +132,13 @@ function factsSelectOptions(): array
 {
     global $cookie, $select_fact;
     $facts = dbSelect($select_fact, array("db"=>"prefact"));
-    $list = array(array("code" => "nouvelle_facture", "txt" => "Nouvelle facture"));
+    $list = array();
     foreach($facts as $fact){
         array_push($list, array("code" => $fact["id"], "txt" => $fact["date"], "title" => "date de facture"));
     }
-    $_selected = array("code" => "nouvelle_facture", "txt" => "Nouvelle facture");
+    array_push($list,array("code" => "nouvelle_facture", "txt" => "Nouvelle facture"));
+    if(sizeof($list) > 1) $_selected = $list[0];
+    else $_selected = array("code" => "nouvelle_facture", "txt" => "Nouvelle facture");
 
     $cookie = array_search($cookie["index"]["sortCol"], array_column($list, "code"));
     if ($cookie !== false)  $_selected = array("code" => $list[$cookie]["code"]);

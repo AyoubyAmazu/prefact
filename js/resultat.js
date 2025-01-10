@@ -141,9 +141,20 @@ $(document).ready(function () {
   });
   $("#cont > div > .all > .left-div > div > .select > .data > .list > .option")
   .on("click", function(){/*selectFact($(this).attr("code"))*/})
-
-  // the end of checking a specific collab line //
+  // on click of affiche facture
+  $("#cont > div > .all > .left-div > .btn.affiche_pre_facture").on("click", function () {
+    let code = $("#cont > div > .all > .left-div > div > .select.sortAnalyse").attr("code");
+    toggleButton(code);
+  });
 });
+/**
+ * 
+ * @param {string} code 
+ */
+function toggleButton(code) {
+  if(code == "nouvelle_facture") $("#cont > div > .all > .left-div > .btn.affiche_pre_facture").addClass("readonly");
+  else $("#cont > div > .all > .left-div > .btn.affiche_pre_facture").removeClass("readonly");
+}
 /**
  * sorts each table factories by date
  * @return {void}
@@ -314,7 +325,7 @@ function sortColSelectOption(div) {
 }
 
 function sortColAdapt() {
-  var code = $(
+  let code = $(
     "body .cont .data .main div .all .left-div .select.sortAnalyse"
   ).attr("code");
   if (code == undefined || code == null) code = "";
@@ -330,6 +341,7 @@ function sortColAdapt() {
     option.length == 0
   )
     return;
+  toggleButton(code);
 }
 
 //the end of list select open script
@@ -763,7 +775,7 @@ function ajouter_fact(){
         , success: function(data)
         {
             try { var result = JSON.parse(data); } catch(error) { popError(); return; }
-            if(result["code"] == 200) { window.location.href = "affiche_fact.php?"+code_dossier+",id="+result['id_fact']; return; }
+            if(result["code"] == 200) { window.location.href = "affiche_fact.php?d="+code_dossier+"&f="+result['id_fact']; return; }
             popError(result["txt"], result["btn"]);
         }
       })

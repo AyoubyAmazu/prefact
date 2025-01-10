@@ -40,7 +40,6 @@ if(isset($_POST["fact_id"])){
         die(json_encode(["code"=>400,"msg"=>"Veuillez selectionner des temps"]));
     }
 
-    
 }
 
 ?>
