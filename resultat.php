@@ -6,11 +6,11 @@ $self = APPurl;
 $user = auth(array("script" => $self));
 $opts = array("user" => $user);
 $cookie = cookieInit();
-$getD = ((isset($_GET["d"]))? cryptDel($_GET["d"]) : false);
-if($getD == false) err(array_merge($opts, array("txt" => "Erreur d'accès", "btn" => APPurl)));
+$getD = ((isset($_GET["d"])) ? cryptDel($_GET["d"]) : false);
+if ($getD == false) err(array_merge($opts, array("txt" => "Erreur d'accès", "btn" => APPurl)));
 
 // dossier id
-$id = dbSelect("SELECT `id` FROM `adr` WHERE `code` = '$getD'", array("db"=>"prefact"))[0]["id"];
+$id = dbSelect("SELECT `id` FROM `adr` WHERE `code` = '$getD'", array("db" => "prefact"))[0]["id"];
 // all queries of this page
 $temps_sql = "SELECT * FROM expert_fidsud.temps WHERE ADR_ID =$id AND PREST_CODE LIKE ':p%' AND `LFACT_ID` = 0";
 $select_fact = "SELECT * FROM `facture` WHERE `adr_id` =$id AND `status`=1  ORDER BY `id` ASC";
@@ -21,8 +21,8 @@ $select_checked_tmps = "SELECT temps_id from facture_temps WHERE fact_det_id in
 (SELECT id FROM facture WHERE status in (1, 2, 3))))";
 
 // unavailable temps
-$tmps_non_fact = dbSelect($select_non_fact, array("db"=>"prefact"));
-$tmps_used = dbSelect($select_checked_tmps, array("db"=>"prefact"));
+$tmps_non_fact = dbSelect($select_non_fact, array("db" => "prefact"));
+$tmps_used = dbSelect($select_checked_tmps, array("db" => "prefact"));
 
 /**
  * creates pages html
@@ -30,18 +30,26 @@ $tmps_used = dbSelect($select_checked_tmps, array("db"=>"prefact"));
 function composePage(): string
 {
     global $select_cat, $temps_sql, $tmps_non_fact, $tmps_used;
-    $cats = dbSelect($select_cat, array("db"=>"prefact"));
+    $cats = dbSelect($select_cat, array("db" => "prefact"));
+    $factsList = factsSelectOptions();
 
-    $html = composeHead();
-    foreach($cats as $cat){
+    $html = "<div class='popup facts-check hide'><div>";
+    $html .= "<div class='label'>Modifier Segmentation</div>";
+    $html .= formCheckbox(array("key" => "col", "list" => $factsList["list"], "code"=>$factsList["selected"]));
+    $html .= "<div class='op'>";
+    $html .= formBtn(array("key" => "cancel", "txt" => "Annuler"));
+    $html .= formBtn(array("key" => "save", "txt" => "Continue"));
+    $html .= "</div>";
+    $html .= "</div></div>";
+    $html .= composeHead();
+    foreach ($cats as $cat) {
         $sql = str_replace(":p", $cat["prest_start"], $temps_sql);
-        $tmp_list = dbSelect($sql, array("db"=>"dia"));
-        $tmp_list = array_filter($tmp_list, function($item) use($tmps_non_fact, $tmps_used){
-            if(sizeof($tmps_non_fact) > 0) $tmps_non_fact = $tmps_non_fact[0];
-            if(sizeof($tmps_used) > 0) $tmps_used = $tmps_used[0];
-            return !in_array($item["TEMPS_ID"], $tmps_non_fact) && !in_array($item["TEMPS_ID"], $tmps_used);
+        $tmp_list = dbSelect($sql, array("db" => "dia"));
+        // print_r(array_column($tmps_non_fact, "temps_id"));
+        $tmp_list = array_filter($tmp_list, function ($item) use ($tmps_non_fact, $tmps_used) {
+            return !in_array($item["TEMPS_ID"], array_column($tmps_non_fact, "temps_id")) && !in_array($item["TEMPS_ID"], array_column($tmps_used, "temps_id"));
         });
-        $html .= formTable(array("legend" => $cat["nom"], "id" => "trav-com", "list"=>$tmp_list));
+        $html .= formTable(array("legend" => $cat["nom"], "id" => cryptSave($cat["id"]), "list" => $tmp_list));
     }
     return $html;
 }
@@ -51,23 +59,18 @@ function composePage(): string
  */
 function composeHead(): string
 {
-    $factsList = factsSelectOptions();
-
     $html = "<div class='all'>";
     $html .= "<div class='left-div'>";
+    $html .= formBtn(array("key" => "Ajouter-facture", "ico" => "plus", "txt" => "Ajouter â la facture"));
+    $html .= formBtn(array("key" => "unfact", "ico" => "ban", "txt" => "Ne pas facturer"));
     $html .= "<div>";
-    $html .= formLabel(array(
-        "key" => "Sèlection d'une facture non terminèe : ",
-    ));
-
-    $html .= formSelect(array("key" => "sortAnalyse", "selected" => $factsList["cookie"], "list" => $factsList["list"]));
     $html .= "</div>";
     $html .= formBtn(array("key" => "affiche_pre_facture", "ico" => "eye", "txt" => "Afficher la pré-facture"));
     $html .= "</div>";
     $html .= "<div class='right-div'>";
     $html .= formBtn(array("key" => "affiche-exep", "txt" => "Afficher l'exceptionnel"));
     // $html .= formBtn(array("key" => "presentation", "txt" => "Prestations facturèes"));
-    $html .= formBtn(array("key" => "basculer", "txt" => "Basculer vers synthèse du dossier", "href" => "recap.php?d=".$_GET["d"]));
+    $html .= formBtn(array("key" => "basculer", "txt" => "Basculer vers synthèse du dossier", "href" => "recap.php?d=" . $_GET["d"]));
     $html .= "</div>";
     $html .= "</div>";
     return $html;
@@ -116,10 +119,6 @@ function formTable($opts = array()): string
         $html .= "</tr>";
     }
     $html .= "</table>";
-    $html .= "<div class='add-table-btn'>";
-    $html .= formBtn(array("key" => "Ajouter-facture", "ico" => "plus", "txt" => "Ajouter â la facture"));
-    $html .= formBtn(array("key" => "ne-pas-facturer", "ico" => "ban", "txt" => "Ne pas facturer"));
-    $html .= "</div>";
     $html .= "</fieldset>";
     return $html;
 }
@@ -131,18 +130,18 @@ function formTable($opts = array()): string
 function factsSelectOptions(): array
 {
     global $cookie, $select_fact;
-    $facts = dbSelect($select_fact, array("db"=>"prefact"));
+    $facts = dbSelect($select_fact, array("db" => "prefact"));
     $list = array();
-    foreach($facts as $fact){
+    foreach ($facts as $fact) {
         array_push($list, array("code" => cryptSave($fact["id"]), "txt" => $fact["date"], "title" => "date de facture"));
     }
-    array_push($list,array("code" => "nouvelle_facture", "txt" => "Nouvelle facture"));
-    if(sizeof($list) > 1) $_selected = $list[0];
+    array_push($list, array("code" => "nouvelle_facture", "txt" => "Nouvelle facture"));
+    if (sizeof($list) > 1) $_selected = $list[0];
     else $_selected = array("code" => "nouvelle_facture", "txt" => "Nouvelle facture");
 
     $cookie = array_search($cookie["index"]["sortCol"], array_column($list, "code"));
     if ($cookie !== false)  $_selected = array("code" => $list[$cookie]["code"]);
-    return array("list" => $list, "cookie" => $_selected);
+    return array("list" => $list, "selected" => $_selected);
 }
 
 
