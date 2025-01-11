@@ -49,7 +49,7 @@ function composePage(): string
         $tmp_list = array_filter($tmp_list, function ($item) use ($tmps_non_fact, $tmps_used) {
             return !in_array($item["TEMPS_ID"], array_column($tmps_non_fact, "temps_id")) && !in_array($item["TEMPS_ID"], array_column($tmps_used, "temps_id"));
         });
-        $html .= formTable(array("legend" => $cat["nom"], "id" => "trav-com", "list" => $tmp_list));
+        $html .= formTable(array("legend" => $cat["nom"], "id" => cryptSave($cat["id"]), "list" => $tmp_list));
     }
     return $html;
 }
@@ -62,7 +62,7 @@ function composeHead(): string
     $html = "<div class='all'>";
     $html .= "<div class='left-div'>";
     $html .= formBtn(array("key" => "Ajouter-facture", "ico" => "plus", "txt" => "Ajouter â la facture"));
-    $html .= formBtn(array("key" => "ne-pas-facturer", "ico" => "ban", "txt" => "Ne pas facturer"));
+    $html .= formBtn(array("key" => "unfact", "ico" => "ban", "txt" => "Ne pas facturer"));
     $html .= "<div>";
     $html .= "</div>";
     $html .= formBtn(array("key" => "affiche_pre_facture", "ico" => "eye", "txt" => "Afficher la pré-facture"));

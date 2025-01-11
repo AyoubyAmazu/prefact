@@ -19,8 +19,8 @@ $(document).ready(function () {
   delet_empty_table();
   empty_message();
   ajouter_fact();
-    button_affiche_fact();
-
+  button_affiche_fact();
+  unfactTmps();
 
   // show special
   //  console.log($("#cont > div > .all > .right-div > .affiche-exep > a"))
@@ -153,8 +153,13 @@ function afficheFact()
 {
   let d = new URLSearchParams(window.location.search).get('d');
   $("#cont > div > .all > .left-div > .btn.affiche_pre_facture > a").on("click", function(){
+    if($(this).closest(".btn.affiche_pre_facture").hasClass("readonly")) return;
+    $(".popup.facts-check.hide > div > .checkbox > .data > .list > .option[code=nouvelle_facture]").css({display: "none"});
     $(".popup.facts-check.hide").removeClass("hide");
-    $(".popup.facts-check > div > .op > .btn.cancel > a").on("click", function(){$(".popup.facts-check").addClass("hide");});
+    $(".popup.facts-check > div > .op > .btn.cancel > a").on("click", function(){
+      $(".popup.facts-check").addClass("hide");
+      $(".popup.facts-check.hide > div > .checkbox > .data > .list > .option[code=nouvelle_facture]").css({display: "flex"});
+    });
     $(".popup.facts-check > div > .op > .btn.save > a").on("click", function(){
       let d = new URLSearchParams(window.location.search).get('d');
       let f =  $(this).closest(".op").parent().find(".checkbox").find(".data > .list > .option.on").attr("code");
@@ -576,8 +581,6 @@ function sortTableByPrest(tableId) {
   }
 }
 
-// the end of the prest sort //
-
 $(document).ready(function () {
   // the start of the affiche exep //
 
@@ -622,16 +625,12 @@ $(document).ready(function () {
     });
   $(
     "body .cont .data .main div .all .left-div .select.sortAnalyse .data .list .option a"
-  )
-    .off("click")
-    .on("click", function (event) {
+  ).on("click", function (event) {
       sortColSelectOption($(event.target).parents(".option"));
     });
-});
-
-//  the script of checkead and not cheacked
-$(document).on("click", "tr > td >.first-check > a", function () {
-  $(this.firstChild.firstChild).toggleClass("fa-check");
+    $("tr > td >.first-check > a").on("click" , function () {
+      $(this.firstChild.firstChild).toggleClass("fa-check");
+    });
 });
 // cheack all the cheacked
 $(document).on("click", "thead .first-check", function () {
@@ -642,8 +641,9 @@ $(document).on("click", "thead .first-check", function () {
     .toggleClass("fa-check");
 });
 
-// sort table by prest
-
+/**
+ *  sort table by prest
+ */ 
 function sortPrest(tableId) {
   let table = $("#" + tableId);
   let originalRows = table.html(); // Save the original table rows
@@ -715,7 +715,9 @@ function sortPrest(tableId) {
   }
   handleCheckGroupPrest()
 }
-
+/**
+ * Handels select temps group button 
+ */
 function handleCheckGroupPrest() {
   $("table > tbody > tr.total-row-collab > td > div > a").each(function () {
     // $(this).on("click",function(){console.log("done");})
@@ -736,7 +738,9 @@ function handleCheckGroupPrest() {
     });
   });
 }
-
+/**
+ * Deletes fields that are empty of temps
+ */
 function delet_empty_table() {
   $("#cont > div > .field > table").each(function () {
     if ($(this).find("tbody > tr").length === 0) {
@@ -745,7 +749,9 @@ function delet_empty_table() {
     
   });
 }
-
+/**
+ * if there is temps fieldset a message is desplayed
+ */
 function empty_message(){
       // Check if there are any tables left
       if ($("#cont > div > .field > table").length === 0) {
@@ -755,14 +761,21 @@ function empty_message(){
         // $("#cont > div").hide(); // Example: Hide the container
     }
 }
-
+/**
+ * send request to the server with data to handle facture creating
+ */
 function ajouter_fact(){
   $("#cont > div > .all > .left-div > .Ajouter-facture > a").on("click", function () {
+    let checked = $("table > tbody > tr > td > div > a > div > .fa-check");
+    if(checked.length < 1)$(".popup.facts-check > div > .op > .btn.save").addClass("readonly");
     $(".popup.facts-check.hide").removeClass("hide");
-    $(".popup.facts-check > div > .op > .btn.cancel > a").on("click", function(){$(".popup.facts-check").addClass("hide");});
+    $(".popup.facts-check > div > .op > .btn.cancel > a").on("click", function(){
+      $(".popup.facts-check").addClass("hide");
+    });
     $(".popup.facts-check > div > .op > .btn.save > a").on("click", function(){
+      if($(this).closest(".btn.save").hasClass("readonly"))return;
       temps =[] 
-      $("table > tbody > tr > td > div > a > div > .fa-check").each(function() {
+      checked.each(function() {
         let rwId = $(this).closest("tr").attr("rw-id");
         if (rwId) {
             temps.push(rwId);
@@ -790,13 +803,38 @@ function ajouter_fact(){
     });
 })
 }
-
-function button_affiche_fact(){
-  if( $("body > #cont > div > div > .left-div > div > .select.sortAnalyse").attr("code")=="nouvelle_facture"){ $("body > #cont > div > div > .left-div > .btn.affiche_pre_facture").addClass("readonly");}
-  $("body > #cont > div > div > .left-div > div > .select.sortAnalyse > div > .list > .option").on("click", function () {
-      let selected = $(this).attr("code");
-    if(selected == "nouvelle_facture"){
-      $("body > #cont > div > div > .left-div > .btn.affiche_pre_facture").addClass("readonly");
-    }else{$("body > #cont > div > div > .left-div > .btn.affiche_pre_facture").removeClass("readonly");}
+/**
+ * send to server with data to handle unfacting temps
+ */
+function unfactTmps()
+{
+  $("#cont > div > .all > .left-div > .btn.unfact > a").on("click", function(){
+    let checked = $("table > tbody > tr > td > div > a > div > .fa-check");
+    if(checked.length < 1)return;
+    temps =[] 
+    checked.each(function() {let rwId = $(this).closest("tr").attr("rw-id");if (rwId) temps.push(rwId);});
+    $.ajax({
+    url: "ajouter_facture.php",
+    type: "POST",
+    data: {
+    "fact_id": "unfact",
+    "temps": temps,
+    }
+    , beforeSend: function() { loaderShow(); }
+    , complete: function() { loaderHide(); }
+    , success: function(data)
+    {
+        try { var result = JSON.parse(data); } catch(error) { popError(); return; }
+        if(result["code"] == 200) { location.reload();return; }
+        popError(result["txt"], result["btn"]);
+    }
+    })
   });
+}
+/**
+ * 
+ */
+function button_affiche_fact(){
+  let facts = $(".popup.facts-check.hide > div > .checkbox > .data > .list > .option");
+  if(facts.length < 2) $("#cont > div > div > .left-div > .btn.affiche_pre_facture").addClass("readonly");
 }

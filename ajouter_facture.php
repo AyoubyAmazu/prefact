@@ -28,7 +28,7 @@ if (isset($_POST["fact_id"]) && isset($_POST["temps"])) {
         }
         die(json_encode(["code" => 200, "id_fact" => $id_fact]));
     }
-    if ($_POST["fact_id"] !== "nouvelle_facture") {
+    if ($_POST["fact_id"] !== "nouvelle_facture" && $_POST["fact_id"] !== "unfact") {
         $id_fact = cryptDel($_POST["fact_id"]);
         $fact_cat = dbSelect("SELECT id from facture_cat where facture_id = $id_fact limit 1", array("db" => "prefact"))[0]["id"];
         $fact_det_id = dbSelect("SELECT id from facture_det where fact_cat_id = $fact_cat order by id limit 1", array("db" => "prefact"))[0];
@@ -40,6 +40,13 @@ if (isset($_POST["fact_id"]) && isset($_POST["temps"])) {
         foreach ($_POST["temps"] as $temp) {
             $id = dbSelect("select max(id) as id from facture_temps", array("db" => "prefact"))[0]["id"] + 1;
             $sql = "insert into facture_temps (id , fact_det_id , temps_id) values ($id, $fact_det_id, $temp)";
+            dbExec($sql, array("db" => "prefact"));
+        }
+        die(json_encode(["code" => 200, "id_fact" => $_POST["fact_id"]]));
+    }
+    if($_POST["fact_id"] == "unfact"){
+        foreach ($_POST["temps"] as $temp) {
+            $sql = "insert into temps_non_fact (temps_id) values ($temp)";
             dbExec($sql, array("db" => "prefact"));
         }
         die(json_encode(["code" => 200, "id_fact" => $_POST["fact_id"]]));
