@@ -51,8 +51,8 @@ $(document).ready(function () {
 
     // enoyer validation
     $("#cont > div > .top > div > .envoyer-valid").on("click", function () {envoyer_validation();});
-
-
+    // handles delete fact btn click
+    onDeleteFact();
   });
 //the start of list select open script
 function sortColSelectFilter(div) {
@@ -299,3 +299,27 @@ function deleteDetail(field) {
         }
     });
   }
+  /**
+   * Sends ajax request to the server to handle fact delete
+   */
+function onDeleteFact() {
+  $("#cont > div > .top > .first-line > div.supprimer-fac > a").on("click", function(){
+    
+    let code_dossier = new URLSearchParams(window.location.search).get("d");
+    let fact = new URLSearchParams(window.location.search).get("f");
+    console.log(code_dossier, fact);
+    $.ajax({
+      url: `affiche_fact.php?d=${code_dossier}&f=${fact}`,
+      type: "POST",
+      data: {"delete_fact": ""}
+      , beforeSend: function() { loaderShow(); }
+      , complete: function() { loaderHide(); }
+      , success: function(data)
+      {
+          try { var result = JSON.parse(data); } catch(error) { popError(); return; }
+          if(result["code"] == 200) { window.location.href = "resultat.php?d="+code_dossier; return; }
+          popError(result["txt"], result["btn"]);
+      }
+    })
+  });
+}

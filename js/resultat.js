@@ -771,6 +771,7 @@ function ajouter_fact(){
     $(".popup.facts-check.hide").removeClass("hide");
     $(".popup.facts-check > div > .op > .btn.cancel > a").on("click", function(){
       $(".popup.facts-check").addClass("hide");
+      $(".popup.facts-check > div > .op > .btn.save").removeClass("readonly");
     });
     $(".popup.facts-check > div > .op > .btn.save > a").on("click", function(){
       if($(this).closest(".btn.save").hasClass("readonly"))return;

@@ -9,8 +9,6 @@ $factId = ((isset($_GET["f"]))? cryptDel($_GET["f"]) : false);
 $getD = ((isset($_GET["d"]))? cryptDel($_GET["d"]) : false);
 if($getD == false) err(array_merge($opts, array("txt" => "Erreur d'accès", "btn" => APPurl)));
 if($factId == false) err(array_merge($opts, array("txt" => "Erreur d'accès", "btn" => APPurl)));
-
-handleRequest();
 $cookie = cookieInit();
 
 // All queries of this page
@@ -27,6 +25,7 @@ $select_tmps = "SELECT * FROM temps WHERE TEMPS_ID = ?";
 
 $delete_prest_by_detail = "DELETE FROM prestation WHERE IdDetail = ?";
 $delete_prest_by_id = "DELETE FROM prestation WHERE IdPrest = :idPrest";
+handleRequest();
 
 /**
  * composes the page
@@ -87,7 +86,7 @@ function composeFilters()
 
 	$html .= formBtn(array("key" => "envoyer-valid", "txt" => "Envoyer â la validation", "href"=>"fact_a_valider.php?d=".$_GET["d"]));
 	$html .= formBtn(array("key" => "inserer-ligne", "txt" => "Inserer nouvelles lignes", "href"=>"resultat.php?d=".$_GET["d"]));
-	$html .= formBtn(array("key" => "supprimer-fac", "txt" => "Supprimer cette facture", "href"=>"resultat.php?d=".$_GET["d"]));
+	$html .= formBtn(array("key" => "supprimer-fac", "txt" => "Supprimer cette facture"));
 	$html .= formBtn(array("key" => "archiver-fac", "txt" => "Archiver la facture"));
 	$html .= formBtn(array("key" => "visualisation-fac", "txt" => "Visualisation de la facture", "href" => "visualisation.php"));
 	$html .= formBtn(array("key" => "basculer", "txt" => "Basculer vers synthèse du dossier", "href" => "recap.php?d=".$_GET["d"]));
@@ -197,7 +196,6 @@ function composeFactCat(): string
 
 	return $html;
 }
-// ! here
 function composeFactDet($idTrav): string
 {
 	global $fact_det;
@@ -332,14 +330,34 @@ function fetchExerciceList(): array
 }
 
 /**
- * Handle ajax post requests
+ * Handle ajax requests
  * @return void
  */
 function handleRequest()
 {
 	if(isset($_POST["delete_prest"]))deletePrestById($_POST["delete_prest"]);
 	if(isset($_POST["delete_detail"]))deleteDetail($_POST["delete_detail"]);
+	if(isset($_POST["delete_fact"]))deleteFact();
 
+}
+function deleteFact()
+{
+	global $fact_cat, $factId;
+	$factCatsIds = array_column(dbSelect($fact_cat, array("db"=>"prefact")), "id");
+	if(sizeof($factCatsIds) > 0){
+		$factDetails = array_column(dbSelect("SELECT id FROM facture_det WHERE fact_cat_id in (".implode(", ", $factCatsIds).")", array("db"=>"prefact")), "id");
+		if(sizeof($factDetails) > 0){
+			// delete temps
+			dbExec("DELETE FROM `facture_temps` WHERE fact_det_id in (".implode(", ", $factDetails).");", array("db"=>"prefact"));
+			// delete fact details
+			dbExec("DELETE FROM `facture_det` WHERE fact_cat_id in (".implode(", ", $factCatsIds).");", array("db"=>"prefact"));
+		}
+		// delete fact categories
+		dbExec("DELETE FROM `facture_cat` WHERE facture_id = $factId;", array("db"=>"prefact"));
+	}
+	// delete facture
+	dbExec("DELETE FROM `facture` WHERE id = $factId;", array("db"=>"prefact"));
+	die(json_encode(['code'=>200]));
 }
 /**
  * delete prestation by id
