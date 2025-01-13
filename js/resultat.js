@@ -8,15 +8,7 @@ $(document).ready(function () {
       isSorted = !isSorted;
     });
   });
-  // group collab
-  // $("#cont > div > .field > table > thead > tr > .second-2.collab-header").each(
-  //   function () {
-  //     $(this).on("click", function () {
-  //       groupCollab($(this).closest("table"));
-  //     });
-  //   }
-  // );
-
+  
   delet_empty_table();
   empty_message();
   ajouter_fact();
@@ -24,13 +16,14 @@ $(document).ready(function () {
   unfactTmps();
 
   // show special
-  //  console.log($("#cont > div > .all > .right-div > .affiche-exep > a"))
+
   $("#cont > div > .all > .right-div > .affiche-exep > a").on(
     "click",
     function () {
       filterSpecial();
     }
   );
+
   $(".select").on("click", function () {
     selectAdapt($(this));
   });
@@ -41,7 +34,7 @@ $(document).ready(function () {
       $(this).on("click", function () {
         formCheckboxUnique($(this));
       });
-    });
+  });
   const tableClasses = [
     "fieldset1",
     "fieldset2",
@@ -294,7 +287,6 @@ $(document).ready(function () {
       event.preventDefault();
       const iconTd = $(this).find("i");
       iconTd.toggleClass("clicked");
-
       if (iconTd.hasClass("clicked")) {
         iconTd.removeClass("fa-circle");
         iconTd.addClass("fa-circle-check");
@@ -389,120 +381,7 @@ function sortColAdapt() {
     return;
 }
 
-//the end of list select open script
 
-/**
- * group each table facts by collab
- * @param {HTMLElement} table
- */
-// function groupCollab(table) {
-//   let i;
-//   table.find("tr > td > .btn.min.first-check > a > div > i").each(function () {
-//     $(this).removeClass("fa-check");
-//   });
-//   table.find(".total-row-collab").each(function () {
-//     table[0].deleteRow($(this[0]));
-//   });
-//   let rows = table.find("tr");
-//   table.find("tbody").html("");
-//   rows.sort((a, b) => {
-//     const acode = $(a).find(".code-row > a").text().toLowerCase();
-//     const bcode = $(b).find(".code-row > a").text().toLowerCase();
-//     return acode.localeCompare(bcode);
-//   });
-//   rows.each(function () {
-//     table.find("tbody").append($(this));
-//   });
-
-//   let currentcollab = null;
-//   let collabTotals = {};
-//   let dureeTotals = {};
-//   let qntTotals = {};
-
-//   rows.each(function () {
-//     let collabCell = $(this).find(".code-row");
-//     let amountCell = $(this).find(".amount");
-//     let dureeCell = $(this).find(".duree");
-//     let qntCell = $(this).find(".qnt");
-
-//     if (collabCell && amountCell && dureeCell && qntCell) {
-//       let collabCode = collabCell.text().trim();
-//       let amount = parseFloat(amountCell.text().replace(",", ""));
-//       let duree = parseFloat(dureeCell.text());
-//       let qnt = parseInt(qntCell.text());
-
-//       if (!isNaN(amount)) {
-//         collabTotals[collabCode] = (collabTotals[collabCode] || 0) + amount;
-//       }
-
-//       if (!isNaN(duree)) {
-//         dureeTotals[collabCode] = (dureeTotals[collabCode] || 0) + duree;
-//       }
-
-//       if (!isNaN(qnt)) {
-//         qntTotals[collabCode] = (qntTotals[collabCode] || 0) + qnt;
-//       }
-//     }
-//   });
-
-//   for (i = rows.length - 1; i >= 1; i--) {
-//     let collab = rows[i].querySelector(".code-row").textContent;
-
-//     if (collab !== currentcollab) {
-//       currentcollab = collab;
-
-//       let newRow = table[0].insertRow(i + 1);
-
-//       newRow.classList.add("total-row-collab");
-
-//       let tdWithButton = document.createElement("td");
-
-//       tdWithButton.innerHTML = formBtn({
-//         key: "first-check",
-//         ico: "fa-circle",
-//       });
-//       tdWithButton.querySelector("a").setAttribute("data-collab", collab);
-
-//       newRow.appendChild(tdWithButton);
-
-//       let textCell = newRow.insertCell(1);
-//       textCell.textContent = "Cocher tout : " + collab;
-//       textCell.setAttribute("colspan", "5");
-
-//       let totalQntCell = newRow.insertCell(2);
-//       totalQntCell.textContent = qntTotals[collab];
-
-//       let totalDureeCell = newRow.insertCell(3);
-//       totalDureeCell.textContent = dureeTotals[collab];
-
-//       let totalAmountCell = newRow.insertCell(4);
-//       totalAmountCell.textContent = collabTotals[collab];
-//     }
-//   }
-//   handleCheckGroup();
-// }
-
-/**
- * checks all factories related when checking the grouping row
- */
-function handleCheckGroup() {
-  $("table > tbody > tr.total-row-collab > td > div > a").each(function () {
-    $(this).on("click", function () {
-      let code = $(this).attr("data-collab");
-      $(this)
-        .closest("tbody")
-        .find(".rw > .code-row > a")
-        .each(function () {
-          if ($(this).text() === code) {
-            $(this)
-              .closest(".rw")
-              .find("td > .first-check > a > .ico > i")
-              .toggleClass("fa-check");
-          }
-        });
-    });
-  });
-}
 
 // function sortTableByPrest(tableId) {
 //   let table, rows, switching, i, shouldSwitch;
@@ -684,16 +563,12 @@ function handleCheckGroupPrest() {
   $("table > tbody > tr.total-row-collab > td > div > a").each(function () {
     $(this).on("click", function () {
       $(this).find(".ico > i").toggleClass("fa-check");
+      let groupcheckbox = $(this).find(".ico > i");
       let code = $(this).attr("data-collab");
-      $(this)
-        .closest("tbody")
-        .find(".rw > .prest-column > div > div > input")
-        .each(function () {
+      $(this).closest("tbody").find(".rw > .prest-column > div > div > input").each(function () {
           if ($(this).attr("value") === code) {
-            $(this)
-              .closest(".rw")
-              .find("td > .first-check > a > .ico > i")
-              .toggleClass("fa-check");
+            $(this).closest(".rw").find("td > .first-check > a > .ico > i").removeClass();
+           $(this).closest(".rw").find("td > .first-check > a > .ico > i").addClass(groupcheckbox.attr("class"));
           }
         });
     });
@@ -705,18 +580,13 @@ function handleCheckGroupPrest() {
 function handleCheckGroupcollab() {
   $("table > tbody > tr.total-row-collab > td > div > a").each(function () {
     $(this).on("click", function () {
-      $(this).find(".ico > i").toggleClass("fa-check");
+     $(this).find(".ico > i").toggleClass("fa-check");
+       let groupcheckbox = $(this).find(".ico > i");
       let code = $(this).attr("data-collab");
-      $(this)
-        .closest("tbody")
-        .find(".rw > .code-row > a")
-        .each(function () {
-
+      $(this).closest("tbody").find(".rw > .code-row > a").each(function () {
           if ($(this).html() === code) {
-            $(this)
-              .closest(".rw")
-              .find("td > .first-check > a > .ico > i")
-              .toggleClass("fa-check");
+            $(this).closest(".rw").find("td > .first-check > a > .ico > i").removeClass();
+           $(this).closest(".rw").find("td > .first-check > a > .ico > i").addClass(groupcheckbox.attr("class"));
           }
         });
     });
@@ -881,6 +751,7 @@ $(document).ready(function () {
   let table = "";
   let originalRows = "";
   let tbody;
+
   $("#cont > div > .field > table > thead > tr > .second-2.prest-header").each(
     function () {
       $(this).on("click", function () {
@@ -952,13 +823,13 @@ $(document).ready(function () {
             `);
           }
           handleCheckGroupPrest();
+          cheakonCLick(table);
         }
       });
     }
   );
-
   // end sort by prest
-
+  
   // start sort by collab
   $("#cont > div > .field > table > thead > tr > .second-2.collab-header").each(
     function () {
@@ -979,7 +850,6 @@ $(document).ready(function () {
 
           // Group rows based on the clicked column's value
           rows.forEach((row) => {
-            console.log(columnIndex)
             const cellValue = $(row).find(`td:eq(${columnIndex}) a`).html();
             if (!groupedRows[cellValue]) groupedRows[cellValue] = [];
             groupedRows[cellValue].push(row);
@@ -1031,9 +901,23 @@ $(document).ready(function () {
             `);
           }
           handleCheckGroupcollab();
+          cheakonCLick(table);
+
         }
       });
     }
   );
   // end sort by collab
+
+  // checked input 
+  
 });
+
+function cheakonCLick(table){
+  $(table).find("tbody > tr > td > .btn.min.first-check > a").each(function () {
+    $(this).on("click", function () {
+      $(this.firstChild.firstChild).toggleClass("fa-check");
+    });
+  });
+
+}
