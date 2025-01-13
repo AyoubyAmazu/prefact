@@ -17,8 +17,6 @@ if (isset($_POST["fact_id"]) && isset($_POST["temps"])) {
         die(json_encode(["code" => 200, "id_fact" => cryptSave($factId)]));
     }
     if ($_POST["fact_id"] !== "nouvelle_facture" && $_POST["fact_id"] !== "unfact") {
-        // print_r($_POST);
-        // die();
         $factId = cryptDel($_POST["fact_id"]);
         foreach ($_POST["temps"] as $catId => $temps) {
             $factCat = createFactCat(cryptDel($catId), $factId);
