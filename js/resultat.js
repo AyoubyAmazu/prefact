@@ -775,12 +775,12 @@ function ajouter_fact(){
     });
     $(".popup.facts-check > div > .op > .btn.save > a").on("click", function(){
       if($(this).closest(".btn.save").hasClass("readonly"))return;
-      temps =[] 
+      temps ={};
       checked.each(function() {
         let rwId = $(this).closest("tr").attr("rw-id");
-        if (rwId) {
-            temps.push(rwId);
-        }
+        let catId = $(this).closest("table").attr("id");
+        if(catId in temps)temps[catId].push(rwId);
+        else temps[catId] = [rwId]; 
       });
       let searchParams = new URLSearchParams(window.location.search)
       let code_dossier=searchParams.get("d");
