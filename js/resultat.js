@@ -382,119 +382,6 @@ function sortColAdapt() {
 }
 
 
-
-// function sortTableByPrest(tableId) {
-//   let table, rows, switching, i, shouldSwitch;
-//   table = document.getElementById(tableId);
-//   if (table === null) {
-//     console.log("Table not found with ID: " + tableId);
-//     return;
-//   }
-
-//   let prestRowsDelete = table.querySelectorAll(
-//     " tr > td > .btn.min.first-check > a > div > i"
-//   );
-
-//   prestRowsDelete.forEach(function (element) {
-//     element.classList.remove("clicked");
-//     element.classList.remove("fa-circle-check");
-//   });
-
-//   let prestRows = table.querySelectorAll(".total-row-collab");
-//   for (let i = 0; i < prestRows.length; i++) {
-//     table.deleteRow(prestRows[i].rowIndex);
-//   }
-
-//   switching = true;
-
-//   while (switching) {
-//     switching = false;
-//     rows = table.rows;
-
-//     for (i = 1; i < rows.length - 1; i++) {
-//       shouldSwitch = false;
-//       let x = rows[i].querySelector(".prest-column").textContent;
-//       let y = rows[i + 1].querySelector(".prest-column").textContent;
-
-//       if (x.toLowerCase() > y.toLowerCase()) {
-//         shouldSwitch = true;
-//         break;
-//       }
-//     }
-
-//     if (shouldSwitch) {
-//       rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-//       switching = true;
-//     }
-//   }
-
-//   let currentPrest = null;
-//   let prestTotals = {};
-//   let dureeTotals = {};
-//   let qntTotals = {};
-
-//   for (i = 1; i < rows.length; i++) {
-//     let prestCell = rows[i].querySelector(".prest-column");
-//     let amountCell = rows[i].querySelector(".amount");
-//     let dureeCell = rows[i].querySelector(".duree");
-//     let qntCell = rows[i].querySelector(".qnt");
-
-//     if (prestCell && amountCell && dureeCell && qntCell) {
-//       let prestCode = prestCell.textContent.trim();
-//       let amount = parseFloat(amountCell.textContent.replace(",", ""));
-//       let duree = parseFloat(dureeCell.textContent);
-//       let qnt = parseInt(qntCell.textContent);
-
-//       if (!isNaN(amount)) {
-//         prestTotals[prestCode] = (prestTotals[prestCode] || 0) + amount;
-//       }
-
-//       if (!isNaN(duree)) {
-//         dureeTotals[prestCode] = (dureeTotals[prestCode] || 0) + duree;
-//       }
-
-//       if (!isNaN(qnt)) {
-//         qntTotals[prestCode] = (qntTotals[prestCode] || 0) + qnt;
-//       }
-//     }
-//   }
-
-//   for (i = rows.length - 1; i >= 1; i--) {
-//     let prest = rows[i].querySelector(".prest-column").textContent;
-
-//     if (prest !== currentPrest) {
-//       currentPrest = prest;
-
-//       let newRow = table.insertRow(i + 1);
-
-//       newRow.classList.add("total-row-prest");
-
-//       let tdWithButton = document.createElement("td");
-
-//       tdWithButton.innerHTML = formBtn({
-//         key: "first-check",
-//         ico: "fa-circle",
-//       });
-//       tdWithButton.querySelector("a").setAttribute("data-prest", prest);
-
-//       newRow.appendChild(tdWithButton);
-
-//       let textCell = newRow.insertCell(1);
-//       textCell.textContent = "Cocher tout : " + prest;
-//       textCell.setAttribute("colspan", "5");
-
-//       let totalQntCell = newRow.insertCell(2);
-//       totalQntCell.textContent = qntTotals[prest];
-
-//       let totalDureeCell = newRow.insertCell(3);
-//       totalDureeCell.textContent = dureeTotals[prest];
-
-//       let totalAmountCell = newRow.insertCell(4);
-//       totalAmountCell.textContent = prestTotals[prest];
-//     }
-//   }
-// }
-
 $(document).ready(function () {
   // the start of the affiche exep //
 
@@ -556,42 +443,7 @@ $(document).on("click", "thead .first-check", function () {
 });
 
 
-/**
- * Handels select temps group button
- */
-function handleCheckGroupPrest() {
-  $("table > tbody > tr.total-row-collab > td > div > a").each(function () {
-    $(this).on("click", function () {
-      $(this).find(".ico > i").toggleClass("fa-check");
-      let groupcheckbox = $(this).find(".ico > i");
-      let code = $(this).attr("data-collab");
-      $(this).closest("tbody").find(".rw > .prest-column > div > div > input").each(function () {
-          if ($(this).attr("value") === code) {
-            $(this).closest(".rw").find("td > .first-check > a > .ico > i").removeClass();
-           $(this).closest(".rw").find("td > .first-check > a > .ico > i").addClass(groupcheckbox.attr("class"));
-          }
-        });
-    });
-  });
-}
-/**
- * Handels select collab group button
- */
-function handleCheckGroupcollab() {
-  $("table > tbody > tr.total-row-collab > td > div > a").each(function () {
-    $(this).on("click", function () {
-     $(this).find(".ico > i").toggleClass("fa-check");
-       let groupcheckbox = $(this).find(".ico > i");
-      let code = $(this).attr("data-collab");
-      $(this).closest("tbody").find(".rw > .code-row > a").each(function () {
-          if ($(this).html() === code) {
-            $(this).closest(".rw").find("td > .first-check > a > .ico > i").removeClass();
-           $(this).closest(".rw").find("td > .first-check > a > .ico > i").addClass(groupcheckbox.attr("class"));
-          }
-        });
-    });
-  });
-}
+
 /**
  * Deletes fields that are empty of temps
  */
@@ -745,172 +597,112 @@ function button_affiche_fact() {
       "readonly"
     );
 }
-
-    // start sort by prest
+/**
+ * sort by prest and collab 
+ */ 
 $(document).ready(function () {
   let table = "";
   let originalRows = "";
   let tbody;
+  function handleCheckGroup( columnClass) {
+    $("table > tbody > tr.total-row-collab > td > div > a").each(function () {
+        $(this).on("click", function () {
+            $(this).find(".ico > i").toggleClass("fa-check");
+            let groupcheckbox = $(this).find(".ico > i");
+            let code = $(this).attr("data-collab");
+            $(this).closest("tbody").find( columnClass).each(function () {
+                let value = $(this).is("input") ? $(this).attr("value") : $(this).html();
+                if (value === code) {
+                    $(this).closest(".rw").find("td > .first-check > a > .ico > i").removeClass();
+                    $(this).closest(".rw").find("td > .first-check > a > .ico > i").addClass(groupcheckbox.attr("class"));
+                }
+            });
+        });
+    });
+}
+  function groupAndSortRows(headerClass, cellSelector, handleCheckGroup,columnClass) {
+      $(headerClass).each(function () {
+          $(this).on("click", function () {
+              // Check if the table is already grouped
+              if ($(this).parents().find(".total-row-collab").length > 0) {
+                  // Reset to original table
+                  tbody.empty();
+                  tbody.html(originalRows);
+              } else {
+                  table = $(this).closest("table");
+                  tbody = table.find("tbody");
+                  originalRows = tbody.html(); // Save the original table rows
+                  const columnIndex = table.find(headerClass).index();
 
-  $("#cont > div > .field > table > thead > tr > .second-2.prest-header").each(
-    function () {
-      $(this).on("click", function () {
-        // Check if the table is already grouped
-        if ($(this).parents().find(".total-row-collab").length > 0) {
-          // Reset to original table
-          tbody.empty();
-          tbody.html(originalRows);
-        } else {
-          table = $(this).closest("table");
-          tbody = table.find("tbody");
-          originalRows = tbody.html(); // Save the original table rows
-          const columnIndex = table.find(".prest-header").index();
+                  const rows = table.find("tbody tr").toArray(); // Get all rows in the tbody
+                  const groupedRows = {};
 
-          const rows = table.find("tbody tr").toArray(); // Get all rows in the tbody
-          const groupedRows = {};
+                  // Group rows based on the clicked column's value
+                  rows.forEach((row) => {
+                      const cellValue = $(row).find(`td:eq(${columnIndex}) ${cellSelector}`).val() || $(row).find(`td:eq(${columnIndex}) ${cellSelector}`).html();
+                      if (!groupedRows[cellValue]) groupedRows[cellValue] = [];
+                      groupedRows[cellValue].push(row);
+                  });
 
-          // Group rows based on the clicked column's value
-          rows.forEach((row) => {
-            
-            const cellValue = $(row).find(`td:eq(${columnIndex}) input`).val();
-            if (!groupedRows[cellValue]) groupedRows[cellValue] = [];
-            groupedRows[cellValue].push(row);
+                  // Clear table body
+                  tbody.empty();
+
+                  // Loop through each group and append rows to the table
+                  for (const group in groupedRows) {
+                      // Append rows belonging to the group
+                      groupedRows[group].forEach((row) => tbody.append(row));
+
+                      // Calculate the total for the "Total_PV" column
+                      const total_pv = groupedRows[group].reduce((sum, row) => {
+                          const value = parseFloat($(row).find("td:last").text()) || 0;
+                          return sum + value;
+                      }, 0);
+
+                      // Calculate the total for the "Total_duree" column
+                      const total_duree = groupedRows[group].reduce((sum, row) => {
+                          const value = parseFloat($(row).find("td:eq(6)").text()) || 0;
+                          return sum + value;
+                      }, 0);
+
+                      // Calculate the total for the "Total_Qte" column
+                      const total_qte = groupedRows[group].reduce((sum, row) => {
+                          const value = parseFloat($(row).find("td:eq(7)").text()) || 0;
+                          return sum + value;
+                      }, 0);
+
+                      // Add a total row for the group
+                      tbody.append(`
+                      <tr class="total-row-collab">
+                        <td>
+                          <div class="btn min first-check">
+                            <a data-collab="${group}">
+                              <div class="ico">
+                                <i class="fa-solid fa-fa-circle"></i>
+                              </div>
+                            </a>
+                          </div>
+                        </td>
+                        <td colspan="5">Cocher tout :  ${group}</td>
+                        <td>${total_duree}</td>
+                        <td>${total_qte}</td>
+                        <td>${total_pv}</td>
+                      </tr>
+                      `);
+                  }
+                  handleCheckGroup(columnClass);
+                  cheakonCLick(table);
+              }
           });
-
-          // Clear table body
-          tbody.empty();
-
-          // Loop through each group and append rows to the table
-          for (const group in groupedRows) {
-            // Append rows belonging to the group
-            groupedRows[group].forEach((row) => tbody.append(row));
-
-            // Calculate the total for the "Total_PV" column
-            const total_pv = groupedRows[group].reduce((sum, row) => {
-              const value = parseFloat($(row).find("td:last").text()) || 0;
-              return sum + value;
-            }, 0);
-
-            // Calculate the total for the "Total_duree" column
-            const total_duree = groupedRows[group].reduce((sum, row) => {
-              const value = parseFloat($(row).find("td:eq(6)").text()) || 0;
-              return sum + value;
-            }, 0);
-
-            // Calculate the total for the "Total_Qte" column
-            const total_qte = groupedRows[group].reduce((sum, row) => {
-              const value = parseFloat($(row).find("td:eq(7)").text()) || 0;
-              return sum + value;
-            }, 0);
-
-            // Add a total row for the group
-            tbody.append(`
-            <tr class="total-row-collab">
-              <td>
-                <div class="btn min first-check">
-                  <a data-collab="${group}">
-                    <div class="ico">
-                      <i class="fa-solid fa-fa-circle"></i>
-                    </div>
-                  </a>
-                </div>
-              </td>
-              <td colspan="5">Cocher tout :  ${group}</td>
-              <td>${total_duree}</td>
-              <td>${total_qte}</td>
-              <td>${total_pv}</td>
-            </tr>
-            `);
-          }
-          handleCheckGroupPrest();
-          cheakonCLick(table);
-        }
       });
-    }
-  );
-  // end sort by prest
-  
-  // start sort by collab
-  $("#cont > div > .field > table > thead > tr > .second-2.collab-header").each(
-    function () {
-      $(this).on("click", function () {
-        // Check if the table is already grouped
-        if ($(this).parents().find(".total-row-collab").length > 0) {
-          // Reset to original table
-          tbody.empty();
-          tbody.html(originalRows);
-        } else {
-          table = $(this).closest("table");
-          tbody = table.find("tbody");
-          originalRows = tbody.html(); // Save the original table rows
-          const columnIndex = table.find(".collab-header").index();
+  }
 
-          const rows = table.find("tbody tr").toArray(); // Get all rows in the tbody
-          const groupedRows = {};
+  let columnPrest = $(".rw > .prest-column > div > div > input");
+  let columnCollab = $(".rw > .code-row > a");
+  // Group and sort by prest
+  groupAndSortRows(".second-2.prest-header", "input",handleCheckGroup,columnPrest );
 
-          // Group rows based on the clicked column's value
-          rows.forEach((row) => {
-            const cellValue = $(row).find(`td:eq(${columnIndex}) a`).html();
-            if (!groupedRows[cellValue]) groupedRows[cellValue] = [];
-            groupedRows[cellValue].push(row);
-          });
-
-          // Clear table body
-          tbody.empty();
-
-          // Loop through each group and append rows to the table
-          for (const group in groupedRows) {
-            // Append rows belonging to the group
-            groupedRows[group].forEach((row) => tbody.append(row));
-
-            // Calculate the total for the "Total_PV" column
-            const total_pv = groupedRows[group].reduce((sum, row) => {
-              const value = parseFloat($(row).find("td:last").text()) || 0;
-              return sum + value;
-            }, 0);
-
-            // Calculate the total for the "Total_duree" column
-            const total_duree = groupedRows[group].reduce((sum, row) => {
-              const value = parseFloat($(row).find("td:eq(6)").text()) || 0;
-              return sum + value;
-            }, 0);
-
-            // Calculate the total for the "Total_Qte" column
-            const total_qte = groupedRows[group].reduce((sum, row) => {
-              const value = parseFloat($(row).find("td:eq(7)").text()) || 0;
-              return sum + value;
-            }, 0);
-
-            // Add a total row for the group
-            tbody.append(`
-            <tr class="total-row-collab">
-              <td>
-                <div class="btn min first-check">
-                  <a data-collab="${group}">
-                    <div class="ico">
-                      <i class="fa-solid fa-fa-circle"></i>
-                    </div>
-                  </a>
-                </div>
-              </td>
-              <td colspan="5">Cocher tout :  ${group}</td>
-              <td>${total_duree}</td>
-              <td>${total_qte}</td>
-              <td>${total_pv}</td>
-            </tr>
-            `);
-          }
-          handleCheckGroupcollab();
-          cheakonCLick(table);
-
-        }
-      });
-    }
-  );
-  // end sort by collab
-
-  // checked input 
-  
+  // Group and sort by collab
+  groupAndSortRows(".second-2.collab-header", "a",handleCheckGroup,columnCollab );
 });
 
 function cheakonCLick(table){
