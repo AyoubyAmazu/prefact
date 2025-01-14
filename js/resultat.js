@@ -429,6 +429,8 @@ $(document).ready(function () {
   ).on("click", function (event) {
     sortColSelectOption($(event.target).parents(".option"));
   });
+
+  // cheack a row
   $("tr > td >.first-check > a").on("click", function () {
     $(this.firstChild.firstChild).toggleClass("fa-check");
   });
@@ -628,6 +630,9 @@ $(document).ready(function () {
                   // Reset to original table
                   tbody.empty();
                   tbody.html(originalRows);
+                  $("tr > td >.first-check > a").on("click", function () {
+                    $(this.firstChild.firstChild).toggleClass("fa-check");
+                  });
               } else {
                   table = $(this).closest("table");
                   tbody = table.find("tbody");
@@ -703,6 +708,7 @@ $(document).ready(function () {
 
   // Group and sort by collab
   groupAndSortRows(".second-2.collab-header", "a",handleCheckGroup,columnCollab );
+
 });
 
 function cheakonCLick(table){
