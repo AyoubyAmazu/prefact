@@ -471,73 +471,41 @@ function empty_message() {
 /**
  * send request to the server with data to handle facture creating
  */
-function ajouter_fact() {
-  $("#cont > div > .all > .left-div > .Ajouter-facture > a").on(
-    "click",
-    function () {
-      let checked = $("table > tbody > tr > td > div > a > div > .fa-check");
-      if (checked.length < 1)
-        $(".popup.facts-check > div > .op > .btn.save").addClass("readonly");
-      $(".popup.facts-check.hide").removeClass("hide");
-      $(".popup.facts-check > div > .op > .btn.cancel > a").on(
-        "click",
-        function () {
-          $(".popup.facts-check").addClass("hide");
-          $(".popup.facts-check > div > .op > .btn.save").removeClass(
-            "readonly"
-          );
-        }
-      );
-      $(".popup.facts-check > div > .op > .btn.save > a").on(
-        "click",
-        function () {
-          if ($(this).closest(".btn.save").hasClass("readonly")) return;
-          temps = [];
-          checked.each(function () {
-            let rwId = $(this).closest("tr").attr("rw-id");
-            if (rwId) {
-              temps.push(rwId);
-            }
-          });
-          let searchParams = new URLSearchParams(window.location.search);
-          let code_dossier = searchParams.get("d");
-          let fact_id = $(this)
-            .closest(".op")
-            .parent()
-            .find(".checkbox")
-            .find(".data > .list > .option.on")
-            .attr("code");
-          $.ajax({
-            url: "ajouter_facture.php?d=" + code_dossier,
-            type: "POST",
-            data: {
-              fact_id: fact_id,
-              temps: temps,
-            },
-            beforeSend: function () {
-              loaderShow();
-            },
-            complete: function () {
-              loaderHide();
-            },
-            success: function (data) {
-              try {
-                var result = JSON.parse(data);
-              } catch (error) {
-                popError();
-                return;
-              }
-              if (result["code"] == 200) {
-                window.location.href =
-                  "affiche_fact.php?d=" +
-                  code_dossier +
-                  "&f=" +
-                  result["id_fact"];
-                return;
-              }
-              popError(result["txt"], result["btn"]);
-            },
-          });
+function ajouter_fact(){
+  $("#cont > div > .all > .left-div > .Ajouter-facture > a").on("click", function () {
+    let checked = $("table > tbody > tr > td > div > a > div > .fa-check");
+    if(checked.length < 1)$(".popup.facts-check > div > .op > .btn.save").addClass("readonly");
+    $(".popup.facts-check.hide").removeClass("hide");
+    $(".popup.facts-check > div > .op > .btn.cancel > a").on("click", function(){
+      $(".popup.facts-check").addClass("hide");
+      $(".popup.facts-check > div > .op > .btn.save").removeClass("readonly");
+    });
+    $(".popup.facts-check > div > .op > .btn.save > a").on("click", function(){
+      if($(this).closest(".btn.save").hasClass("readonly"))return;
+      temps ={};
+      checked.each(function() {
+        let rwId = $(this).closest("tr").attr("rw-id");
+        let catId = $(this).closest("table").attr("id");
+        if(catId in temps)temps[catId].push(rwId);
+        else temps[catId] = [rwId]; 
+      });
+      let searchParams = new URLSearchParams(window.location.search)
+      let code_dossier=searchParams.get("d");
+      let fact_id = $(this).closest(".op").parent().find(".checkbox").find(".data > .list > .option.on").attr("code");    
+      $.ajax({
+        url: "ajouter_facture.php?d="+code_dossier,
+        type: "POST",
+        data: {
+      "fact_id": fact_id,
+      "temps": temps,
+      }
+        , beforeSend: function() { loaderShow(); }
+        , complete: function() { loaderHide(); }
+        , success: function(data)
+        {
+            try { var result = JSON.parse(data); } catch(error) { popError(); return; }
+            if(result["code"] == 200) { window.location.href = "affiche_fact.php?d="+code_dossier+"&f="+result['id_fact']; return; }
+            popError(result["txt"], result["btn"]);
         }
       );
     }

@@ -104,7 +104,7 @@ function formTable($opts = array()): string
     $html .= "</tr>";
     $html .= "</thead>";
     foreach ($opts["list"] as $row) {
-        $html .= "<tr class='rw' rw-id=" . $row["TEMPS_ID"] . ">";
+        $html .= "<tr class='rw' rw-id=" . cryptSave($row["TEMPS_ID"]) . ">";
         $formattedDate = date("m/d/Y", strtotime($row['TEMPS_DATE']));
         // added unvalide icon on porpuse to give the chape of box to the button
         $html .= "<td>" . formBtn(array("key" => "first-check", "ico" => "fa-circle")) . "</td>";
