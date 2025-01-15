@@ -1,2 +1,0 @@
-12/01/2025 16:47:36 | CED | Erreur d'accès | /affiche_fact.php
-12/01/2025 17:57:47 | CED | Erreur d'accès | /affiche_fact.php
