@@ -91,12 +91,12 @@ function formTable($opts = array()): string
     $html .= "<tr>";
     $html .= "<th class='first-1'>" . formBtn(array("key" => "first-check", "ico" => "check-double"));
     $html .= "</th>";
-    $html .= "<th class='second-2 date sort'>Date</th>";
+    $html .= "<th class='second-2 date'>Date</th>";
 
-    $html .= "<th class='second-2 collab-header sort'><p>Collab</p></th>";
-    $html .= "<th class='second-2 prest-header sort'><p>Prest</p></th>";
+    $html .= "<th class='second-2 collab-header'><p onclick=\"sortTable('" . $opts["id"] . "')\">Collab</p></th>";
+    $html .= "<th class='second-2 prest-header'><p onclick=\"sortPrest('" . $opts["id"] . "')\">Prest</p></th>";
 
-    $html .= "<th class='no-line exercice sort'><div class='all-year'><p class='exerciceLabel'>Exercice</p></div></th>";
+    $html .= "<th class='no-line exercice'><div class='all-year'><p class='exerciceLabel'>Exercice</p></div></th>";
     $html .= "<th>Titre</th>";
     $html .= "<th class='last-3'>Qte</th>";
     $html .= "<th class='last-3'>Duree</th>";
