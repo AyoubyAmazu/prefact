@@ -12,7 +12,9 @@ $(document).ready(function(){
     $(this).on("click",function () {deleteCat($(this).closest("fieldset"));});
   });
   $("#cont >  div > .btn-last > .btn > a").on("click", function(){createCat()});
-  $("#cont > div > .content > fieldset > .btn-out > .btn.min.categorie-add > a").on("click",function(){createCat()});
+  $("#cont > div > .content > fieldset > .btn-out > .btn.min.categorie-add > a").on("click",function(){createDet($(this).closest("fieldset").attr("id"))});
+  $("body > #cont >  div > .content > fieldset > .heart > .title > .operation-remove > .btn.operation > a").on("click", function(){deleteDet($(this).closest(".heart"))});
+  $("#cont > div > .top > .first-line > div.archiver-fac > a").on("click", function () {archiverFact()});
 });
   /**
    * Sends ajax request to the server to handle fact delete
@@ -120,7 +122,7 @@ function createCat()
       loaderHide();
     },
     success: function (data) {
-        if(data.code == 200)$("#cont > div > content").append(data.html);
+        if(data.code == 200) location.reload();
         else popError("An error occurred while processing your request.");
     }
   });
@@ -128,12 +130,12 @@ function createCat()
 /**
 * Send ajax request to server to create a new cat detail table 
 */
-function createDet()
+function createDet(id)
 {
   $.ajax({
     type: "POST",
     url: `./affiche_fact.php?d=${dossier}&f=${fact}`,
-    data: { create_det: "" },
+    data: { create_det: "", cat_id:id},
     dataType: "json",
     beforeSend: function () {
       loaderShow();
@@ -142,119 +144,76 @@ function createDet()
       loaderHide();
     },
     success: function (data) {
-        if(data.code == 200)$("#cont > div > .content > fieldset > .legend3 ").after(data.html);
+        if(data.code == 200) location.reload();
         else popError("An error occurred while processing your request.");
     }
   });
 }
-// // the start of the new table script //
-
-// $(document).on(
-//   "click",
-//   "body > ,
-//   function () {
-//     var clonedTitleSection = $(this)
-//       .closest("fieldset")
-//       .find(".heart > .title.hide");
-//     var newTableStructure = $(this)
-//       .closest("fieldset")
-//       .find(".heart > table.show");
-
-//     if (clonedTitleSection.length > 0 && newTableStructure.length > 0) {
-//       var clonedTitleSectionCopy = clonedTitleSection.clone();
-//       var newTableStructureCopy = newTableStructure.clone();
-//       newTableStructureCopy.removeClass("show");
-//       clonedTitleSectionCopy.removeClass("hide");
-
-//       var destinationLocation = $(this).closest("fieldset").find(".heart");
-//       destinationLocation.append(clonedTitleSectionCopy);
-//       destinationLocation.append(newTableStructureCopy);
-//     }
-//   }
-// );
-
-// // the end of the new table script //
-
-// // the start of removing a specific table //
-
-// $(document).on(
-//   "click",
-//   "body > #cont >  div > .content > fieldset > .heart > .title > .operation-remove > .btn.operation > a",
-//   function (event) {
-//     event.preventDefault();
-//     console.log("remove button got clicked");
-
-//     var title = $(this).closest(".title");
-//     var table = $(this).closest(".title").next("table");
-
-//     title.remove();
-//     table.remove();
-//   }
-// );
-// // the end of removing a specific table //
-
-// // the start of the textarea script //
-// function autoResize(textarea) {
-//   textarea.style.height = "18px";
-//   textarea.style.height = textarea.scrollHeight + "px";
-// }
-
-// $(document).on(
-//   "input",
-//   "body > #cont >  div > .content > fieldset > .heart > table > tbody > tr > td > .textarea.textarea-container > .data > textarea",
-//   function () {
-//     autoResize(this);
-//   }
-// );
-// // the end of the textarea script //
-
-// // the start of fill in the comment //
-// $(document).on(
-//   "click",
-//   "body > #cont >  div > .content > fieldset > .heart > table > tbody > tr > td > .btn.min.operation > a",
-//   function () {
-//     var $container = $(this).closest(
-//       "body > #cont >  div > .content > fieldset > .heart > table > tbody > tr"
-//     );
-//     var content = $container.find(".titre").text();
-
-//     var textarea = $(this)
-//       .closest("table")
-//       .find(
-//         "tbody > tr > td > .textarea.textarea-container > .data > textarea"
-//       );
-
-//     if (textarea.val() === "") {
-//       textarea.val(content);
-//     } else {
-//       textarea.val(textarea.val() + "\n" + "\n" + content);
-//     }
-//     autoResize(textarea[0]);
-
-//     $("body").on("input propertychange", "textarea", function () {
-//       autoResize(this);
-//     });
-//   }
-// );
-// // the end of fill in the comment //
-
-// $(document).on(
-//   "click",
-//   "body #cont >  div .content fieldset .heart table tbody tr th .btn.min.action a",
-//   function () {
-//     var $table = $(this).closest("table");
-//     var rows = $table.find("tbody > tr").get();
-//     rows.sort(function (a, b) {
-//       var keyA = new Date($(a).children("td").eq(1).text());
-//       var keyB = new Date($(b).children("td").eq(1).text());
-
-//       if (keyA < keyB) return 1;
-//       if (keyA > keyB) return -1;
-//       return 0;
-//     });
-
-//     $.each(rows, function (index, row) {
-//       $table.find("tbody").append(row);
-//     });
-//   }
-// );
+/**
+* Send ajax request to server to delete a cat detail table 
+*/
+function deleteDet(table)
+{
+  let id = $(table).find("table").attr("id");
+  $.ajax({
+    type: "POST",
+    url: `./affiche_fact.php?d=${dossier}&f=${fact}`,
+    data: { delete_det: "", det_id:id},
+    dataType: "json",
+    beforeSend: function () {
+      loaderShow();
+    },
+    complete: function () {
+      loaderHide();
+    },
+    success: function (data) {
+        if(data.code == 200) table.remove();
+        else popError("An error occurred while processing your request.");
+    }
+  });
+}
+/**
+ * 
+ */
+function archiverFact()
+{
+  $.ajax({
+    type: "POST",
+    url: `./affiche_fact.php?d=${dossier}&f=${fact}`,
+    data: { archiverFact: ""},
+    dataType: "json",
+    beforeSend: function () {
+      loaderShow();
+    },
+    complete: function () {
+      loaderHide();
+    },
+    success: function (data) {
+        if(data.code == 200) window.location.href ="./resultat.php?d="+dossier;
+        else popError("An error occurred while processing your request.");
+    }
+  });
+}
+/**
+ * 
+ */
+function Factfae()
+{
+  $.ajax({
+    type: "POST",
+    url: `./affiche_fact.php?d=${dossier}&f=${fact}`,
+    data: { Factfae: ""},
+    dataType: "json",
+    beforeSend: function () {
+      loaderShow();
+    },
+    complete: function () {
+      loaderHide();
+    },
+    success: function (data) {
+      // window.location.href ="./resultat.php?d="+dossier;
+        if(data.code == 200) ;
+        else popError("An error occurred while processing your request.");
+    }
+  });
+}

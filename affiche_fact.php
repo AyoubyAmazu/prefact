@@ -32,7 +32,6 @@ handleRequest();
  */
 function composePage(): string
 {
-
 	$html = " ";
 	$html .= "<div class='top'>";
 	$html .= "<div class='first-line'>";
@@ -135,35 +134,8 @@ function composeFactDet($idTrav): string
 	$result = dbSelect($select, array("db" => "prefact"));
 	$html = "";
 	foreach ($result as $detail) {
-		$html .= "<div class='heart'>";
-		$html .= "<div class='title'>";
-		$html .= "<div class='title-content'>";
-		$html .= formLabel(array("key" => "Titre : "));
-		$html .= formInput(array("key" => "titre-content", "type" => "text"));
-		$html .= "</div>";
-		$html .= "<div class='operation-remove'>";
-		$html .= formBtn(array("key" => "prestation", "ico" => "plus"));
-		$html .= formBtn(array("key" => "operation", "ico" => "trash"));
-		$html .= "</div>";
-		$html .= "</div>";
-		$html .= "<table detid=" . $detail["id"] . ">";
-		$html .= "<tr>";
-		$html .= "<th class='operation'>" . formBtn(array("key" => "action", "ico" => "arrow-up"));
-		$html .= "</th>";
-		$html .= "<th>Date</th>";
-		$html .= "<th>Collab</th>";
-		$html .= "<th>Prest</th>";
-		$html .= "<th class='total' colspan='5'><div>" . formLabel(array("key" => "Total Gènèral = " . $detail["amount"] . " / Total Facturer = ")) . formInput(array("key" => "total-facture", "type" => "text", "value" => $detail["amount"])) . "</div></th>";
-		$html .= "</tr>";
-		$html .= composePrest($detail["id"]);
-		$html .= "<tr class='area'>";
-		$html .= "<td colspan='9'><div>" . formTextarea(array("key" => "textarea-container")) . formBtn(array("key" => "comment-add", "ico" => "comment-medical"));
-		$html .= "</div></td>";
-		$html .= "</tr>";
-		$html .= "</table>";
-		$html .= "</div>";
+		$html .= displayDet(true, $detail);
 	}
-
 	return $html;
 }
 
@@ -226,10 +198,41 @@ function displayField($cat, $composeDet = false)
 	return $html;
 }
 /**
- * Creates html for detail table
- * @return void
+ * Create Detail for a categorie
+ * @param bool $composePrest
+ * @return string
  */
-function displayDet(){}
+function displayDet($composeTemp = false, $detail)
+{
+	$html = "<div class='heart'>";
+		$html .= "<div class='title'>";
+		$html .= "<div class='title-content'>";
+		$html .= formLabel(array("key" => "Titre : "));
+		$html .= formInput(array("key" => "titre-content", "type" => "text"));
+		$html .= "</div>";
+		$html .= "<div class='operation-remove'>";
+		$html .= formBtn(array("key" => "prestation", "ico" => "plus"));
+		$html .= formBtn(array("key" => "operation", "ico" => "trash"));
+		$html .= "</div>";
+		$html .= "</div>";
+		$html .= "<table id=" . cryptSave($detail["id"]) . ">";
+		$html .= "<tr>";
+		$html .= "<th class='operation'>" . formBtn(array("key" => "action", "ico" => "arrow-up"));
+		$html .= "</th>";
+		$html .= "<th>Date</th>";
+		$html .= "<th>Collab</th>";
+		$html .= "<th>Prest</th>";
+		$html .= "<th class='total' colspan='5'><div>" . formLabel(array("key" => "Total Gènèral = ".$detail["amount"]." / Total Facturer = ")) . formInput(array("key" => "total-facture", "type" => "text", "value" => $detail["amount"])) . "</div></th>";
+		$html .= "</tr>";
+		if($composeTemp == true) $html .= composePrest($detail["id"]);
+		$html .= "<tr class='area'>";
+		$html .= "<td colspan='9'><div>" . formTextarea(array("key" => "textarea-container")) . formBtn(array("key" => "comment-add", "ico" => "comment-medical"));
+		$html .= "</div></td>";
+		$html .= "</tr>";
+		$html .= "</table>";
+		$html .= "</div>";
+		return $html;
+}
 /**
  * fetch from db travau drivers and selects from cookie if non return a defult item
  * @param int $cat_id default travaux
@@ -313,7 +316,9 @@ function handleRequest()
 {
 	if (isset($_POST["create_cat"])) createCat();
 	if (isset($_POST["delete_cat"])) deleteCat(cryptDel($_POST["delete_cat"]));
-	if (isset($_POST["create_det"])) createDet();
+	if (isset($_POST["create_det"])) createDet(cryptDel($_POST["cat_id"]));
+	if (isset($_POST["archiverFact"])) archiverFact();
+	if (isset($_POST["delete_det"])) deleteDet(cryptDel($_POST["det_id"]));
 	if (isset($_POST["delete_prest"])) deletePrestById(cryptDel($_POST["delete_prest"]));
 	if (isset($_POST["delete_detail"])) deleteDetail($_POST["delete_detail"]);
 	if (isset($_POST["delete_fact"])) deleteFact();
@@ -341,6 +346,7 @@ function deleteFact()
 	dbExec("DELETE FROM `facture` WHERE id = $factId;", array("db" => "prefact"));
 	die(json_encode(['code' => 200]));
 }
+
 /**
  * creates a category field for this fact
  * @return void
@@ -369,13 +375,24 @@ function deleteCat($catId)
 	dbExec("DELETE FROM facture_cat WHERE id = $catId", array("db"=>"prefact"));
 	die(json_encode(["code"=>200]));
 }
-/**
- * Create Detail for a categorie
- * @return void
- */
-function createDet()
+function createDet($catId)
 {
-
+	$detId = dbSelect("SELECT max(id) as id FROM facture_det");
+	if(empty($detId))$detId = 1;
+	else $detId = $detId[0]["id"]+1;
+	dbExec("INSERT INTO `prefact`.`facture_det` (`id`, fact_cat_id, titre, obs, amount) VALUES ($detId, $catId, '', '', 0.00);");
+	die(json_encode(["code"=>200, "html"=>displayDet(false, array("id"=>$detId, "titre"=>"", "obs"=>"", "amount"=>0.00))]));
+}
+function deleteDet($detId)
+{
+	dbExec("DELETE from facture_det WHERE id = $detId");
+	die(json_encode(["code"=>200]));
+}
+function archiverFact()
+{
+	global $factId;
+	dbExec("UPDATE `prefact`.`facture` SET `archiver` = '1' WHERE (`id` = $factId);");
+	die(json_encode(["code"=>200]));
 }
 /**
  * delete prestation by id

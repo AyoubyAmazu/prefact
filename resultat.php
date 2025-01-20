@@ -13,7 +13,7 @@ if ($getD == false) err(array_merge($opts, array("txt" => "Erreur d'accès", "bt
 $id = dbSelect("SELECT `id` FROM `adr` WHERE `code` = '$getD'", array("db" => "prefact"))[0]["id"];
 // all queries of this page
 $temps_sql = "SELECT * FROM expert_fidsud.temps WHERE ADR_ID =$id AND PREST_CODE LIKE ':p%' AND `LFACT_ID` = 0";
-$select_fact = "SELECT * FROM `facture` WHERE `adr_id` =$id AND `status`=1  ORDER BY `id` ASC";
+$select_fact = "SELECT * FROM `facture` WHERE `adr_id` =$id AND `status`=1 and archiver = 0  ORDER BY `id` ASC";
 $select_cat = "SELECT * FROM prefact.cat;";
 $select_non_fact = "SELECT temps_id FROM temps_non_fact";
 $select_checked_tmps = "SELECT temps_id from facture_temps WHERE fact_det_id in
