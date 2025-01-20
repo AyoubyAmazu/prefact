@@ -119,8 +119,7 @@ function formSelectFilter(div)
 }
 
 function formSelectOption(div)
-{
-    
+{   
     $(div).children(".list").children(".option").on("click",function()
     {
         var code = $(this).attr("code"); if(code == undefined || code == null) code = ""; $(this).parents(".select").attr("code", code);
