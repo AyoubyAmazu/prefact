@@ -24,6 +24,13 @@ $select_checked_tmps = "SELECT temps_id from facture_temps WHERE fact_det_id in
 $tmps_non_fact = dbSelect($select_non_fact, array("db" => "prefact"));
 $tmps_used = dbSelect($select_checked_tmps, array("db" => "prefact"));
 
+if(isset($_POST["temps"])){
+    foreach($_POST["temps"] as $temp){
+        dbExec("INSERT into facture_temps (fact_det_id , temps_id) values (".cryptDel($_GET["t"]).",".cryptDel($temp).")", array("db"=>"prefact"));
+    }
+    die(json_encode(["code"=>200]));
+}
+
 /**
  * creates pages html
  */

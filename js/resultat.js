@@ -767,6 +767,31 @@ function empty_message(){
 function ajouter_fact(){
   $("#cont > div > .all > .left-div > .Ajouter-facture > a").on("click", function () {
     let checked = $("table > tbody > tr > td > div > a > div > .fa-check");
+    let table = new URLSearchParams(window.location.search).get("t");
+    let code_dossier=new URLSearchParams(window.location.search).get("d");
+    let temps ={};
+    if(table){
+      temps = [];
+      checked.each(function(){temps.push($(this).closest("tr").attr("rw-id"))});
+      $.ajax({
+        url: "./resultat.php?d="+code_dossier+`&t=${table}`,
+        type: "POST",
+        data: {"temps": temps}
+        , beforeSend: function() { loaderShow(); }
+        , complete: function() { loaderHide(); }
+        , success: function(data)
+        {
+            try { var result = JSON.parse(data); } catch(error) { popError(); return; }
+            if(result["code"] == 200) {
+              let fact = new URLSearchParams(document.referrer).get("f");
+              window.location.href = `./affiche_fact.php?d=${code_dossier}&f=${fact}`;
+              return; 
+            }
+            popError(result["txt"], result["btn"]);
+        }
+      });
+      return;
+    }
     if(checked.length < 1)$(".popup.facts-check > div > .op > .btn.save").addClass("readonly");
     $(".popup.facts-check.hide").removeClass("hide");
     $(".popup.facts-check > div > .op > .btn.cancel > a").on("click", function(){
@@ -775,15 +800,12 @@ function ajouter_fact(){
     });
     $(".popup.facts-check > div > .op > .btn.save > a").on("click", function(){
       if($(this).closest(".btn.save").hasClass("readonly"))return;
-      temps ={};
       checked.each(function() {
         let rwId = $(this).closest("tr").attr("rw-id");
         let catId = $(this).closest("table").attr("id");
         if(catId in temps)temps[catId].push(rwId);
         else temps[catId] = [rwId]; 
       });
-      let searchParams = new URLSearchParams(window.location.search)
-      let code_dossier=searchParams.get("d");
       let fact_id = $(this).closest(".op").parent().find(".checkbox").find(".data > .list > .option.on").attr("code");    
       $.ajax({
         url: "ajouter_facture.php?d="+code_dossier,

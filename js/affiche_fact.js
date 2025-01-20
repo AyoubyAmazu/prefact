@@ -15,6 +15,7 @@ $(document).ready(function(){
   $("#cont > div > .content > fieldset > .btn-out > .btn.min.categorie-add > a").on("click",function(){createDet($(this).closest("fieldset").attr("id"))});
   $("body > #cont >  div > .content > fieldset > .heart > .title > .operation-remove > .btn.operation > a").on("click", function(){deleteDet($(this).closest(".heart"))});
   $("#cont > div > .top > .first-line > div.archiver-fac > a").on("click", function () {archiverFact()});
+  $("#cont > div > .top > .first-line > div.facture-fae > a").on("click", function () {Factfae()}); 
 });
   /**
    * Sends ajax request to the server to handle fact delete
@@ -202,7 +203,7 @@ function Factfae()
   $.ajax({
     type: "POST",
     url: `./affiche_fact.php?d=${dossier}&f=${fact}`,
-    data: { Factfae: ""},
+    data: { fact_fae: ""},
     dataType: "json",
     beforeSend: function () {
       loaderShow();

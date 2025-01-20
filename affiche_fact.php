@@ -78,8 +78,9 @@ function composeHead()
  */
 function composeFilters()
 {
-	global $cookie;
+	global $cookie, $opts;
 	$siteList = fetchSitesList();
+	var_dump($opts["user"]);
 	// $exerList = fetchExerciceList();
 	$html = "";
 
@@ -110,8 +111,6 @@ function composeFilters()
 	);
 	return $html;
 }
-
-
 /**
  * Summary of fetchInvoiceDetails
  * @return void
@@ -204,6 +203,7 @@ function displayField($cat, $composeDet = false)
  */
 function displayDet($composeTemp = false, $detail)
 {
+	global $getD;
 	$html = "<div class='heart'>";
 		$html .= "<div class='title'>";
 		$html .= "<div class='title-content'>";
@@ -211,7 +211,7 @@ function displayDet($composeTemp = false, $detail)
 		$html .= formInput(array("key" => "titre-content", "type" => "text"));
 		$html .= "</div>";
 		$html .= "<div class='operation-remove'>";
-		$html .= formBtn(array("key" => "prestation", "ico" => "plus"));
+		$html .= formBtn(array("key" => "prestation", "ico" => "plus", "href"=>"./resultat.php?d=".$_GET["d"]."&t=".cryptSave($detail["id"])));
 		$html .= formBtn(array("key" => "operation", "ico" => "trash"));
 		$html .= "</div>";
 		$html .= "</div>";
@@ -318,6 +318,7 @@ function handleRequest()
 	if (isset($_POST["delete_cat"])) deleteCat(cryptDel($_POST["delete_cat"]));
 	if (isset($_POST["create_det"])) createDet(cryptDel($_POST["cat_id"]));
 	if (isset($_POST["archiverFact"])) archiverFact();
+	if (isset($_POST["fact_fae"])) factFae();
 	if (isset($_POST["delete_det"])) deleteDet(cryptDel($_POST["det_id"]));
 	if (isset($_POST["delete_prest"])) deletePrestById(cryptDel($_POST["delete_prest"]));
 	if (isset($_POST["delete_detail"])) deleteDetail($_POST["delete_detail"]);
@@ -346,7 +347,6 @@ function deleteFact()
 	dbExec("DELETE FROM `facture` WHERE id = $factId;", array("db" => "prefact"));
 	die(json_encode(['code' => 200]));
 }
-
 /**
  * creates a category field for this fact
  * @return void
@@ -392,6 +392,12 @@ function archiverFact()
 {
 	global $factId;
 	dbExec("UPDATE `prefact`.`facture` SET `archiver` = '1' WHERE (`id` = $factId);");
+	die(json_encode(["code"=>200]));
+}
+function factFae()
+{
+	global $factId;
+	dbExec("UPDATE `prefact`.`facture` SET `fae` = '1' WHERE (`id` = $factId);");
 	die(json_encode(["code"=>200]));
 }
 /**
