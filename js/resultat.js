@@ -506,10 +506,10 @@ function ajouter_fact(){
             try { var result = JSON.parse(data); } catch(error) { popError(); return; }
             if(result["code"] == 200) { window.location.href = "affiche_fact.php?d="+code_dossier+"&f="+result['id_fact']; return; }
             popError(result["txt"], result["btn"]);
-      }
-    });
-  });
-})
+        }
+      );
+    }
+  );
 }
 /**
  * send to server with data to handle unfacting temps
