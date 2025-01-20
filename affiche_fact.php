@@ -80,8 +80,7 @@ function composeFilters()
 {
 	global $cookie, $opts;
 	$siteList = fetchSitesList();
-	var_dump($opts["user"]);
-	// $exerList = fetchExerciceList();
+	$exerList = fetchExerciceList();
 	$html = "";
 
 	$html .= formBtn(array("key" => "envoyer-valid", "txt" => "Envoyer â la validation", "href" => "fact_a_valider.php?d=" . $_GET["d"]));
@@ -93,12 +92,14 @@ function composeFilters()
 	$html .= formBtn(array("key" => "modele-fac", "txt" => "Modèle facture autre dossier", "href" => "recup_model.php"));
 	$html .= formBtn(array("key" => "facture-fae", "txt" => "Facture FAE"));
 	$html .= formBtn(array("key" => "tarifs-soc", "txt" => "Tarifs Social", "href" => "tarifs_social.php"));
-	$html .= formLabel(array("key" => "Exercice client : "));
-	// $html .= formSelect(array("key" => "selection_facture_list", "selected" => $exerList["cookie"], "list" => $exerList["list"]));
-	$html .= formLabel(array("key" => "Site : "));
-	$html .= formSelect(array("key" => "selection_facture_list", "selected" => $siteList["cookie"], "list" => $siteList['list']));
+	// $html .= formLabel(array("key" => "Exercice client : "));
+	$html .= formSelect(array("key" => "selection_facture_list", "selected" => $exerList["cookie"], "list" => $exerList["list"], "label"=>"Exercice client : "));
+	// $html .= formLabel(array("key" => "Site : "));
+	$html .= formSelect(array("key" => "selection_facture_list", "selected" => $siteList["cookie"], "list" => $siteList['list'], "label"=>"Site:"));
+	$html .= "<div>";
 	$html .= formLabel(array("key" => "Date de la facture : "));
-	$html .= formBtn(array("key" => "year", "txt" => "28/06/2023", "readonly" => true));
+	$html .= formBtn(array("key" => "year", "txt" => "28/06/2023"));
+	$html .= "</div>";
 	$html .= formLabel(array("key" => "Prèsence d'une lettre de mission : "));
 	$html .= formCheckbox(
 		array(
@@ -291,7 +292,7 @@ function fetchExerciceList(): array
 {
 	global $exerciceSql, $cookie;
 	// exercice selects data
-	$result = dbSelect($exerciceSql, array("db" => "fact"));
+	$result = dbSelect($exerciceSql, array("db" => "prefact"));
 	$exerciceList = array();
 	foreach ($result as $ex) if ($ex[0] == 0) continue;
 	else array_push($exerciceList, array("code" => $ex[0], "txt" => $ex[0], "title" => $ex[0]));
