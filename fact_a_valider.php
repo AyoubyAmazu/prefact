@@ -13,7 +13,7 @@ $getD = 20249; // TODO Delete whene data is merged
 $html = "";
 
 // queries of the page
-$select_facts = "SELECT * FROM factures WHERE EnCours";
+$select_facts = "SELECT * FROM facture WHERE `status` ";
 $select_facts_collab = "select CodeCollab from collab where IdFact=? order by IdCollab asc";
 // TODO: need database titre in dia: line 537
 $select_rd = "select A.COL_CODE_N1 from adresse A where ADR_CODE='?'";
@@ -28,10 +28,11 @@ $select_total_trav = "select * from prestations where IdFact='?' and IdDetail in
 function composePage(): string
 {
    global $html, $select_facts;
-
+   var_dump(buildFactsQury($select_facts));
 //   print_r(buildFactsQury($select_facts));
 //   $facts = array();
-   $facts = dbSelect(buildFactsQury($select_facts), array("db" => "fact"));
+   $facts = dbSelect(buildFactsQury($select_facts), array("db" => "prefact"));
+   var_dump($facts);
    displayHead();
    $html .= "<div class='centre'>";
 
@@ -151,17 +152,18 @@ function composeFactRow(array $fact): void
  */
 function buildFactsQury(string $select_facts): string
 {
+   
    global $opts;
    $isNotSite = $opts["user"]["soc"] == "" || $opts["user"]["soc"] == "vide";
    if (isset($_GET["all_facts"])) {
-      $isNotSite ? $select_facts .= " IN (3, 4) AND ValDebours=1 " . socListQueris() :
-         $select_facts .= " IN (3, 4) AND ValDebours=1 " . "and Site='" . $opts["user"]["soc"] . "'" . socListQueris();
+      $isNotSite ? $select_facts .= " IN (2, 3) AND debours = 0 and fae = 0 " . socListQueris() :
+         $select_facts .= " IN (2, 3) debours = 0 and fae =0 " . socListQueris();
    } else if (isset($_GET["term"])) {
-      $isNotSite ? $select_facts .= "=4 AND ValDebours=1 " . socListQueris() :
-         $select_facts .= "=4 AND ValDebours=1 " . "and Site='" . $opts["user"]["soc"] . "'" . socListQueris();
+      $isNotSite ? $select_facts .= "=4 AND debours = 0 " . socListQueris() :
+         $select_facts .= "=4 AND debours = 0" . socListQueris();
    } else {
-      $isNotSite ? $select_facts = "(" . $select_facts . "=3 AND ValDebours=1 " . socListQueris() . ") union (select * from factures where EnCours=4 and FactImprimee=0 and ValDebours=1" . socListQueris() . ")" :
-         $select_facts = "(" . $select_facts . "=3 AND ValDebours=1 " . "and Site='" . $opts["user"]["soc"] . "'" . socListQueris() . ") union(select * from factures where EnCours=4 and FactImprimee=0 and ValDebours=1" . socListQueris() . ")";
+      $isNotSite ? $select_facts = "(" . $select_facts . "=3 AND debours = 0 and fae =0 " . socListQueris() . ") " :
+         $select_facts = "(" . $select_facts . "=3 and debours = 0 and fae =0 " .  socListQueris() . ")";
 
    }
    return $select_facts;
@@ -174,15 +176,15 @@ function buildFactsQury(string $select_facts): string
 function socListQueris(): string
 {
    global $opts;
-   $str = " and (Code in (select ADR_CODE from expert_fidsud.adresse where SOC_CODE";
+   $str = " and adr_id in (select CODE from adr";
    $condition = array("AULAB", "JUCAR", "AGB", "LUV");
 
    if (!empty($opts["user"]["socList"]))
-      $str .= " in ( '" . implode("', '", $opts["user"]["socList"]) . "' )))";
-   else $str = "";
+      $str .= " where SOC in ( '" . implode("', '", $opts["user"]["socList"]) . "' ))";
+   else $str .= ")";
 
    if (in_array($opts["user"]["id"], $condition))
-      $str .= ") or Code in (select ADR_CODE from fssecteurpublic.adresse where SOC_CODE='FSSECTEURP'))";
+      $str .= " or Code in (select ADR_CODE from fssecteurpublic.adresse where SOC_CODE='FSSECTEURP'))";
 
    return $str;
 }
