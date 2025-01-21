@@ -78,26 +78,27 @@ function composeHead()
  */
 function composeFilters()
 {
-	global $cookie;
+	global $cookie, $getD;
 	$siteList = fetchSitesList();
-	// $exerList = fetchExerciceList();
+	$exerList = fetchExerciceList();
 	$html = "";
-
-	$html .= formBtn(array("key" => "envoyer-valid", "txt" => "Envoyer â la validation", "href" => "fact_a_valider.php?d=" . $_GET["d"]));
+	$html .= formBtn(array("key" => "envoyer-valid", "txt" => "Envoyer â la validation"));
 	$html .= formBtn(array("key" => "inserer-ligne", "txt" => "Inserer nouvelles lignes", "href" => "resultat.php?d=" . $_GET["d"]));
 	$html .= formBtn(array("key" => "supprimer-fac", "txt" => "Supprimer cette facture"));
 	$html .= formBtn(array("key" => "archiver-fac", "txt" => "Archiver la facture"));
-	$html .= formBtn(array("key" => "visualisation-fac", "txt" => "Visualisation de la facture", "href" => "visualisation.php"));
+	$html .= formBtn(array("key" => "visualisation-fac", "txt" => "Visualisation de la facture", "href" => "visualisation.php?d=".$_GET["d"]));
 	$html .= formBtn(array("key" => "basculer", "txt" => "Basculer vers synthèse du dossier", "href" => "recap.php?d=" . $_GET["d"]));
-	$html .= formBtn(array("key" => "modele-fac", "txt" => "Modèle facture autre dossier", "href" => "recup_model.php"));
+	$html .= formBtn(array("key" => "modele-fac", "txt" => "Modèle facture autre dossier", "href" => "recup_model.php?d=".$_GET["d"]));
 	$html .= formBtn(array("key" => "facture-fae", "txt" => "Facture FAE"));
 	$html .= formBtn(array("key" => "tarifs-soc", "txt" => "Tarifs Social", "href" => "tarifs_social.php"));
-	$html .= formLabel(array("key" => "Exercice client : "));
-	// $html .= formSelect(array("key" => "selection_facture_list", "selected" => $exerList["cookie"], "list" => $exerList["list"]));
-	$html .= formLabel(array("key" => "Site : "));
-	$html .= formSelect(array("key" => "selection_facture_list", "selected" => $siteList["cookie"], "list" => $siteList['list']));
+	// $html .= formLabel(array("key" => "Exercice client : "));
+	$html .= formSelect(array("key" => "selection_facture_list", "selected" => $exerList["cookie"], "list" => $exerList["list"], "label"=>"Exercice client : "));
+	// $html .= formLabel(array("key" => "Site : "));
+	$html .= formSelect(array("key" => "selection_facture_list", "selected" => $siteList["cookie"], "list" => $siteList['list'], "label"=>"Site:"));
+	$html .= "<div>";
 	$html .= formLabel(array("key" => "Date de la facture : "));
-	$html .= formBtn(array("key" => "year", "txt" => "28/06/2023", "readonly" => true));
+	$html .= formBtn(array("key" => "year", "txt" => "28/06/2023"));
+	$html .= "</div>";
 	$html .= formLabel(array("key" => "Prèsence d'une lettre de mission : "));
 	$html .= formCheckbox(
 		array(
@@ -110,8 +111,6 @@ function composeFilters()
 	);
 	return $html;
 }
-
-
 /**
  * Summary of fetchInvoiceDetails
  * @return void
@@ -204,6 +203,7 @@ function displayField($cat, $composeDet = false)
  */
 function displayDet($composeTemp = false, $detail)
 {
+	global $getD;
 	$html = "<div class='heart'>";
 		$html .= "<div class='title'>";
 		$html .= "<div class='title-content'>";
@@ -211,7 +211,7 @@ function displayDet($composeTemp = false, $detail)
 		$html .= formInput(array("key" => "titre-content", "type" => "text"));
 		$html .= "</div>";
 		$html .= "<div class='operation-remove'>";
-		$html .= formBtn(array("key" => "prestation", "ico" => "plus"));
+		$html .= formBtn(array("key" => "prestation", "ico" => "plus", "href"=>"./resultat.php?d=".$_GET["d"]."&t=".cryptSave($detail["id"])));
 		$html .= formBtn(array("key" => "operation", "ico" => "trash"));
 		$html .= "</div>";
 		$html .= "</div>";
@@ -291,7 +291,7 @@ function fetchExerciceList(): array
 {
 	global $exerciceSql, $cookie;
 	// exercice selects data
-	$result = dbSelect($exerciceSql, array("db" => "fact"));
+	$result = dbSelect($exerciceSql, array("db" => "prefact"));
 	$exerciceList = array();
 	foreach ($result as $ex) if ($ex[0] == 0) continue;
 	else array_push($exerciceList, array("code" => $ex[0], "txt" => $ex[0], "title" => $ex[0]));
@@ -314,14 +314,31 @@ function fetchExerciceList(): array
  */
 function handleRequest()
 {
+	if (isset($_POST["validate"])) validate();
 	if (isset($_POST["create_cat"])) createCat();
 	if (isset($_POST["delete_cat"])) deleteCat(cryptDel($_POST["delete_cat"]));
 	if (isset($_POST["create_det"])) createDet(cryptDel($_POST["cat_id"]));
-	if (isset($_POST["archiverFact"])) archiverFact();
 	if (isset($_POST["delete_det"])) deleteDet(cryptDel($_POST["det_id"]));
+	if (isset($_POST["archiverFact"])) archiverFact();
+	if (isset($_POST["fact_fae"])) factFae();
 	if (isset($_POST["delete_prest"])) deletePrestById(cryptDel($_POST["delete_prest"]));
 	if (isset($_POST["delete_detail"])) deleteDetail($_POST["delete_detail"]);
 	if (isset($_POST["delete_fact"])) deleteFact();
+}
+/**
+ * Validate facture
+ * @return never
+ */
+function validate()
+{
+	global $getD, $factId, $opts;
+	$rd = dbSelect("SELECT rd FROM adr WHERE code = '$getD'", array("db"=>"prefact"))[0]["rd"];
+	if($rd == $opts["user"]["id"]){
+		dbExec("UPDATE `prefact`.`facture` SET `status` = '3' WHERE (`id` = '$factId')", array("db"=>"prefact"));
+	} else{ 
+		dbExec("UPDATE `prefact`.`facture` SET `status` = '2' WHERE (`id` = '$factId')", array("db"=>"prefact"));
+	}
+	die(json_encode(["code"=>200]));
 }
 /**
  * Deletes the current facture
@@ -346,7 +363,6 @@ function deleteFact()
 	dbExec("DELETE FROM `facture` WHERE id = $factId;", array("db" => "prefact"));
 	die(json_encode(['code' => 200]));
 }
-
 /**
  * creates a category field for this fact
  * @return void
@@ -392,6 +408,12 @@ function archiverFact()
 {
 	global $factId;
 	dbExec("UPDATE `prefact`.`facture` SET `archiver` = '1' WHERE (`id` = $factId);");
+	die(json_encode(["code"=>200]));
+}
+function factFae()
+{
+	global $factId;
+	dbExec("UPDATE `prefact`.`facture` SET `fae` = '1' WHERE (`id` = $factId);");
 	die(json_encode(["code"=>200]));
 }
 /**
