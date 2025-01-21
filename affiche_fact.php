@@ -82,8 +82,8 @@ function composeFilters()
 	$siteList = fetchSitesList();
 	$exerList = fetchExerciceList();
 	$html = "";
-
-	$html .= formBtn(array("key" => "envoyer-valid", "txt" => "Envoyer â la validation", "href" => "fact_a_valider.php?d=" . $_GET["d"]));
+	// var_dump($opts["user"]);
+	$html .= formBtn(array("key" => "envoyer-valid", "txt" => "Envoyer â la validation"));
 	$html .= formBtn(array("key" => "inserer-ligne", "txt" => "Inserer nouvelles lignes", "href" => "resultat.php?d=" . $_GET["d"]));
 	$html .= formBtn(array("key" => "supprimer-fac", "txt" => "Supprimer cette facture"));
 	$html .= formBtn(array("key" => "archiver-fac", "txt" => "Archiver la facture"));
@@ -315,15 +315,32 @@ function fetchExerciceList(): array
  */
 function handleRequest()
 {
+	if (isset($_POST["validate"])) validate();
 	if (isset($_POST["create_cat"])) createCat();
 	if (isset($_POST["delete_cat"])) deleteCat(cryptDel($_POST["delete_cat"]));
 	if (isset($_POST["create_det"])) createDet(cryptDel($_POST["cat_id"]));
+	if (isset($_POST["delete_det"])) deleteDet(cryptDel($_POST["det_id"]));
 	if (isset($_POST["archiverFact"])) archiverFact();
 	if (isset($_POST["fact_fae"])) factFae();
-	if (isset($_POST["delete_det"])) deleteDet(cryptDel($_POST["det_id"]));
 	if (isset($_POST["delete_prest"])) deletePrestById(cryptDel($_POST["delete_prest"]));
 	if (isset($_POST["delete_detail"])) deleteDetail($_POST["delete_detail"]);
 	if (isset($_POST["delete_fact"])) deleteFact();
+}
+/**
+ * Validate facture
+ * @return never
+ */
+function validate()
+{
+	global $getD, $factId, $opts;
+	$rd = dbSelect("SELECT rd FROM adr WHERE code = '$getD'", array("db"=>"prefact"))[0]["rd"];
+	if($rd == $opts["user"]["id"]){
+		dbExec("UPDATE `prefact`.`facture` SET `status` = '3' WHERE (`id` = '$factId')", array("db"=>"prefact"));
+	} else{ 
+		var_dump($rd,$rd == $opts["user"]["id"]);
+		dbExec("UPDATE `prefact`.`facture` SET `status` = '2' WHERE (`id` = '$factId')", array("db"=>"prefact"));
+	}
+	die(json_encode(["code"=>200]));
 }
 /**
  * Deletes the current facture

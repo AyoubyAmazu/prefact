@@ -16,11 +16,13 @@ $(document).ready(function(){
   $("body > #cont >  div > .content > fieldset > .heart > .title > .operation-remove > .btn.operation > a").on("click", function(){deleteDet($(this).closest(".heart"))});
   $("#cont > div > .top > .first-line > div.archiver-fac > a").on("click", function () {archiverFact()});
   $("#cont > div > .top > .first-line > div.facture-fae > a").on("click", function () {Factfae()}); 
+  $("#cont > div > .top > .first-line > div.envoyer-valid > a").on("click", function () {toValidate()}); 
 });
   /**
    * Sends ajax request to the server to handle fact delete
    */
-function onDeleteFact() {
+function onDeleteFact() 
+{
   $("#cont > div > .top > .first-line > div.supprimer-fac > a").on("click", function(){
     
     let code_dossier = new URLSearchParams(window.location.search).get("d");
@@ -174,7 +176,7 @@ function deleteDet(table)
   });
 }
 /**
- * 
+ * Send ajax request to server to archive fact
  */
 function archiverFact()
 {
@@ -196,7 +198,7 @@ function archiverFact()
   });
 }
 /**
- * 
+ * Send ajax request to server to set fae
  */
 function Factfae()
 {
@@ -217,4 +219,29 @@ function Factfae()
         else popError("An error occurred while processing your request.");
     }
   });
+}
+/*
+* Send ajax server request to send fact to validation
+*/
+function toValidate()
+{
+  $.ajax({
+    type: "POST",
+    url: `./affiche_fact.php?d=${dossier}&f=${fact}`,
+    data: { validate: ""},
+    dataType: "json",
+    beforeSend: function () {
+      loaderShow();
+    },
+    complete: function () {
+      loaderHide();
+    },
+    success: function (data) {
+        if(data.code == 200){
+          window.location.href ="./fact_a_valider.php?d="+dossier;
+        } else {
+          popError("An error occurred while processing your request.");
+        }
+    }
+  })
 }
