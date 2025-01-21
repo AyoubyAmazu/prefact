@@ -1,0 +1,186 @@
+
+
+body > #cont > div {
+    flex-wrap: wrap; 
+    font-family: bld;
+} 
+
+body > #cont > div > .div1 {
+    font-family: bld; 
+    flex-wrap: wrap; 
+    gap: 10px; 
+    justify-content: center;
+    align-items: flex-start;
+    display: inline-flex;
+}
+
+
+
+body > #cont > div  > .div2{
+    justify-content: center;
+    flex-wrap: wrap; 
+    gap: 10px; 
+    padding-top: 20px;
+    text-align: center;
+    display: inline-flex;
+    width: 100%;
+}
+
+body > #cont > div  > .div2 > .label_test{
+    justify-content: center;
+    flex-wrap: wrap; 
+    gap: 10px; 
+    display: inline-flex;
+    width: 100%;
+
+}
+
+body > #cont > div  > .div2 > .label_test > .label{
+    border-bottom:  1px solid;
+
+}
+
+body > #cont > div  > .div2 > .div_area1{
+    justify-content: center;
+    flex-wrap: wrap; 
+    gap: 10px; 
+    display: inline-flex;
+    width: 100%;
+}
+
+
+body > #cont > div  > .div2 > .div_area1 > .area1 {
+    justify-content: center;
+    flex-wrap: wrap; 
+    gap: 10px; 
+    display: inline-flex;
+    width: 100%;
+}
+
+body > #cont > div  > .div2 > .div_area1 > .area1 > .textarea{
+    width:400px;
+    display: none;
+
+}
+
+body > #cont > div  > .div2 > .div_area2{
+    justify-content: center;
+    flex-wrap: wrap; 
+    gap: 10px; 
+    display: inline-flex;
+    width: 100%;
+}
+
+body > #cont > div  > .div2 > .div_area2 > .area2 {
+    justify-content: center;
+    flex-wrap: wrap; 
+    gap: 10px; 
+    display: inline-flex;
+    width: 100%;
+}
+
+body > #cont > div  > .div2 > .div_area2 > .area2 >  .textarea{
+    width:400px;
+   display: none;
+}
+
+body > #cont > div  > .div2 > .div3{
+    justify-content: center;
+    flex-wrap: wrap; 
+    gap: 10px; 
+    display: inline-flex;
+    width: 100%;
+}
+
+body > #cont > div  > .div2 > .div3 > .div3_label{
+    display: inline-flex;
+    width: 100%;
+    justify-content: center;
+
+}
+
+
+body > #cont > div  > .div2 > .div3 >  a{
+  color: var(--red);
+}
+
+body > #cont > div  > .div2 > .div4{
+    justify-content: left;
+    flex-wrap: wrap; 
+    width: 100%;
+    margin-top: 50px;
+}
+
+
+
+
+body > #cont > div  > .div2 >  .select  > .data > a   {
+   max-width: 100%;
+   width: 155px;
+
+}
+body > #cont > div  > .div2 >  .select  {
+    margin-top: 10px;
+
+}
+
+body > #cont > div  > .div2 > .btn{
+    margin-top: 10px;
+}
+
+body > #cont > div  > .div2 > .label  {
+    margin-top: 10px;
+}  
+
+
+body > #cont > div  > .div2 > .input {
+    flex-wrap: wrap; 
+    display: inline-flex;
+   width: 300px;
+   margin-top: 10px;
+   
+} 
+
+body > #cont > div  > .div2 > .div4 > .label{
+    margin-top: 10px;
+ } 
+
+
+
+body > #cont > div  > .div2 > .div5{
+    /* margin-top: -60px; */
+    justify-content: right;
+    flex-wrap: wrap; 
+    gap: 10px; 
+    width: 100%;
+}
+
+
+
+
+
+
+ 
+
+body > #cont > div > .data > .main > div  > .div2 > .div5 > .total > .label {
+    justify-content: right;
+    flex-wrap: wrap; 
+    gap: 10px; 
+    display: inline-flex;
+    width: 100%;
+    margin-left: 10px;
+}
+
+
+
+
+
+body > #cont > div > .data > .main > div  > .div2 > .div5 > .total_ht > .label {
+    justify-content: right;
+    display: inline-flex; 
+    width: 100%;
+    margin-top: 15px;
+} 
+
+
+

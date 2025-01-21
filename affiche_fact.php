@@ -78,18 +78,17 @@ function composeHead()
  */
 function composeFilters()
 {
-	global $cookie, $opts;
+	global $cookie, $getD;
 	$siteList = fetchSitesList();
 	$exerList = fetchExerciceList();
 	$html = "";
-	// var_dump($opts["user"]);
 	$html .= formBtn(array("key" => "envoyer-valid", "txt" => "Envoyer â la validation"));
 	$html .= formBtn(array("key" => "inserer-ligne", "txt" => "Inserer nouvelles lignes", "href" => "resultat.php?d=" . $_GET["d"]));
 	$html .= formBtn(array("key" => "supprimer-fac", "txt" => "Supprimer cette facture"));
 	$html .= formBtn(array("key" => "archiver-fac", "txt" => "Archiver la facture"));
-	$html .= formBtn(array("key" => "visualisation-fac", "txt" => "Visualisation de la facture", "href" => "visualisation.php"));
+	$html .= formBtn(array("key" => "visualisation-fac", "txt" => "Visualisation de la facture", "href" => "visualisation.php?d=".$_GET["d"]));
 	$html .= formBtn(array("key" => "basculer", "txt" => "Basculer vers synthèse du dossier", "href" => "recap.php?d=" . $_GET["d"]));
-	$html .= formBtn(array("key" => "modele-fac", "txt" => "Modèle facture autre dossier", "href" => "recup_model.php"));
+	$html .= formBtn(array("key" => "modele-fac", "txt" => "Modèle facture autre dossier", "href" => "recup_model.php?d=".$_GET["d"]));
 	$html .= formBtn(array("key" => "facture-fae", "txt" => "Facture FAE"));
 	$html .= formBtn(array("key" => "tarifs-soc", "txt" => "Tarifs Social", "href" => "tarifs_social.php"));
 	// $html .= formLabel(array("key" => "Exercice client : "));
@@ -337,7 +336,6 @@ function validate()
 	if($rd == $opts["user"]["id"]){
 		dbExec("UPDATE `prefact`.`facture` SET `status` = '3' WHERE (`id` = '$factId')", array("db"=>"prefact"));
 	} else{ 
-		var_dump($rd,$rd == $opts["user"]["id"]);
 		dbExec("UPDATE `prefact`.`facture` SET `status` = '2' WHERE (`id` = '$factId')", array("db"=>"prefact"));
 	}
 	die(json_encode(["code"=>200]));
