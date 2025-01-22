@@ -3,6 +3,7 @@
  */
 let fact = new URLSearchParams(window.location.search).get("f");
 let dossier = new URLSearchParams(window.location.search).get("d");
+let timer;
 $(document).ready(function(){
   onDeleteFact(); // handels the click on supprimer cette facture
   initSelect();// setup the site select functionalities
@@ -19,7 +20,30 @@ $(document).ready(function(){
   $("#cont > div > .top > .first-line > div.envoyer-valid > a").on("click", function () {toValidate()});
   $("#cont > div > .top > .first-line > .checkbox > .data > .list > .option > a").on("click", function(){updateMission($(this))}); 
   $("#cont > div > .top > .first-line > div > div > .year > a").on("click", function(){updateDate($(this))});
+  $("#cont > div > .content > fieldset > .heart > .title > .title-content > .input > .data > input").keypress(function(){updateDetTitle($(this))})
 });
+/**
+* Sends ajax request to the server to update det title
+*/
+function updateDetTitle(input)
+{
+  clearTimeout(timer);
+  timer = setTimeout(function() {
+    $.ajax({
+      type: "POST"
+      ,url: `./affiche_fact.php?d=${dossier}&f=${fact}`
+      ,data: { set_title: $(input).val()}
+      , beforeSend: function() { loaderShow(); }
+      , complete: function() { loaderHide(); }
+      , success: function(data)
+      {
+          try { var result = JSON.parse(data); } catch(error) { popError(); return; }
+          if(result["code"] == 200) return;
+          else popError(result["txt"], result["btn"]);
+      }
+    });
+  }, 3000);
+}
 /**
 * Sends ajax request to the server to update date
 */

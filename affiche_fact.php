@@ -80,8 +80,8 @@ function composeHead()
  */
 function composeFilters($fact)
 {
-	global $cookie;
-	$siteList = fetchSitesList();
+	global $cookie, $getD;
+	$site = dbSelect("SELECT soc from adr where code = '$getD'")[0]["soc"];
 	$exerList = fetchExerciceList();
 	$html = "";
 	$html .= formBtn(array("key" => "envoyer-valid", "txt" => "Envoyer â la validation"));
@@ -95,8 +95,6 @@ function composeFilters($fact)
 	$html .= formBtn(array("key" => "tarifs-soc", "txt" => "Tarifs Social", "href" => "tarifs_social.php?d=".$_GET["d"]));
 	// $html .= formLabel(array("key" => "Exercice client : "));
 	$html .= formSelect(array("key" => "selection_facture_list", "selected" => $exerList["cookie"], "list" => $exerList["list"], "label"=>"Exercice client : "));
-	// $html .= formLabel(array("key" => "Site : "));
-	$html .= formSelect(array("key" => "selection_facture_list", "selected" => $siteList["cookie"], "list" => $siteList['list'], "label"=>"Site:"));
 	$html .= "<div>";
 	$html .= formLabel(array("key" => "Date de la facture : "));
 	$html .="<div style='position:relative;'>";
@@ -104,13 +102,17 @@ function composeFilters($fact)
 	$html .= "<input id='date' type=date value=".$fact["date"]." style='opacity: 0;position:absolute;'>";
 	$html .= "</div>";
 	$html .= "</div>";
-	$html .= formLabel(array("key" => "Prèsence d'une lettre de mission : "));
-	$html .= formCheckbox(array("key" => "bool", "list" => array(
+	// $html .= formLabel(array("key" => "lettre de mission : "));
+	$html .= formCheckbox(array("key" => "bool", "label"=>"lettre de mission:", "list" => array(
 				array("code" => "oui", "txt" => "Oui", "value" => ($cookie["index"]["sortDir"] == "oui" || $fact["mission"] == 1)),
 				array("code" => "non", "txt" => "Non", "value" => ($cookie["index"]["sortDir"] == "non"|| $fact["mission"] == 0))
 			)
 		)
 	);
+	$html .= "<div style='display:flex;'>";
+	$html .= formLabel(array("key" => "Site : "));
+	$html .="<div class='.txt'>".$site."</div>";
+	$html .= "</div>";
 	return $html;
 }
 /**
@@ -326,9 +328,16 @@ function handleRequest()
 	if (isset($_POST["fact_fae"])) factFae();
 	if (isset($_POST['set_mission'])) {updateMission();}
 	if (isset($_POST['set_date'])) {updateDate();}
+	if (isset($_POST['set_title'])) {updateDate();}
 	if (isset($_POST["delete_prest"])) deletePrestById(cryptDel($_POST["delete_prest"]));
 	if (isset($_POST["delete_detail"])) deleteDetail($_POST["delete_detail"]);
 	if (isset($_POST["delete_fact"])) deleteFact();
+}
+function updateDetTitle()
+{
+	global $factId;
+	dbExec("UPDATE `prefact`.`facture` SET `date` = '".$_POST["set_date"]."' WHERE (`id` = '$factId')");
+	die(json_encode(["code"=>200]));
 }
 function updateDate()
 {
