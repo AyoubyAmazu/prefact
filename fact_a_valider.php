@@ -8,16 +8,13 @@ $opts = array("user" => $user);
 $cookie = cookieInit();
 $getD = ((isset($_GET["d"]))? cryptDel($_GET["d"]) : false);
 if($getD == false) err(array_merge($opts, array("txt" => "Erreur d'accès", "btn" => APPurl)));
-$getD = 20249; // TODO Delete whene data is merged
 
 $html = "";
 
 // queries of the page
 $select_facts = "SELECT * FROM facture WHERE `status` ";
 $select_facts_collab = "select CodeCollab from collab where IdFact=? order by IdCollab asc";
-// TODO: need database titre in dia: line 537
-$select_rd = "select A.COL_CODE_N1 from adresse A where ADR_CODE='?'";
-//$titre=$row3['TITRE_COURT'];/ $titre='';
+$select_rd = "select rd from adr where code ='?'";
 //verifie s il y a des debours
 $select_total_trav = "select * from prestations where IdFact='?' and IdDetail in (select IdDetail from detail where IdFact='?')";
 
@@ -28,11 +25,7 @@ $select_total_trav = "select * from prestations where IdFact='?' and IdDetail in
 function composePage(): string
 {
    global $html, $select_facts;
-   var_dump(buildFactsQury($select_facts));
-//   print_r(buildFactsQury($select_facts));
-//   $facts = array();
    $facts = dbSelect(buildFactsQury($select_facts), array("db" => "prefact"));
-   var_dump($facts);
    displayHead();
    $html .= "<div class='centre'>";
 
@@ -60,7 +53,7 @@ function composePage(): string
    $html .= "</td>";
    $html .= "</tr>";
    foreach ($facts as $fact) {
-      if ($fact["EnCours"] == 3) composeFactRow($fact);
+      if ($fact["status"] == 2 || $fact["status"] == 3) composeFactRow($fact);
    }
 
    $html .= "</table>";
@@ -97,36 +90,38 @@ function displayHead(): void
  */
 function composeFactRow(array $fact): void
 {
-   global $html, $select_rd, $select_facts_collab;
-   $select_rd = str_replace("?", $fact["Code"], $select_rd);
-   $select_facts_collab = str_replace("?", $fact["IdFact"], $select_facts_collab);
-   $rd = dbSelect($select_rd, array("db" => "dia"))[0];
-   $collab = dbSelect($select_facts_collab, array("db" => "fact"))[0];
-   // unknown $presta_debours var
-   //   if(in_array($row2['CodePrest'],$presta_debours)){
-   //					$debours='Oui';
-   //				}
+   global $html, $select_rd, $select_facts_collab, $getD;
+   $select_rd = str_replace("?", $fact["adr_id"], $select_rd);
+   $select_facts_collab = str_replace("?", $fact["id"], $select_facts_collab);
+   $rd = dbSelect($select_rd, array("db" => "prefact"));
+   $collab = dbSelect($select_facts_collab, array("db" => "fact"));
+   if(!empty($collab))$collab = $collab[0];
+   if(isset($_GET["a_valid"]) && ($fact["status"]!=2 || $fact["status"]!=3)) return;
 
-   if(isset($_GET["a_valid"]) && $fact["EnCours"]!=3) return;
+   if(empty($collab)){
+      $collab["CodeCollab"] = "-";
+   }
 
-   $html .= "<tr class = 'row'>";
-   $html .= "<td class='left'>" . $rd["COL_CODE_N1"] . "</td>";
+   $html .= "<tr id='".cryptSave($fact["id"])."' class = 'row'>";
+   $html .= "<td class='left'>" . $rd[0]["rd"] . "</td>";
    $html .= "<td>" . $collab["CodeCollab"] . "</td>";
-   $html .= "<td class = 'code_dossier'>" . $fact["Code"] . "</td>";
-   $html .= "<td class = 'nom_dossier' >" . $fact["Dossier"] . "</td>";
+   $html .= "<td class = 'code_dossier'>" . $fact["adr_id"] . "</td>";
+   $html .= "<td class = 'nom_dossier' >" . $getD . "</td>";
    $html .= "<td>";
-   $html .= "<div class='date'>";
-   $html .= formDp(array("key" => "date", "value" => formatFactureDate($fact["DateFacture"], $fact["Date"])));
+   $html .= "<div class='date' style='position:relative;'>";
+   $html .= formDp(array("key" => "date", "readonly"=>true, "value" => formatFactureDate($fact["date"], $fact["date"])));
+   $html .= "<input id='date' type='date' value='".$fact["date"]."' style='opacity:0; position:absolute;'>";
    $html .= "</div>";
    $html .= "</td>";
-   $html .= "<td>" . formateValiDte($fact["DateValidationRD"]) . "</td>";
-   $html .= "<td>" . formateDateDIa($fact['DateInsertDIA']) . "</td>";
+   $html .= "<td>-</td>" /*. formateValiDte($fact["DateValidationRD"]) . "-</td>"*/;
+   $html .= "<td>-</td>" /*. formateDateDIa($fact['DateInsertDIA']) . "-</td>"*/;
    $html .= "<td>";
-   if ($fact["Modalite1"] == "") $html .= "---";
-   else $html .= $fact["FAE"] == 1 ? "FAE" : "" . $fact["Modalite1"];
+   $html .= $fact["fae"] == 1 ? "FAE" : "" ;
    $html .= "</td>";
-   $html .= "<td>" . $fact['MontantFact'] . "</td>";
-   $html .= "<td>---</td>";
+   $html .= "<td>" . $fact['amount'] . "</td>";
+   $html .= "<td>";
+   $html .= $fact["debours"] == 1 ? "OUI" : "NO" ;
+   $html .= "</td>";
    $html .= "<td>";
    $html .= "<div class='checkbox'>";
    $html .= formCheckbox(array("key" => "verr", "list" => array(array("code" => "check"))));
@@ -135,10 +130,10 @@ function composeFactRow(array $fact): void
    $html .= "<td>";
    $html .= "<div class='verticalB'>";
    $html .= formBtn(array("key" => "icoVertica", "ico" => "fa-solid fa-ellipsis-vertical"));
-   $html .= "<div class='list off' factId='".$fact["IdFact"]."'>";
-   $html .= "<input class='comment' hidden='true' value='".$fact["CommentairesFacture"]."'/>";
-   $html .= formBtn(array("key" => "open", "txt" => "ouvrir la facture", "ico" => "fa-solid fa-envelope-open-text", "href" => "validation_recap.php"));
-   $html .= formBtn(array("key" => "commentaire", "txt" => "Ajouter un commentaire", "ico" => "fa-solid fa-pencil"));
+   $html .= "<div class='list off' factId='".$fact["id"]."'>";
+   // $html .= "<input class='comment' hidden='true' value='".$fact["obs"]."'/>";
+   $html .= formBtn(array("key" => "open", "txt" => "ouvrir la facture", "ico" => "fa-solid fa-envelope-open-text", "href" => "validation_recap.php?d=".$_GET['d']));
+   $html .= formBtn(array("key" => "validate", "txt" => "Validate Facture", "ico" => "fa-solid fa-check"));
    $html .= formBtn(array("key" => "close", "txt" => "Annuler la facture", "ico" => "fa-solid fa-ban"));
    $html .= "</div>";
    $html .= "</div>";
@@ -156,14 +151,14 @@ function buildFactsQury(string $select_facts): string
    global $opts;
    $isNotSite = $opts["user"]["soc"] == "" || $opts["user"]["soc"] == "vide";
    if (isset($_GET["all_facts"])) {
-      $isNotSite ? $select_facts .= " IN (2, 3) AND debours = 0 and fae = 0 " . socListQueris() :
-         $select_facts .= " IN (2, 3) debours = 0 and fae =0 " . socListQueris();
+      $isNotSite ? $select_facts .= " IN (2, 3) AND debours = 0" . socListQueris() :
+         $select_facts .= " IN (2, 3) debours = 0" . socListQueris();
    } else if (isset($_GET["term"])) {
       $isNotSite ? $select_facts .= "=4 AND debours = 0 " . socListQueris() :
          $select_facts .= "=4 AND debours = 0" . socListQueris();
    } else {
-      $isNotSite ? $select_facts = "(" . $select_facts . "=3 AND debours = 0 and fae =0 " . socListQueris() . ") " :
-         $select_facts = "(" . $select_facts . "=3 and debours = 0 and fae =0 " .  socListQueris() . ")";
+      $isNotSite ? $select_facts = "(" . $select_facts . "=2 AND debours = 0 " . socListQueris() . ") " :
+         $select_facts = "(" . $select_facts . "=2 and debours = 0 " .  socListQueris() . ")";
 
    }
    return $select_facts;

@@ -1,3 +1,4 @@
+let dossier = new URLSearchParams(window.location.search).get("d");
 $(document).ready(function () {
 
 
@@ -7,7 +8,40 @@ $(document).ready(function () {
     $(window).on("click", function (event) {if (!$(event.target).closest(".verticalB").length) {$("body > #cont > div > .centre > table > tbody > tr > td > .verticalB > .list ").addClass("off");}});
     $("body > #cont > div > .centre > table > tbody > tr > td > .verticalB > .list > .close").click(function(){anuller_fact($(this));});
     search();
+    $("#cont > div > div.centre > table > tbody > tr.row > td> div.date > div.dp > div.data > div.cal > a").on("click", function(){
+        updateFactDate($(this).closest(".data"));
+    });
 });
+/*
+* Send ajax request to the server to update fact date 
+*/
+function updateFactDate(button)
+{
+    let fact = $(button).closest(".row").attr("id");
+    let input = document.querySelector("#date");
+    input.showPicker();
+    $(input).on("change", function(){
+        $.ajax({
+            type: "POST"
+            ,url: `./affiche_fact.php?d=${dossier}&f=${fact}`
+      ,data: { set_date: $(input).val()}
+      , beforeSend: function() { loaderShow(); }
+      , complete: function() { loaderHide(); }
+      , success: function(data)
+      {
+          try { var result = JSON.parse(data); } catch(error) { popError(); return; }
+          if(result["code"] == 200) {
+            $(button).find("input").val(result["date"]);
+            return;
+          }
+          else popError(result["txt"], result["btn"]);
+      }
+    });
+  });
+}
+/*
+* Gets Comment popup html 
+*/
 function displayCommentPopup(list)
 {
     let comment = $(list).find(".comment").val()
