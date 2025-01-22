@@ -339,6 +339,8 @@ function handleRequest()
 
 
 }
+
+// update amount
 function updateamount(){
 	$amount = $_POST["amount"];
 	$id = cryptDel($_POST["id"]);
