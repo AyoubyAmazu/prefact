@@ -1,0 +1,25 @@
+#cont > div > .hd { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px;   }
+#cont > div > .hd > .left { display: flex; flex-wrap: wrap; gap: 10px; font-weight: bld; }
+#cont > div > .hd > .left > .btn > a { font-size: 13px; line-height: 18px; font-family: bld;}
+
+
+
+#cont > div > .hd > .left > .select.year{ display: inline-flex; justify-content: right; flex-direction: row; align-items: center; gap: 0 5px;}
+#cont > div > .hd > .left > .select.year > .label { padding: 0; font-size: 13px; line-height: 18px; font-family: bld; border-bottom: 1px solid var(--dark); background-color: var(--bleu) ;}
+#cont > div > .hd > .left > .dp.date { display: inline-flex; justify-content: right; flex-direction: row; align-items: center; gap: 0 5px; }
+#cont > div > .hd > .left > .dp.date > .data{width: 150px; }
+#cont > div > .hd > .left > .dp.date > .label { padding: 0; font-size: 13px; line-height: 18px; font-family: bld;}
+#cont > div > .hd > .left > .select.regelement{ display: inline-flex; justify-content: right; flex-direction: row; align-items: center; gap: 0 5px;width: 300px;}
+#cont > div > .hd > .left > .select.regelement > .label { padding: 0; font-size: 13px; line-height: 18px; font-family: bld;}
+
+#cont > div > fieldset { border: 1px solid var(--light); border-radius: 15px; margin-top: 50px;  }
+#cont > div > fieldset >  .center > .centerLeft  {display: flex; flex-wrap: wrap;   font-size: 15px; line-height: 19px; font-family: bld; justify-content: space-between;margin-left: 30px; margin-right: 30px; } 
+
+#cont > div > fieldset >  .center > .centerMid {display: inline-block; justify-content: center; margin-top: 15px; font-size: 15px; line-height: 20px; font-style: italic;}
+#cont > div > fieldset >  .center > .centerMid > .label.Selon {margin-top: 20px;}
+#cont > div > fieldset >  .center > .centerMid > .label.Mission {border-bottom: 1px solid var(--dark);}
+
+#cont > div > fieldset >  .center > .centerLeftTwo  {display: flex; flex-wrap: wrap;   font-size: 15px; line-height: 19px; font-family: bld; justify-content: space-between;margin-left: 30px; margin-right: 30px; margin-top: 25px; } 
+
+#cont > div > fieldset >  .center > .centerMidTwo {display: flex;  margin-top: 15px; font-size: 15px; line-height: 20px; font-style: italic; justify-content: center; }
+#cont > div > fieldset >  .center > .centerFin  {display: flex; flex-wrap: wrap;   font-size: 15px; line-height: 19px; font-family: bld; justify-content: space-between;margin-left: 30px; margin-right: 30px; margin-bottom: 10px; } 
