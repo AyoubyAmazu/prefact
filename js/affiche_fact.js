@@ -5,6 +5,7 @@ let fact = new URLSearchParams(window.location.search).get("f");
 let dossier = new URLSearchParams(window.location.search).get("d");
 let timer;
 $(document).ready(function(){
+  change_travaux();
   onDeleteFact(); // handels the click on supprimer cette facture
   initSelect();// setup the site select functionalities
   initCheckbox();
@@ -481,4 +482,35 @@ function total_factur(){
   $(".table-info > table > tbody > tr > #amount").html(total_factur+" €");
   $(".table-info > table > tbody > tr > #total").html(total_factur*1.2+" €");
 }
+
+function change_travaux(){
+
+
+    $("legend > .select.selection_facture_list > .data > .list > .option").on("click", function()
+    {
+      var cat_id =  $(this).attr("code");
+      var fact_cat = $(this).closest("fieldset ").attr("id");
+      $.ajax({
+        type: "POST",
+        url: `affiche_fact.php?d=${dossier}&f=${fact}`,
+        data: {
+           change_travaux: true,
+            cat_id: cat_id, 
+            fact_cat: fact_cat},
+        dataType: "json",
+        beforeSend: function () {
+          loaderShow();
+        },
+        complete: function () {
+          loaderHide();
+        },
+        success: function (data) {
+            if(data.code == 200) {
+              window.lo
+            }
+            else popError("An error occurred while processing your request.");
+        }
+      });
+    });
+} 
 

@@ -250,8 +250,8 @@ function fetchTravDrvList(int $cat_id = null): array
 	$list = array();
 
 	foreach ($result as $trav) {
-		array_push($list, array("code" => $trav["nom"], "txt" => $trav["nom"], "title" => $trav["nom"]));
-		if ($cat_id != null && $trav["id"] == $cat_id) $selected =  array("code" => $trav["nom"], "txt" => $trav["nom"]);
+		array_push($list, array("code" => $trav["id"], "txt" => $trav["nom"], "title" => $trav["nom"] , ));
+		if ($cat_id != null && $trav["id"] == $cat_id) $selected =  array("code" => $trav["id"], "txt" => $trav["nom"] , );
 	}
 	$sortNulltable = array("code" => "table", "txt" => "Travaux Comptable et fiscaux");
 
@@ -332,6 +332,7 @@ function handleRequest()
 	if (isset($_POST["delete_prest"])) deletePrestById(cryptDel($_POST["delete_prest"]));
 	if (isset($_POST["delete_detail"])) deleteDetail($_POST["delete_detail"]);
 	if (isset($_POST["delete_fact"])) deleteFact();
+  if (isset($_POST["change_travaux"])) change_travaux();
 	if(isset($_POST["set_obs"])) updateObs();
 	if(isset($_POST["total_cat"])) total_cat();
 	if(isset($_POST["total_det"])) total_det();
@@ -520,6 +521,15 @@ function deleteDetail(int $id): never
 	die(json_encode(['success' => 200]));
 }
 
+function change_travaux()
+{
+	var_dump($_POST["cat_id"]);
+	$catId = $_POST["cat_id"];
+	$fact_cat = cryptDel($_POST["fact_cat"]);
+	$sql = "UPDATE facture_cat SET cat_id = $catId WHERE id = $fact_cat ";
+	dbExec($sql, array("db"=>"prefact"));
+	die(json_encode(['code' => 200,'txt' => $sql]));
+}
 $cont = html(array_merge($opts, array("cont" => composePage(), "script" => "affiche_fact", "adr" => $getD)));
 
 die($cont);
