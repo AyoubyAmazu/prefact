@@ -9,6 +9,9 @@ $(document).ready(function(){
   onDeleteFact(); // handels the click on supprimer cette facture
   initSelect();// setup the site select functionalities
   initCheckbox();
+  total_det();
+  total_cat();
+  total_factur();
   $("#cont >  div > .content > fieldset > .heart > table > tbody > tr > td > .btn.min.operation-delete > a").on("click", function () {deletePres($(this).closest("tr"));});
   $("#cont >  div > .content > fieldset > .legend3 > .btn.min.categorie-remove > a").each(function(){
     $(this).on("click",function () {deleteCat($(this).closest("fieldset"));});
@@ -21,21 +24,52 @@ $(document).ready(function(){
   $("#cont > div > .top > .first-line > div.envoyer-valid > a").on("click", function () {toValidate()});
   $("#cont > div > .top > .first-line > .checkbox > .data > .list > .option > a").on("click", function(){updateMission($(this))}); 
   $("#cont > div > .top > .first-line > div > div > .year > a").on("click", function(){updateDate($(this))});
-  $("#cont > div > .content > fieldset > .heart > .title > .title-content > .input > .data > input").keypress(function(){updateDetTitle($(this))})
+  $("#cont > div > .content > fieldset > .heart > .title > .title-content > .input > .data > input").keypress(function(){;updateDetTitle($(this))})
+  $("#cont > div > .content > fieldset > .heart > table > tbody > .area > td > div > .textarea > .data > textarea").keypress(function(){  updateDeObs($(this));})
+  $("#cont > div > .content > fieldset > .heart > table > tbody > tr > .total > div > .input > .data > input").keypress(function(){update_amount($(this),$(this).closest("table").attr("id"),"facture_det")}); // update facture_det amount
+  $("#cont > div > .content > fieldset > .legend2 >  .input > .data > input").keypress(function(){update_amount($(this),$(this).closest("fieldset").attr("id"),"facture_cat")}); // update facrure_cat amount   
 });
-/**
-* Sends ajax request to the server to update det title
-*/
-function updateDetTitle(input)
-{
+
+function update_amount(div,id ,table){
   clearTimeout(timer);
   timer = setTimeout(function() {
     $.ajax({
       type: "POST"
       ,url: `./affiche_fact.php?d=${dossier}&f=${fact}`
-      ,data: { set_title: $(input).val()}
-      , beforeSend: function() { loaderShow(); }
-      , complete: function() { loaderHide(); }
+      ,data: { 
+        table : table,
+        amount : $(div).val(),
+        id : id
+      }
+      , beforeSend: function() { }
+      , complete: function() {  }
+      , success: function(data)
+      {
+          try { var result = JSON.parse(data); } catch(error) { popError(); return; }
+          if(result["code"] == 200) {console.log(result["txt"]);return;}
+          else popError(result["txt"], result["btn"]);
+      }
+    });
+  }, 3000);
+}
+
+/**
+* Sends ajax request to the server to update det title
+*/
+function updateDetTitle(input)
+{
+ 
+  clearTimeout(timer);
+  timer = setTimeout(function() {
+    $.ajax({
+      type: "POST"
+      ,url: `./affiche_fact.php?d=${dossier}&f=${fact}`
+      ,data: { 
+        set_title: $(input).val(),
+        det_id: $(input).closest(".heart").find("table").attr("id")
+      }
+      , beforeSend: function() { }
+      , complete: function() {  }
       , success: function(data)
       {
           try { var result = JSON.parse(data); } catch(error) { popError(); return; }
@@ -45,6 +79,33 @@ function updateDetTitle(input)
     });
   }, 3000);
 }
+/**
+* Sends ajax request to the server to update det title
+*/
+function updateDeObs(txt)
+{
+ 
+  clearTimeout(timer);
+  timer = setTimeout(function() {
+    $.ajax({
+      type: "POST"
+      ,url: `./affiche_fact.php?d=${dossier}&f=${fact}`
+      ,data: { 
+        set_obs: $(txt).val(),
+        det_id: $(txt).closest(".heart").find("table").attr("id")
+      }
+      , beforeSend: function() { }
+      , complete: function() {  }
+      , success: function(data)
+      {
+          try { var result = JSON.parse(data); } catch(error) { popError(); return; }
+          if(result["code"] == 200) return;
+          else popError(result["txt"], result["btn"]);
+      }
+    });
+  }, 3000);
+}
+
 /**
 * Sends ajax request to the server to update date
 */
@@ -319,6 +380,108 @@ function toValidate()
   })
 }
 
+function total_det(){
+  $("fieldset > .heart").each(function(){
+    var total_det=0 ;
+    $(this).find("table > tbody > tr > .prest_amount").each(function(){
+      total_det +=parseFloat($(this).html());
+    })
+    if($(this).find("table > tbody > tr > .total > div > .input > .data > input").val() == 0){
+    $.ajax({
+      type: "POST",
+      url: `./affiche_fact.php?d=${dossier}&f=${fact}`,
+      data: { 
+        total_det: total_det,
+        id : $(this).find("table").attr("id")
+      },
+      dataType: "json",
+      beforeSend: function () {
+      },
+      complete: function () {
+      },
+      success: function (data) {
+          if(data.code == 200){
+           
+          } else {
+            popError("An error occurred while processing your request.");
+          }
+      }
+    })
+    $(this).find("table > tbody > tr > .total > div > .input > .data > input").val(total_det);
+  }
+  $(this).find("table > tbody > tr > .total > div > .label > .label-key").html(`Total Gènèral = ${total_det} / Total Facturer = `)
+
+  })
+
+}
+
+function total_cat(){
+  $("fieldset ").each(function(){
+    let total_cat ;
+    
+    total_cat = 0;
+    $(this).find(".heart").each(function(){
+      total_cat +=parseFloat($(this).find("table > tbody > tr > .total > div > .input > .data > input").val());
+    })
+    
+    if($(this).find(".legend2 > .input > .data > input").val() == 0){
+    $.ajax({
+      type: "POST",
+      url: `./affiche_fact.php?d=${dossier}&f=${fact}`,
+      data: { 
+        total_cat: total_cat,
+        id : $(this).attr("id")
+      },
+      dataType: "json",
+      beforeSend: function () {
+      },
+      complete: function () {
+      },
+      success: function (data) {
+          if(data.code == 200){
+           
+          } else {
+            popError("An error occurred while processing your request.");
+          }
+      }
+    })
+    $(this).find(".legend2 > .input > .data > input").val(total_cat);
+  }
+  $(this).find(".legend2 > .label > .label-value").html(`<div>Total Gènèral = ${total_cat} € / Total Facturer = </div>`)
+
+  })
+
+
+}
+
+function total_factur(){
+  let total_factur = 0;
+  $("fieldset ").each(function(){
+    total_factur +=parseFloat($(this).find(".legend2 > .input > .data > input").val());
+  })
+  $.ajax({
+    type: "POST",
+    url: `./affiche_fact.php?d=${dossier}&f=${fact}`,
+    data: { 
+      total_factur: total_factur,
+      id : fact
+    },
+    dataType: "json",
+    beforeSend: function () {
+    },
+    complete: function () {
+    },
+    success: function (data) {
+        if(data.code == 200){
+         
+        } else {
+          popError("An error occurred while processing your request.");
+        }
+    }
+  })
+  $(".table-info > table > tbody > tr > #amount").html(total_factur+" €");
+  $(".table-info > table > tbody > tr > #total").html(total_factur*1.2+" €");
+}
 
 function change_travaux(){
 
@@ -350,3 +513,4 @@ function change_travaux(){
       });
     });
 } 
+
