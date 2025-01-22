@@ -16,8 +16,56 @@ $(document).ready(function(){
   $("body > #cont >  div > .content > fieldset > .heart > .title > .operation-remove > .btn.operation > a").on("click", function(){deleteDet($(this).closest(".heart"))});
   $("#cont > div > .top > .first-line > div.archiver-fac > a").on("click", function () {archiverFact()});
   $("#cont > div > .top > .first-line > div.facture-fae > a").on("click", function () {Factfae()}); 
-  $("#cont > div > .top > .first-line > div.envoyer-valid > a").on("click", function () {toValidate()}); 
+  $("#cont > div > .top > .first-line > div.envoyer-valid > a").on("click", function () {toValidate()});
+  $("#cont > div > .top > .first-line > .checkbox > .data > .list > .option > a").on("click", function(){updateMission($(this))}); 
+  $("#cont > div > .top > .first-line > div > div > .year > a").on("click", function(){updateDate($(this))});
 });
+/**
+* Sends ajax request to the server to update date
+*/
+function updateDate(button)
+{
+  let input = document.querySelector("#date");
+  input.showPicker();
+  $(input).on("change", function(){
+    $.ajax({
+      type: "POST"
+      ,url: `./affiche_fact.php?d=${dossier}&f=${fact}`
+      ,data: { set_date: $(input).val()}
+      , beforeSend: function() { loaderShow(); }
+      , complete: function() { loaderHide(); }
+      , success: function(data)
+      {
+          try { var result = JSON.parse(data); } catch(error) { popError(); return; }
+          if(result["code"] == 200) {
+            $(button).find(".txt").text(result["date"]);
+            return;
+          }
+          else popError(result["txt"], result["btn"]);
+      }
+    });
+  });
+}
+/**
+* Sends ajax request to the server to update mission
+*/
+function updateMission(option)
+{
+  let code = $(option).closest(".option").attr("code");
+  $.ajax({
+    type: "POST"
+    ,url: `./affiche_fact.php?d=${dossier}&f=${fact}`
+    ,data: { set_mission: code}
+    , beforeSend: function() { loaderShow(); }
+    , complete: function() { loaderHide(); }
+    , success: function(data)
+    {
+        try { var result = JSON.parse(data); } catch(error) { popError(); return; }
+        if(result["code"] == 200) return;
+        else popError(result["txt"], result["btn"]);
+    }
+  });
+}
   /**
    * Sends ajax request to the server to handle fact delete
    */

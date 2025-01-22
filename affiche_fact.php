@@ -32,10 +32,12 @@ handleRequest();
  */
 function composePage(): string
 {
+	global $factId;
+	$fact = dbSelect("SELECT * FROM facture where id = $factId")[0];
 	$html = " ";
 	$html .= "<div class='top'>";
 	$html .= "<div class='first-line'>";
-	$html .= composeFilters();
+	$html .= composeFilters($fact);
 	$html .= composeHead();
 
 	$html .= "</div>";
@@ -76,9 +78,9 @@ function composeHead()
 /**
  * composes html filtres of the page
  */
-function composeFilters()
+function composeFilters($fact)
 {
-	global $cookie, $getD;
+	global $cookie;
 	$siteList = fetchSitesList();
 	$exerList = fetchExerciceList();
 	$html = "";
@@ -97,15 +99,15 @@ function composeFilters()
 	$html .= formSelect(array("key" => "selection_facture_list", "selected" => $siteList["cookie"], "list" => $siteList['list'], "label"=>"Site:"));
 	$html .= "<div>";
 	$html .= formLabel(array("key" => "Date de la facture : "));
-	$html .= formBtn(array("key" => "year", "txt" => "28/06/2023"));
+	$html .="<div style='position:relative;'>";
+	$html .= formBtn(array("key" => "year", "txt" => $fact["date"]));
+	$html .= "<input id='date' type=date value=".$fact["date"]." style='opacity: 0;position:absolute;'>";
+	$html .= "</div>";
 	$html .= "</div>";
 	$html .= formLabel(array("key" => "Prèsence d'une lettre de mission : "));
-	$html .= formCheckbox(
-		array(
-			"key" => "bool",
-			"list" => array(
-				array("code" => "oui", "txt" => "Oui", "value" => ($cookie["index"]["sortDir"] == "oui")),
-				array("code" => "non", "txt" => "Non", "value" => ($cookie["index"]["sortDir"] == "non"))
+	$html .= formCheckbox(array("key" => "bool", "list" => array(
+				array("code" => "oui", "txt" => "Oui", "value" => ($cookie["index"]["sortDir"] == "oui" || $fact["mission"] == 1)),
+				array("code" => "non", "txt" => "Non", "value" => ($cookie["index"]["sortDir"] == "non"|| $fact["mission"] == 0))
 			)
 		)
 	);
@@ -314,6 +316,7 @@ function fetchExerciceList(): array
  */
 function handleRequest()
 {
+	
 	if (isset($_POST["validate"])) validate();
 	if (isset($_POST["create_cat"])) createCat();
 	if (isset($_POST["delete_cat"])) deleteCat(cryptDel($_POST["delete_cat"]));
@@ -321,9 +324,24 @@ function handleRequest()
 	if (isset($_POST["delete_det"])) deleteDet(cryptDel($_POST["det_id"]));
 	if (isset($_POST["archiverFact"])) archiverFact();
 	if (isset($_POST["fact_fae"])) factFae();
+	if (isset($_POST['set_mission'])) {updateMission();}
+	if (isset($_POST['set_date'])) {updateDate();}
 	if (isset($_POST["delete_prest"])) deletePrestById(cryptDel($_POST["delete_prest"]));
 	if (isset($_POST["delete_detail"])) deleteDetail($_POST["delete_detail"]);
 	if (isset($_POST["delete_fact"])) deleteFact();
+}
+function updateDate()
+{
+	global $factId;
+	dbExec("UPDATE `prefact`.`facture` SET `date` = '".$_POST["set_date"]."' WHERE (`id` = '$factId')");
+	die(json_encode(["code"=>200, "date"=>$_POST["set_date"]]));
+}
+function updateMission()
+{
+	global $factId;
+	if($_POST["set_mission"] == "oui")dbExec("UPDATE `prefact`.`facture` SET `mission` = '1' WHERE (`id` = '$factId')");
+	else dbExec("UPDATE `prefact`.`facture` SET `mission` = '0' WHERE (`id` = '$factId')");
+	die(json_encode(["code"=>200]));
 }
 /**
  * Validate facture
