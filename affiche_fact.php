@@ -60,15 +60,15 @@ function composeHead()
 	$html .= "<div class='table-info'>";
 	$html .= "<table>";
 	$html .= "<tbody>";
-	$html .= "<tr>";
+	$html .= "<tr >";
 	$html .= "<td>MONTANT DE LA FACTURE</td>";
 	$html .= "<td>H.T</td>";
-	$html .= "<td>78,50 €</td>";
+	$html .= "<td id='amount' ></td>";
 	$html .= "</tr>";
-	$html .= "<tr>";
+	$html .= "<tr >";
 	$html .= "<td class='non-style'></td>";
 	$html .= "<td>T.T.C</td>";
-	$html .= "<td>94,20 €</td>";
+	$html .= "<td id='total'></td>";
 	$html .= "</tr>";
 	$html .= "</tbody>";
 	$html .= "</table>";
@@ -166,7 +166,7 @@ function composePrest($factdet_id): string
 		$html .= "<td>" . formBtn(array("key" => "operation", "ico" => "arrow-down")) . "</td>";
 		$html .= "<td>" . $temp["TEMPS_M_QTE"] . "</td>";
 		$html .= "<td>" . $temp["TEMPS_DUREE"] . "</td>";
-		$html .= "<td>" . $temp["TEMPS_M_PV"] . "</td>";
+		$html .= "<td class='prest_amount'>" . $temp["TEMPS_M_PV"] . "</td>";
 		$html .= "</tr>";
 	}
 	return $html;
@@ -187,7 +187,7 @@ function displayField($cat, $composeDet = false)
 	$html .= formSelect(array("key" => "selection_facture_list", "selected" => $travDrvList["cookie"], "list" => $travDrvList["list"]));
 	$html .= "</legend>";
 	$html .= "  <div class='legend2'>";
-	$html .= formLabel(array("key" => "Total Gènèral = " . $cat["amount"] . " / Total Facturer = "));
+	$html .= formLabel(array("key" => ""));
 	$html .= formInput(array("key" => "total-facture", "type" => "text", "value" => $cat["amount"]));
 	$html .= "</div>";
 	$html .= "  <div class='legend3'>";
@@ -212,7 +212,7 @@ function displayDet($composeTemp = false, $detail)
 		$html .= "<div class='title'>";
 		$html .= "<div class='title-content'>";
 		$html .= formLabel(array("key" => "Titre : "));
-		$html .= formInput(array("key" => "titre-content", "type" => "text"));
+		$html .= formInput(array("key" => "titre-content", "type" => "text" , "value" => $detail["titre"]));
 		$html .= "</div>";
 		$html .= "<div class='operation-remove'>";
 		$html .= formBtn(array("key" => "prestation", "ico" => "plus", "href"=>"./resultat.php?d=".$_GET["d"]."&t=".cryptSave($detail["id"])));
@@ -226,11 +226,11 @@ function displayDet($composeTemp = false, $detail)
 		$html .= "<th>Date</th>";
 		$html .= "<th>Collab</th>";
 		$html .= "<th>Prest</th>";
-		$html .= "<th class='total' colspan='5'><div>" . formLabel(array("key" => "Total Gènèral = ".$detail["amount"]." / Total Facturer = ")) . formInput(array("key" => "total-facture", "type" => "text", "value" => $detail["amount"])) . "</div></th>";
+		$html .= "<th class='total' colspan='5'><div>" . formLabel(array("key" => "-")) . formInput(array("key" => "total-facture", "type" => "text", "value" => $detail["amount"])) . "</div></th>";
 		$html .= "</tr>";
 		if($composeTemp == true) $html .= composePrest($detail["id"]);
 		$html .= "<tr class='area'>";
-		$html .= "<td colspan='9'><div>" . formTextarea(array("key" => "textarea-container")) . formBtn(array("key" => "comment-add", "ico" => "comment-medical"));
+		$html .= "<td colspan='9'><div>" . formTextarea(array("key" => "textarea-container", "value"=> $detail["obs"])) . formBtn(array("key" => "comment-add", "ico" => "comment-medical"));
 		$html .= "</div></td>";
 		$html .= "</tr>";
 		$html .= "</table>";
@@ -328,16 +328,53 @@ function handleRequest()
 	if (isset($_POST["fact_fae"])) factFae();
 	if (isset($_POST['set_mission'])) {updateMission();}
 	if (isset($_POST['set_date'])) {updateDate();}
-	if (isset($_POST['set_title'])) {updateDate();}
+	if (isset($_POST['set_title'])) {updateDetTitle();}
 	if (isset($_POST["delete_prest"])) deletePrestById(cryptDel($_POST["delete_prest"]));
 	if (isset($_POST["delete_detail"])) deleteDetail($_POST["delete_detail"]);
 	if (isset($_POST["delete_fact"])) deleteFact();
+	if(isset($_POST["set_obs"])) updateObs();
+	if(isset($_POST["total_cat"])) total_cat();
+	if(isset($_POST["total_det"])) total_det();
+	if(isset($_POST["table"]) ) updateamount();
+
+
+}
+function updateamount(){
+	$amount = $_POST["amount"];
+	$id = cryptDel($_POST["id"]);
+	$table = $_POST["table"];
+	$sql="UPDATE `prefact`.`$table` SET `amount` = '$amount' WHERE `id` = '$id'";
+	dbExec($sql);
+	die(json_encode(["code"=>200,"txt"=>$sql]));
+}
+function total_det(){
+	$total_det = $_POST["total_det"];
+	$id = cryptDel($_POST["id"]);
+	dbExec("UPDATE `prefact`.`facture_det` SET `amount` = '$total_det' WHERE `id` = '$id'");
+	die(json_encode(["code"=>200]));
+}
+
+function total_cat(){
+	$total_cat = $_POST["total_cat"];
+	var_dump($total_cat);
+	$id = cryptDel($_POST["id"]);
+	dbExec("UPDATE `prefact`.`facture_cat` SET `amount` = '$total_cat' WHERE `id` = '$id'");
+	die(json_encode(["code"=>200]));
 }
 function updateDetTitle()
 {
-	global $factId;
-	dbExec("UPDATE `prefact`.`facture` SET `date` = '".$_POST["set_date"]."' WHERE (`id` = '$factId')");
-	die(json_encode(["code"=>200]));
+
+	$fact_det = cryptDel($_POST["det_id"]);
+	$titre = $_POST["set_title"];
+	dbExec("UPDATE `prefact`.`facture_det` SET `titre` = '$titre' WHERE `id` = '$fact_det'");
+	die(json_encode(["code"=>200,"txt"=>$titre]));
+}
+
+function updateObs(){
+	$fact_det = cryptDel($_POST["det_id"]);
+	$obs = $_POST["set_obs"];
+	dbExec("UPDATE `prefact`.`facture_det` SET `obs` = '$obs' WHERE `id` = '$fact_det'");
+	die(json_encode(["code"=>200,"txt"=>$obs]));
 }
 function updateDate()
 {
