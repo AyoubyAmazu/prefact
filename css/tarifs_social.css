@@ -1,0 +1,35 @@
+body > #cont > div > .hd { display: flex; flex-wrap: wrap; gap: 10px;  display: flex; flex-wrap: wrap; gap: 10px; font-weight: bld;   }
+body > #cont > div > .hd > .btn > a { font-size: 13px; line-height: 18px; font-family: bld;}
+
+
+body > #cont > div > .menu > table > tbody > tr > td:nth-child(even) {background-color: var(--dark1); /* Background color for even columns */}
+body > #cont > div > .menu > table > tbody > tr > td:nth-child(odd) { background-color: var(--light) /* Background color for odd columns */}
+body > #cont > div > .menu > table > tbody > tr > th:nth-child(even) {background-color: var(--dark1); /* Background color for even columns */}
+body > #cont > div > .menu > table > tbody > tr > th:nth-child(odd) { background-color: var(--light) /* Background color for odd columns */}
+
+body > #cont > div > .menu {justify-content: center;}
+body > #cont > div > .menu > table  {border-collapse: collapse; margin-top: 40px;}
+body > #cont > div > .menu > table > tbody > tr > th { border: 1px solid var(--dark);border-left: none;border-right: none; padding: 10px; } 
+
+
+body > #cont > div > .menu > table > tbody > tr.second > th > .comm > .input { width: 200px;}
+ body > #cont > div > .menu > table > tbody > tr.second > th > .comm > .input > .data { border: 1px solid var(--dark1)}
+
+body > #cont > div > .menu > .table > .tbody > .tr.second > th > .pas > .select.pas > .data {width: 150px;}
+body > #cont > div > .menu > table > tbody > .second > th > .pas > .select.pas { width: 80px;}
+body > #cont > div > .menu > table > tbody > .second > th > .facture > .select.fac {width: 150px;}
+
+
+body > #cont > div > .menu > table > tbody > tr > th > div > .input { width: 100px;}
+body > #cont > div > .menu > table > tbody > tr > th > div > .input > .data { border: 1px solid var(--dark1)}
+
+body > #cont > div > .select {display: flex; flex-direction: row;  gap: 0 5px; }
+      
+body > #cont > div > .select > .input   {flex-direction: row; align-items: center; gap: 0 5px; width: 600px;}
+body > #cont > div > .select > .select   {flex-direction: row; align-items: center; gap: 0 5px; width: 300px;}
+body > #cont > div > .select > .input  > .label  {font-size: 13px; line-height: 18px; font-family: bld;}
+body > #cont > div > .select > .select > .label   {font-size: 13px; line-height: 18px; font-family: bld;}
+
+
+
+

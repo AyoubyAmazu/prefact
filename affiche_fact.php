@@ -90,7 +90,7 @@ function composeFilters()
 	$html .= formBtn(array("key" => "basculer", "txt" => "Basculer vers synthèse du dossier", "href" => "recap.php?d=" . $_GET["d"]));
 	$html .= formBtn(array("key" => "modele-fac", "txt" => "Modèle facture autre dossier", "href" => "recup_model.php?d=".$_GET["d"]));
 	$html .= formBtn(array("key" => "facture-fae", "txt" => "Facture FAE"));
-	$html .= formBtn(array("key" => "tarifs-soc", "txt" => "Tarifs Social", "href" => "tarifs_social.php"));
+	$html .= formBtn(array("key" => "tarifs-soc", "txt" => "Tarifs Social", "href" => "tarifs_social.php?d=".$_GET["d"]));
 	// $html .= formLabel(array("key" => "Exercice client : "));
 	$html .= formSelect(array("key" => "selection_facture_list", "selected" => $exerList["cookie"], "list" => $exerList["list"], "label"=>"Exercice client : "));
 	// $html .= formLabel(array("key" => "Site : "));
