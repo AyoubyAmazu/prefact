@@ -7,7 +7,7 @@
 #cont > div > .hd > .left > .select.year{ display: inline-flex; justify-content: right; flex-direction: row; align-items: center; gap: 0 5px;}
 #cont > div > .hd > .left > .select.year > .label { padding: 0; font-size: 13px; line-height: 18px; font-family: bld; border-bottom: 1px solid var(--dark); background-color: var(--bleu) ;}
 #cont > div > .hd > .left > .dp.date { display: inline-flex; justify-content: right; flex-direction: row; align-items: center; gap: 0 5px; }
-#cont > div > .hd > .left > .dp.date > .data{width: 150px; }
+#cont > div > .hd > .left > .dp.date > .data{width: 150px; border-radius: 5px;}
 #cont > div > .hd > .left > .dp.date > .label { padding: 0; font-size: 13px; line-height: 18px; font-family: bld;}
 #cont > div > .hd > .left > .select.regelement{ display: inline-flex; justify-content: right; flex-direction: row; align-items: center; gap: 0 5px;width: 300px;}
 #cont > div > .hd > .left > .select.regelement > .label { padding: 0; font-size: 13px; line-height: 18px; font-family: bld;}

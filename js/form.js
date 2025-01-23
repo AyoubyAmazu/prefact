@@ -162,5 +162,12 @@ function selectAdapt(div)
     formSelectFilter(div);
 
 }
+// adapt dp
+$(document).ready(function(){
+    $(".dp").find("a").on("click", function(){
+        let datePicker = $(this).closest(".data").find(".date-piker");
+        datePicker.get(0).showPicker();
+    });
+});
 
 

@@ -9,7 +9,11 @@
    // $filter = htmlFilter($opts);
 
 $getD = ((isset($_GET["d"]))? cryptDel($_GET["d"]) : false);
+$getF = ((isset($_GET["f"]))? cryptDel($_GET["f"]) : false);
 if($getD == false) err(array_merge($opts, array("txt" => "Erreur d'accès", "btn" => APPurl)));
+if($getF == false) err(array_merge($opts, array("txt" => "Erreur d'accès", "btn" => APPurl)));
+
+$facture = dbSelect("SELECT * FROM facture WHERE id = $getF")[0];
 
    $sortYear = array();
    array_push($sortYear, array("code" => "temps", "txt" => "2020" ));
@@ -31,12 +35,13 @@ if($getD == false) err(array_merge($opts, array("txt" => "Erreur d'accès", "btn
 
     $html = "<div class='hd'>";
         $html .= "<div class='left'>";
-        $html .= formBtn(array("key" => "retour", "ico" => "fa-solid fa-angles-left", "txt"=>"Retour à la liste à valider", "title"=>"retour à la liste" , "href"=>"fact_a_valider.php"));
+        $html .= formBtn(array("key" => "retour", "ico" => "fa-solid fa-angles-left", "txt"=>"Retour à la liste à valider", "title"=>"retour à la liste" , "href"=>"fact_a_valider.php?d=".$_GET['d']));
         $html .= formBtn(array("key" => "valider", "ico" => "fa-solid fa-check", "txt" => "Valider la facture", "title"=>"valider la facture"));
         $html .= "</div>";
         $html .= "<div class='left'>";
-        $html .= formSelect(array("key"=>"year","label"=>"AUD084700 - BITCHE FIXATIONS - Exercice client : ", "list" => $sortYear ));
-        $html .= formDp(array("key"=>"date"  ,  "label"=>"Date de la facture : "  ,  "value"=>"27/06/2023" ));
+        $html .= formSelect(array("key"=>"year","label"=>"$getD - BITCHE FIXATIONS - Exercice client : ", "list" => $sortYear ));
+
+        $html .= formDp(array("key"=>"date", "label"=>"Date de la facture : ", "value"=>$facture["date"], "readonly"=>true ));
         $html .= formDp(array("key"=>"date"  ,  "label"=>"Echèaonce de la facture : "  ,"value"=>"27/06/2023"));
         $html .= formSelect(array("key"=>"regelement","label"=>"Mode de reglement : ","list" => $sortRegl ));
         $html .= "</div>";
@@ -65,15 +70,15 @@ if($getD == false) err(array_merge($opts, array("txt" => "Erreur d'accès", "btn
         $html .= "</div>";
         $html .= "<div class='centerFin'>";
         $html .= formLabel(array("key"=>""));
-        $html .= formLabel(array("key"=>"H.T : 0000,00"));
+        $html .= formLabel(array("key"=>"H.T :".$facture["amount"]));
         $html .= "</div>";
         $html .= "<div class='centerFin'>";
         $html .= formLabel(array("key"=>""));
-        $html .= formLabel(array("key"=>"T.T.C. = 0000,00"));
+        $html .= formLabel(array("key"=>"T.T.C. =".($facture["amount"]*1.20)));
         $html .= "</div>";
         $html .= "<div class='centerFin'>";
         $html .= formLabel(array("key"=>""));
-        $html .= formLabel(array("key"=>"Net à payer = 0000,00"));
+        $html .= formLabel(array("key"=>"Net à payer =".($facture["amount"]*1.20)));
         $html .= "</div>";
         
     $html .= "</div>";

@@ -1,7 +1,5 @@
 let dossier = new URLSearchParams(window.location.search).get("d");
 $(document).ready(function () {
-
-
     $("body > #cont > div > .centre > table > tbody > tr > td > .verticalB > .btn > a ").off("click").on("click", function (event) {openPopupMenu($(event.target).parents(".verticalB"));});
     $("body > #cont > div > .centre > table > tbody > tr > td >  .checkbox  > .verr > .data > .list > .option > a").off("click").on("click", function (event) {CheckboxUnique($(event.target).parents(".option"));});
     $("body > #cont > div > .centre > table > tbody > tr > td > .verticalB > .list > .btn.commentaire > a").on("click", function () {displayCommentPopup($(this).closest(".list"));});
@@ -11,6 +9,10 @@ $(document).ready(function () {
     $("#cont > div > div.centre > table > tbody > tr.row > td> div.date > div.dp > div.data > div.cal > a").on("click", function(){
         updateFactDate($(this).closest(".data"));
     });
+    $("#cont > div > div.centre > table > tbody > tr.row > td > div > div.list > div.btn.open > a").on("click", function () {
+        let fact = $(this).closest(".row").attr("id");
+        window.location.href = `./validation_recap.php?d=${dossier}&f=${fact}`;
+    });
 });
 /*
 * Send ajax request to the server to update fact date 
@@ -18,8 +20,8 @@ $(document).ready(function () {
 function updateFactDate(button)
 {
     let fact = $(button).closest(".row").attr("id");
-    let input = document.querySelector("#date");
-    input.showPicker();
+    let input = $(button).find(".date-piker").get(0);
+    // input.showPicker();
     $(input).on("change", function(){
         $.ajax({
             type: "POST"
