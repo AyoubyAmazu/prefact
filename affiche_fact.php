@@ -297,7 +297,7 @@ function fetchExerciceList(): array
 	// exercice selects data
 	$result = dbSelect("SELECT EXO_CODE , EXO_ID from exercice where ADR_ID in (select ADR_ID from adresse where ADR_CODE='".$getD."')", array("db" => "dia"));
 	$facture_exo = dbSelect("SELECT EXO_CODE as `txt` , EXO_ID as code from exercice where EXO_ID = (SELECT exo from prefact.facture where id = $factId)" , array("db" => "dia"));
-	var_dump($facture_exo);
+
 	$exerciceList = array();
 	foreach ($result as $ex) if ($ex[0] == 0) continue;
 	else array_push($exerciceList, array("code" => $ex["EXO_ID"], "txt" => $ex["EXO_CODE"]));
@@ -380,7 +380,7 @@ function total_det(){
 
 function total_cat(){
 	$total_cat = $_POST["total_cat"];
-	var_dump($total_cat);
+	
 	$id = cryptDel($_POST["id"]);
 	dbExec("UPDATE `prefact`.`facture_cat` SET `amount` = '$total_cat' WHERE `id` = '$id'");
 	die(json_encode(["code"=>200]));
@@ -544,7 +544,7 @@ function deleteDetail(int $id): never
 
 function change_travaux()
 {
-	var_dump($_POST["cat_id"]);
+	
 	$catId = $_POST["cat_id"];
 	$fact_cat = cryptDel($_POST["fact_cat"]);
 	$sql = "UPDATE facture_cat SET cat_id = $catId WHERE id = $fact_cat ";
