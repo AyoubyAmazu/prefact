@@ -473,6 +473,7 @@
             $html .= "<div class='data'>";
                 foreach($opts["op"] as $v) if($v["type"] == "pre") $html .= $v["txt"];
                 $html .= "<input " . implode(" ", $data) . ">";
+                $html .= "<input class='date-piker' type='date' value='".$opts["value"]."'>";
                 $html .= formBtn(array("key" => "cal", "ico" => "calendar", "title" => "Calendrier"));
 
                 foreach($opts["op"] as $v) if($v["type"] == "post") $html .= $v["txt"];

@@ -88,6 +88,7 @@ input[type="password"]::-ms-clear { display: none; }
 .dp > .label { padding: 0 10px; text-align: left; }
 .dp > .data { flex-grow: 1; display: flex; border-radius: 15px; border: 1px solid var(--dark); position: relative; }
 .dp > .data > input { flex-grow: 1; width: 0; padding: 5px 10px; font-family: txt; font-size: 14px; line-height: 18px; color: var(--dark); border: none; background-color: transparent; outline: none; }
+.dp > .data > input.date-piker { opacity:0; position:absolute;right:0;z-index:-99; }
 .dp > .data > input::placeholder { color: var(--dark5); opacity: 1; }
 .dp > .data > .btn > a { border: none; }
 .dp.required > .label::after { content: " *"; color: var(--red); }

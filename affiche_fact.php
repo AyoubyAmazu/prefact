@@ -88,7 +88,7 @@ function composeFilters($fact)
 	$html .= formBtn(array("key" => "inserer-ligne", "txt" => "Inserer nouvelles lignes", "href" => "resultat.php?d=" . $_GET["d"]));
 	$html .= formBtn(array("key" => "supprimer-fac", "txt" => "Supprimer cette facture"));
 	$html .= formBtn(array("key" => "archiver-fac", "txt" => "Archiver la facture"));
-	$html .= formBtn(array("key" => "visualisation-fac", "txt" => "Visualisation de la facture", "href" => "visualisation.php?d=".$_GET["d"]));
+	$html .= formBtn(array("key" => "visualisation-fac", "txt" => "Visualisation de la facture", "href" => "visualisation.php?d=".$_GET["d"]."&f=".$_GET['f']));
 	$html .= formBtn(array("key" => "basculer", "txt" => "Basculer vers synthèse du dossier", "href" => "recap.php?d=" . $_GET["d"]));
 	$html .= formBtn(array("key" => "modele-fac", "txt" => "Modèle facture autre dossier", "href" => "recup_model.php?d=".$_GET["d"]));
 	$html .= formBtn(array("key" => "facture-fae", "txt" => "Facture FAE"));
