@@ -12,7 +12,8 @@ if ($factId == false) err(array_merge($opts, array("txt" => "Erreur d'accès", "
 $cookie = cookieInit();
 
 // All queries of this page
-$exerciceSql = "SELECT distinct exo from facture order by exo Asc";
+$exerciceSql = 'SELECT EXO_CODE from exercice where ADR_ID in (select ADR_ID from adresse where ADR_CODE='.`$getD`.')"';
+;
 $siteSql = "SELECT * from site order by Site Asc";
 $travSql = "SELECT * FROM prefact.cat;";
 // detail queries
@@ -22,7 +23,6 @@ $fact_det = "SELECT * FROM facture_det WHERE fact_cat_id = ?";
 $delete_detail = "DELETE FROM facture_det WHERE id = ?";
 $prestSql = "SELECT * from facture_temps where fact_det_id = ?";
 $select_tmps = "SELECT * FROM temps WHERE TEMPS_ID = ?";
-
 $delete_prest_by_detail = "DELETE FROM prestation WHERE IdDetail = ?";
 $deleteTemp = "DELETE FROM facture_temps WHERE id = ?";
 handleRequest();
@@ -94,7 +94,7 @@ function composeFilters($fact)
 	$html .= formBtn(array("key" => "facture-fae", "txt" => "Facture FAE"));
 	$html .= formBtn(array("key" => "tarifs-soc", "txt" => "Tarifs Social", "href" => "tarifs_social.php?d=".$_GET["d"]));
 	// $html .= formLabel(array("key" => "Exercice client : "));
-	$html .= formSelect(array("key" => "selection_facture_list", "selected" => $exerList["cookie"], "list" => $exerList["list"], "label"=>"Exercice client : "));
+	$html .= formSelect(array("key" => "selection_facture_list", "selected" => $exerList["selected"], "list" => $exerList["list"], "label"=>"Exercice client : "));
 	$html .= "<div>";
 	$html .= formLabel(array("key" => "Date de la facture : "));
 	$html .="<div style='position:relative;'>";
@@ -156,7 +156,7 @@ function composePrest($factdet_id): string
 	foreach ($result as $fact_tmp) {
 		$_select = str_replace("?", $fact_tmp["temps_id"], $select_tmps);
 		$temp = dbSelect($_select, array("db" => "dia"))[0];
-		$html .= "<tr id=" . cryptSave($fact_tmp["id"]) . ">";
+		$html .= "<tr id=" . cryptSave($fact_tmp["id"]) . " class='prest'>";
 		$html .= "<td>" . formBtn(array("key" => "operation-delete", "ico" => "xmark"));
 		$html .= "</td>";
 		$html .= "<td>" . date("m/d/Y", strtotime($temp['TEMPS_DATE'])) . "</td>";
@@ -293,12 +293,14 @@ function fetchSitesList(): array
  */
 function fetchExerciceList(): array
 {
-	global $exerciceSql, $cookie;
+	global  $cookie , $getD , $factId;
 	// exercice selects data
-	$result = dbSelect($exerciceSql, array("db" => "prefact"));
+	$result = dbSelect("SELECT EXO_CODE , EXO_ID from exercice where ADR_ID in (select ADR_ID from adresse where ADR_CODE='".$getD."')", array("db" => "dia"));
+	$facture_exo = dbSelect("SELECT EXO_CODE as `txt` , EXO_ID as code from exercice where EXO_ID = (SELECT exo from prefact.facture where id = $factId)" , array("db" => "dia"));
+
 	$exerciceList = array();
 	foreach ($result as $ex) if ($ex[0] == 0) continue;
-	else array_push($exerciceList, array("code" => $ex[0], "txt" => $ex[0], "title" => $ex[0]));
+	else array_push($exerciceList, array("code" => $ex["EXO_ID"], "txt" => $ex["EXO_CODE"]));
 
 	$sortNull = array("code" => "year", "txt" => "2023");
 
@@ -307,9 +309,9 @@ function fetchExerciceList(): array
 		$sortSelected = $sortNull;
 	} else {
 		$k2 = array_search($exerciceList[$k]["parent"], haystack: array_column($exerciceList, "code"));
-		$sortSelected = array("code" => $exerciceList[$k]["code"], "txt" => (($k2 === false) ? "" : ($exerciceList[$k2]["txt"] . " > ")) . $exerciceList[$k]["txt"], "title" => "Trier par : " . $exerciceList[$k]["title"]);
+		$sortSelected = array("code" => $exerciceList[$k]["code"], "txt" => (($k2 === false) ? "" : ($exerciceList[$k2]["txt"] . " > ")) . $exerciceList[$k]["txt"]);
 	}
-	return array("list" => $exerciceList, "cookie" => $sortSelected);
+	return array("list" => $exerciceList,"selected"=>$facture_exo[0] ,"cookie" => $sortSelected);
 }
 
 /**
@@ -337,8 +339,27 @@ function handleRequest()
 	if(isset($_POST["total_cat"])) total_cat();
 	if(isset($_POST["total_det"])) total_det();
 	if(isset($_POST["table"]) ) updateamount();
+	if(isset($_POST["total_factur"])) total_fact();
+	if(isset($_POST["exo_id"])) update_exo();
 
 
+}
+// update total facture
+
+function total_fact(){
+	$total_fact = $_POST["total_factur"];
+	$id = cryptDel($_POST["id"]);
+	dbExec("UPDATE `prefact`.`facture` SET `amount` = '$total_fact' WHERE (`id` = '$id')");
+	die(json_encode(["code"=>200]));
+}
+
+// update exo
+
+function update_exo(){
+	$exo_id = $_POST["exo_id"];
+	$factId = cryptDel($_POST["fact_id"]);
+	dbExec("UPDATE `prefact`.`facture` SET `exo` = '$exo_id' WHERE (`id` = '$factId')");
+	die(json_encode(["code"=>200]));
 }
 
 // update amount
@@ -359,7 +380,7 @@ function total_det(){
 
 function total_cat(){
 	$total_cat = $_POST["total_cat"];
-	var_dump($total_cat);
+	
 	$id = cryptDel($_POST["id"]);
 	dbExec("UPDATE `prefact`.`facture_cat` SET `amount` = '$total_cat' WHERE `id` = '$id'");
 	die(json_encode(["code"=>200]));
@@ -523,7 +544,7 @@ function deleteDetail(int $id): never
 
 function change_travaux()
 {
-	var_dump($_POST["cat_id"]);
+	
 	$catId = $_POST["cat_id"];
 	$fact_cat = cryptDel($_POST["fact_cat"]);
 	$sql = "UPDATE facture_cat SET cat_id = $catId WHERE id = $fact_cat ";
