@@ -3,9 +3,13 @@
 .btn > a > .ico { flex-shrink: 0; height: 18px; }
 .btn > a > .txt { text-align: left; }
 .btn > a:hover { color: var(--light); background-color: var(--dark); }
+.btn.green > a:hover { background-color:#66f975;  }
+.btn.red > a:hover { background-color:#f96666;  }
 .btn.min > a { padding: 5px; }
 .btn.min > a > .ico { width: 18px; }
 .btn.min > a > .txt { padding: 0 5px; text-align: center; }
+.btn.green { background-color:#66f975; }
+.btn.red { background-color:#f96666; }
 .btn.l > a { justify-content: flex-start; }
 .btn.l > a .txt { text-align: left; }
 .btn.r > a { flex-direction: row-reverse; justify-content: flex-start; }

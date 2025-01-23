@@ -46,7 +46,7 @@ function composePage(): string
 	$html .= composeFactCat();
 	$html .= "</div>";
 	$html .= "<div class='btn-last'>";
-	$html .= formBtn(array("key" => "ajoute-catgorie", "ico" => "plus", "title" => "Ajouter une nouvelle catègorie"));
+	$html .= formBtn(array("key" => "ajoute-catgorie green", "ico" => "plus", "title" => "Ajouter une nouvelle catègorie"));
 	$html .= formLabel(array("key" => "Ajouter une nouvelle catègorie"));
 	$html .= "</div>";
 	return $html;
@@ -84,9 +84,9 @@ function composeFilters($fact)
 	$site = dbSelect("SELECT soc from adr where code = '$getD'")[0]["soc"];
 	$exerList = fetchExerciceList();
 	$html = "";
-	$html .= formBtn(array("key" => "envoyer-valid", "txt" => "Envoyer â la validation"));
-	$html .= formBtn(array("key" => "inserer-ligne", "txt" => "Inserer nouvelles lignes", "href" => "resultat.php?d=" . $_GET["d"]));
-	$html .= formBtn(array("key" => "supprimer-fac", "txt" => "Supprimer cette facture"));
+	$html .= formBtn(array("key" => "envoyer-valid green", "txt" => "Envoyer â la validation"));
+	$html .= formBtn(array("key" => "inserer-ligne green", "txt" => "Inserer nouvelles lignes", "href" => "resultat.php?d=" . $_GET["d"]));
+	$html .= formBtn(array("key" => "supprimer-fac red", "txt" => "Supprimer cette facture"));
 	$html .= formBtn(array("key" => "archiver-fac", "txt" => "Archiver la facture"));
 	$html .= formBtn(array("key" => "visualisation-fac", "txt" => "Visualisation de la facture", "href" => "visualisation.php?d=".$_GET["d"]."&f=".$_GET['f']));
 	$html .= formBtn(array("key" => "basculer", "txt" => "Basculer vers synthèse du dossier", "href" => "recap.php?d=" . $_GET["d"]));
@@ -157,7 +157,7 @@ function composePrest($factdet_id): string
 		$_select = str_replace("?", $fact_tmp["temps_id"], $select_tmps);
 		$temp = dbSelect($_select, array("db" => "dia"))[0];
 		$html .= "<tr id=" . cryptSave($fact_tmp["id"]) . " class='prest'>";
-		$html .= "<td>" . formBtn(array("key" => "operation-delete", "ico" => "xmark"));
+		$html .= "<td>" . formBtn(array("key" => "operation-delete red", "ico" => "xmark"));
 		$html .= "</td>";
 		$html .= "<td>" . date("m/d/Y", strtotime($temp['TEMPS_DATE'])) . "</td>";
 		$html .= "<td>" . $temp["COL_CODE"] . "</td>";
@@ -191,11 +191,11 @@ function displayField($cat, $composeDet = false)
 	$html .= formInput(array("key" => "total-facture", "type" => "text", "value" => $cat["amount"]));
 	$html .= "</div>";
 	$html .= "  <div class='legend3'>";
-	$html .= formBtn(array("key" => "categorie-remove", "ico" => "trash", "title" => "Supprimer une Catègorie"));
+	$html .= formBtn(array("key" => "categorie-remove red", "ico" => "trash", "title" => "Supprimer une Catègorie"));
 	$html .= "</div>";
 	if ($composeDet == true) $html .= composeFactDet($cat["id"]);
 	$html .= "<div class='btn-out'>";
-	$html .= formBtn(array("key" => "categorie-add", "ico" => "plus", "title" => "Ajouter une Catègorie"));
+	$html .= formBtn(array("key" => "categorie-add green", "ico" => "plus", "title" => "Ajouter une Catègorie"));
 	$html .= "</div>";
 	$html .= "</fieldset>";
 	return $html;
@@ -215,8 +215,8 @@ function displayDet($composeTemp = false, $detail)
 		$html .= formInput(array("key" => "titre-content", "type" => "text" , "value" => $detail["titre"]));
 		$html .= "</div>";
 		$html .= "<div class='operation-remove'>";
-		$html .= formBtn(array("key" => "prestation", "ico" => "plus", "href"=>"./resultat.php?d=".$_GET["d"]."&t=".cryptSave($detail["id"])));
-		$html .= formBtn(array("key" => "operation", "ico" => "trash"));
+		$html .= formBtn(array("key" => "prestation green", "ico" => "plus", "href"=>"./resultat.php?d=".$_GET["d"]."&t=".cryptSave($detail["id"])));
+		$html .= formBtn(array("key" => "operation red", "ico" => "trash"));
 		$html .= "</div>";
 		$html .= "</div>";
 		$html .= "<table id=" . cryptSave($detail["id"]) . ">";

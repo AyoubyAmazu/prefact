@@ -68,8 +68,8 @@ function composeHead(): string
 {
     $html = "<div class='all'>";
     $html .= "<div class='left-div'>";
-    $html .= formBtn(array("key" => "Ajouter-facture", "ico" => "plus", "txt" => "Ajouter â la facture"));
-    $html .= formBtn(array("key" => "unfact", "ico" => "ban", "txt" => "Ne pas facturer"));
+    $html .= formBtn(array("key" => "Ajouter-facture green", "ico" => "plus", "txt" => "Ajouter â la facture"));
+    $html .= formBtn(array("key" => "unfact red", "ico" => "ban", "txt" => "Ne pas facturer"));
     $html .= "<div>";
     $html .= "</div>";
     $html .= formBtn(array("key" => "affiche_pre_facture", "ico" => "eye", "txt" => "Afficher la pré-facture"));
@@ -114,7 +114,7 @@ function formTable($opts = array()): string
         $html .= "<tr class='rw' rw-id=" . cryptSave($row["TEMPS_ID"]) . ">";
         $formattedDate = date("m/d/Y", strtotime($row['TEMPS_DATE']));
         // added unvalide icon on porpuse to give the chape of box to the button
-        $html .= "<td>" . formBtn(array("key" => "first-check", "ico" => "fa-circle")) . "</td>";
+        $html .= "<td>" . formBtn(array("key" => "first-check row-check", "ico" => "fa-circle")) . "</td>";
         $html .= "<td class='centered-td date'>" . $formattedDate . "</td>";
         $html .= "<td class='centered-td code-row'><a href='#'>" . $row['COL_CODE'] . "</a></td>";
         $html .= "<td class='centered-td prest-column'><p class='click' onclick='myFunction(this)'><span class='center_span' id='popupTextSpan1'>" . formInput(array("key" => "prest_code", "align" => "c", "value" => $row['PREST_CODE'])) . "</span></p></td>";
