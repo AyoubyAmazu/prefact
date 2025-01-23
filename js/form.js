@@ -121,10 +121,13 @@ function formSelectFilter(div)
 function formSelectOption(div)
 {   
    
-        var code = $(this).attr("code"); if(code == undefined || code == null) code = ""; $(this).parents(".select").attr("code", code);
-        var txt = $(this).children("a").html();if(txt == undefined || txt == null) txt = ""; $(this).parents(".select").children(".data").children("a").children(".main").html(txt);
-        var title = $(this).children("a").attr("title"); if(title == undefined || title == null) title = ""; $(this).parents(".select").children(".data").children("a").attr("title", title);
-        formSelectHide($(div.parents(".select")));
+        var code = $(div).parent().attr("code"); if(code == undefined || code == null) code = ""; $(div).closest(".select").attr("code", code);
+       
+        var txt = $(div).html();if(txt == undefined || txt == null) txt = ""; $(div).closest(".select").children(".data").children("a").children(".main").html(txt);
+      
+        var title = $(div).attr("title"); if(title == undefined || title == null) title = ""; $(div).closest(".select").children(".data").children("a").attr("title", title);
+   
+        formSelectHide($(div.closest(".select")));
    
    
 }

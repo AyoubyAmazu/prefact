@@ -12,6 +12,7 @@ $(document).ready(function(){
   total_det();
   total_cat();
   total_factur();
+  update_exo();
   $("#cont >  div > .content > fieldset > .heart > table > tbody > tr > td > .btn.min.operation-delete > a").on("click", function () {deletePres($(this).closest("tr"));});
   $("#cont >  div > .content > fieldset > .legend3 > .btn.min.categorie-remove > a").each(function(){
     $(this).on("click",function () {deleteCat($(this).closest("fieldset"));});
@@ -28,6 +29,32 @@ $(document).ready(function(){
   $("#cont > div > .content > fieldset > .heart > table > tbody > .area > td > div > .textarea > .data > textarea").keypress(function(){  updateDeObs($(this));})
   $("#cont > div > .content > fieldset > .heart > table > tbody > tr > .total > div > .input > .data > input").keypress(function(){update_amount($(this),$(this).closest("table").attr("id"),"facture_det")}); // update facture_det amount
   $("#cont > div > .content > fieldset > .legend2 >  .input > .data > input").keypress(function(){update_amount($(this),$(this).closest("fieldset").attr("id"),"facture_cat")}); // update facrure_cat amount   
+  
+  let ascending = true; // Flag to keep track of the sort order
+     $("#cont > div > .content > fieldset > .heart > table > tbody > tr > .operation > .action > a").on("click", function() {
+        let rows = $("#cont > div > .content > fieldset > .heart > table > tbody > tr:not(:first)").toArray();
+        let lastRow =  rows.pop();
+ 
+        rows.sort(function(a, b) {
+            let dateA = new Date($(a).find("td:eq(1)").text());
+            let dateB = new Date($(b).find("td:eq(1)").text());
+
+            if (ascending) {
+                return dateA - dateB;
+            } else {
+                return dateB - dateA;
+            }
+        });
+
+        // $("#cont > div > .content > fieldset > .heart > table > tbody ").append(firstRow)
+        $("#cont > div > .content > fieldset > .heart > table > tbody ").append(rows,lastRow);
+        $(this).find(".ico > i").toggleClass("fa-arrow-up fa-arrow-down");
+        ascending = !ascending; // Toggle the sort order
+    });
+
+
+
+
 });
 
 function update_amount(div,id ,table){
@@ -187,7 +214,7 @@ function initSelect()
   $("div.select > .data > .list > .input > .data > input").on("input", function () {formSelectFilter($(this).closest(".select"));});
 
   $( "div.select > .data > .list > .option > a").each(function() {
-    $(this).on("click", function () {formSelectOption($(this).closest(".data"));});
+    $(this).on("click", function () {formSelectOption($(this));});
   })
 }
 function initCheckbox()
@@ -499,10 +526,10 @@ function change_travaux(){
             fact_cat: fact_cat},
         dataType: "json",
         beforeSend: function () {
-          loaderShow();
+          
         },
         complete: function () {
-          loaderHide();
+       
         },
         success: function (data) {
             if(data.code == 200) {
@@ -513,4 +540,34 @@ function change_travaux(){
       });
     });
 } 
+
+function update_exo(){
+  $(".first-line > .select.selection_facture_list > .data > .list > .option ").on("click", function()
+  {
+    var exo_id =  $(this).closest(".first-line > .select.selection_facture_list").attr("code");
+    
+    $.ajax({
+      type: "POST",
+      url: `affiche_fact.php?d=${dossier}&f=${fact}`,
+      data: {
+         
+          exo_id: exo_id, 
+          fact_id: fact
+        },
+      dataType: "json",
+      beforeSend: function () {
+        
+      },
+      complete: function () {
+     
+      },
+      success: function (data) {
+          if(data.code == 200) {
+            window.lo
+          }
+          else popError("An error occurred while processing your request.");
+      }
+    });
+  });
+}
 
