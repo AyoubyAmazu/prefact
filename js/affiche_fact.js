@@ -484,7 +484,7 @@ function total_cat(){
 function total_factur(){
   let total_factur = 0;
   $("fieldset ").each(function(){
-    total_factur +=parseFloat($(this).find(".legend2 > .input > .data > input").val());
+    total_factur +=parseFloat($(this).find(".legend2 > .input > .data > input").val(), 2);
   })
   $.ajax({
     type: "POST",
@@ -507,7 +507,7 @@ function total_factur(){
     }
   })
   $(".table-info > table > tbody > tr > #amount").html(total_factur+" €");
-  $(".table-info > table > tbody > tr > #total").html(total_factur*1.2+" €");
+  $(".table-info > table > tbody > tr > #total").html(parseFloat(total_factur*1.2).toFixed(2)+" €");
 }
 
 function change_travaux(){

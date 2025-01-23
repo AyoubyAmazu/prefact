@@ -311,7 +311,7 @@ function fetchExerciceList(): array
 		$k2 = array_search($exerciceList[$k]["parent"], haystack: array_column($exerciceList, "code"));
 		$sortSelected = array("code" => $exerciceList[$k]["code"], "txt" => (($k2 === false) ? "" : ($exerciceList[$k2]["txt"] . " > ")) . $exerciceList[$k]["txt"]);
 	}
-	return array("list" => $exerciceList,"selected"=>$facture_exo[0] ,"cookie" => $sortSelected);
+	return array("list" => $exerciceList,"selected"=>!empty($facture_exo)?$facture_exo[0]:array() ,"cookie" => $sortSelected);
 }
 
 /**
